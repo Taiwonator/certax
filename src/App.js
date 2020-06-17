@@ -18,6 +18,7 @@ function App() {
         >
           Learn React
         </a>
+        <input type="text" id="revenueInput"/>
       </header>
     </div>
   );
