@@ -1,5 +1,15 @@
+#dependencies
 node_modules
+
+#production
 build
-npm-debug.log
+
+/dist
+
+#misc
 .env
 .DS_Store
+npm-debug.log
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
