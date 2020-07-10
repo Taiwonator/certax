@@ -1,9 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import './App.scss';
 
 class App extends Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
-        return <div>Hello from React!</div>;
+        return (
+            <LandingPage data={this.props.mockdata} />
+        );
     }
 }
 
