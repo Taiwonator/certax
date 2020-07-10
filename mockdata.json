@@ -1,0 +1,18 @@
+{
+    "colors": {
+        "yellow": "#E2AA60", 
+        "blue": "#525288", 
+        "lightblue": "#9FB7DB",
+        "black": "#2F2721"
+    },
+
+    "navbar": {
+        "wordlogo": ""
+    },
+
+    "sections": {
+        "landingpage": {
+            "logo": ""
+        }
+    }
+}
