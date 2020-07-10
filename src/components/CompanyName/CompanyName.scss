@@ -1,0 +1,49 @@
+@import url("https://use.typekit.net/kjw7qtq.css");
+
+$header-font: questa, serif;
+
+.company-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1, h2 {
+        font-weight: 100;
+        font-family: $header-font;
+    }
+    
+    h1 {
+        font-size: 100px;
+    }
+
+    h2 {
+        font-size: 35px;
+        line-height: 0.5;
+        
+        span {
+            display: inline-block;
+            position: relative;
+            padding: 0px 15px;  
+
+            &:before, &:after {
+                content: "";
+                position: absolute;
+                height: 5px;
+                border-top: 2px solid;
+                top: 5px;
+                width: 50%;
+            }
+
+            &:before {
+                right: 100%;
+            }
+
+            &:after {
+                left: 100%;
+            }
+        }
+    }
+
+}
+
+

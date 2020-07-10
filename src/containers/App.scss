@@ -1,12 +1,12 @@
 @import url("https://use.typekit.net/kjw7qtq.css");
 
-$header-font: "questa, serif";
-$text-font: "questa-sans, sans-serif";
+$text-font: questa-sans, sans-serif;
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: $text-font;
 }
 
 
