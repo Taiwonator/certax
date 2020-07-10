@@ -9,4 +9,7 @@ $text-font: questa-sans, sans-serif;
     font-family: $text-font;
 }
 
+//responsive font size
+//calc(100px + (150 - 100) * ((100vw - 480px) / (1920 - 480)))
+
 
