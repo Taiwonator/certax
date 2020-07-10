@@ -1,12 +1,10 @@
-@import url("https://use.typekit.net/kjw7qtq.css");
-
-$text-font: questa-sans, sans-serif;
+@use '../stylesheets/variables';
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: $text-font;
+    font-family: variables.$text-font;
 }
 
 //responsive font size

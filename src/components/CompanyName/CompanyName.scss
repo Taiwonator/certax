@@ -1,8 +1,10 @@
-@import url("https://use.typekit.net/kjw7qtq.css");
+@use '../../stylesheets/variables';
 
-$header-font: questa, serif;
-$phone: 600px;
-$tablet: 1024px;
+@mixin for-phone {
+    @media (max-width: variables.$phone) {
+        @content;
+    }
+}
 
 .company-name-container {
     display: flex;
@@ -14,35 +16,19 @@ $tablet: 1024px;
     }
     
     h1 {
-        font-size: 100px;
-        font-family: $header-font;
-        
-        @media screen and (min-width: $phone) {
-            font-size: 200px;
-        }
-
-        @media screen and (min-width: $tablet) {
-            font-size: 150px;
-        }
+        font-size: calc(80px + (100 - 80) * ((100vw - 480px) / (1920 - 480)));
+        font-family: variables.$header-font;
     }
 
     h2 {
-        font-size: 35px;
+        font-size: calc(28px + (35 - 28) * ((100vw - 480px) / (1920 - 480)));
         line-height: 0.5;
-
-        @media screen and (min-width: $phone) {
-            font-size: 70px;
-        }
-
-        @media screen and (min-width: $tablet) {
-            font-size: 52.5px;
-        }
         
         span {
             display: inline-block;
             position: relative;
             padding: 0px 15px; 
-            font-family: $header-font; 
+            font-family: variables.$header-font; 
 
             &:before, &:after {
                 content: "";

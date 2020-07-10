@@ -1,7 +1,9 @@
+@use '../../stylesheets/variables';
+
 .company-logo-container {
     display: flex;
     
     svg {
-        height: 200px;
+       height: calc(150px + (200 - 150) * ((100vw - 480px) / (1920 - 480)));
     }
 }
