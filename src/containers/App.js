@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.scss';
+import LandingPage from './LandingPage.js';
 
 class App extends Component {
     constructor(props){
