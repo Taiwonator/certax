@@ -9,7 +9,7 @@ class App extends Component {
 
     render() {
         return (
-            <LandingPage data={this.props.mockdata} />
+            <LandingPage colors={this.props.mockdata.colors} data={this.props.mockdata.sections.landingpage} />
         );
     }
 }
