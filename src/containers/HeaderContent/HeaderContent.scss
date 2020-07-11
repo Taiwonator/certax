@@ -1,8 +1,7 @@
+@use '../../stylesheets/basics' as b;
 
-@use '../stylesheets/basics' as b;
 
-
-.header-container {
+.header-content-container {
     @include b.center-element;
     display: flex;
     flex-direction: column;

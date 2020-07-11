@@ -1,0 +1,59 @@
+@use '../../stylesheets/variables' as v;
+
+@mixin for-phone {
+    @media (max-width: v.$phone) {
+        @content;
+    }
+}
+
+.staircase-container {
+    position: absolute;
+    max-width: 50vw;
+    width: 500px;
+
+    @include for-phone() {
+        max-width: unset;
+        width: 83.5%;
+    }
+
+    svg {
+        width: 100%;
+
+        .box-10 {
+            opacity: 1;
+        }
+
+        .box-8 {
+            opacity: .8;
+        }
+
+        .box-6 {
+            opacity: .6;
+        }
+
+        .box-4 {
+            opacity: .4;
+        }
+
+        .box-2 {
+            opacity: .2;
+        }
+        
+        .box-4, .box-2 {
+            @include for-phone() {
+                display: none;
+            }
+        }
+    }
+}
+
+.BR {
+    right: 0;
+    bottom: 0;
+}
+
+.BL {
+    left: 0;
+    bottom: 0;
+    transform: scaleX(-1);
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.scss';
-import LandingPage from './LandingPage.js';
+import LandingPage from './LandingPage/LandingPage.js';
 
 class App extends Component {
     constructor(props){
@@ -9,7 +9,9 @@ class App extends Component {
 
     render() {
         return (
-            <LandingPage colors={this.props.mockdata.colors} data={this.props.mockdata.sections.landingpage} />
+            <div>
+                <LandingPage colors={this.props.mockdata.colors} data={this.props.mockdata.sections.landingpage} />
+            </div>
         );
     }
 }

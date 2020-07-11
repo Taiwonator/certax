@@ -1,7 +1,8 @@
-@use '../../stylesheets/variables';
+@use '../../stylesheets/variables' as v;
+@use '../../stylesheets/basics.scss' as b;
 
 @mixin for-phone {
-    @media (max-width: variables.$phone) {
+    @media (max-width: v.$phone) {
         @content;
     }
 }
@@ -13,11 +14,12 @@
 
     h1, h2 {
         font-weight: 100;
+        @include b.no-text-highlight;
     }
     
     h1 {
         font-size: calc(80px + (100 - 80) * ((100vw - 480px) / (1920 - 480)));
-        font-family: variables.$header-font;
+        font-family: v.$header-font;
     }
 
     h2 {
@@ -28,7 +30,7 @@
             display: inline-block;
             position: relative;
             padding: 0px 15px; 
-            font-family: variables.$header-font; 
+            font-family: v.$header-font; 
 
             &:before, &:after {
                 content: "";

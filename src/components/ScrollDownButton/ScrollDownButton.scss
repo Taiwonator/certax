@@ -1,0 +1,19 @@
+.scroll-down-button-container {
+    
+    position: relative;
+    top: 50px;
+
+    svg {
+        height: 35px;
+        transition: filter .2s ease-in-out;
+
+        &:hover {
+            filter: brightness(.9);
+        }
+
+        &:active {
+            filter: brightness(.7);
+        }
+    }
+
+}
