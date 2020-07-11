@@ -9,7 +9,7 @@
 .staircase-container {
     position: absolute;
     max-width: 50vw;
-    width: 500px;
+    width: 550px;
 
     @include for-phone() {
         max-width: unset;

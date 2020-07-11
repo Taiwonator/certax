@@ -23,7 +23,7 @@
     }
 
     h2 {
-        font-size: calc(28px + (35 - 28) * ((100vw - 480px) / (1920 - 480)));
+        font-size: calc(28px + (40 - 28) * ((100vw - 480px) / (1920 - 480)));
         line-height: 0.5;
         
         span {
@@ -38,7 +38,7 @@
                 height: 5px;
                 border-top: 2px solid;
                 top: 5px;
-                width: 50%;
+                width: 45%;
             }
 
             &:before {
