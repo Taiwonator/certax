@@ -17,7 +17,9 @@
     }
 
     svg {
+        position: absolute;
         width: 100%;
+        bottom: 0;
 
         .box-10 {
             opacity: 1;

@@ -1,4 +1,10 @@
 .landing-page-container {
     position: relative;
     height: 100vh;
+
+    .landing-page-graphics-container {
+        position: relative;
+        height: 100%;
+        z-index: -1;
+    }
 }

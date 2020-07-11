@@ -5,7 +5,7 @@ const Staircase = (props) => {
     let className = props.position;
 
     return(
-    <div className={`staircase-container ${className}`}>
+    <div className={`staircase-container ${className}`}> 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 585 468">
             <rect className="box-10" x="1060" y="681" width="117" height="117" transform="translate(1645 1149) rotate(-180)" fill={props.color}/>
             <rect className="box-8" x="1060" y="564" width="117" height="117" transform="translate(1645 915) rotate(-180)" fill={props.color} />
