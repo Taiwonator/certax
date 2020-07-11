@@ -15,6 +15,7 @@
         .hide {
             @include for-phone {
                 display: none;
+                width: 200px;
             }
         }
     }
