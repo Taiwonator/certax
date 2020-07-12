@@ -1,0 +1,29 @@
+.toggle-button-container {
+
+    svg {
+        height: 35px;
+        position: relative;
+        top: 15px;
+        transition: filter .2s ease-in-out;
+
+        &:hover {
+            filter: brightness(.8);
+        }
+
+        &:active {
+            filter: brightness(.6);
+        }
+    }
+}
+
+.bars {
+    .cross {
+        display: none;
+    }
+}
+
+.cross {
+    .bars {
+        display: none;
+    }
+}

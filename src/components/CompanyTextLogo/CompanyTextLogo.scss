@@ -1,0 +1,22 @@
+@use '../../stylesheets/variables' as v;
+
+@mixin for-phone {
+    @media (max-width: v.$phone) {
+        @content;
+    }
+}
+
+.company-text-logo-container {
+    svg {
+        height: 55px;
+        position: relative;
+        top: 5px; // centers the logo
+
+        .hide {
+            @include for-phone {
+                display: none;
+                width: 200px;
+            }
+        }
+    }
+}

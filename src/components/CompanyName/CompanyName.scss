@@ -1,0 +1,56 @@
+@use '../../stylesheets/variables' as v;
+@use '../../stylesheets/basics.scss' as b;
+
+@mixin for-phone {
+    @media (max-width: v.$phone) {
+        @content;
+    }
+}
+
+.company-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1, h2 {
+        font-weight: 100;
+        @include b.no-text-highlight;
+    }
+    
+    h1 {
+        font-size: calc(80px + (115 - 80) * ((100vw - 480px) / (1920 - 480)));
+        font-family: v.$header-font;
+    }
+
+    h2 {
+        font-size: calc(28px + (40 - 28) * ((100vw - 480px) / (1920 - 480)));
+        line-height: 0.5;
+        
+        span {
+            display: inline-block;
+            position: relative;
+            padding: 0px 15px; 
+            font-family: v.$header-font; 
+
+            &:before, &:after {
+                content: "";
+                position: absolute;
+                height: 5px;
+                border-top: 2px solid;
+                top: 5px;
+                width: 45%;
+            }
+
+            &:before {
+                right: 100%;
+            }
+
+            &:after {
+                left: 100%;
+            }
+        }
+    }
+
+}
+
+

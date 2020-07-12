@@ -1,14 +1,13 @@
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
+@use '../stylesheets/variables';
 
-body {
-
-    div {
-
-        font-family: $font-stack;
-        color: $primary-color;
-        font-size: 30px;
-    
-    }
-
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: variables.$text-font;
 }
+
+//responsive font size
+//calc(100px + (150 - 100) * ((100vw - 480px) / (1920 - 480)))
+
+

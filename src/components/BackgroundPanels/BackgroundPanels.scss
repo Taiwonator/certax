@@ -1,0 +1,57 @@
+@use '../../stylesheets/variables' as v;
+
+@mixin for-phone {
+    @media (max-width: v.$phone) {
+        @content;
+    }
+}
+
+@mixin for-tablet {
+    @media (max-width: v.$tablet) {
+        @content;
+    }
+}
+
+.background-panels-container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 0 2%;
+    justify-content: space-between;
+
+    .background-panel {
+        background-color: white;
+        flex: 1;
+        margin: 0 5px;
+        height: 100px;
+        box-shadow: 0 0px 7px rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+
+    .panel-1 {
+        height: 90%;
+    }
+
+    .panel-2 {
+        height: 75%;
+    }
+
+    .panel-3 {
+        height: 65%;
+    }
+
+    .panel-4 {
+        height: 45%;
+    }
+
+    .panel-4, .hide{
+        @include for-tablet() {
+            display: none;
+        }
+    }
+
+    .panel-4, .panel-3, .hide{
+        @include for-phone() {
+            display: none;
+        }
+    }
+}

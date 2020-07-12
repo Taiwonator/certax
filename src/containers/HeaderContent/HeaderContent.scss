@@ -1,0 +1,10 @@
+@use '../../stylesheets/basics' as b;
+
+
+.header-content-container {
+    @include b.center-element;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80%;
+}
