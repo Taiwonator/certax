@@ -1,0 +1,21 @@
+@use '../../stylesheets/variables' as v;
+
+.navbar-item-container {
+
+    border-width: .5px;
+    border-style: solid;
+    transition: filter .2s ease-in-out;
+
+    &:hover {
+        filter: saturate(200%) brightness(.9);
+    }
+
+    p {
+        font-size: 100px;
+        font-family: v.$header-font;
+        font-weight: 100;
+        margin: 0 2vw;
+
+    }
+}
+

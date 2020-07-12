@@ -15,3 +15,15 @@
         }
     }
 }
+
+.bars {
+    .cross {
+        display: none;
+    }
+}
+
+.cross {
+    .bars {
+        display: none;
+    }
+}
