@@ -7,6 +7,16 @@
     font-family: variables.$text-font;
 }
 
+body {
+    animation: fade-in 1s ease-in-out;
+    overflow-x: hidden;
+}
+
+@keyframes fade-in {
+    0% { opacity:0; }
+    100% { opacity:1; }
+}
+
 //responsive font size
 //calc(100px + (150 - 100) * ((100vw - 480px) / (1920 - 480)))
 

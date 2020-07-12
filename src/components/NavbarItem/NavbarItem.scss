@@ -1,10 +1,13 @@
 @use '../../stylesheets/variables' as v;
+@use '../../stylesheets/basics' as b;
 
 .navbar-item-container {
 
     border-width: .5px;
     border-style: solid;
     transition: filter .2s ease-in-out;
+    cursor: pointer;
+    @include b.no-text-highlight;
 
     &:hover {
         filter: saturate(200%) brightness(.9);
