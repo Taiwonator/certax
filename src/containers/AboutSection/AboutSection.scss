@@ -1,16 +1,36 @@
+@use '../../stylesheets/variables' as v;
+
+@mixin for-phone {
+    @media (max-width: v.$phone) {
+        @content;
+    }
+}
+
 .about-section-container {
     width: 100%;
     min-height: 100vh;
     position: relative;
 
-    .about-section-content-container {
-        max-width: 1235px;
-        width: 80vw;
-        height: 688px;
+    .about-section-content-wrapper {
         display: flex;
-        margin: 0 auto;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
         position: relative;
+        align-items: center;
         top: calc(200px + (350 - 200) * ((100vw - 480px) / (1920 - 480)));
+
+        .about-section-content-container {
+            max-width: 1235px;
+            width: 80vw;
+            height: 688px;
+            display: flex;
+            margin: 0 auto;
+            position: relative;
+            @include for-phone() {
+                width: 90vw;
+            }
+        }
     }
 
 }

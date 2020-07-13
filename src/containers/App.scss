@@ -1,10 +1,10 @@
-@use '../stylesheets/variables';
+@use '../stylesheets/variables' as v;
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: variables.$text-font;
+    font-family: v.$text-font;
 }
 
 body {
@@ -23,14 +23,14 @@ body {
 
 body::-webkit-scrollbar  {
     width: 10px;
-    background-color: white
+    background-color: #525288
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: #525288;	
+    background-color: #E2AA60;	
 }
 
 :root{
-    scrollbar-color: #525288 white !important;
+    scrollbar-color: #E2AA60 white !important;
     scrollbar-width: thin !important;
   }

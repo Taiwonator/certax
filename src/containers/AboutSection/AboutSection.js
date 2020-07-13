@@ -3,6 +3,7 @@ import Staircase from '../../components/Staircase/Staircase.js';
 import './AboutSection.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import ContentBox from '../../components/ContentBox/ContentBox.js';
+import ScrollDownButton from '../../components/ScrollDownButton/ScrollDownButton.js';
 
 let staircase_type = 'partial';
 
@@ -21,12 +22,15 @@ function AboutSection(props) {
         <div className='about-section-container'>
             <Staircase position='TR' color={props.colors.yellow} type={staircase_type}/>
             <Staircase position='TL' color={props.colors.blue} type={staircase_type}/>
-            <div className='about-section-content-container'>
-                <Staircase position='TR' color={props.colors.yellow} type='block'/>
-                <Staircase position='TL' color={props.colors.blue} type='block'/> 
-                <Staircase position='BR' color={props.colors.yellow} type='block'/>
-                <Staircase position='BL' color={props.colors.blue} type='block'/> 
-                <ContentBox colors={props.colors} content={props.data}/>
+            <div className='about-section-content-wrapper'>
+                <div className='about-section-content-container'>
+                    <Staircase position='TR' color={props.colors.yellow} type='block'/>
+                    <Staircase position='TL' color={props.colors.blue} type='block'/> 
+                    <Staircase position='BR' color={props.colors.blue} type='block'/>
+                    <Staircase position='BL' color={props.colors.yellow} type='block'/> 
+                    <ContentBox colors={props.colors} content={props.data}/>
+                </div>
+                <ScrollDownButton color={props.colors.blue}/>
             </div>
         </div>
     )
