@@ -1,0 +1,26 @@
+@use '../../stylesheets/basics' as b;
+@use '../../stylesheets/variables' as v;
+
+@mixin for-phone {
+    @media (max-width: v.$phone) {
+        @content;
+    }
+}
+
+.content-box-container {
+    width: 90%;
+    height: 90%;
+    max-width: 1135px;
+    background-color: #FFFFFFE6;
+    box-shadow: 0 0px 7px rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    @include b.center-element;
+    
+
+    .staircase-container {
+        width: 360px;
+
+        @include for-phone() {
+            display: none;
+        }
+    }
+}

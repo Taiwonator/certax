@@ -14,7 +14,7 @@ class App extends Component {
             <div>
                 <Navbar colors={this.props.mockdata.colors} labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact Us']}/>
                 <LandingPage colors={this.props.mockdata.colors} data={this.props.mockdata.sections.landingpage} />
-                <AboutSection />
+                <AboutSection colors={this.props.mockdata.colors} data={this.props.mockdata.sections.about}/>
             </div>
         );
     }
