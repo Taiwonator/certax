@@ -4,6 +4,8 @@ import './Staircase.scss';
 const Staircase = (props) => {
     let className = props.position;
 
+    
+
     return (
     <div className={`staircase-container ${className}`}> 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 585 468">
