@@ -40,7 +40,7 @@ class Navbar extends Component {
 function NavbarItemList(props) {
     const navbar_labels = props.labels;
     const list = navbar_labels.map((label) => 
-        <NavbarItem key={label} color={props.color} text={label} />
+        <NavbarItem key={`key_${label}`} color={props.color} text={label} />
     );
     return (<div className='navbar-items-list'>{list}</div>)
 }
