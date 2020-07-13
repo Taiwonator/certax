@@ -4,8 +4,8 @@ import Staircase from '../../components/Staircase/Staircase.js';
 function AboutSection(props) {
     return (
         <div className='about-section-container'>
-            {/* <Staircase position='TR' color={props.colors.yellow}/>
-            <Staircase position='TL' color={props.colors.blue}/> */}
+            <Staircase position='TR' color={props.colors.yellow} type='partial'/>
+            <Staircase position='TL' color={props.colors.blue} type='partial'/>
         </div>
     )
 }
