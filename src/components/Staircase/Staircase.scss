@@ -61,13 +61,13 @@
 }
 
 .TR {
-    left: 0;
+    top: 0;
     bottom: 0;
     transform: scale(-1);
 }
 
 .TL {
     right: 0;
-    bottom: 0;
+    top: 0;
     transform: scaleY(-1);
 }

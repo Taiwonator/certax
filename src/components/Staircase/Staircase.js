@@ -10,8 +10,8 @@ const Staircase = (props) => {
                         <rect className="box-8" x="943" y="681" width="117" height="117" transform="translate(1411 1149) rotate(-180)" fill={props.color} />
                     </g>;
     const box_8s_hollow =  <g key={3}>
-                                <rect className="box-8" x="1060" y="564" width="117" height="117" transform="translate(1645 915) rotate(-180)" stroke={props.color} stroke-width="2" fill='white' />
-                                <rect className="box-8" x="943" y="681" width="117" height="117" transform="translate(1411 1149) rotate(-180)" stroke={props.color} stroke-width="2" fill='white' />
+                                <rect className="box-8" x="1060" y="564" width="117" height="117" transform="translate(1645 915) rotate(-180)" stroke={props.color} strokeWidth="2" fill='white' />
+                                <rect className="box-8" x="943" y="681" width="117" height="117" transform="translate(1411 1149) rotate(-180)" stroke={props.color} strokeWidth="2" fill='white' />
                             </g>;
     const box_6s = <g key={4}>
                         <rect className="box-6" x="1060" y="447" width="117" height="117" transform="translate(1645 681) rotate(-180)" fill={props.color} />
@@ -46,6 +46,8 @@ const Staircase = (props) => {
         case 'mini': 
             output = mini;
             break;
+        case 'single':
+            output = <rect key={8} className="box-8" x="1060" y="681" width="117" height="117" transform="translate(1645 1149) rotate(-180)" stroke={props.color} strokeWidth="2" fill='white'/>;
     }
     
     return (
