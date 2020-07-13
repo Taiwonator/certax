@@ -7,6 +7,10 @@
 }
 
 .company-text-logo-container {
+    @include for-phone() {
+        width: 200px;
+    }
+    
     svg {
         height: 55px;
         position: relative;
@@ -15,7 +19,6 @@
         .hide {
             @include for-phone {
                 display: none;
-                width: 200px;
             }
         }
     }

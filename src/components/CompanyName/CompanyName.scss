@@ -1,12 +1,6 @@
 @use '../../stylesheets/variables' as v;
 @use '../../stylesheets/basics.scss' as b;
 
-@mixin for-phone {
-    @media (max-width: v.$phone) {
-        @content;
-    }
-}
-
 .company-name-container {
     display: flex;
     flex-direction: column;

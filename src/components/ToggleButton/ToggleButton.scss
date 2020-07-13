@@ -1,18 +1,20 @@
+@use '../../stylesheets/basics.scss' as b;
+
 .toggle-button-container {
+    height: 100px;
+    width: 100px;
+    position: relative;
+    transition: filter .2s ease-in-out;
+
+    &:hover {
+        filter: saturate(200%) brightness(.9);
+    }
 
     svg {
         height: 35px;
         position: relative;
-        top: 15px;
-        transition: filter .2s ease-in-out;
-
-        &:hover {
-            filter: brightness(.8);
-        }
-
-        &:active {
-            filter: brightness(.6);
-        }
+        top: 5px;
+        @include b.center-element;
     }
 }
 
@@ -25,5 +27,13 @@
 .cross {
     .bars {
         display: none;
+    }
+}
+
+.inverse {
+    svg {
+        rect {
+            fill: white;
+        }
     }
 }

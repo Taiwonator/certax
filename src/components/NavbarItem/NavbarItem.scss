@@ -14,10 +14,11 @@
     }
 
     p {
-        font-size: 100px;
+        font-size: calc(60px + (100 - 60) * ((100vw - 480px) / (1920 - 480)));
         font-family: v.$header-font;
         font-weight: 100;
         margin: 0 2vw;
+        text-align: center;
 
     }
 }

@@ -22,10 +22,10 @@ class Navbar extends Component {
         <nav className={`navbar-container ${this.state.active ? 'navbar-active' : ''}`}>
             <div className='navbar-content'>
                 <CompanyTextLogo colors={this.props.colors}/>
-                <ToggleButton color={this.props.colors.blue} toggleNavbar={this.toggleNavbar} shape='bars'/>
+                <ToggleButton color={this.props.colors.blue} toggleNavbar={this.toggleNavbar} shape='bars' inverse='true'/>
             </div>
             <ul className='navbar-items'>
-                <ToggleButton color={this.props.colors.yellow} toggleNavbar={this.toggleNavbar} shape='cross'/>
+                <ToggleButton color={this.props.colors.yellow} toggleNavbar={this.toggleNavbar} shape='cross' inverse='true'/>
                 <NavbarItem color={this.props.colors.yellow} text='About'/>
                 <NavbarItem color={this.props.colors.yellow} text='Testimonials'/>
                 <NavbarItem color={this.props.colors.yellow} text='Quote'/>
