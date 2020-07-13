@@ -1,10 +1,21 @@
 @use '../../stylesheets/basics.scss' as b;
+@use '../../stylesheets/variables.scss' as v;
+
+@mixin for-phone {
+    @media (max-width: v.$phone) {
+        @content;
+    }
+}
 
 .toggle-button-container {
     height: 100px;
-    width: 100px;
+    width: 120px;
     position: relative;
     transition: filter .2s ease-in-out;
+
+    @include for-phone() {
+        width: 100px;
+    }
 
     &:hover {
         filter: saturate(200%) brightness(.9);

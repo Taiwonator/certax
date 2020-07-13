@@ -21,3 +21,16 @@ body {
 //calc(100px + (150 - 100) * ((100vw - 480px) / (1920 - 480)))
 
 
+body::-webkit-scrollbar  {
+    width: 10px;
+    background-color: white
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #525288;	
+}
+
+:root{
+    scrollbar-color: #525288 white !important;
+    scrollbar-width: thin !important;
+  }
