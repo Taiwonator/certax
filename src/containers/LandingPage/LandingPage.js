@@ -10,8 +10,8 @@ function LandingPage(props) {
             <HeaderContent colors={props.colors} />
             <div className='landing-page-graphics-container'>
                 <BackgroundPanels />
-                <Staircase position='BR' color={props.colors.blue}/>
-                <Staircase position= 'BL' color={props.colors.yellow}/>  
+                <Staircase position='BR' color={props.colors.blue} type='full'/>
+                <Staircase position= 'BL' color={props.colors.yellow} type='full'/>  
             </div>
         </div>
     );
