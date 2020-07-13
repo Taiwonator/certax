@@ -1,17 +1,16 @@
-@use '../../stylesheets/basics' as b;
-
 .about-section-container {
     width: 100%;
     min-height: 100vh;
     position: relative;
 
     .about-section-content-container {
-        width: 1135px;
-        height: 588px;
-        background-color: black;
-        @include b.center-element;
-        margin-top: 10%;
-
+        max-width: 1235px;
+        width: 80vw;
+        height: 688px;
+        display: flex;
+        margin: 0 auto;
+        position: relative;
+        top: calc(200px + (350 - 200) * ((100vw - 480px) / (1920 - 480)));
     }
 
 }
