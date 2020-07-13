@@ -16,7 +16,6 @@ class Navbar extends Component {
             active: !this.state.active
         });
     }
-
     render() {
     return (
         <nav className={`navbar-container ${this.state.active ? 'navbar-active' : ''}`}>
@@ -26,14 +25,24 @@ class Navbar extends Component {
             </div>
             <ul className='navbar-items'>
                 <ToggleButton color={this.props.colors.yellow} toggleNavbar={this.toggleNavbar} shape='cross' inverse='true'/>
-                <NavbarItem color={this.props.colors.yellow} text='About'/>
+                 
+                {/* <NavbarItem color={this.props.colors.yellow} text='About'/>
                 <NavbarItem color={this.props.colors.yellow} text='Testimonials'/>
                 <NavbarItem color={this.props.colors.yellow} text='Quote'/>
                 <NavbarItem color={this.props.colors.yellow} text='Services'/>
-                <NavbarItem color={this.props.colors.yellow} text='Contact Us'/>
+                <NavbarItem color={this.props.colors.yellow} text='Contact Us'/> */}
+                <NavbarItemList labels={this.props.labels} color={this.props.colors.yellow} />
             </ul>
         </nav>
     )}
+}
+
+function NavbarItemList(props) {
+    const navbar_labels = props.labels;
+    const list = navbar_labels.map((label) => 
+        <NavbarItem key={label} color={props.color} text={label} />
+    );
+    return (<div className='navbar-items-list'>{list}</div>)
 }
 
 export default Navbar;

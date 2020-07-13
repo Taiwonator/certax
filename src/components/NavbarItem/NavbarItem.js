@@ -7,7 +7,6 @@ const NavbarItem = (props) => {
     darker_color = (darker_color & 0xfefefe) >> 1;
     darker_color = darker_color.toString(16)
     darker_color = "#" + darker_color;
-    console.log(darker_color);
 
     return (
         <span style={{borderColor: darker_color}} className='navbar-item-container'>

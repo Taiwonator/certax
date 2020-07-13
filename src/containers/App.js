@@ -11,7 +11,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Navbar colors={this.props.mockdata.colors}/>
+                <Navbar colors={this.props.mockdata.colors} labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact Us']}/>
                 <LandingPage colors={this.props.mockdata.colors} data={this.props.mockdata.sections.landingpage} />
             </div>
         );
