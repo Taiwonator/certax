@@ -1,5 +1,9 @@
+@use '../../stylesheets/basics' as b;
+
 .info-section-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     padding-top: 50px;
     position: relative;
 
@@ -11,16 +15,35 @@
         margin: 0 auto;
 
         .info-section-content {
-            flex-basis: 75%;
+            flex-basis: 65%;
+            @include b.for-tablet() {
+                flex-basis:100%;
+            }
+
+            svg {
+                @include b.for-phone() {
+                    display: none;
+                }
+            }
         }
 
         .left-side-graphic {
-            flex-basis: 15%;
-        }
+            flex-basis: 25%;
 
-        .empty-space {
-            flex-basis: 15%;
-        }
+            @include b.for-tablet() {
+                display: none;
+            }
+
+            @include b.for-phone() {
+                display: none;
+            }
+        }   
         
+    }
+
+    .middle-graphic-container {
+        // background: black;
+        width: 150px; 
+        position: relative;
     }
 }

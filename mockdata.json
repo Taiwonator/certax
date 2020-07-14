@@ -1,10 +1,13 @@
 {
     "colors": {
         "yellow": "#E2AA60", 
+        "lightyellow": "#deb176",
+        "lighteryellow": "#ddbb8f",
         "blue": "#525288", 
         "lightblue": "#9FB7DB",
-        "black": "#2F2721", 
-        "grey": '#707070'
+        "textblack": "#2F2721", 
+        "black": "#0F0F0F",
+        "grey": "#707070"
     },
 
     "navbar": {

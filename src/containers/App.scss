@@ -34,3 +34,7 @@ body::-webkit-scrollbar-thumb {
     scrollbar-color: #E2AA60 white !important;
     scrollbar-width: thin !important;
   }
+
+  .app-container {
+      transition: background-color .5s ease-in-out;
+  }

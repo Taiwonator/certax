@@ -10,7 +10,7 @@ let upper_staircase_type = 'full';
 let lower_staircase_type = 'partial';
 
 function LandingPage(props) {
-    const { height, width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
     if(width <= 600 & upper_staircase_type != 'mini') {
         upper_staircase_type = 'mini';
         lower_staircase_type = 'single';
@@ -23,7 +23,7 @@ function LandingPage(props) {
         <div className='landing-page-container'>
             <HeaderContent colors={props.colors} />
             <div className='landing-page-graphics-container'>
-                <BackgroundPanels />
+                <BackgroundPanels darkMode={props.darkMode}/>
                 <Staircase position='BR' color={props.colors.blue} type={upper_staircase_type}/>
                 <Staircase position= 'BL' color={props.colors.yellow} type={upper_staircase_type}/>  
                 <div className='lower-staircase-container'>
