@@ -7,9 +7,11 @@
 }
 
 .about-section-container {
-    width: 100%;
-    min-height: 100vh;
     position: relative;
+    border-bottom: 1px solid #EEEEEE;
+    margin-top: calc(200px + (350 - 200) * ((100vw - 480px) / (1920 - 480)));
+    padding-bottom: 50px;
+
 
     .about-section-content-wrapper {
         display: flex;
@@ -18,7 +20,6 @@
         width: 100%;
         position: relative;
         align-items: center;
-        top: calc(200px + (350 - 200) * ((100vw - 480px) / (1920 - 480)));
 
         .about-section-content-container {
             max-width: 1235px;

@@ -1,0 +1,15 @@
+@use '../../stylesheets/variables' as v;
+
+@mixin for-phone {
+    @media (max-width: v.$phone) {
+        @content;
+    }
+}
+
+.info-section-content {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content: space-evenly;
+    align-items: center;
+}

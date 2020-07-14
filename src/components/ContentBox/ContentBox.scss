@@ -14,6 +14,8 @@
     background-color: #FFFFFFE6;
     box-shadow: 0 0px 7px rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     @include b.center-element;
+    display: flex;
+    align-items: center;
     
 
     .staircase-container {
