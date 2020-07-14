@@ -16,11 +16,17 @@ class Navbar extends Component {
             active: !this.state.active
         });
     }
+
+    activeStateDarkMode = () => {
+        return this.props.darkMode();
+    }
+    
+
     render() {
     return (
-        <nav className={`navbar-container ${this.state.active ? 'navbar-active' : ''}`}>
+        <nav style={{ backgroundColor: this.activeStateDarkMode()}} className={`navbar-container ${this.state.active ? 'navbar-active' : ''}`}>
             <div className='navbar-content'>
-                <CompanyTextLogo colors={this.props.colors}/>
+                <CompanyTextLogo toggleDarkMode={this.props.toggleDarkMode} colors={this.props.colors}/>
                 <ToggleButton color={this.props.colors.blue} toggleNavbar={this.toggleNavbar} shape='bars' inverse='true'/>
             </div>
             <ul className='navbar-items'>

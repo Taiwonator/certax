@@ -28,6 +28,11 @@ const Content = (props) => {
         justifyContent: css_flex
     }
 
+    const header_style = {
+        color: props.headercolor, 
+        textAlign: css_align
+    }
+
     const para_style = {
         color: props.paracolor,
         textAlign: css_align
@@ -37,7 +42,7 @@ const Content = (props) => {
     return (
         <div className='content-container' style={content_container_style}>
             <div className='header-container'>
-                <h3 style={{color: props.headercolor}}>{props.headertext}</h3>
+                <h3 style={header_style}>{props.headertext}</h3>
                 <div className='underline' style={underline_style}>
                     <div style={{backgroundColor: props.headercolor}} />
                 </div>

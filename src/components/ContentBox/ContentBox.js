@@ -6,7 +6,7 @@ import Content from '../Content/Content.js';
 
 function ContentBox(props) {
     return (
-        <div className='content-box-container'>
+        <div style={{backgroundColor: props.darkMode()}} className='content-box-container'>
             <Staircase position='TR' color={props.colors.yellow} type='mini'/>
             <Staircase position='TL' color={props.colors.blue} type='mini'/> 
             <Staircase position='BR' color={props.colors.blue} type='mini'/>

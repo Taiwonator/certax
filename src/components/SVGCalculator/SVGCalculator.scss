@@ -1,0 +1,8 @@
+.SVGCalculator-container {
+    display: flex;
+    
+
+    svg {
+        height: calc(200px + (350 - 200) * ((100vw - 480px) / (1920 - 480)));
+    }
+}
