@@ -20,8 +20,6 @@ function AboutSection(props) {
 
     return (
         <div className='about-section-container'>
-            <Staircase position='TR' color={props.colors.yellow} type={staircase_type}/>
-            <Staircase position='TL' color={props.colors.blue} type={staircase_type}/>
             <div className='about-section-content-wrapper'>
                 <div className='about-section-content-container'>
                     <Staircase position='TR' color={props.colors.yellow} type='block'/>
