@@ -1,0 +1,66 @@
+.quote-container {
+    display: flex;
+    flex-direction: column;
+
+    p {
+        // align-self: flex-start;
+        // text-align: left;
+        font-size: calc(20px + (25 - 20) * ((100vw - 480px) / (1920 - 480)));
+        color: white;
+        font-style: italic;
+        font-weight: 100;
+        line-height: 45px;
+
+        &:before, &:after {
+            content: '"';   
+        }
+    }
+
+    h4 {
+        font-size: calc(20px + (25 - 20) * ((100vw - 480px) / (1920 - 480)));
+        text-transform: uppercase;
+        // align-self: flex-end;
+        // text-align: right;
+        
+        span {
+            display: inline-block;
+            position: relative;
+            padding: 0px 15px; 
+
+
+            &:before, &:after {
+                content: "";
+                position: absolute;
+                height: 5px;
+                border-top: 4px solid;
+                top: 50%;
+                width: 15%;
+                
+            }
+
+            &:before {
+                right: 100%;
+            }
+
+            &:after {
+                left: 100%;
+            }
+        }
+    }
+}
+
+.hide-left {
+    span {
+        &:before {
+            display: none;
+        }
+    }
+}
+
+.hide-right {
+    span {
+        &:after {
+            display: none;
+        }
+    }
+}
