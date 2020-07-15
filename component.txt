@@ -1,0 +1,10 @@
+import React, { Component } from 'react';
+import './Name.scss';
+
+function Name (props) {
+    return (
+        <div/>
+    )
+}
+
+export default Name;

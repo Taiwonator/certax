@@ -30,14 +30,16 @@
         }, 
 
         "testimonial": {
-            "longtestimonials": [{
+            "bigtestimonials": [{
                 "text": "Ever since signing up with Alice my whole life has become 10x simpler. Would definitely recommend", 
-                "author": "James Jamerson"
+                "author": "James Jamerson",
+                "image": "https://c0.wallpaperflare.com/preview/643/488/994/architecture-business-coffee-coffee-shop.jpg"
             }, {
                 "text": "Alice has such a way of explaining complicated concepts", 
-                "author": "Robert Fisher"
+                "author": "Robert Fisher", 
+                "image": "https://images.unsplash.com/photo-1462392246754-28dfa2df8e6b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
             }], 
-            "shorttestimonials": [{
+            "minitestimonials": [{
                 "text": "So easy to work with", 
                 "author": "Tom Cook"
             }, {

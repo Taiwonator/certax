@@ -1,0 +1,31 @@
+@use '../../stylesheets/basics' as b;
+
+.big-testimony-container {
+    display: flex;
+    width: 80%;
+    height: 600px;
+    margin: 0 auto;
+    @include b.for-tablet() {
+        flex-direction: column;
+        margin-bottom: 40px;
+    }
+
+    .big-testimony-content-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2em;
+        flex-basis: 40%;
+        @include b.for-tablet() {
+            order: 0 !important;
+        }
+    }
+
+    .big-testimony-image {
+        flex-basis: 60%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        filter: brightness(.8) blur(.2px);
+    }
+}

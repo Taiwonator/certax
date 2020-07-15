@@ -1,10 +1,12 @@
 @use '../../stylesheets/variables.scss' as v;
+@use '../../stylesheets/basics.scss' as b;
 
 .subheader-container {
     margin: 3em auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 0 1em;
     position: relative;
     max-width: 720px;
@@ -15,4 +17,16 @@
         font-size: calc(35px + (70 - 35) * ((100vw - 480px) / (1920 - 480)));
     }
 
+    .stars {
+        width: 40%;
+        margin-top: 2em;
+    }
+
+}
+
+.hide {
+    * {
+    @include b.hide;
+    display: none;
+    }
 }
