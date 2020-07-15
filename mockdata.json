@@ -27,6 +27,44 @@
         "info": {
             "headertext": "GET A QUOTE TODAY", 
             "paratext": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et mauris in lacus viverra fringilla sit amet eu orci. Maecenas semper orci imperdiet ex pharetra pellentesque. Sed non vestibulum magna."
+        }, 
+
+        "testimonial": {
+            "longtestimonials": [{
+                "text": "Ever since signing up with Alice my whole life has become 10x simpler. Would definitely recommend", 
+                "author": "James Jamerson"
+            }, {
+                "text": "Alice has such a way of explaining complicated concepts", 
+                "author": "Robert Fisher"
+            }], 
+            "shorttestimonials": [{
+                "text": "So easy to work with", 
+                "author": "Tom Cook"
+            }, {
+                "text": "Definition of professional", 
+                "author": "Carey Parker"
+            }, 
+            {
+                "text": "Exceptional, and super funny", 
+                "author": "Fisher Maker"
+            }, {
+                "text": "Such a laid back accountant", 
+                "author": "Hyde Larpo"
+            }, 
+            {
+                "text": "Reliable and a hard worker", 
+                "author": "Claire Piper"
+            }, {
+                "text": "Big brain genius", 
+                "author": "Falpo Nick"
+            }, 
+            {
+                "text": "Best buisness decision ever made", 
+                "author": "Shidy Krispo"
+            }, {
+                "text": "Would 100% recommend", 
+                "author": "Daniel Crit"
+            }]
         }
     }
 }

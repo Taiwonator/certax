@@ -3,4 +3,9 @@ import ReactDOM from "react-dom";
 import App from "./containers/App";
 import MockData from "../mockdata.json"
 
-ReactDOM.render(<App mockdata={MockData}/>, document.getElementById("root"));
+ReactDOM.render(<App colors={MockData.colors}  
+                     landingpage={MockData.sections.landingpage} 
+                     about={MockData.sections.about}
+                     info={MockData.sections.info}
+                     testimonial={MockData.sections.testimonial}
+                     />, document.getElementById("root"));

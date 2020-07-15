@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Content.scss';
 import ContentButton from '../ContentButton/ContentButton.js';
+import Underline from '../Underline/Underline';
 
 const Content = (props) => {
     let css_flex = 'center';
@@ -24,10 +25,6 @@ const Content = (props) => {
 
     }
 
-    const underline_style = {
-        justifyContent: css_flex
-    }
-
     const header_style = {
         color: props.headercolor, 
         textAlign: css_align
@@ -43,9 +40,7 @@ const Content = (props) => {
         <div className='content-container' style={content_container_style}>
             <div className='header-container'>
                 <h3 style={header_style}>{props.headertext}</h3>
-                <div className='underline' style={underline_style}>
-                    <div style={{backgroundColor: props.headercolor}} />
-                </div>
+                <Underline color={props.headercolor} justifyContent={css_flex}/>
             </div>
             <p style={para_style}>{props.paratext}</p>
             <ContentButton inverse='true' color={props.headercolor} text='More info'/>

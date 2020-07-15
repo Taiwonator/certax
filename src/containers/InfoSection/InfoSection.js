@@ -62,7 +62,7 @@ const MiddleGraphic = (props) => (
                     <g>
                         <rect stroke={props.colors.yellow} fill='none' x="49.5" y="374" width="33" height="33" />
                     </g>
-                    <rect fill={props.colors.yellow} x="15" y="17.5" width="100" height="100" />
+                    <rect fill={props.colors.yellow} x="15" y="17.5" width="100" height="100"/>
                     <line stroke={props.colors.yellow} fill='none' x1="65.5" y1="373.5" x2="65.5" y2="117.5" />
                     <rect fill={props.colors.yellow} x="65" y="67.5" width="50" height="50" />
                     <rect fill={props.colors.lightyellow} x="65" y="17.5" width="50" height="50" />

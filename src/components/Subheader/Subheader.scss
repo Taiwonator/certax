@@ -1,0 +1,18 @@
+@use '../../stylesheets/variables.scss' as v;
+
+.subheader-container {
+    margin: 3em auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 1em;
+    position: relative;
+    max-width: 720px;
+
+    h3 {
+        font-weight: 100;
+        text-align: center;
+        font-size: calc(35px + (70 - 35) * ((100vw - 480px) / (1920 - 480)));
+    }
+
+}

@@ -4,6 +4,8 @@ import LandingPage from './LandingPage/LandingPage.js';
 import Navbar from './Navbar/Navbar.js';
 import AboutSection from './AboutSection/AboutSection.js';
 import InfoSection from './InfoSection/InfoSection.js';
+import TestimonialSection from './TestimonialSection/TestimonialSection.js';
+//./TestimonialsSection/TestimonialsSection.js
 
 class App extends Component {
     constructor(props){
@@ -17,7 +19,7 @@ class App extends Component {
         if(!this.state.darkmode) {
             return '';
         } else {
-            return this.props.mockdata.colors.black;
+            return this.props.colors.black;
         }
     }
 
@@ -30,10 +32,11 @@ class App extends Component {
     render() {
         return (
             <div className='app-container' style={{backgroundColor: this.darkMode()}}>
-                <Navbar toggleDarkMode={this.toggleDarkMode} darkMode={this.darkMode} colors={this.props.mockdata.colors} labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact Us']}/>
-                <LandingPage darkMode={this.darkMode} colors={this.props.mockdata.colors} data={this.props.mockdata.sections.landingpage} />
-                <AboutSection darkMode={this.darkMode} colors={this.props.mockdata.colors} data={this.props.mockdata.sections.about}/>
-                <InfoSection colors={this.props.mockdata.colors} data={this.props.mockdata.sections.info}/>
+                <Navbar toggleDarkMode={this.toggleDarkMode} darkMode={this.darkMode} colors={this.props.colors} labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact Us']}/>
+                <LandingPage darkMode={this.darkMode} colors={this.props.colors} data={this.props.landingpage} />
+                <AboutSection darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
+                <InfoSection colors={this.props.colors} data={this.props.info}/>
+                <TestimonialSection colors={this.props.colors} data={this.props.testimonial}/>
             </div>
         );
     }
