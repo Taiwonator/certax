@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './TestimonialSection.scss';
 import Subheader from '../../components/Subheader/Subheader';
 import BigTestimony from '../BigTestimony/BigTestimony';
+import QuoteCarousel from '../../components/QuoteCarousel/QuoteCarousel';
 
 function TestimonialSection (props) {
     return (
@@ -9,8 +10,9 @@ function TestimonialSection (props) {
             <Subheader text='HEAR WHAT MY CLIENTS HAVE TO SAY' color={props.colors.yellow} underline={false}/>
             <TGraphic color={props.colors.yellow}/> 
             <BigTestimonyList testimonials={props.data.bigtestimonials} colors={props.colors}/>
+            <QuoteCarousel testimonials={props.data.minitestimonials} colors={props.colors}/>
         </div>
-    )
+    ) 
 }
 
 const BigTestimonyList = (props) => {
