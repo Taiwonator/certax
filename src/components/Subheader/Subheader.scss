@@ -1,4 +1,5 @@
 @use '../../stylesheets/variables.scss' as v;
+@use '../../stylesheets/basics.scss' as b;
 
 .subheader-container {
     margin: 3em auto;
@@ -15,4 +16,11 @@
         font-size: calc(35px + (70 - 35) * ((100vw - 480px) / (1920 - 480)));
     }
 
+}
+
+.hide {
+    * {
+    @include b.hide;
+    display: none;
+    }
 }

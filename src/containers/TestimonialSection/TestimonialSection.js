@@ -5,7 +5,7 @@ import Subheader from '../../components/Subheader/Subheader';
 function TestimonialSection (props) {
     return (
         <div className='testimonial-section-container'>
-            <Subheader text='HEAR WHAT MY CLIENTS HAVE TO SAY' color={props.colors.yellow}/>
+            <Subheader text='HEAR WHAT MY CLIENTS HAVE TO SAY' color={props.colors.yellow} underline={true}/>
         </div>
     )
 }
