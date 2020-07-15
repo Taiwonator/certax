@@ -63,7 +63,7 @@
                 height: 100%;
 
                 @include b.for-tablet() {
-                    min-width: 33.33%;
+                    min-width: 100%;
                 }
 
                 @include b.for-phone() {

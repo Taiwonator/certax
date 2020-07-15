@@ -41,7 +41,7 @@ class QuoteCarousel extends Component {
       updateVisibleBoxes() {
         let no_boxes = 4;
         if(this.state.width < 1024 && this.state.width > 600) {
-            no_boxes = 3;
+            no_boxes = 1;
         } else if(this.state.width >= 0 && this.state.width <= 600) {
             no_boxes = 1;
         } else {
@@ -55,7 +55,7 @@ class QuoteCarousel extends Component {
     updateListWidth() {
         let min_width = 25;
         if(this.state.width < 1024 && this.state.width > 600) {
-            min_width = 33.33;
+            min_width = 100;
         } else if(this.state.width >= 0 && this.state.width <= 600) {
             min_width = 100;
         } else {
@@ -82,7 +82,6 @@ class QuoteCarousel extends Component {
         this.updateVisibleBoxes();
         this.updateListWidth();
         this.updatePointerMax();
-        console.log((this.state.pointer == this.state.max_pointer - 2) && (this.props.testimonials.length % this.state.no_boxes != 0));
         if(this.state.pointer < this.state.max_pointer - 2 || ((this.state.pointer < this.state.max_pointer - 1) && (this.props.testimonials.length % this.state.no_boxes != 0))) {
             const pointer = this.state.pointer + 1;
             this.setState({
