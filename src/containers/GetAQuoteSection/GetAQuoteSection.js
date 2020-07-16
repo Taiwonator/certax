@@ -9,9 +9,7 @@ function GetAQuoteSection (props) {
             <div className='get-a-quote-section-container'>
                 <Subheader text='WANT TO SEE YOUR QUOTE?' color={props.colors.yellow} underline={false}/>
                 <TGraphic color={props.colors.textblack} topcolor={props.colors.yellow}/>
-                <div className='get-a-quote-graphic-container'>
-                    <GetAQuote colors={props.colors} content={props.data}/>
-                </div>
+                <GetAQuote colors={props.colors} content={props.data}/>
             </div>
         )
 }

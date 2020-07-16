@@ -62,8 +62,8 @@
 
 .TR {
     top: 0;
-    bottom: 0;
-    transform: scale(-1);
+    left: 0;
+    transform: scaleX(-1) scaleY(-1);
 }
 
 .TL {

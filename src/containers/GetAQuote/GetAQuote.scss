@@ -5,6 +5,7 @@
     flex-direction: row;
     height: 800px;
     width: 80%;
+    position: relative;
 
     @include b.for-tablet () {
         flex-direction: column;
@@ -15,6 +16,7 @@
     }
 
     .get-a-quote-content-container {
+        position: relative;
         flex-basis: 60%;
         border-style: solid;
         border-width: 1px;
@@ -24,13 +26,27 @@
             margin: 1% 0;
             order: 1;
         }
+
+        .get-a-quote-graphic {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            transform: translate(-10%, -10%) scaleY(-1);
+            z-index: -1;
+            @include b.for-tablet (){
+                display: none;
+            }
+        }
     }
 
     .get-a-quote-image-container {
         position: relative;
         flex-basis: 40%;
         display: flex;
-        align-items: center;        
+        flex-direction: column;
+        align-items: center; 
+        justify-content: center;       
 
         .get-a-quote-image-darkner {
             width: 100%;
