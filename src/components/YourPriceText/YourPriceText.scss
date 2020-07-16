@@ -1,0 +1,54 @@
+@use '../../stylesheets/basics' as b;
+
+.your-price-text-container {
+    display: flex;
+    flex-direction: column;
+    font-size: 35px;
+    z-index: 2;
+    position: relative;
+    margin: 0 auto;
+    width: 80%;
+    @include b.for-phone () {
+        width: unset;
+    }
+
+    h4 {
+        align-self: flex-start;
+        text-align: left;
+        font-weight: 400;
+
+        @include b.for-phone () {
+            display: none;
+        }
+    }
+
+    .your-price-text {
+        align-self: flex-end;
+        text-align: right;
+        display: flex;
+        flex-direction: row;
+        
+        .your-price-text-value {
+            font-size: calc(110px + (150 - 110) * ((100vw - 1024px) / (1920 - 1024))) !important;
+            @include b.for-phone () {
+                font-size: 100px;
+            }
+        }
+
+        .your-price-text-symbol, .your-price-text-rate {
+            font-size: 50px;
+        }
+
+        .your-price-text-symbol {
+            align-self: flex-start;
+        }
+
+        .your-price-text-rate {
+            align-self: flex-end;
+            @include b.for-phone () {
+                font-size: 25px;
+            }
+        }
+
+    }
+}

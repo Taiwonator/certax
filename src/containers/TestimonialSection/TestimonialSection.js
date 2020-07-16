@@ -3,12 +3,13 @@ import './TestimonialSection.scss';
 import Subheader from '../../components/Subheader/Subheader';
 import BigTestimony from '../BigTestimony/BigTestimony';
 import QuoteCarousel from '../../components/QuoteCarousel/QuoteCarousel';
+import TGraphic from '../../components/TGraphic/TGraphic';
 
 function TestimonialSection (props) {
     return (
         <div className='testimonial-section-container'>
-            <Subheader text='HEAR WHAT MY CLIENTS HAVE TO SAY' color={props.colors.yellow} underline={false}/>
-            <TGraphic color={props.colors.yellow}/> 
+            <Subheader text='HEAR WHAT MY CLIENTS HAVE TO SAY' color={props.colors.yellow} underline={false} stars={false}/>
+            <TGraphic color={props.colors.yellow} translateY={10}/> 
             <BigTestimonyList testimonials={props.data.bigtestimonials} colors={props.colors}/>
             <QuoteCarousel testimonials={props.data.minitestimonials} colors={props.colors}/>
         </div>
@@ -24,20 +25,6 @@ const BigTestimonyList = (props) => {
         <div>
             {list}
         </div>
-    )
-}
-
-const TGraphic = (props) => {
-    const style = {
-        width: '50px', 
-        transform: 'translateY(10px)'
-    }
-    return ( 
-        <svg viewBox="0 0 64 134.5" width='60' style={style}>
-            <line fill='none' stroke={props.color} x1="32" y1="9.5" x2="32" y2="134.5" strokeWidth='2' />
-            <line fill='none' stroke={props.color} y1="9.5" x2="64" y2="9.5" strokeWidth='2'/>
-            <line fill='none' stroke={props.color} x1="47" y1="0.5" x2="17" y2="0.5" strokeWidth='2' />
-        </svg>
     )
 }
 
