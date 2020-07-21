@@ -15,9 +15,18 @@ class GetAQuote extends Component {
                 <div style={{backgroundColor: this.props.colors.white, borderColor: this.props.colors.textblack}} className='get-a-quote-content-container'>
                     <Block color={this.props.colors.textblack}/>
                     <form className='get-a-quote-content'>
-                        <InputField label='Company Name' color={this.props.colors.textblack} type='text'/>
-                        <InputField label='Your Turnover' color={this.props.colors.textblack} type='select' options={['£0 to £20,000', '£20,000 to £85,000', '£85,000 to £201,000', '£201,000 to £300,000']}/>
-                        <InputField label='Do you want us to manage your payroll?' color={this.props.colors.textblack} type='radio' options={['Weekly','Fourtnightly', 'Monthly']}/>
+                        <InputField key={`InputField_0`} label='Company Name' color={this.props.colors.textblack} type='text'/>
+
+                        <InputField key={`InputField_1`} 
+                                    label='Your Turnover' 
+                                    color={this.props.colors.textblack} 
+                                    type='select' 
+                                    options={['£0 to £20,000', '£20,000 to £85,000', '£85,000 to £201,000', '£201,000 to £300,000']}/>
+
+                        <InputField key={`InputField_2`} 
+                                    label='Do you want us to manage your payroll?' 
+                                    color={this.props.colors.textblack} 
+                                    type='radio' options={['Weekly','Fourtnightly', 'Monthly']}/>
 
                     </form>
                 </div>

@@ -31,15 +31,15 @@ const InputField = (props) => {
             break;
         case 'radio': 
             options = props.options;
-            options_list = options.map((option) => (
-                <>
+            options_list = options.map((option, i) => (
+                <div className='radio-container' key={i}>
                     <input type='radio' id={option} name={props.label} value={option} />
-                    <label for={option} className='radio'>{option}</label>
-                </>
+                    <label htmlFor={option} className='radio'>{option}</label>
+                </div>
             ))
             const radio_input = <>
                                     <label className='radio-label'>Do you want us to manage your payroll?</label>
-                                    <div className='radio-container'> 
+                                    <div className='radio-list-container'> 
                                         {options_list}
                                     </div>
                                 </>
