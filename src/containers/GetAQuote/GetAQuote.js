@@ -3,6 +3,7 @@ import './GetAQuote.scss';
 import YourPriceText from '../../components/YourPriceText/YourPriceText';
 import InputField from '../../components/InputField/InputField';
 import Subheader from '../../components/Subheader/Subheader';
+import ContentButton from '../../components/ContentButton/ContentButton';
 
 class GetAQuote extends Component {
     constructor(props) {
@@ -29,6 +30,8 @@ class GetAQuote extends Component {
                                     label='Do you want us to manage your payroll?' 
                                     color={this.props.colors.textblack} 
                                     type='radio' options={['Weekly','Fourtnightly', 'Monthly']}/>
+                        
+                        <ContentButton text='Submit' color={'black'} inverse={true}/>
 
                     </form>
                 </div>

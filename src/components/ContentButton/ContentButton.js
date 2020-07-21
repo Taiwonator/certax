@@ -5,7 +5,7 @@ function ContentButton(props){
 
     let style = {}
 
-    if(props.inverse != 'true') {
+    if(!props.inverse) {
         style = {
             color: props.color,
             borderColor:props.color
@@ -23,7 +23,7 @@ function ContentButton(props){
     console.log(style.color);
 
     return (
-        <div className={`button ${(props.inverse != 'true') ? '' : 'inverse'} `} style={style} type='button'>{props.text}</div>
+        <div className={`button ${(!props.inverse) ? '' : 'inverse'} `} style={style} type='button'>{props.text}</div>
     )
 }
 
