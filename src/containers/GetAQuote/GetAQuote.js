@@ -31,7 +31,7 @@ class GetAQuote extends Component {
                                     color={this.props.colors.textblack} 
                                     type='radio' options={['Weekly','Fourtnightly', 'Monthly']}/>
                         
-                        <ContentButton text='Submit' color={'black'} inverse={true}/>
+                        <ContentButton text='Submit' color={'lightgrey'} inverse={true}/>
 
                     </form>
                 </div>
