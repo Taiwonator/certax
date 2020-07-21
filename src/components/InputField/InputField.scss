@@ -8,10 +8,16 @@
    width: 60%;
    margin-bottom: 25px;
 
+   @include b.for-tablet() {
+       align-items: center;
+       width: 90%;
+   }
+
 
    label {
        font-size: 17px;
        font-weight: 100;
+       text-align: center;
    }
 
    input, select {
@@ -47,6 +53,8 @@
                 &:checked + .radio {
                     background: black;
                     color: white;
+                    border-color: white;
+                    border-width: 2px;
                 }
         }
 
@@ -54,6 +62,7 @@
             position: relative;
             height: 55px;
             flex: 1;
+            min-width: 100px;
             text-align: center;
             display: flex;
             justify-content: center;
@@ -61,6 +70,7 @@
             border-width: .5px;
             border-style: solid;
             transition: all .1s ease-in;
+            margin-bottom: 5px;
             @include b.no-text-highlight;
 
             &:nth-child(n+1) {
@@ -69,6 +79,10 @@
 
             &:nth-last-child(1) {
                 margin-right: 0px;
+            }
+
+            @include b.for-phone() {
+                margin-right: 0px !important;
             }
 
         }
