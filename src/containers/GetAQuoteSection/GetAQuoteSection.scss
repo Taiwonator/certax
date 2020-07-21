@@ -1,0 +1,10 @@
+@use '../../stylesheets/basics' as b;
+
+.get-a-quote-section-container {
+    text-align: center; 
+    display: flex;
+    flex-direction: column;  
+    position: relative;
+    align-items: center;
+    width: 100%;
+}

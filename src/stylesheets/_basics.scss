@@ -21,6 +21,12 @@
     display: none;
 }
 
+@mixin image-basics {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 @mixin for-phone {
     @media (max-width: v.$phone) {
         @content;
