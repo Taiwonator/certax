@@ -1,3 +1,5 @@
+@use '../../stylesheets/basics' as b;
+
 .input-field-container {
    display: flex;
    margin: 0 auto;
@@ -28,4 +30,49 @@
            font-weight: 100;
        }
    }
+
+
+   .radio-label {
+      
+   }
+
+   .radio-container {
+       display: flex;
+       flex-direction: row;
+       width: 100%;
+       flex-wrap: wrap;
+
+        input[type="radio"] {
+                display: none;
+                &:checked + .radio {
+                    background: black;
+                    color: white;
+                }
+        }
+
+        .radio {
+            position: relative;
+            height: 55px;
+            flex: 1;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-width: .5px;
+            border-style: solid;
+            transition: all .1s ease-in;
+            @include b.no-text-highlight;
+
+            &:nth-child(n+1) {
+                margin-right: 5px;
+            }
+
+            &:nth-last-child(1) {
+                margin-right: 0px;
+            }
+
+        }
+        }
+
+   
 }
