@@ -38,6 +38,11 @@
                 display: none;
             }
         }
+
+        .get-a-quote-content {
+            display: flex;
+            flex-direction: column;
+        }
     }
 
     .get-a-quote-image-container {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './GetAQuote.scss';
 import YourPriceText from '../../components/YourPriceText/YourPriceText';
+import InputField from '../../components/InputField/InputField';
 
 class GetAQuote extends Component {
     constructor(props) {
@@ -13,6 +14,10 @@ class GetAQuote extends Component {
             <div className='get-a-quote-container'>
                 <div style={{backgroundColor: this.props.colors.white, borderColor: this.props.colors.textblack}} className='get-a-quote-content-container'>
                     <Block color={this.props.colors.textblack}/>
+                    <form className='get-a-quote-content'>
+                        <InputField label='Company Name' color={this.props.colors.textblack} type='text'/>
+                        <InputField label='Your Turnover' color={this.props.colors.textblack} type='select' options={['£0 to £20,000', '£20,000 to £85,000', '£85,000 to £201,000', '£201,000 to £300,000']}/>
+                    </form>
                 </div>
                 <div className='get-a-quote-image-container'>
                     <div style={{backgroundImage: `url(${this.props.content.image})`}} className='get-a-quote-image-darkner'/>
