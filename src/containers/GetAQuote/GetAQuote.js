@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './GetAQuote.scss';
 import YourPriceText from '../../components/YourPriceText/YourPriceText';
 import InputField from '../../components/InputField/InputField';
+import Subheader from '../../components/Subheader/Subheader';
 
 class GetAQuote extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class GetAQuote extends Component {
             <div className='get-a-quote-container'>
                 <div style={{backgroundColor: this.props.colors.white, borderColor: this.props.colors.textblack}} className='get-a-quote-content-container'>
                     <Block color={this.props.colors.textblack}/>
+                    <Subheader text='Quote price calculator' color={this.props.colors.textblack} subtext='Dont miss out on free consultation' subtextcolor={'grey'}/>
                     <form className='get-a-quote-content'>
                         <InputField key={`InputField_0`} label='Company Name' color={this.props.colors.textblack} type='text'/>
 

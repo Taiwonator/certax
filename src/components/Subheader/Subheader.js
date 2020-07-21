@@ -7,6 +7,7 @@ const Subheader = (props) => {
     return(
         <div className='subheader-container'>
             <h3 style={{color: props.color}}>{props.text}</h3>
+            <h4 style={{color: props.subtextcolor}}>{props.subtext}</h4>
             <Underline color={props.color} justifyContent='center' hide={!props.underline}/>
             <Stars color={props.color} hide={!props.stars}/>
         </div>
