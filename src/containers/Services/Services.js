@@ -7,7 +7,7 @@ class Services extends Component {
     constructor(props){
         super(props);
         this.state = {
-            service_index: 1,
+            service_index: 0,
             counter: 0
         }
     }
@@ -29,10 +29,11 @@ class Services extends Component {
             counter
         })
         this.checkForNextService();
+        console.log(this.state.counter);
     }
 
     checkForNextService() {
-        if(this.state.counter % 10 == 0) {
+        if(this.state.counter % 10 == 0 && this.state.counter > 1) {
             this.nextService();
         } 
     }
@@ -51,7 +52,7 @@ class Services extends Component {
     selectService = index => {
         const service_index = index;
         this.setState({
-            service_index, counter: 0
+            service_index, counter: -10
         }) 
     }
 
