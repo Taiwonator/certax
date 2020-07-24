@@ -43,7 +43,7 @@ const Content = (props) => {
                 <Underline color={props.headercolor} justifyContent={css_flex}/>
             </div>
             <p style={para_style}>{props.paratext}</p>
-            <ContentButton inverse='true' color={props.headercolor} text='More info'/>
+            <ContentButton inverse='true' color={props.buttoncolor} text={props.buttontext}/>
         </div>
     )
 }

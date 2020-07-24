@@ -15,6 +15,8 @@ function ContentBox(props) {
                      paratext={props.content.paratext}
                      headercolor={props.colors.blue}
                      paracolor={props.colors.lightblue}
+                     buttontext='More info'
+                     buttoncolor={props.colors.blue}
                      align='center'/>
         </div>
     )

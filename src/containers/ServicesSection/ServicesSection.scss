@@ -1,3 +1,13 @@
+@use '../../stylesheets/basics' as b;
+
 .services-section-container {
-    margin-top: 150px;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    margin: 150px auto 0 auto;
+    position: relative;
+
+    @include b.for-tablet() {
+        width: 90vw;
+    }
 }
