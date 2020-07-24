@@ -7,8 +7,34 @@ class Services extends Component {
     constructor(props){
         super(props);
         this.state = {
-            service_index: 1
+            service_index: 1,
+            counter: 0
         }
+    }
+
+    componentDidMount() {
+        this.counterID = setInterval(
+          () => this.increment(),
+          1000
+        );
+      }
+    
+      componentWillUnmount() {
+        clearInterval(this.counterID);
+      }
+
+    increment() {
+        let counter = this.state.counter + 1;
+        this.setState({
+            counter
+        })
+        this.checkForNextService();
+    }
+
+    checkForNextService() {
+        if(this.state.counter % 10 == 0) {
+            this.nextService();
+        } 
     }
 
     nextService = _ => {
@@ -17,16 +43,19 @@ class Services extends Component {
             service_index = 0;
         }
         this.setState({
-            service_index
+            service_index, counter: 0
         }) 
+        console.log(this.state.counter);
     }
 
     selectService = index => {
         const service_index = index;
         this.setState({
-            service_index
+            service_index, counter: 0
         }) 
     }
+
+
 
     render() {
         return(

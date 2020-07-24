@@ -4,7 +4,6 @@ import Content from '../Content/Content';
 
 const ServicesMainCard = (props) => {
     let color = (props.serviceIndex % 2 != 0) ? props.colors.yellow : props.colors.blue;
-    console.log(props.serviceIndex);
 
     return (
         <div className='services-main-card-container'>

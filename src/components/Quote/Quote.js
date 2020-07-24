@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './Quote.scss';
 
 function Quote (props) {
-    console.log(props.child);
     let text_style = {}
     let quote_style = {}
     if(props.child % 2 == 0) {

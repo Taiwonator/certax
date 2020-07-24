@@ -18,10 +18,6 @@ function ContentButton(props){
         }
     }
 
-
-
-    console.log(style.color);
-
     return (
         <div onClick={props.buttonOnClick} className={`button ${(!props.inverse) ? '' : 'inverse'} `} style={style} type='button'>{props.text}</div>
     )

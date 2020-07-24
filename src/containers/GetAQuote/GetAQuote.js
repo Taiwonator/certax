@@ -9,8 +9,8 @@ class GetAQuote extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
-        console.log(this.props.content.image);
     }
+    
     render() { 
         return ( 
             <div className='get-a-quote-container'>

@@ -18,7 +18,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: background-color .2s ease-in-out;
+        transition: background-color 1s ease-in-out;
 
         @include b.for-tablet() {
             flex-basis: 60%;
@@ -63,6 +63,6 @@
         @include b.for-phone() {
             flex-basis: 40%;
         }
-        transition: background-image .5s ease-in-out;
+        transition: background-image 1s ease-in-out;
     }
 }

@@ -19,10 +19,6 @@ const ServicesCard = (props) => {
 
     let style = (props.index == props.activeIndex) ? active_style : {};
 
-    if(props.activeIndex == props.index) {
-        console.log(props.service.title);
-    }
-
     return (
     <div onClick={props.onClick} style={{backgroundColor: color}} className='services-card-container'>
         <div className={`services-card-content ${(props.index == props.activeIndex) ? 'active-index' : ''}`}>
