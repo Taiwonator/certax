@@ -1,0 +1,98 @@
+@use '../../stylesheets/basics' as b;
+
+.services-card-container {
+    background: black;
+    height: 200px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 1400px) {
+        height: 250px;
+    }
+
+    .services-card-face {
+        height: 100%;
+        width: 100%;
+        border-style: solid;
+        border-width: .5px;
+        background: white;
+        transition: opacity .2s ease-in-out;
+
+        @include b.for-tablet() {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-size: auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(.2);
+            opacity: .4;
+        }
+    }
+
+    .services-card-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 20% 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 1;
+
+        @include b.for-tablet() {
+            h3 {
+                color: white !important;
+            }
+
+            .underline {
+                display: none;
+            }
+        }
+
+        &:hover +.services-card-face {
+            opacity: 0;
+        }
+
+        &:hover h3 {
+            color: white !important;
+        }
+
+        &:hover .underline div {
+            background-color: white !important;
+        }
+
+        @include b.for-tablet() {
+            padding: 0
+        }
+
+        h3 {
+            font-size: 24px;
+        }
+
+        p {
+            @include b.for-tablet() {
+                display: none;
+            }
+        }
+        
+
+    }
+
+    @include b.for-tablet() {
+        height: 100px;
+    }
+}
+
+.active-index {
+    h3 {
+        color: white !important;
+    }
+
+    .underline div {
+        background-color: white !important;
+    }
+}

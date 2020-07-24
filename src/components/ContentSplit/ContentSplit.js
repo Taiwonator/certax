@@ -11,6 +11,8 @@ function ContentSplit(props) {
                         paratext={props.content.paratext}
                         headercolor={props.colors.yellow}
                         paracolor={props.colors.grey}
+                        buttontext={'Get a quote'}
+                        buttoncolor={props.colors.yellow}
                         align={props.alignContent}/>
             <SVGCalculator colors={props.colors}/>
         </div>

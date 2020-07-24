@@ -17,7 +17,8 @@
   "homepage": "https://bitbucket.org/taiwonation/react-app#readme",
   "dependencies": {
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-fontawesome": "^1.7.1"
   },
   "devDependencies": {
     "jasmine": "^3.5.0",

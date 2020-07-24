@@ -3,6 +3,7 @@
 
 .content-container {
     display: flex;
+    max-width: 90%;
     flex-direction: column;
     justify-content: space-evenly;
     height: 80%;
@@ -25,7 +26,6 @@
         // text-align: center;
         font-size: calc(16px + (20 - 16) * ((100vw - 480px) / (1920 - 480)));
         font-weight: 100;
-        max-width: 80%;
         line-height: 36px;
     }
 }

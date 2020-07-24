@@ -9,4 +9,5 @@ ReactDOM.render(<App colors={MockData.colors}
                      info={MockData.sections.info}
                      testimonial={MockData.sections.testimonial}
                      getaquote={MockData.sections.getaquote}
+                     services={MockData.sections.services}
                      />, document.getElementById("root"));
