@@ -52,6 +52,7 @@ class Services extends Component {
     selectService = index => {
         const service_index = index;
         this.setState({
+            // Increased amount of time
             service_index, counter: -10
         }) 
     }
