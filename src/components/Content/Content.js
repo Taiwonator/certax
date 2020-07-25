@@ -6,13 +6,13 @@ import Underline from '../Underline/Underline';
 const Content = (props) => {
     let css_flex = 'center';
     let css_align = 'center';
-    let button_align = 'space-evenly';
+    let button_align = 'space-around';
 
     switch(props.align) {
         case 'center':
             css_flex = 'center';
             css_align = 'center'; 
-            button_align = 'space-evenly';
+            button_align = 'space-around';
             break;
         case 'left':
             css_flex = 'flex-start';
@@ -53,7 +53,6 @@ const Content = (props) => {
             <div style={{justifyContent: button_align}} className='buttons-container'>
                 <ContentButton buttonOnHoverText={props.buttonOnHoverText} 
                                buttonOnHover={props.buttonOnHover}
-                               buttonOnMouseEnter={props.buttonOnMouseEnter} 
                                buttonOnClick={props.buttonOnClick} 
                                inverse='true' 
                                color={props.buttoncolor} 

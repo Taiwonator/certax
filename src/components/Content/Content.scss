@@ -5,7 +5,7 @@
     display: flex;
     max-width: 90%;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-around;
     height: 80%;
     @include b.for-phone() {
         align-items: center;

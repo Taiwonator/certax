@@ -4,7 +4,7 @@ import './ContentButton.scss';
 const ContentButton = (props) => {
 
     let style = {};
-
+    //Use for onhover change
     const [text, changeText] = useState(props.text);
 
     if(!props.inverse) {

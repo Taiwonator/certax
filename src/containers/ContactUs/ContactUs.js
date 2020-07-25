@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './ContactUs.scss';
-import Subheader from '../../components/Subheader/Subheader';
 import Content from '../../components/Content/Content';
 
 const ContactUs = (props) => {
@@ -13,17 +12,16 @@ const ContactUs = (props) => {
                      headercolor={props.colors.white}
                      paracolor={props.colors.white}
 
-                     buttontext={'Copy Email to clipboard'}
+                     buttontext={`Chat Now`}
                      buttoncolor={props.colors.yellow}
-                    //  buttonOnClick={() => console.log(props.email)}
-                    //  buttonOnMouseEnter={() => console.log(`I am displaying ${props.email}`)}
-                     buttonOnHoverText={props.email}
-                     buttonOnHover={true}
+                     buttonOnClick={props.chatnow}
+                    //  buttonOnHoverText={props.email}
+                    //  buttonOnHover={true}
 
                      twinbutton={true}
-                     twinbuttontext={'Chat Now'}
+                     twinbuttontext={`Email: ${props.email}`}
                      twinbuttoncolor={props.colors.blue}
-                     twinbuttonOnClick={props.chatnow}
+                     twinbuttonOnClick={() => console.log(props.email)}
                      
                      align={'center'}/>
         </div>
