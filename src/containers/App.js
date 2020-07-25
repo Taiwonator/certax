@@ -8,6 +8,7 @@ import TestimonialSection from './TestimonialSection/TestimonialSection.js';
 import GetAQuoteSection from './GetAQuoteSection/GetAQuoteSection';
 import ServicesSection from './ServicesSection/ServicesSection';
 import ContactUsSection from './ContactUsSection/ContactUsSection';
+import Footer from './Footer/Footer';
 
 class App extends Component {
     constructor(props){
@@ -42,6 +43,7 @@ class App extends Component {
                 <GetAQuoteSection darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
                 <ServicesSection darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>
                 <ContactUsSection colors={this.props.colors} data={this.props.contactus}/>
+                <Footer colors={this.props.colors}/>
             </div>
         );
     }
