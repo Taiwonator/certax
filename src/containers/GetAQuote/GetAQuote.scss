@@ -9,7 +9,7 @@
 
     @include b.for-tablet () {
         flex-direction: column;
-        width: 90%;
+        width: 100%;
     }
 
     .get-a-quote-content-container {

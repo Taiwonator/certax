@@ -8,4 +8,8 @@
     position: relative;
     align-items: center;
     width: 80vw;
+
+    @include b.for-tablet() {
+        width: 90vw;
+    }
 }
