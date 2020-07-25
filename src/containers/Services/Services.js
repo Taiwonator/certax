@@ -29,7 +29,6 @@ class Services extends Component {
             counter
         })
         this.checkForNextService();
-        console.log(this.state.counter);
     }
 
     checkForNextService() {
