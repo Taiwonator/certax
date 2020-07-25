@@ -1,5 +1,51 @@
+@use '../../stylesheets/basics' as b;
+
 .footer-container {
     height: 100px;
     width: 100vw;
+    padding: 0 5vw;
     background: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+
+    @include b.for-tablet() {
+        flex-direction: column;
+        height: 150px;
+    }
+
+    .footer-left, .footer-right {
+        display: flex;
+        height: 100%;
+        align-items: center;
+
+        @include b.for-tablet() {
+            align-items: center;
+            justify-content: space-evenly !important;
+            text-align: center;
+        }
+
+        a {
+            font-size: 14px;
+            color: #78868f;
+            text-decoration: none;
+        }
+    }
+
+    .footer-left {
+        justify-content: flex-start;
+    }
+
+    .footer-right {
+        justify-content: flex-end;
+        display: flex;
+        flex-wrap: wrap;
+
+        a {
+            flex: 1;
+            margin: 0 1em;
+        }
+        
+    }
 }

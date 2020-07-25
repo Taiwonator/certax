@@ -43,7 +43,7 @@ class App extends Component {
                 <GetAQuoteSection darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
                 <ServicesSection darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>
                 <ContactUsSection colors={this.props.colors} data={this.props.contactus}/>
-                <Footer />
+                <Footer colors={this.props.colors}/>
             </div>
         );
     }
