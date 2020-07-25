@@ -1,0 +1,32 @@
+.contact-us-container {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+
+    .contact-us-background-image {
+        height: 100%;
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: brightness(.2) contrast(.8) saturate(2);
+    }
+
+    .content-container {
+        position: absolute;
+
+        .buttons-container {
+            flex-direction: column;
+            justify-content: space-evenly;
+            width: 100%;
+            padding: 0 10%;
+
+            .button {
+                margin-top: 5px;
+            }
+        }
+    }
+}

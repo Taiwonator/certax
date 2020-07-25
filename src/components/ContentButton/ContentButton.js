@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './ContentButton.scss';
 
-function ContentButton(props){
+const ContentButton = (props) => {
 
-    let style = {}
+    let style = {};
+    //Use for onhover change
+    const [text, changeText] = useState(props.text);
 
     if(!props.inverse) {
         style = {
             color: props.color,
-            borderColor:props.color
+            borderColor: props.color
         }
+        
     } else {
         style = {
             color: 'white', 
@@ -17,10 +20,15 @@ function ContentButton(props){
             backgroundColor: props.color
         }
     }
-
-    return (
-        <div onClick={props.buttonOnClick} className={`button ${(!props.inverse) ? '' : 'inverse'} `} style={style} type='button'>{props.text}</div>
-    )
+        
+        return (
+            <div onMouseEnter={() => {if(props.buttonOnHover) changeText(props.buttonOnHoverText)}}
+                 onMouseLeave={() => {if(props.buttonOnHover) changeText(props.text)}}
+                 onClick={props.buttonOnClick} className={`button ${(!props.inverse) ? '' : 'inverse'} `} 
+                 style={style} type='button'>
+                    {text}
+                 </div>
+        )
 }
 
 export default ContentButton;

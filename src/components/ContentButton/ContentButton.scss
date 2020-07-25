@@ -1,17 +1,21 @@
 @use '../../stylesheets/basics' as b;
 
 .button {
-    padding: 1em 2.5em;
+    padding: 1em 0;
     font-size: calc(16px + (20 - 16) * ((100vw - 480px) / (1920 - 480)));
+    font-weight: 100;
     border-width: 1px;
     border-style: solid;
+    text-align: center;
     @include b.no-text-highlight;
+    transition: filter .05s ease-in-out, width .2s ease-in-out;
+    min-width: 180px;
 
     &:hover {
-        filter: brightness(.9);
+        filter: saturate(1.5);
     }
 
     &:active {
-        filter: brightness(.8);
+        filter: saturate(2);
     }
 }

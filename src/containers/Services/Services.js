@@ -29,7 +29,6 @@ class Services extends Component {
             counter
         })
         this.checkForNextService();
-        console.log(this.state.counter);
     }
 
     checkForNextService() {
@@ -46,7 +45,6 @@ class Services extends Component {
         this.setState({
             service_index, counter: 0
         }) 
-        console.log(this.state.counter);
     }
 
     selectService = index => {
