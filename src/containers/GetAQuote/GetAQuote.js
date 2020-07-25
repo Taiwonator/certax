@@ -10,12 +10,27 @@ class GetAQuote extends Component {
         super(props);
         this.state = {  }
     }
+
+    hexToRgb(hex) {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+          return r + r + g + g + b + b;
+        });
+      
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        } : null;
+    }
     
     render() { 
         return ( 
             <div className='get-a-quote-container'>
                 <div style={{backgroundColor: this.props.colors.white, borderColor: this.props.colors.textblack}} className='get-a-quote-content-container'>
-                    <Block color={this.props.colors.textblack}/>
+                    <Block color={this.props.colors.yellow}/>
                     <Subheader text='Quote price calculator' color={this.props.colors.textblack} subtext='Dont miss out on free consultation' subtextcolor={'grey'}/>
                     <form className='get-a-quote-content'>
                         <InputField key={`InputField_0`} label='Company Name' color={this.props.colors.textblack} type='text'/>
@@ -35,7 +50,7 @@ class GetAQuote extends Component {
 
                     </form>
                 </div>
-                <div className='get-a-quote-image-container'>
+                <div className='get-a-quote-image-container' style={{backgroundColor: `rgba(${this.hexToRgb(this.props.colors.blue).r}, ${this.hexToRgb(this.props.colors.blue).g}, ${this.hexToRgb(this.props.colors.blue).b}, .4`}}>
                     <div style={{backgroundImage: `url(${this.props.content.image})`}} className='get-a-quote-image-darkner'/>
                     <YourPriceText color={this.props.colors.white} value={59}/>
                 </div>
