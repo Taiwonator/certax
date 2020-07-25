@@ -6,13 +6,13 @@ import Underline from '../Underline/Underline';
 const Content = (props) => {
     let css_flex = 'center';
     let css_align = 'center';
-    let button_align = 'center';
+    let button_align = 'space-evenly';
 
     switch(props.align) {
         case 'center':
             css_flex = 'center';
             css_align = 'center'; 
-            button_align = 'center';
+            button_align = 'space-evenly';
             break;
         case 'left':
             css_flex = 'flex-start';
@@ -51,7 +51,13 @@ const Content = (props) => {
             </div>
             <p style={para_style}>{props.paratext}</p>
             <div style={{justifyContent: button_align}} className='buttons-container'>
-                <ContentButton buttonOnClick={props.buttonOnClick} inverse='true' color={props.buttoncolor} text={props.buttontext}/>
+                <ContentButton buttonOnHoverText={props.buttonOnHoverText} 
+                               buttonOnHover={props.buttonOnHover}
+                               buttonOnMouseEnter={props.buttonOnMouseEnter} 
+                               buttonOnClick={props.buttonOnClick} 
+                               inverse='true' 
+                               color={props.buttoncolor} 
+                               text={props.buttontext}/>
                 {twinbutton}
             </div>
         </div>

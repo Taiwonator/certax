@@ -1,26 +1,85 @@
 import React, { Component } from 'react';
 import './ContentButton.scss';
 
-function ContentButton(props){
+class ContentButton extends Component {
 
-    let style = {}
+    constructor(props) {
+        super(props);
+        this.state = {
+            style: {
 
-    if(!props.inverse) {
-        style = {
-            color: props.color,
-            borderColor:props.color
-        }
-    } else {
-        style = {
-            color: 'white', 
-            borderColor: 'none', 
-            backgroundColor: props.color
+            }, 
+            show_text: props.text, 
         }
     }
 
-    return (
-        <div onClick={props.buttonOnClick} className={`button ${(!props.inverse) ? '' : 'inverse'} `} style={style} type='button'>{props.text}</div>
-    )
+    componentDidMount() {
+        if(!this.props.inverse) {
+            this.setState({
+                style: {
+                    color: this.props.color,
+                    borderColor:this.props.color
+                }
+            })
+            
+        } else {
+            this.setState({
+                style: {
+                    color: 'white', 
+                    borderColor: 'none', 
+                    backgroundColor: this.props.color
+                }
+            })
+        }
+    }
+
+    componentWillReceiveProps() {
+        if(!this.props.inverse) {
+            this.setState({
+                style: {
+                    color: this.props.color,
+                    borderColor:this.props.color
+                }
+            })
+            
+        } else {
+            this.setState({
+                style: {
+                    color: 'white', 
+                    borderColor: 'none', 
+                    backgroundColor: this.props.color
+                }
+            })
+        }
+    }
+
+
+    changeShowText = show_text => {
+        if(this.props.buttonOnHover) {
+            this.setState({
+                show_text
+            })
+        }
+    }
+
+    revertShowText = _ => {
+        if(this.props.buttonOnHover) {
+            this.setState({
+                show_text: this.props.text
+            })
+        }
+    }
+        
+    render() {
+        return (
+            <div onMouseEnter={() => this.changeShowText(this.props.buttonOnHoverText)}
+                 onMouseLeave={this.revertShowText}
+                 onClick={this.props.buttonOnClick} className={`button ${(!this.props.inverse) ? '' : 'inverse'} `} 
+                 style={this.state.style} type='button'>
+                    {this.state.show_text}
+                 </div>
+        )
+    }
 }
 
 export default ContentButton;
