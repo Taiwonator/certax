@@ -12,9 +12,13 @@ const ContactUs = (props) => {
                      paratext={props.text}
                      headercolor={props.colors.white}
                      paracolor={props.colors.white}
-                     buttontext={'Chat Now'}
-                     buttoncolor={'blue'}
-                     buttonOnClick={props.chatnow}
+                     buttontext={'Email'}
+                     buttoncolor={props.colors.yellow}
+                     buttonOnClick={() => console.log(props.email)}
+                     twinbutton={true}
+                     twinbuttontext={'Chat Now'}
+                     twinbuttoncolor={props.colors.blue}
+                     twinbuttonOnClick={props.chatnow}
                      align={'center'}/>
         </div>
     );

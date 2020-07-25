@@ -5,13 +5,16 @@
     font-size: calc(16px + (20 - 16) * ((100vw - 480px) / (1920 - 480)));
     border-width: 1px;
     border-style: solid;
+    text-align: center;
     @include b.no-text-highlight;
+    transition: filter .05s ease-in-out;
+    min-width: 180px;
 
     &:hover {
-        filter: brightness(.9);
+        filter: saturate(1.5);
     }
 
     &:active {
-        filter: brightness(.8);
+        filter: saturate(2);
     }
 }

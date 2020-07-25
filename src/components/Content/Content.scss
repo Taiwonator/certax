@@ -28,4 +28,21 @@
         font-weight: 100;
         line-height: 36px;
     }
+
+    .buttons-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        @include b.for-phone() {
+            flex-direction: column;
+        }
+
+        .button {
+            @include b.for-phone() {
+                margin-top: 5px;
+            }
+        }
+    }
 }
