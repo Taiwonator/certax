@@ -21,5 +21,10 @@
                 display: none;
             }
         }
+
+        @include for-phone {
+            height: 50px;
+        }
+        
     }
 }
