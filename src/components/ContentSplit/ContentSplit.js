@@ -13,6 +13,7 @@ function ContentSplit(props) {
                         paracolor={props.colors.grey}
                         buttontext={'Get a quote'}
                         buttoncolor={props.colors.yellow}
+                        buttonOnClick={props.scroll}
                         align={props.alignContent}/>
             <SVGCalculator colors={props.colors}/>
         </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './ContentBox.scss';
 import Staircase from '../Staircase/Staircase.js';
 import Content from '../Content/Content.js';
+import ScrollDownButton from '../ScrollDownButton/ScrollDownButton';
 
 
 function ContentBox(props) {
@@ -17,6 +18,7 @@ function ContentBox(props) {
                      paracolor={props.colors.lightblue}
                      buttontext='More info'
                      buttoncolor={props.colors.blue}
+                     buttonOnClick={props.buttonOnClick}
                      align='center'/>
         </div>
     )

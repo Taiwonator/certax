@@ -26,7 +26,7 @@ const AboutSection = React.forwardRef((props, ref) => {
                     <Staircase position='TL' color={props.colors.blue} type='block'/> 
                     <Staircase position='BR' color={props.colors.blue} type='block'/>
                     <Staircase position='BL' color={props.colors.yellow} type='block'/> 
-                    <ContentBox darkMode={props.darkMode} colors={props.colors} content={props.data}/>
+                    <ContentBox darkMode={props.darkMode} colors={props.colors} content={props.data} buttonOnClick={props.scrollToInfo}/>
                 </div>
                 <ScrollDownButton scroll={props.scroll} color={props.colors.blue}/>
             </div>

@@ -4,7 +4,7 @@ import ContentSplit from '../../components/ContentSplit/ContentSplit';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import Staircase from '../../components/Staircase/Staircase';
 
-function InfoSection(props) {
+const InfoSection = React.forwardRef((props, ref) => {
     const { width } = useWindowDimensions();
     let content_align = 'left';
     if(width <= 600 & content_align != 'center') {
@@ -14,15 +14,15 @@ function InfoSection(props) {
     }
 
     return (
-        <div className='info-section-container'>
+        <div ref={ref} className='info-section-container'>
             <div className='info-section-content-wrapper'>
                 <LeftGraphic colors={props.colors}/>
-                <ContentSplit colors={props.colors} content={props.data} alignContent={content_align}/>
+                <ContentSplit scroll={props.scroll} colors={props.colors} content={props.data} alignContent={content_align}/>
             </div>
             <MiddleGraphic colors={props.colors}/>
         </div>
     )
-}
+})
 
 
 

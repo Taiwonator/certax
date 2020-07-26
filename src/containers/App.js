@@ -19,6 +19,7 @@ class App extends Component {
 
         this.homeRef = React.createRef();
         this.aboutRef = React.createRef();
+        this.infoRef = React.createRef();
         this.testimonialsRef = React.createRef();
         this.getaquoteRef = React.createRef();
         this.servicesRef = React.createRef();
@@ -44,6 +45,7 @@ class App extends Component {
 
     scrollToHome = _ => this.scrollToMyRef(this.homeRef)
     scrollToAbout = _ => this.scrollToMyRef(this.aboutRef, -150)
+    scrollToInfo = _ => this.scrollToMyRef(this.infoRef, -100)
     scrollToTestimonials = _ => this.scrollToMyRef(this.testimonialsRef, -300)
     scrollToGetAQuote = _ => this.scrollToMyRef(this.getaquoteRef, 250)
     scrollToGetAQuote = _ => this.scrollToMyRef(this.getaquoteRef, 250)
@@ -61,8 +63,8 @@ class App extends Component {
                         />
                 
                 <LandingPage ref={this.homeRef} scroll={this.scrollToAbout} darkMode={this.darkMode} colors={this.props.colors} data={this.props.landingpage} />
-                <AboutSection ref={this.aboutRef} scroll={this.scrollToTestimonials} darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
-                <InfoSection colors={this.props.colors} data={this.props.info}/>
+                <AboutSection ref={this.aboutRef} scrollToInfo={this.scrollToInfo} scroll={this.scrollToTestimonials} darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
+                <InfoSection ref={this.infoRef} colors={this.props.colors} scroll={this.scrollToGetAQuote} data={this.props.info}/>
                 <TestimonialSection ref={this.testimonialsRef} colors={this.props.colors} data={this.props.testimonial}/>
                 <GetAQuoteSection ref={this.getaquoteRef} darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
                 <ServicesSection ref={this.servicesRef} scroll={this.scrollToContactUs} darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>

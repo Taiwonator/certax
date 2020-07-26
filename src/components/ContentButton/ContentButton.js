@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './ContentButton.scss';
 
 const ContentButton = (props) => {
-
     let style = {};
     //Use for onhover change
     const [text, changeText] = useState(props.text);
