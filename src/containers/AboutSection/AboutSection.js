@@ -19,7 +19,7 @@ function AboutSection(props) {
     }
 
     return (
-        <div className='about-section-container'>
+        <div style={{borderBottomColor: (props.darkMode()) ? props.colors.yellow : props.colors.lightgrey}} className='about-section-container'>
             <div className='about-section-content-wrapper'>
                 <div className='about-section-content-container'>
                     <Staircase position='TR' color={props.colors.yellow} type='block'/>

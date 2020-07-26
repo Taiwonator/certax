@@ -7,7 +7,8 @@
         "lightblue": "#9FB7DB",
         "textblack": "#2F2721", 
         "black": "#0F0F0F",
-        "grey": "#707070", 
+        "grey": "#707070",
+        "lightgrey": "#EEEEEE",  
         "white": "#FFFFFF"
     },
 
