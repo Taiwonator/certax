@@ -16,7 +16,7 @@ const NavbarItem = (props) => {
     }
 
     return (
-        <span style={border_style} className='navbar-item-container'>
+        <span onClick={props.scroll} style={border_style} className='navbar-item-container'>
             <p style={color_style}>{props.text}</p>
         </span>
     )};

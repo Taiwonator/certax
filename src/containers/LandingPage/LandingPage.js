@@ -9,7 +9,7 @@ import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 let upper_staircase_type = 'full';
 let lower_staircase_type = 'partial';
 
-function LandingPage(props) {
+const LandingPage = React.forwardRef((props, ref) => {
     const { width } = useWindowDimensions();
     if(width <= 600 & upper_staircase_type != 'mini') {
         upper_staircase_type = 'mini';
@@ -20,8 +20,8 @@ function LandingPage(props) {
     }
     
     return ( 
-        <div className='landing-page-container'>
-            <HeaderContent colors={props.colors} />
+        <div ref={ref} className='landing-page-container'>
+            <HeaderContent scroll={props.scroll} colors={props.colors} />
             <div className='landing-page-graphics-container'>
                 <BackgroundPanels darkMode={props.darkMode}/>
                 <Staircase position='BR' color={props.colors.blue} type={upper_staircase_type}/>
@@ -33,7 +33,7 @@ function LandingPage(props) {
             </div>
         </div>
     );
-}
+})
 
 export default LandingPage;
 

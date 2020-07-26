@@ -9,7 +9,7 @@ function HeaderContent(props) {
         <div className="header-content-container"> 
             <CompanyLogo colors={props.colors}/>
             <CompanyName colors={props.colors}/>
-            <ScrollDownButton color={props.colors.blue}/> 
+            <ScrollDownButton scroll={props.scroll} color={props.colors.blue}/> 
         </div>
     );
 }

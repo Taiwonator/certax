@@ -21,6 +21,7 @@
     }
 
     #back {
+        cursor: pointer;
         p {
             font-size: calc(16px + (20 - 16) * ((100vw - 480px) / (1920 - 480)));
             transform: rotate(270deg);
@@ -29,6 +30,7 @@
     }
 
     #forward {
+        cursor: pointer;
         p {
             font-size: calc(16px + (20 - 16) * ((100vw - 480px) / (1920 - 480)));
             transform: rotate(90deg);

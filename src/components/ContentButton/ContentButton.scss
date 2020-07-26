@@ -10,6 +10,8 @@
     @include b.no-text-highlight;
     transition: filter .05s ease-in-out, width .2s ease-in-out;
     min-width: 180px;
+    cursor: pointer;
+
 
     &:hover {
         filter: saturate(1.5);

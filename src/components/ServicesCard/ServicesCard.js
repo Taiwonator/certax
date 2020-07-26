@@ -28,7 +28,7 @@ const ServicesCard = (props) => {
         <div style={{backgroundImage: `url(${backgroundImage})`, 
                      borderColor: color, 
                      opacity: style.opacity, 
-                     background: (props.darkMode()) ? props.colors.black : props.colors.white}}
+                     backgroundColor: (props.darkMode()) ? props.colors.black : props.colors.white}}
                      className='services-card-face'></div>
     </div>
     )

@@ -7,6 +7,10 @@
     font-family: v.$text-font;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     animation: fade-in 1s ease-in-out;
     overflow-x: hidden;

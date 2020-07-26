@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import './ContactUsSection.scss';
 import ContactUs from '../ContactUs/ContactUs';
 
-function ContactUsSection(props) {
+const ContactUsSection = React.forwardRef((props, ref) => {
     return (
-        <div className='contact-us-section-container'>
+        <div ref={ref} className='contact-us-section-container'>
             <ContactUs title='Need to find out more?'
                        text='You can contact us anytime and we will respond within 24 hours'
                        email={props.data.email}
@@ -14,6 +14,6 @@ function ContactUsSection(props) {
                        />
         </div>
     )
-}
+})
 
 export default ContactUsSection;

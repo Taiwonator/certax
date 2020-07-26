@@ -16,6 +16,13 @@ class App extends Component {
         this.state = {
             darkmode: false
         }
+
+        this.homeRef = React.createRef();
+        this.aboutRef = React.createRef();
+        this.testimonialsRef = React.createRef();
+        this.getaquoteRef = React.createRef();
+        this.servicesRef = React.createRef();
+        this.contactusRef = React.createRef();
     }
 
     darkMode = _ => {
@@ -32,18 +39,38 @@ class App extends Component {
         });
     }
 
+    // Scroll to any general element
+    scrollToMyRef = (ref, yOffset) => window.scrollTo(0, ref.current.offsetTop + yOffset)
+
+    scrollToHome = _ => this.scrollToMyRef(this.homeRef)
+    scrollToAbout = _ => this.scrollToMyRef(this.aboutRef, -150)
+    scrollToTestimonials = _ => this.scrollToMyRef(this.testimonialsRef, -300)
+    scrollToGetAQuote = _ => this.scrollToMyRef(this.getaquoteRef, 250)
+    scrollToGetAQuote = _ => this.scrollToMyRef(this.getaquoteRef, 250)
+    scrollToServices = _ => this.scrollToMyRef(this.servicesRef, -100)
+    scrollToContactUs = _ => this.scrollToMyRef(this.contactusRef, 0)
+
     render() {
         return (
             <div className='app-container' style={{backgroundColor: this.darkMode()}}>
-                <Navbar toggleDarkMode={this.toggleDarkMode} darkMode={this.darkMode} colors={this.props.colors} labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact Us']}/>
-                <LandingPage darkMode={this.darkMode} colors={this.props.colors} data={this.props.landingpage} />
-                <AboutSection darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
+                <Navbar toggleDarkMode={this.toggleDarkMode} 
+                        darkMode={this.darkMode} 
+                        colors={this.props.colors} 
+                        labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact Us']}
+                        label_scrolls={[this.scrollToAbout, this.scrollToTestimonials, this.scrollToGetAQuote, this.scrollToServices, this.scrollToContactUs]}
+                        />
+                
+                <LandingPage ref={this.homeRef} scroll={this.scrollToAbout} darkMode={this.darkMode} colors={this.props.colors} data={this.props.landingpage} />
+                <AboutSection ref={this.aboutRef} scroll={this.scrollToTestimonials} darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
                 <InfoSection colors={this.props.colors} data={this.props.info}/>
-                <TestimonialSection colors={this.props.colors} data={this.props.testimonial}/>
-                <GetAQuoteSection darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
-                <ServicesSection darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>
-                <ContactUsSection colors={this.props.colors} data={this.props.contactus}/>
-                <Footer colors={this.props.colors}/>
+                <TestimonialSection ref={this.testimonialsRef} colors={this.props.colors} data={this.props.testimonial}/>
+                <GetAQuoteSection ref={this.getaquoteRef} darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
+                <ServicesSection ref={this.servicesRef} scroll={this.scrollToContactUs} darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>
+                <ContactUsSection ref={this.contactusRef} colors={this.props.colors} data={this.props.contactus}/>
+                <Footer colors={this.props.colors}
+                        labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact']}
+                        label_scrolls={[this.scrollToAbout, this.scrollToTestimonials, this.scrollToGetAQuote, this.scrollToServices, this.scrollToContactUs]}
+                        homescroll={this.scrollToHome}/>
             </div>
         );
     }

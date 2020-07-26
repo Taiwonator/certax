@@ -7,7 +7,7 @@ import ScrollDownButton from '../../components/ScrollDownButton/ScrollDownButton
 
 let staircase_type = 'partial';
 
-function AboutSection(props) {
+const AboutSection = React.forwardRef((props, ref) => {
     const { height, width } = useWindowDimensions();
     const phone_size = 600;
 
@@ -19,7 +19,7 @@ function AboutSection(props) {
     }
 
     return (
-        <div style={{borderBottomColor: (props.darkMode()) ? props.colors.yellow : props.colors.lightgrey}} className='about-section-container'>
+        <div ref={ref} style={{borderBottomColor: (props.darkMode()) ? props.colors.yellow : props.colors.lightgrey}} className='about-section-container'>
             <div className='about-section-content-wrapper'>
                 <div className='about-section-content-container'>
                     <Staircase position='TR' color={props.colors.yellow} type='block'/>
@@ -28,11 +28,11 @@ function AboutSection(props) {
                     <Staircase position='BL' color={props.colors.yellow} type='block'/> 
                     <ContentBox darkMode={props.darkMode} colors={props.colors} content={props.data}/>
                 </div>
-                <ScrollDownButton color={props.colors.blue}/>
+                <ScrollDownButton scroll={props.scroll} color={props.colors.blue}/>
             </div>
         </div>
     )
-}
+})
 
 export default AboutSection;
 

@@ -4,6 +4,7 @@ import './Navbar.scss';
 import CompanyTextLogo from '../../components/CompanyTextLogo/CompanyTextLogo.js';
 import ToggleButton from '../../components/ToggleButton/ToggleButton.js';
 import NavbarItem from '../../components/NavbarItem/NavbarItem.js';
+import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 
 class Navbar extends Component {
     constructor(props) {
@@ -20,6 +21,12 @@ class Navbar extends Component {
     activeStateDarkMode = () => {
         return this.props.darkMode();
     }
+
+    scrollTo = (i) => {
+        // Toggles scrollbar
+        this.toggleNavbar();
+        this.props.label_scrolls[i]();
+    }
     
 
     render() {
@@ -31,13 +38,8 @@ class Navbar extends Component {
             </div>
             <ul className='navbar-items'>
                 <ToggleButton color={this.props.colors.yellow} toggleNavbar={this.toggleNavbar} shape='cross' inverse='true'/>
-                 
-                {/* <NavbarItem color={this.props.colors.yellow} text='About'/>
-                <NavbarItem color={this.props.colors.yellow} text='Testimonials'/>
-                <NavbarItem color={this.props.colors.yellow} text='Quote'/>
-                <NavbarItem color={this.props.colors.yellow} text='Services'/>
-                <NavbarItem color={this.props.colors.yellow} text='Contact Us'/> */}
-                <NavbarItemList labels={this.props.labels} color={this.props.colors.yellow} />
+                <NavbarItemList scrollTo={this.scrollTo} label_scrolls={this.props.label_scrolls} labels={this.props.labels} color={this.props.colors.yellow} />
+                <ToggleSwitch colors={this.props.colors} toggleDarkMode={this.props.toggleDarkMode}/>
             </ul>
         </nav>
     )}
@@ -45,8 +47,8 @@ class Navbar extends Component {
 
 function NavbarItemList(props) {
     const navbar_labels = props.labels;
-    const list = navbar_labels.map((label) => 
-        <NavbarItem key={`key_${label}`} color={props.color} text={label} />
+    const list = navbar_labels.map((label, i) => 
+        <NavbarItem key={`key_${label}`} color={props.color} text={label} scroll={() => props.scrollTo(i)}/>
     );
     return (<div className='navbar-items-list'>{list}</div>)
 }

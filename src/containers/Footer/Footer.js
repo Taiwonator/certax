@@ -5,18 +5,25 @@ const Footer = (props) => {
     return (
         <div className='footer-container'>
             <div className='footer-left'>
-                <a href='#' style={{color: props.colors.blue}}>Copyright © 2020, Certax Accounting</a>
+                <a style={{color: props.colors.blue}}>Copyright © 2020, Certax Accounting</a>
             </div>
             <div className='footer-right'>
-                <a style={{color: props.colors.yellow}} href='#'>Home</a>
-                <a href='#'>About</a>
-                <a href='#'>Testimonials</a>
-                <a href='#'>Quote</a>
-                <a href='#'>Services</a>
-                <a href='#'>Contact</a>
+                <a onClick={props.homescroll} style={{color: props.colors.yellow}}>Home</a>
+                <FooterItemList labels={props.labels} scrolls={props.label_scrolls}/>
             </div>
         </div>
     );
+}
+
+const FooterItemList = (props) => {
+    let labels = props.labels;
+    let list = labels.map((label, i) => (
+        <a key={i} onClick={props.scrolls[i]} >{label}</a>
+    ));
+
+    return (
+    <>{list}</>
+    )
 }
  
 export default Footer;
