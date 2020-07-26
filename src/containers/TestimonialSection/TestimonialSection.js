@@ -8,7 +8,7 @@ import TGraphic from '../../components/TGraphic/TGraphic';
 function TestimonialSection (props) {
     return (
         <div className='testimonial-section-container'>
-            <Subheader text='HEAR WHAT MY CLIENTS HAVE TO SAY' color={props.colors.yellow} underline={false} stars={false}/>
+            <Subheader text='HEAR WHAT MY CLIENTS HAVE TO SAY' color={props.colors.yellow} underline={false} stars={true}/>
             <TGraphic color={props.colors.yellow} translateY={10}/> 
             <BigTestimonyList testimonials={props.data.bigtestimonials} colors={props.colors}/>
             <QuoteCarousel testimonials={props.data.minitestimonials} colors={props.colors}/>

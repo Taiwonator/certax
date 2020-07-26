@@ -61,7 +61,7 @@ class Services extends Component {
         return(
             <div className='services-container'>
                 <ServicesMainCard colors={this.props.colors} service={this.props.services.services[this.state.service_index]} serviceIndex={this.state.service_index} buttonOnClick={this.nextService}/>
-                <ServicesCardList services={this.props.services.services} colors={this.props.colors} onClick={this.selectService} serviceIndex={this.state.service_index}/>
+                <ServicesCardList darkMode={this.props.darkMode} services={this.props.services.services} colors={this.props.colors} onClick={this.selectService} serviceIndex={this.state.service_index}/>
             </div>
         )
     }
@@ -70,7 +70,7 @@ class Services extends Component {
 const ServicesCardList = (props) => {
     let services = props.services;
     let services_list = services.map((service, i) => (
-        <ServicesCard key={i} service={service} index={i} colors={props.colors} onClick={() => props.onClick(i)} activeIndex={props.serviceIndex}/>
+        <ServicesCard darkMode={props.darkMode} key={i} service={service} index={i} colors={props.colors} onClick={() => props.onClick(i)} activeIndex={props.serviceIndex}/>
     ))
 
     return (

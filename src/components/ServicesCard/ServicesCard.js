@@ -25,7 +25,11 @@ const ServicesCard = (props) => {
             <Subheader text={props.service.title} underline={true} stars={false} color={color}/>
             <p style={{color}}>READ MORE <FontAwesome name="long-arrow-right" /></p>
         </div>
-        <div style={{backgroundImage: `url(${backgroundImage})`, borderColor: color, opacity: style.opacity}} className='services-card-face'></div>
+        <div style={{backgroundImage: `url(${backgroundImage})`, 
+                     borderColor: color, 
+                     opacity: style.opacity, 
+                     background: (props.darkMode()) ? props.colors.black : props.colors.white}}
+                     className='services-card-face'></div>
     </div>
     )
 }

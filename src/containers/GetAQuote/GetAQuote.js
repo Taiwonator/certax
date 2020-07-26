@@ -25,13 +25,17 @@ class GetAQuote extends Component {
           b: parseInt(result[3], 16)
         } : null;
     }
+
+    getBackgroundColor() {
+        // return `rgba(${this.hexToRgb(this.props.colors.blue).r}, ${this.hexToRgb(this.props.colors.blue).g}, ${this.hexToRgb(this.props.colors.blue).b}, .4`;
+    }
     
     render() { 
         return ( 
             <div className='get-a-quote-container'>
                 <div style={{backgroundColor: this.props.colors.white, borderColor: this.props.colors.textblack}} className='get-a-quote-content-container'>
                     <Block color={this.props.colors.yellow}/>
-                    <Subheader text='Quote price calculator' color={this.props.colors.textblack} subtext='Dont miss out on free consultation' subtextcolor={'grey'}/>
+                    <Subheader text='Quote price calculator' color={this.props.colors.textblack} subtext='Fill out the details below' subtextcolor={'grey'}/>
                     <form className='get-a-quote-content'>
                         <InputField key={`InputField_0`} label='Company Name' color={this.props.colors.textblack} type='text'/>
 
@@ -50,7 +54,8 @@ class GetAQuote extends Component {
 
                     </form>
                 </div>
-                <div className='get-a-quote-image-container' style={{backgroundColor: `rgba(${this.hexToRgb(this.props.colors.blue).r}, ${this.hexToRgb(this.props.colors.blue).g}, ${this.hexToRgb(this.props.colors.blue).b}, .4`}}>
+
+                <div className='get-a-quote-image-container' style={{backgroundColor: this.getBackgroundColor()}}>
                     <div style={{backgroundImage: `url(${this.props.content.image})`}} className='get-a-quote-image-darkner'/>
                     <YourPriceText color={this.props.colors.white} value={59}/>
                 </div>
