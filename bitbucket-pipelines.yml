@@ -7,8 +7,11 @@ image: node:12.14.0
 pipelines:
   default:
     - step:
+        name: Build
         caches:
           - node
         script: # Modify the commands below to build your repository.
           - npm install
           - npm run build
+        artifacts: # defining the artifacts to be passed to each future step.
+          - dist/**
