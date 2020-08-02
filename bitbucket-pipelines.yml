@@ -14,4 +14,4 @@ pipelines:
           - npm install
           - npm run build
         artifacts: # defining the artifacts to be passed to each future step.
-          - dist/**
+          - build/**
