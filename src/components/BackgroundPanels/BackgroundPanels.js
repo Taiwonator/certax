@@ -7,6 +7,7 @@ const BackgroundPanels = (props) => (
         <div style={{backgroundColor: props.darkMode()}} className={`background-panel panel-3`}></div>
         <div style={{backgroundColor: props.darkMode()}} className={`background-panel panel-2`}></div>
         <div style={{backgroundColor: props.darkMode()}} className={`background-panel panel-1`}></div>
+        <div style={{backgroundColor: props.darkMode()}} className={`background-panel panel-0 hide`}></div>
         <div style={{backgroundColor: props.darkMode()}} className={`background-panel panel-1 hide`}></div>
         <div style={{backgroundColor: props.darkMode()}} className={`background-panel panel-2`}></div>
         <div style={{backgroundColor: props.darkMode()}} className={`background-panel panel-3`}></div>

@@ -28,8 +28,12 @@
         transition: background-color .25s linear;
     }
 
+    .panel-0 {
+        height: 95%;
+    } 
+
     .panel-1 {
-        height: 90%;
+        height: 85%;
     }
 
     .panel-2 {
@@ -47,6 +51,12 @@
     .panel-4, .hide{
         @include for-tablet() {
             display: none;
+        }
+    }
+
+    @include for-tablet() {
+        .panel-1 {
+            height: 90%;
         }
     }
 
