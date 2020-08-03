@@ -45,6 +45,15 @@
         }
     }
 
+    h3 {
+        font-size: calc(20px + (25 - 20) * ((100vw - 480px) / (1920 - 480)));
+        font-family: v.$text-font;
+        text-align: center;
+        font-weight: 400;
+        margin-top: 1em;
+        max-width: 300px; // Arbitary value
+    }
+
 }
 
 
