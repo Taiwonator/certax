@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './GetAQuote.scss';
 import Content from '../../components/Content/Content';
+import QuotationQuestions from '../QuotationQuestions/QuotationQuestions';
 
 class GetAQuote extends Component {
     constructor(props) {
@@ -31,6 +32,8 @@ class GetAQuote extends Component {
                     </div>
                 </div>
             </div>
+
+            <QuotationQuestions colors={this.props.colors}/>
         </div>
         );
     }
