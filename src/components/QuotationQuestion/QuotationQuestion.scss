@@ -1,0 +1,27 @@
+.quotation-question-container {
+    flex: 1;
+    height: 300px;
+    border-style: solid;
+    border-color: black;
+    border-width: .5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 1em;
+    min-height: 300px;
+
+    .quotation-question-text {
+
+        h3 {
+            font-size: 24px;
+            text-transform: uppercase;
+            font-weight: 100;
+        }
+
+        p {
+            margin-top: .5em;
+            color: grey;
+            font-size: 14px;
+        }
+    }
+}

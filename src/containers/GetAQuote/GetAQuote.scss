@@ -1,68 +1,93 @@
 @use '../../stylesheets/basics' as b;
+@use '../../stylesheets/variables' as v;
 
 .get-a-quote-container {
-    display: flex;
-    flex-direction: row;
-    height: 800px;
-    width: 100%;
     position: relative;
+    width: 80vw;
 
-    @include b.for-tablet () {
-        flex-direction: column;
+    .get-a-quote-card {
+        height: 400px;  
         width: 100%;
-    }
-
-    .get-a-quote-content-container {
-        position: relative;
-        flex-basis: 60%;
-        border-style: solid;
-        border-width: 1px;
-        margin: 0 1% 0 0;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        @include b.for-tablet (){
-            margin: 1% 0;
-            order: 1;
+        flex-direction: row;
+        @include b.for-tablet() {
+            flex-direction: column;
+            height: 800px;
         }
 
-        .get-a-quote-graphic {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            transform: translate(-10%, -10%) scaleY(-1);
-            z-index: -1;
-            @include b.for-tablet (){
-                display: none;
+        .get-a-quote-card-content {
+            flex-basis: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            h3 {
+                font-weight: 100;
+            }
+
+            p {
+                font-size: 16px;
             }
         }
 
-        .get-a-quote-content {
-            display: flex;
-            flex-direction: column;
-        }
-    }
+        .get-a-quote-card-image-container {
+            flex-basis: 50%;
+            position: relative;
 
-    .get-a-quote-image-container {
-        position: relative;
-        flex-basis: 40%;
-        display: flex;
-        flex-direction: column;
-        align-items: center; 
-        justify-content: center;    
-        background-color: rgba(82, 82, 136, .4);   
+            .get-a-quote-card-image {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-image: url('https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80');
+                @include b.image-basics;
+                filter: brightness(.3);
+            }
 
-        .get-a-quote-image-darkner {
-            width: 100%;
-            height: 100%;
-            top: 0;
-            z-index: -1;
-            position: absolute;
-            @include b.image-basics;
-            background-position: 85% 50%;
-            filter: brightness(.4) contrast(85%);
+            .get-a-quote-price-container {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                justify-content: space-around;
+                color: white;
+                padding: 0 50px;
+
+                h3 {
+                    font-weight: 100;
+                    align-self: flex-start;
+                    font-size: 30px;
+                    font-family: v.$text-font;
+                    @include b.for-phone() {
+                        align-self: center;
+                        font-size: 24px;
+                    }
+                }
+
+                .get-a-quote-price {
+                    align-self: flex-end;
+                    display: flex;
+                    @include b.for-phone() {
+                        align-self: center;
+                    }
+
+                    .get-a-quote-price-currency {
+                        font-size: 45px;
+                    }
+
+                    .get-a-quote-price-value {
+                        font-size: 125px;
+                        font-weight: 700;
+                        @include b.for-tablet() {
+                            font-size: 75px;
+                        }
+                    }
+
+                    .get-a-quote-price-per {
+                        font-size: 18px;
+                        align-self: flex-end;
+                    }
+                }
+            }
         }
     }
 }

@@ -1,0 +1,46 @@
+@use '../../stylesheets/basics' as b;
+
+.quotation-questions-container {
+    width: 100%;
+    // background-color: red;
+    display: flex;
+    flex-direction: column;
+
+    .quotation-questions-block {
+        display: flex;
+        flex-direction: column;
+
+        .quotation-questions-row {
+            display: flex;
+            flex-direction: row;
+            @include b.for-tablet() {
+                flex-direction: column;
+            }
+
+            .quotation-question-container {
+                margin: 5px;
+                &:nth-child(1) {
+                    margin-left: 0px
+                }
+                &:nth-last-child(1) {
+                    margin-left: 0px
+                }
+                @include b.for-tablet() {
+                    margin: 2.5px 0;
+                }
+            }
+        }
+    }
+}
+
+.quotation-questions-bar {
+    margin: 10px 0;
+
+    p {
+        padding: 1em 0;
+        color: white;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+    
+}
