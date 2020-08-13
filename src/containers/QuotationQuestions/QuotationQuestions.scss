@@ -6,23 +6,28 @@
     display: flex;
     flex-direction: column;
 
-    .quotation-questions-row {
+    .quotation-questions-block {
         display: flex;
-        flex-direction: row;
-        @include b.for-tablet() {
-            flex-direction: column;
-        }
+        flex-direction: column;
 
-        .quotation-question-container {
-            margin: 5px;
-            &:nth-child(1) {
-                margin-left: 0px
-            }
-            &:nth-last-child(1) {
-                margin-left: 0px
-            }
+        .quotation-questions-row {
+            display: flex;
+            flex-direction: row;
             @include b.for-tablet() {
-                margin: 2.5px 0;
+                flex-direction: column;
+            }
+
+            .quotation-question-container {
+                margin: 5px;
+                &:nth-child(1) {
+                    margin-left: 0px
+                }
+                &:nth-last-child(1) {
+                    margin-left: 0px
+                }
+                @include b.for-tablet() {
+                    margin: 2.5px 0;
+                }
             }
         }
     }

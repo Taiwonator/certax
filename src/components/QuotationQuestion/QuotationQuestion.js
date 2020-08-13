@@ -5,7 +5,11 @@ import Input from '../Input/Input';
 const QuotationQuestion = (props) => {
     return ( 
     <div className='quotation-question-container' style={{borderColor: props.color}}>
-       <Input />
+        <div className='quotation-question-text'>
+            <h3 style={{color: props.color}}>Company Industry</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+        </div>
+       <Input type={props.type} color={props.color}/>
     </div> 
     );
 }

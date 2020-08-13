@@ -1,0 +1,100 @@
+@use '../../stylesheets/basics' as b;
+
+.radio-wrapper {
+    display: flex;
+    justify-content: center;
+
+    @include b.for-tablet() {
+        flex-direction: column;
+    }
+
+    .radio-container {
+        margin: 2.5px;
+            &:nth-child(1) {
+                margin-left: 0px
+            }
+            &:nth-last-child(1) {
+                margin-left: 0px
+            }
+            @include b.for-tablet() {
+                margin: 2.5px 0;
+            }
+
+        input[type='radio'] {
+            display: none;
+            &:checked + .radio {
+                background: #525288;
+                color: white;
+                border-color: #525288;
+                border-width: 2px;
+            }
+        }
+
+        .radio {
+            position: relative;
+            height: 45px;
+            min-width: 110px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-width: .5px;
+            border-style: solid;
+            transition: all .1s ease-in;
+            @include b.no-text-highlight;
+            color: #525288;
+        }
+
+    }
+}
+
+select {
+    height: 45px;
+    border: none;
+    outline: none;
+    border-style: solid;
+    border-width: .5px;
+    border-radius: 0;
+    border-color: #525288;
+    font-size: 16px;
+    font-weight: 100;
+    padding: 12px 10px;
+    color: #525288;
+}
+
+.number-input-container {
+    height: 45px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    * {
+        height: 100%;
+    }
+
+    input {
+        text-align: center;
+        border: none;
+        outline: none;
+        border-style: solid;
+        border-width: .5px;
+        border-radius: 0;
+        border-color: #525288;
+        font-size: 16px;
+        font-weight: 100;
+        margin: 0 5px;
+        @include b.for-phone() {
+            width: 50px;
+        }
+    }
+
+    div {
+        padding: 0 20px;
+        background: #525288;
+        display: flex;
+        color: white;
+        align-items: center;
+        @include b.no-text-highlight;
+    }
+}
