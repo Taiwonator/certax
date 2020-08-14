@@ -87,6 +87,7 @@
                     p {
                         text-transform: uppercase;
                         font-size: calc(19px + (25 - 19) * ((100vw - 480px) / (1920 - 480)));
+                        font-weight: 100;
                         text-align: left;
                     }
 

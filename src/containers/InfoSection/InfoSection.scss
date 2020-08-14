@@ -25,6 +25,15 @@
                     display: none;
                 }
             }
+
+            .content-container {
+                p {
+                    max-width: 80%;
+                    @include b.for-phone() {
+                        max-width: unset;
+                    }
+                }
+            }
         }
 
         .left-side-graphic {
