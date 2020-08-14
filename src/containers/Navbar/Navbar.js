@@ -39,7 +39,7 @@ class Navbar extends Component {
             <ul className='navbar-items'>
                 <ToggleButton color={this.props.colors.yellow} toggleNavbar={this.toggleNavbar} shape='cross' inverse='true'/>
                 <NavbarItemList scrollTo={this.scrollTo} label_scrolls={this.props.label_scrolls} labels={this.props.labels} color={this.props.colors.yellow} />
-                <ToggleSwitch colors={this.props.colors} toggleDarkMode={this.props.toggleDarkMode}/>
+                {/* <ToggleSwitch colors={this.props.colors} toggleDarkMode={this.props.toggleDarkMode}/> */}
             </ul>
         </nav>
     )}
