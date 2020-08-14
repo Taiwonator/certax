@@ -1,9 +1,10 @@
 @use '../../stylesheets/basics' as b;
 
 .big-testimony-container {
+    position: relative;
     display: flex;
     width: 80%;
-    height: 600px;
+    min-height: 600px;
     margin: 0 auto;
     @include b.for-tablet() {
         flex-direction: column;
@@ -23,6 +24,7 @@
 
     .big-testimony-image {
         flex-basis: 60%;
+        min-height: 400px;
         @include b.image-basics;
         filter: brightness(.8) blur(.2px);
 

@@ -1,3 +1,5 @@
+@use '../../stylesheets/basics' as b;
+
 .navbar-container {
     position: fixed;
     height: 80px;
@@ -39,6 +41,10 @@
         width: 100%;
         justify-content: space-evenly;
         align-items: center; 
+
+        @include b.for-phone() {
+            height: 75%;
+        }
 
         .navbar-items-list {
             width: 100%;
