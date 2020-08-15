@@ -71,7 +71,17 @@
             }]
         }, 
         "getaquote": {
-            "image": "https://images.unsplash.com/photo-1554224155-3a58922a22c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1325&q=80"
+            "output": {
+                        "questions" : {},
+                        "newQuestions" : [
+                            {"question": "Company Industry", "type": "multi"}, //Added type
+                            {"question": "Company Field", "type": "multi"}, 
+                            {"question": "Turnover amount", "type": "number"}
+                        ],
+                        "quote" : 49,
+                        "batch" : 1,
+                        "moreQuestionsAvailable" : true
+            }
         }, 
         "services": {
             "services": [
