@@ -22,12 +22,12 @@ const Input = (props) => {
     } else if(props.type == 'binary') {
         let input = <div className='radio-wrapper'>
         <div className='radio-container'>
-            <input type='radio' id={'no_key'} name={'yes-no'} value={'no'} onChange={e => setValue(e.target.value)} disabled={locked}/>
-            <label htmlFor={'no_key'} className='radio'>NO</label>
+            <input type='radio' id={`no_${props.question}`} name={`yes-no_${props.question}`} value={'no'} onChange={e => setValue(e.target.value)} disabled={locked}/>
+            <label htmlFor={`no_${props.question}`} className='radio'>NO</label>
         </div>
         <div className='radio-container'>
-            <input type='radio' id={'yes_key'} name={'yes-no'} value={'yes'} onChange={e => setValue(e.target.value)} disabled={locked}/>
-            <label htmlFor={'yes_key'} className='radio'>YES</label>
+            <input type='radio' id={`yes_${props.question}`} name={`yes-no_${props.question}`} value={'yes'} onChange={e => setValue(e.target.value)} disabled={locked}/>
+            <label htmlFor={`yes_${props.question}`} className='radio'>YES</label>
         </div>
         </div>
         output = input;

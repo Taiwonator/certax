@@ -26,14 +26,14 @@ class GetAQuote extends Component {
                         <h3>YOUR PRICE</h3>
                         <div className='get-a-quote-price'>
                             <p className='get-a-quote-price-currency'>£</p>
-                            <p className='get-a-quote-price-value'>59</p>
+                            <p className='get-a-quote-price-value'>{this.props.data.quote}</p>
                             <p className='get-a-quote-price-per'>/mon</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <QuotationQuestions colors={this.props.colors}/>
+            <QuotationQuestions data={this.props.data} colors={this.props.colors}/>
         </div>
         );
     }
