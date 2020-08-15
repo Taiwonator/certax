@@ -7,17 +7,20 @@ class GetAQuote extends Component {
     constructor(props) {
         super(props);
         this.state = { 
+            // questions: [],
             questions: [],
             batch: 0,
          }
     }
 
     addBatch = _ => {
-        let new_batch = data.newQuestions[this.state.batch];
-        this.setState(prevState => ({
-            questions: [...prevState.questions, new_batch], 
-            batch: prevState.batch + 1
-        }))
+        if(this.state.batch < this.props.data.questions.length) {
+            let new_batch = this.props.data.questions[this.state.batch];
+            this.setState(prevState => ({
+                questions: [...prevState.questions, new_batch], 
+                batch: prevState.batch + 1
+            }))
+        }
     }
 
     addBatchTwo = _ => {

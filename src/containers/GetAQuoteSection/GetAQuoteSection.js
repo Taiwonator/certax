@@ -20,7 +20,7 @@ const GetAQuoteSection = React.forwardRef((props, ref) => {
         return (
             <div ref={ref} className='get-a-quote-section-container'>
                 <Subheader text='WANT TO SEE YOUR QUOTE?' color={props.colors.lightblue} underline={false}/>
-                <GetAQuote colors={props.colors} data={props.data.output}/>
+                <GetAQuote colors={props.colors} data={props.data}/>
             </div>
         )
 })

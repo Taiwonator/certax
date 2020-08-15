@@ -71,22 +71,24 @@
             }]
         }, 
         "getaquote": {
-            "output": {
-                        "questions" : [
-                            {"question": "Company Industry", "type": "multi"}, //Added type
-                            {"question": "Company Field", "type": "multi"}, 
-                            {"question": "Turnover amount", "type": "number"}
-                        ],
-                        "newQuestions" : [
-                            {"question": "Self Assesment", "type": "binary"}, 
-                            {"question": "Bookkeeping", "type": "binary"}, 
-                            {"question": "Payroll", "type": "binary"}, 
-                            {"question": "VAT registered?", "type": "binary"}
-                        ],
-                        "quote" : 49,
-                        "batch" : 2,
-                        "moreQuestionsAvailable" : true
-            }
+            "questions":    [
+                                [
+                                    {"question": "Self Assesment", "type": "binary"}
+                                ], 
+                                [
+                                    {"question": "What industry are you in?", "type": "multi"},
+                                    {"question": "What type of legal entity needs the accounts done?", "type": "multi"},
+                                    {"question": "Is the company VAT registered", "type": "binary"}
+                                ],
+                                [
+                                    {"question": "How many directors are in the company?", "type": "number"},
+                                    {"question": "Do you require book keeping?", "type": "binary"},
+                                    {"question": "How many employees need payroll", "type": "number"}
+                                ],
+                                [
+                                    {"question": "What is your estimated annual turnover", "type": "number"}
+                                ]
+                            ]
         }, 
         "services": {
             "services": [
