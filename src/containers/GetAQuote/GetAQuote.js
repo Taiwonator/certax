@@ -6,7 +6,22 @@ import QuotationQuestions from '../QuotationQuestions/QuotationQuestions';
 class GetAQuote extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { 
+            questions: [],
+            batch: 0,
+         }
+    }
+
+    addBatch = _ => {
+        let new_batch = data.newQuestions[this.state.batch];
+        this.setState(prevState => ({
+            questions: [...prevState.questions, new_batch], 
+            batch: prevState.batch + 1
+        }))
+    }
+
+    addBatchTwo = _ => {
+
     }
 
     render() { 
@@ -33,7 +48,7 @@ class GetAQuote extends Component {
                 </div>
             </div>
 
-            <QuotationQuestions data={this.props.data} colors={this.props.colors}/>
+            <QuotationQuestions questions={this.state.questions} data={this.props.data} colors={this.props.colors} addBatch={this.addBatch}/>
         </div>
         );
     }

@@ -6,7 +6,6 @@ const Input = (props) => {
     const [locked, setLocked] = useState(false);
 
     let output = null;
-    console.log(value);
     if(props.type == 'multi') {
         let style = (locked) ? {color: 'white', backgroundColor: props.color} : {color: props.color, backgroundColor: 'unset'}
         let input = <>

@@ -35,6 +35,10 @@
 
 .quotation-questions-bar {
     margin: 10px 0;
+    transition: all .1s ease-in-out;
+    &:hover {
+        filter: brightness(.75);
+    }
 
     p {
         padding: 1em 0;

@@ -4,17 +4,12 @@ import QuotationQuestion from '../../components/QuotationQuestion/QuotationQuest
 import {chunk} from '../../helperFunctions/arrayOperations';
 
 const QuotationQuestions = (props) => {
+    console.log(props.questions);
     return ( 
     <div className='quotation-questions-container'>
-        <Bar text='General Information' color={props.colors.blue} />
-        {/* <div className='quotation-questions-block'>
-            <div className='quotation-questions-row'>
-                <QuotationQuestion question={'Company Industry'} type={'multi'} color={props.colors.blue}/>
-                <QuotationQuestion question={'Company Field'} type={'multi'} color={props.colors.blue}/>
-                <QuotationQuestion question={'Company Turnover'} type={'number'} color={props.colors.blue}/>
-            </div>
-        </div> */}
-        <Block questions={props.data.newQuestions} color={props.colors.blue}/>
+        <BlockList questions={props.questions} color={props.colors.blue}/>
+
+        <Bar text='MORE QUESTIONS' color={props.colors.yellow} onClick={props.addBatch}/>
     </div> 
     );
 }
@@ -40,6 +35,16 @@ const Block = (props) => {
         <div className='quotation-questions-block'>
             {rows}
         </div>
+    )
+}
+
+const BlockList = (props) => {
+    let question_arrays = props.questions;
+    let list = question_arrays.map(array => 
+        <Block questions={array} color={props.color} />
+    )
+    return (
+        <>{list}</>
     )
 }
 
