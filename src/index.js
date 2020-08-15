@@ -12,3 +12,23 @@ ReactDOM.render(<App colors={MockData.colors}
                      services={MockData.sections.services}
                      contactus={MockData.sections.contactus}
                      />, document.getElementById("root"));
+
+                     const data = { username: 'example' };
+
+                     fetch('https://f9o0pacig5.execute-api.eu-west-2.amazonaws.com/getUID', {
+                       method: 'POST', // or 'PUT'
+                       headers: {
+                         'Content-Type': 'application/json',
+                       },
+                       mode: 'no-cors',
+                       body: JSON.stringify(data),
+                     })
+                     .then(response => {
+                         response.text();
+                     })
+                     .then(data => {
+                       console.log('Success:', data);
+                     })
+                     .catch((error) => {
+                       console.error('Error:', error);
+                     });

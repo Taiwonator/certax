@@ -72,14 +72,19 @@
         }, 
         "getaquote": {
             "output": {
-                        "questions" : {},
-                        "newQuestions" : [
+                        "questions" : [
                             {"question": "Company Industry", "type": "multi"}, //Added type
                             {"question": "Company Field", "type": "multi"}, 
                             {"question": "Turnover amount", "type": "number"}
                         ],
+                        "newQuestions" : [
+                            {"question": "Self Assesment", "type": "binary"}, 
+                            {"question": "Bookkeeping", "type": "binary"}, 
+                            {"question": "Payroll", "type": "binary"}, 
+                            {"question": "VAT registered?", "type": "binary"}
+                        ],
                         "quote" : 49,
-                        "batch" : 1,
+                        "batch" : 2,
                         "moreQuestionsAvailable" : true
             }
         }, 

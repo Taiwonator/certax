@@ -1,5 +1,5 @@
 // copied from https://medium.com/@Dragonza/four-ways-to-chunk-an-array-e19c889eac4 (recursion)
-function chunk(array, size) {
+export function chunk(array, size) {
     if (!array) return [];
     const firstChunk = array.slice(0, size); // create the first chunk of the given array
     if (!firstChunk.length) {

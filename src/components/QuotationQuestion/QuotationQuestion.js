@@ -9,7 +9,7 @@ const QuotationQuestion = (props) => {
             <h3 style={{color: props.color}}>{props.question}</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing</p>
         </div>
-       <Input type={props.type} color={props.color}/>
+       <Input question={props.question} type={props.type} color={props.color}/>
     </div> 
     );
 }

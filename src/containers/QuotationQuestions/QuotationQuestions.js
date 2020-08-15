@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './QuotationQuestions.scss';
 import QuotationQuestion from '../../components/QuotationQuestion/QuotationQuestion';
+import {chunk} from '../../helperFunctions/arrayOperations';
 
 const QuotationQuestions = (props) => {
-    console.log(props.data);
     return ( 
     <div className='quotation-questions-container'>
         <Bar text='General Information' color={props.colors.blue} />
@@ -28,10 +28,17 @@ const Bar = (props) => {
 }
 
 const Block = (props) => {
-    console.log(props.questions.length)
+    let questions_chunked = chunk(props.questions, 3);
+    if(props.questions.length == 4) {
+        questions_chunked = chunk(props.questions, 2);
+    }
+    let rows = questions_chunked.map(row => 
+        <Row key={`key_${row[0].question}_${row.length}`} questions={row} color={props.color}/>
+    )
+
     return (
         <div className='quotation-questions-block'>
-            <Row questions={props.questions} color={props.color}/>
+            {rows}
         </div>
     )
 }
