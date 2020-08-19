@@ -13,7 +13,7 @@ ReactDOM.render(<App colors={MockData.colors}
                      contactus={MockData.sections.contactus}
                      />, document.getElementById("root"));
 
-                     fetch('https://f9o0pacig5.execute-api.eu-west-2.amazonaws.com/getUID', {
+                     fetch('https://api.certaxnorwich.accountant/getUID', {
                        method: 'GET', // or 'PUT'
                        headers: {
                          'Content-Type': 'application/json',
