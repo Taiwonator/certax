@@ -18,7 +18,7 @@ ReactDOM.render(<App colors={MockData.colors}
                        headers: {
                          'Content-Type': 'application/json',
                        },
-                      //  mode: 'no-cors',
+                       mode: 'no-cors',
                       //  credentials: 'include',
                      })
                      .then(response => {
