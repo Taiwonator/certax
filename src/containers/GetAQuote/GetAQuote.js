@@ -51,7 +51,7 @@ class GetAQuote extends Component {
                 </div>
             </div>
 
-            <QuotationQuestions questions={this.state.questions} data={this.props.data} colors={this.props.colors} addBatch={this.addBatch}/>
+            <QuotationQuestions questions={this.state.questions} colors={this.props.colors} addBatch={this.addBatch}/>
         </div>
         );
     }
