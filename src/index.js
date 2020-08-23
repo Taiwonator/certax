@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./containers/App";
 import MockData from "../mockdata.json"
-import Weather from './apitest/Weather';
+import * as Weather from './apitest/Weather';
 
 ReactDOM.render(<App colors={MockData.colors}  
                      landingpage={MockData.sections.landingpage} 
@@ -13,26 +13,5 @@ ReactDOM.render(<App colors={MockData.colors}
                      services={MockData.sections.services}
                      contactus={MockData.sections.contactus}
                      />, document.getElementById("root"));
-
-                     const data = { username: 'example' };
-
-fetch('https://f9o0pacig5.execute-api.eu-west-2.amazonaws.com/getUID', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  mode: 'no-cors',
-  credentials: 'include',
-  body: JSON.stringify(data),
-})
-.then(response => {
-    response.text();
-})
-.then(data => {
-  console.log('Success:', data);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
 
 Weather.getWeather();
