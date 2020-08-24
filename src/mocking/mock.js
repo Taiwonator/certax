@@ -47,27 +47,61 @@ export const getBatchTwo = () =>
 })
 
 export const getBatchThree = (questions) => {
+  
+    let newQuestions = [
+        {
+          key: 'requireBookeeping',
+          displayValue: 'Do you require book keeping?',
+          type: 'boolean',
+        },
+        {
+          key: 'employees',
+          displayValue: 'How many employees need payroll?',
+          type: 'number',
+        },
+    ]
+
+    const properties_question = {
+        key: 'properties',
+        displayValue: 'How many properties do you have?',
+        type: 'number'
+    }
+
+    if(questions.service == 'property investor') {
+        newQuestions.push(properties_question);
+    }
+
+    const directors_question = {
+        key: 'directors',
+        displayValue: 'How many directors are in the company',
+        type: 'number'
+    }
+
+    if(questions.legalType == 'limited company') {
+        newQuestions.push(directors_question);
+    }
+
+    const partnership_question = {
+        key: 'partners', 
+        displayValue: 'How many partners are in the company?', 
+        type: 'number'
+    }
+
+    if(questions.legalType == 'partnership') {
+        newQuestions.push(partnership_question);
+    }
+
+
     return ({
         questions : {
             'isSelfAssessment': true,
-            'service':answer2,
-            'legalType':answer3,
-            'isVat':answer4,
+            'service':'Services',
+            'legalType':'Limited Company',
+            'isVat':'yes',
           },
-          newQuestions : [
-            {
-              key: questionKey5,
-              displayValue: questionToDiplay5,
-              type: questionType5,
-            },
-            {
-              key: questionKey6,
-              displayValue: questionToDiplay6,
-              type: questionType6,
-            },
-          ],
-          qoute : value3,
+          newQuestions,
+          quote : 1200,
           batch : 3,
-          moreQuestionsAvailable : false,
+          moreQuestionsAvailable : true,
     })
 }
