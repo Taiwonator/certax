@@ -1,17 +1,16 @@
 export const hitEndpoint = _ => {
-    fetch("https://2v0ebj4v57.execute-api.eu-west-2.amazonaws.com/quoteCalculation", {
+    fetch("https://api.certaxnorwich.accountant/quoteCalculation", {
         method: 'POST', 
         headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
         }, 
         mode: 'no-cors', 
-        credentials: 'include'
+        credentials: 'include', 
+        body: JSON.stringify({answers: {}, batch: 0})
     })
         .then(response => {
-            if(response.status != 200) {
-                console.log(`something went wrong. Staus code: ${response.status}`);
-                return;
-            } else if (response.ok) {
+            if(response.ok) {
                 return response.json();
             }
         })
