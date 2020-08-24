@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./containers/App";
 import MockData from "../mockdata.json"
-import * as Weather from './apitest/Weather';
+import {hitEndpoint} from "./apitest/QuoteFunctions";
 
 ReactDOM.render(<App colors={MockData.colors}  
                      landingpage={MockData.sections.landingpage} 
@@ -14,4 +14,4 @@ ReactDOM.render(<App colors={MockData.colors}
                      contactus={MockData.sections.contactus}
                      />, document.getElementById("root"));
 
-Weather.getWeather();
+hitEndpoint();
