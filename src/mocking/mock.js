@@ -97,11 +97,39 @@ export const getBatchThree = (questions) => {
             'isSelfAssessment': true,
             'service':'Services',
             'legalType':'Limited Company',
-            'isVat':'yes',
+            'isVat':true,
           },
           newQuestions,
           quote : 1200,
           batch : 3,
           moreQuestionsAvailable : true,
+    })
+}
+
+export const getBatchFour = (questions) => {
+    let newQuestions = [];
+    const income_question = {
+        key: 'income', 
+        displayValue: 'What is your estimated annual turnover?', 
+        type: 'number'
+    }
+
+    if(questions.requireBookeeping) {
+        newQuestions.push(income_question);
+    }
+
+    return ({
+        questions : {
+            'isSelfAssessment': true,
+            'service':'Services',
+            'legalType':'Limited Company',
+            'isVat':true,
+            'requireBookeeping': true, 
+            ///
+          },
+          newQuestions,
+          quote : 1600,
+          batch : 4,
+          moreQuestionsAvailable : false,
     })
 }
