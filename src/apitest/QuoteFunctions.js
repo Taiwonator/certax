@@ -1,5 +1,5 @@
 export const hitEndpoint = _ => {
-    fetch("https://api.certaxnorwich.accountant/quoteCalculation", {
+    fetch("https://api.certaxnorwich.accountant/postQuote", {
         method: 'POST', 
         headers: {
             'Accept': 'application/json',
