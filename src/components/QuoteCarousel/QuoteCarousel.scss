@@ -1,7 +1,7 @@
 @use '../../stylesheets/basics' as b;
 
 .quote-carousel-container {
-    height: 250px;
+    height: 200px;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -23,7 +23,7 @@
     #back {
         cursor: pointer;
         p {
-            font-size: calc(16px + (20 - 16) * ((100vw - 480px) / (1920 - 480)));
+            font-size: calc(16px + (18 - 16) * ((100vw - 480px) / (1920 - 480)));
             transform: rotate(270deg);
             @include b.no-text-highlight;
         }
@@ -32,7 +32,7 @@
     #forward {
         cursor: pointer;
         p {
-            font-size: calc(16px + (20 - 16) * ((100vw - 480px) / (1920 - 480)));
+            font-size: calc(16px + (18 - 16) * ((100vw - 480px) / (1920 - 480)));
             transform: rotate(90deg);
             @include b.no-text-highlight;
         }
@@ -83,10 +83,17 @@
                     justify-content: space-evenly;
                     padding: 10%;
                     @include b.no-text-highlight;
+
+                    h3 {
+                        font-size: calc(18px + (25 - 18) * ((100vw - 480px) / (1920 - 480)));
+                        margin-bottom: 1em;
+                        font-weight: 450;
+                        text-align: center;
+                    }
                     
                     p {
                         text-transform: uppercase;
-                        font-size: calc(19px + (25 - 19) * ((100vw - 480px) / (1920 - 480)));
+                        font-size: calc(16px + (18 - 16) * ((100vw - 480px) / (1920 - 480)));
                         font-weight: 100;
                         text-align: left;
                     }
@@ -101,4 +108,30 @@
         }
     }
 
+}
+
+.wide {
+    color: red;
+    align-items: center !important;
+    width: 99.5% !important;
+    min-width: 100% !important;
+
+    .quote-carousel-item {
+        width: 100% !important;
+
+        P {
+            text-transform: none !important;
+            text-align: center !important;
+            font-size: 16px !important;
+            margin-bottom: 1em;
+        }
+
+    }
+}
+
+.tall {
+    height: 400px;
+    @include b.for-tablet() {
+        height: 650px !important;
+    }
 }

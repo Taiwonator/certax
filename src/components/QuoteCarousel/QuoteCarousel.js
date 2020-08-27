@@ -40,12 +40,16 @@ class QuoteCarousel extends Component {
 
       updateVisibleBoxes() {
         let no_boxes = 4;
-        if(this.state.width < 1024 && this.state.width > 600) {
-            no_boxes = 2;
-        } else if(this.state.width >= 0 && this.state.width <= 600) {
-            no_boxes = 1;
+        if(!this.props.wide) {
+            if(this.state.width < 1024 && this.state.width > 600) {
+                no_boxes = 2;
+            } else if(this.state.width >= 0 && this.state.width <= 600) {
+                no_boxes = 1;
+            } else {
+                no_boxes = 4;
+            }
         } else {
-            no_boxes = 4;
+            no_boxes = 1;
         }
         this.setState({
             no_boxes
@@ -54,12 +58,16 @@ class QuoteCarousel extends Component {
 
     updateListWidth() {
         let min_width = 25;
-        if(this.state.width < 1024 && this.state.width > 600) {
-            min_width = 50;
-        } else if(this.state.width >= 0 && this.state.width <= 600) {
-            min_width = 100;
+        if(!this.props.wide) {
+            if(this.state.width < 1024 && this.state.width > 600) {
+                min_width = 50;
+            } else if(this.state.width >= 0 && this.state.width <= 600) {
+                min_width = 100;
+            } else {
+                min_width = 25;
+            }
         } else {
-            min_width = 25;
+            min_width = 100;
         }
         this.setState({
             min_width
@@ -97,37 +105,41 @@ class QuoteCarousel extends Component {
 
     render() {
     return (
-            <div className='quote-carousel-container'>
+            <div className={`quote-carousel-container ${(this.props.wide) ? 'tall' : ''}`}>
                 <div id='back' onClick={this.backButton} className='quote-carousel-button'>
-                    <p style={{color: this.props.colors.yellow}}>BACK</p>
+                    <p style={{color: this.props.color}}>BACK</p>
                 </div>
                 <div className='quote-carousel-list-wrapper'>
                     <div style={{left: `${this.returnLeft()}%`}} className='quote-carousel-list'>
-                        <QuoteCarouselList colors={this.props.colors} quotes={this.props.testimonials}/>
+                        <QuoteCarouselList color={this.props.color} quotes={this.props.testimonials} wide={this.props.wide}/>
                     </div>
                 </div>
                 <div id='forward' onClick={this.forwardButton} className='quote-carousel-button'>
-                    <p style={{color: this.props.colors.yellow}}>FORWARD</p>
+                    <p style={{color: this.props.color}}>FORWARD</p>
                 </div>
             </div>
         ) 
     }
 }
 
-const QuoteCarouselItem = (props) => (
-    <div className='quote-carousel-item-container'>
+const QuoteCarouselItem = (props) => {
+    let underline = (props.wide) ? '' : <Underline color={props.color}/>;
+    let header = (props.wide) ? <h3 style={{color: props.color}}>{props.quote.header}</h3> : '';
+    return (
+    <div className={`quote-carousel-item-container ${(props.wide) ? 'wide' : ''}`}>
         <div style={{borderColor: props.color}} className='quote-carousel-item'>
+            {header}
             <p style={{color: props.color}}>{props.quote.text}</p>
-            <Underline color={props.color}/>
+            {underline}
             <h4 style={{color: props.color}}>{props.quote.author}</h4>
         </div>
     </div>
-)
+    )}
 
 const QuoteCarouselList = (props) => {
     let quotes = props.quotes;
     let list = quotes.map((quote, i) => (
-        <QuoteCarouselItem key={i} quote={quote} color={props.colors.yellow}/>
+        <QuoteCarouselItem key={i} quote={quote} color={props.color} wide={props.wide}/>
     ));
     return (
     <>{list}</>

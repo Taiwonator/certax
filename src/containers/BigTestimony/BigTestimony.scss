@@ -4,7 +4,7 @@
     position: relative;
     display: flex;
     width: 80%;
-    min-height: 600px;
+    min-height: 400px;
     margin: 0 auto;
     @include b.for-tablet() {
         flex-direction: column;
@@ -16,14 +16,14 @@
         align-items: center;
         justify-content: center;
         padding: 2em;
-        flex-basis: 40%;
+        flex-basis: 60%;
         @include b.for-tablet() {
             order: 0 !important;
         }
     }
 
     .big-testimony-image {
-        flex-basis: 60%;
+        flex-basis: 40%;
         min-height: 400px;
         @include b.image-basics;
         filter: brightness(.8) blur(.2px);
