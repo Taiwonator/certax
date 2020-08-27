@@ -75,7 +75,16 @@ const Row = (props) => {
 const QuotationQuestionList = (props) => {
     const questions = props.questions;
     let list = questions.map((question) => { 
-        return (<QuotationQuestion key={question.key} question={question.displayValue} locked={props.lockedAnswers[question.key]} answer={props.answers[question.key]} answerKey={question.key} updateAnswer={props.updateAnswer} type={question.type} color={props.color}/>)
+        return (<QuotationQuestion key={question.key} 
+                                   question={question.displayValue} 
+                                   info={question.info} 
+                                   selections={question.selections}
+                                   locked={props.lockedAnswers[question.key]} 
+                                   answer={props.answers[question.key]} 
+                                   answerKey={question.key} 
+                                   updateAnswer={props.updateAnswer} 
+                                   type={question.type} 
+                                   color={props.color}/>)
     })
     return (
         <>{list}</>

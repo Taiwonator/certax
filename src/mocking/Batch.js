@@ -12,6 +12,7 @@ const getBatchOne = (answers) => ({
       {
         key: 'isSelfAssessment',
         displayValue: 'Do you only require your income tax return to be submitted?',
+        info: 'This is the info section for income tax return',
         type: 'boolean'
       },
     ],
@@ -32,16 +33,31 @@ const getBatchTwo = (answers) => {
         {
           key: 'service',
           displayValue: 'What industry are you in?',
+          info: 'This is the info section for services',
           type: 'selection',
+          selections: {
+            services: 'Services', 
+            retail: 'Retail', 
+            manufacturing: 'Manufacturing',
+            propertyInvestor: 'Property Investor',
+            other: 'Other'
+          }
         },
         {
           key: 'legalType',
           displayValue: 'What type of legal entity needs the accounts done?',
+          info: 'This is the info section for legal entity type',
           type: 'selection',
+          selections: {
+            limitedCompany: 'Limited Company',
+            soleTrader: 'Sole Trader', 
+            partnership: 'Partnership', 
+          }
         },
         {
           key: 'isVat',
           displayValue: 'Is the company VAT registered?',
+          info: 'This is the info section for if the company is VAT registered',
           type: 'boolean',
         },
       ],
@@ -56,11 +72,13 @@ const getBatchThree = (answers) => {
         {
           key: 'requireBookeeping',
           displayValue: 'Do you require book keeping?',
+          info: 'This is the info section for requiring bookkeeping',
           type: 'boolean',
         },
         {
           key: 'employees',
           displayValue: 'How many employees need payroll?',
+          info: 'This is the info section for the number of employees on payroll',
           type: 'number',
         },
     ]
@@ -68,26 +86,30 @@ const getBatchThree = (answers) => {
     const properties_question = {
         key: 'properties',
         displayValue: 'How many properties do you have?',
+        info: 'This is the info section for the number of properties you have as a property investor',
         type: 'number'
     }
 
-    if(answers.service == 'property investor') {
+    if(answers.service == 'propertyInvestor') {
         newQuestions.push(properties_question);
     }
+    console.log(answers.service);
 
     const directors_question = {
         key: 'directors',
         displayValue: 'How many directors are in the company',
+        info: 'This is the info section for the number of directors in your company',
         type: 'number'
     }
 
-    if(answers.legalType == 'limited company') {
+    if(answers.legalType == 'limitedCompany') {
         newQuestions.push(directors_question);
     }
 
     const partnership_question = {
         key: 'partners', 
         displayValue: 'How many partners are in the company?', 
+        info: 'This is the info section the number of partners in your company',
         type: 'number'
     }
 
@@ -110,6 +132,7 @@ const getBatchFour = (answers) => {
     const income_question = {
         key: 'income', 
         displayValue: 'What is your estimated annual turnover?', 
+        info: 'This is the info section for your estimated annual turnover',
         type: 'number'
     }
 

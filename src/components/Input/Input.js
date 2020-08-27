@@ -7,12 +7,15 @@ const Input = (props) => {
 
     if(props.type == 'selection') {
         let style = (props.locked) ? {color: 'white', backgroundColor: props.color} : {color: props.color, backgroundColor: 'unset'}
+        //options selections
+        let optionsList = Object.keys(props.selections).map((key, i) => <option key={key} value={key}>{Object.values(props.selections)[i]}</option>);
         let input = <>
                         <select defaultValue={'DEFAULT'} onChange={e => props.updateAnswer(props.answerKey, e.target.value)} style={style} disabled={props.locked}>
-                            <option value="DEFAULT" disabled>Select a number</option>
-                            <option value="1">One</option>
+                            <option value="DEFAULT" disabled>Select an option</option>
+                            {/* <option value="1">One</option>
                             <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="3">Three</option> */}
+                            {optionsList}
                         </select>
                     </>;
         output = input;
