@@ -132,7 +132,7 @@ const getBatchFour = (answers) => {
 const getBatchFive = (answers) => {
   return ({
     questions : answers,
-    newQuestions,
+    newQuestions: [],
     quote : 3000,
     batch : 5,
     moreQuestionsAvailable: false,
@@ -140,7 +140,7 @@ const getBatchFive = (answers) => {
 }
 
 export const getBatch = (answers, batch) => {
-  if(batch >= 0 && batch <= 4) {
+  if(batch >= 0 && batch <= 5) {
     if (batch == 0) {
         return getReset(answers);
     } else if (batch == 1) {

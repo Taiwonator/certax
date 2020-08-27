@@ -45,7 +45,7 @@ const Content = (props) => {
     let button =  (props.buttontext != null) ? <ContentButton buttonOnHoverText={props.buttonOnHoverText} 
                                                               buttonOnHover={props.buttonOnHover}
                                                               buttonOnClick={props.buttonOnClick} 
-                                                              inverse='true' 
+                                                              inverse={'true'} 
                                                               color={props.buttoncolor} 
                                                               text={props.buttontext}/> : '';
 

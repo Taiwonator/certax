@@ -1,4 +1,5 @@
 @use '../../stylesheets/variables' as v;
+@use '../../stylesheets/basics' as b;
 
 .quotation-question-container {
     flex: 1;
@@ -12,18 +13,30 @@
     padding: 1em;
     min-height: 300px;
 
-    .quotation-question-text {
+    .quotation-question-text-container {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        height: 65%;
 
-        h3 {
-            font-size: 24px;
-            font-weight: 500;
-            font-family: v.$text-font;
+        @include b.for-tablet() {
+            justify-content: space-evenly;
+            height: 100%;
         }
 
-        p {
-            margin-top: .5em;
-            color: grey;
-            font-size: 14px;
+        .quotation-question-text {
+
+            h3 {
+                font-size: 24px;
+                font-weight: 500;
+                font-family: v.$text-font;
+            }
+
+            p {
+                margin-top: .5em;
+                color: grey;
+                font-size: 14px;
+            }
         }
     }
 }

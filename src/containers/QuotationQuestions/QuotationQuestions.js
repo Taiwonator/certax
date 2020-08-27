@@ -6,7 +6,11 @@ import {chunk} from '../../helperFunctions/arrayOperations';
 const QuotationQuestions = (props) => {
     let bar;
     if (props.quoteState.active) {
-        bar = <Bar text='Submit' color={props.colors.yellow} onClick={props.getNewBatch}/>
+        if(props.quoteState.allInputsFilled) {
+            bar = <Bar text='Submit' color={props.colors.yellow} onClick={props.getNewBatch}/>
+        } else {
+            bar = <Bar text='Answer all questions' color={props.colors.grey}/>
+        }
     } else {
         if(props.quoteState.moreQuestionsAvailable) {
             bar = ''

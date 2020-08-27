@@ -9,26 +9,27 @@ class GetAQuote extends Component {
         super(props);
         this.state = { 
            questions: [],
-           answers: {isSelfAssessment: false},
+           answers: {},
            batch: 0, 
            quote: 0,
            moreQuestionsAvailable: true, 
-           active: false
+           active: false, 
+           allInputsFilled: false
         }
     }
 
-    start = () => {
-        const batchObj = getBatch(this.state.answers, 1);
-        if(this.state.batch <= 1) {
-            this.setState({
-                questions: [batchObj.newQuestions], 
-                batch: 1, 
-                moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
-                quote: 0, 
-                active: true
-            })
-        }
-    }
+    // start = () => {
+    //     const batchObj = getBatch(this.state.answers, 1);
+    //     if(!this.state.active) {
+    //         this.setState({
+    //             questions: [batchObj.newQuestions], 
+    //             batch: 1, 
+    //             moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
+    //             quote: 0, 
+    //             active: true, 
+    //         })
+    //     }
+    // }
 
     getNewBatch = () => {
         const batchObj = getBatch(this.state.answers, this.state.batch + 1);
@@ -42,14 +43,19 @@ class GetAQuote extends Component {
             this.setState((prevState) => ({
                 answers: answersObj,
                 questions: [...prevState.questions, batchObj.newQuestions], 
-                batch: prevState.batch + 1, 
+                batch: batchObj.batch, 
                 moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
-                quote: batchObj.quote
+                quote: batchObj.quote, 
+                active: true, 
+                allInputsFilled: false
+                
             }))
         } else {
             this.setState((prevState) => ({
                 moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
-                active: false
+                active: false, 
+                quote: batchObj.quote, 
+                batch: batchObj.batch
             }))
             this.props.scrollToQuote();
         }
@@ -62,7 +68,9 @@ class GetAQuote extends Component {
             answers: [],
             batch: 0, 
             moreQuestionsAvailable: batchObj.moreQuestionsAvailable,
-            quote: 0
+            quote: 0, 
+            active: false, 
+            allInputsFilled: false
         })
     }
 
@@ -75,21 +83,44 @@ class GetAQuote extends Component {
                 ...prevState.answers,
                 [key]: value
             }
-        }));
+        }), () => this.checkInputs());
+    }
+
+    checkInputs = () => {
+        var answers = this.state.answers;
+        if(Object.values(answers).includes(0)) {
+            
+        } else {
+            this.setState({
+                allInputsFilled: true
+            })
+        }
     }
 
     render() { 
-        return ( 
-        <div className='get-a-quote-container'>
-            <div className='get-a-quote-card' style={{backgroundColor: this.props.colors.blue}}>
-                <div className='get-a-quote-card-content'>
-                <Content headertext='Instant Quotation'
+        let content;
+        if(!this.state.active && this.state.moreQuestionsAvailable) {
+            content = <Content headertext='Instant Quotation'
+                                paratext='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices.'
+                                headercolor={this.props.colors.white}
+                                paracolor={this.props.colors.white}
+                                align={'left'}
+                                buttontext='Start now'
+                                buttonOnClick={this.getNewBatch}/>
+        } else {
+            content = <Content headertext='Instant Quotation'
                          paratext='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices.'
                          headercolor={this.props.colors.white}
                          paracolor={this.props.colors.white}
                          align={'left'}
-                         buttontext={'Start now'}
-                         buttonOnClick={this.start}/>
+                         buttontext='Reset'
+                         buttonOnClick={this.reset}/>
+        } 
+        return ( 
+        <div className='get-a-quote-container'>
+            <div className='get-a-quote-card' style={{backgroundColor: this.props.colors.blue}}>
+                <div className='get-a-quote-card-content'>
+                    {content}
                 </div>
                 <div className='get-a-quote-card-image-container'>
                     <div className='get-a-quote-card-image'/>
@@ -104,7 +135,12 @@ class GetAQuote extends Component {
                 </div>
             </div>
 
-            <QuotationQuestions questions={this.state.questions} colors={this.props.colors} answers={this.state.answers} quoteState={{active: this.state.active, moreQuestionsAvailable: this.state.moreQuestionsAvailable}}  updateAnswer={this.updateAnswer} start={this.start} getNewBatch={this.getNewBatch}/>
+            <QuotationQuestions questions={this.state.questions} 
+                                colors={this.props.colors} 
+                                answers={this.state.answers} 
+                                quoteState={{active: this.state.active, moreQuestionsAvailable: this.state.moreQuestionsAvailable, allInputsFilled: this.state.allInputsFilled}}  
+                                updateAnswer={this.updateAnswer} 
+                                getNewBatch={this.getNewBatch}/>
         </div>
         );
     }
@@ -127,6 +163,7 @@ export default GetAQuote;
 
 //FRONTEND
 // Scroll up when finished X
-// Not allow submission unless all fields filled out
+// Not allow submission unless all fields filled out  X
 // Fix number input X
 // Lock inputs
+// Create Start Again feature X

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Input.scss';
 
 const Input = (props) => {
-    let locked = false;
+    let locked = true;
     let output = null;
 
     if(props.type == 'selection') {
