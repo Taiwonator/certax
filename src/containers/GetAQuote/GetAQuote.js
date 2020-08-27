@@ -14,7 +14,8 @@ class GetAQuote extends Component {
            quote: 0,
            moreQuestionsAvailable: true, 
            active: false, 
-           allInputsFilled: false
+           allInputsFilled: false,
+           lockedAnswers: {}
         }
     }
 
@@ -32,6 +33,7 @@ class GetAQuote extends Component {
     // }
 
     getNewBatch = () => {
+        this.lockAnswers();
         const batchObj = getBatch(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
         let answersObj = this.state.answers;
@@ -70,7 +72,8 @@ class GetAQuote extends Component {
             moreQuestionsAvailable: batchObj.moreQuestionsAvailable,
             quote: 0, 
             active: false, 
-            allInputsFilled: false
+            allInputsFilled: false, 
+            lockedAnswers: {}
         })
     }
 
@@ -95,6 +98,17 @@ class GetAQuote extends Component {
                 allInputsFilled: true
             })
         }
+    }
+
+    lockAnswers = () => {
+        var answers = this.state.answers;
+        let lockedAnswers = {};
+        for(var i = 0; i < Object.keys(answers).length; i++) {
+            lockedAnswers[Object.keys(answers)[i]] = true;
+        }
+        this.setState({
+            lockedAnswers
+        })
     }
 
     render() { 
@@ -138,9 +152,10 @@ class GetAQuote extends Component {
             <QuotationQuestions questions={this.state.questions} 
                                 colors={this.props.colors} 
                                 answers={this.state.answers} 
+                                lockedAnswers={this.state.lockedAnswers}
                                 quoteState={{active: this.state.active, moreQuestionsAvailable: this.state.moreQuestionsAvailable, allInputsFilled: this.state.allInputsFilled}}  
                                 updateAnswer={this.updateAnswer} 
-                                getNewBatch={this.getNewBatch}/>
+                                getNewBatch={this.getNewBatch} /> 
         </div>
         );
     }
