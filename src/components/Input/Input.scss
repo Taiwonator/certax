@@ -85,7 +85,7 @@ select {
         font-weight: 100;
         margin: 0 5px;
         @include b.for-phone() {
-            width: 50px;
+            width: 100px;
         }
     }
 

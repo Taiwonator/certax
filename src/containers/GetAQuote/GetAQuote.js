@@ -32,9 +32,15 @@ class GetAQuote extends Component {
 
     getNewBatch = () => {
         const batchObj = getBatch(this.state.answers, this.state.batch + 1);
-        console.log(batchObj.moreQuestionsAvailable);
+        let keys = batchObj.newQuestions.map(a => a.key);
+        let answersObj = this.state.answers;
+        for(var i = 0; i < keys.length; i++) {
+            answersObj[keys[i]] = 0;
+        }
+
         if(batchObj.moreQuestionsAvailable) {
             this.setState((prevState) => ({
+                answers: answersObj,
                 questions: [...prevState.questions, batchObj.newQuestions], 
                 batch: prevState.batch + 1, 
                 moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
@@ -45,7 +51,7 @@ class GetAQuote extends Component {
                 moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
                 active: false
             }))
-            // this.reset();
+            this.props.scrollToQuote();
         }
     }
 
@@ -61,6 +67,9 @@ class GetAQuote extends Component {
     }
 
     updateAnswer = (key, value) => {
+        if(value < 0) {
+            value = 0;
+        }
         this.setState((prevState) => ({
             answers: {
                 ...prevState.answers,
@@ -112,5 +121,12 @@ export default GetAQuote;
 //     ]
 // ]
 
+//BACKEND
 // Need selection options {key: value, ..., key: value}
 // Need explanation string
+
+//FRONTEND
+// Scroll up when finished X
+// Not allow submission unless all fields filled out
+// Fix number input X
+// Lock inputs

@@ -52,7 +52,7 @@ const Block = (props) => {
 
     return (
         <div className='quotation-questions-block'>
-            <Bar text='' color={props.color} />
+            {/* <Bar text='' color={props.color} /> */}
             {rows}
         </div>
     )

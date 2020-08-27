@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Input.scss';
 
 const Input = (props) => {
-    const [value, setValue] = useState(0);
     let locked = false;
     let output = null;
 
@@ -35,7 +34,7 @@ const Input = (props) => {
 
         let input = <div className='number-input-container'>
                         <div className="number-input-decrement" onClick={e => props.updateAnswer(props.answerKey, parseInt(props.answer) - 1)}>–</div>
-                        <input className="number-input" type="text" placeholder={1} value={props.answer} min={0} max={10000000000} onChange={e => props.updateAnswer(props.answerKey, parseInt(e.target.value))}/>
+                        <input className="number-input" type="text" placeholder={0} value={props.answer} min={0} max={10000000000} onChange={e => props.updateAnswer(props.answerKey, parseInt(e.target.value))}/>
                         <div className="number-input-increment" onClick={e => props.updateAnswer(props.answerKey, parseInt(props.answer) + 1)}>+</div>
                     </div>
         output = input;
