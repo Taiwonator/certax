@@ -4,7 +4,6 @@ import './ContentButton.scss';
 const ContentButton = (props) => {
     let style = {};
     //Use for onhover change
-    const [text, changeText] = useState(props.text);
 
     if(!props.inverse) {
         style = {
@@ -21,12 +20,9 @@ const ContentButton = (props) => {
     }
         
         return (
-            <div onMouseEnter={() => {if(props.buttonOnHover) changeText(props.buttonOnHoverText)}}
-                 onMouseLeave={() => {if(props.buttonOnHover) changeText(props.text)}}
-                 onClick={props.buttonOnClick} className={`button ${(!props.inverse) ? '' : 'inverse'} `} 
-                 style={style} type='button'>
-                    {text}
-                 </div>
+            <div onClick={props.buttonOnClick} className={`button ${(!props.inverse) ? '' : 'inverse'} `} style={style} type='button'>
+                {props.text}
+            </div>
         )
 }
 

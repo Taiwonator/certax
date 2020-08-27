@@ -60,6 +60,7 @@ select {
     font-weight: 100;
     padding: 12px 10px;
     color: #525288;
+    transition: all .25s ease-in-out;
 }
 
 .number-input-container {
@@ -85,8 +86,9 @@ select {
         font-weight: 100;
         margin: 0 5px;
         @include b.for-phone() {
-            width: 50px;
+            width: 100px;
         }
+        transition: all .25s ease-in-out;
     }
 
     div {

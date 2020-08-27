@@ -78,7 +78,7 @@
                                 [
                                     {"question": "What industry are you in?", "type": "multi"},
                                     {"question": "What type of legal entity needs the accounts done?", "type": "multi"},
-                                    {"question": "Is the company VAT registered", "type": "binary"}
+                                    {"question": "Is the company VAT registered", "type": "binary"}  
                                 ],
                                 [
                                     {"question": "How many directors are in the company?", "type": "number"},
@@ -130,3 +130,4 @@
         }
     }
 }
+

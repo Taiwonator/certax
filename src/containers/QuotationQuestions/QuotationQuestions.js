@@ -4,12 +4,25 @@ import QuotationQuestion from '../../components/QuotationQuestion/QuotationQuest
 import {chunk} from '../../helperFunctions/arrayOperations';
 
 const QuotationQuestions = (props) => {
-    console.log(props.questions);
+    let bar;
+    if (props.quoteState.active) {
+        if(props.quoteState.allInputsFilled) {
+            bar = <Bar text='Submit' color={props.colors.yellow} onClick={props.getNewBatch}/>
+        } else {
+            bar = <Bar text='Answer all questions' color={props.colors.grey}/>
+        }
+    } else {
+        if(props.quoteState.moreQuestionsAvailable) {
+            bar = ''
+        } else {
+            bar = <Bar text='No more questions' color={props.colors.blue}/>
+        }
+    }
+
     return ( 
     <div className='quotation-questions-container'>
-        <BlockList questions={props.questions} color={props.colors.blue}/>
-
-        <Bar text='MORE QUESTIONS' color={props.colors.yellow} onClick={props.addBatch}/>
+        <BlockList questions={props.questions} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.colors.blue}/>
+        {bar}
     </div> 
     );
 }
@@ -22,46 +35,57 @@ const Bar = (props) => {
     );
 }
 
-const Block = (props) => {
-    let questions_chunked = chunk(props.questions, 3);
-    if(props.questions.length == 4) {
-        questions_chunked = chunk(props.questions, 2);
-    }
-    let rows = questions_chunked.map(row => 
-        <Row key={`key_${row[0].question}_${row.length}`} questions={row} color={props.color}/>
-    )
-
-    return (
-        <div className='quotation-questions-block'>
-            <Bar text='' color={props.color} />
-            {rows}
-        </div>
-    )
-}
-
 const BlockList = (props) => {
     let question_arrays = props.questions;
     let list = question_arrays.map(array => 
-        <Block questions={array} color={props.color} />
+        <Block key={`block_${array[0].key}_${array.length}`} questions={array} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.color} />
     )
     return (
         <>{list}</>
     )
 }
 
+const Block = (props) => {
+    let questions_chunked = chunk(props.questions, 3);
+    if(props.questions.length == 4) {
+        questions_chunked = chunk(props.questions, 2);
+    }
+    let rows = questions_chunked.map(row => 
+        <Row key={`row_${row[0].key}_${row.length}`} questions={row} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.color}/>
+    )
+
+    return (
+        <div className='quotation-questions-block'>
+            {/* <Bar text='' color={props.color} /> */}
+            {rows}
+        </div>
+    )
+}
+
+//keys simpilar us the first question key
+
 const Row = (props) => {
     return (
             <div className='quotation-questions-row'>
-                <QuotationQuestionList questions={props.questions} color={props.color} />
+                <QuotationQuestionList questions={props.questions} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.color} />
             </div>
     )
 }
 
 const QuotationQuestionList = (props) => {
     const questions = props.questions;
-    let list = questions.map((question) => 
-        <QuotationQuestion key={question.question} question={question.question} type={question.type} color={props.color}/>
-    )
+    let list = questions.map((question) => { 
+        return (<QuotationQuestion key={question.key} 
+                                   question={question.displayValue} 
+                                   info={question.info} 
+                                   selections={question.selections}
+                                   locked={props.lockedAnswers[question.key]} 
+                                   answer={props.answers[question.key]} 
+                                   answerKey={question.key} 
+                                   updateAnswer={props.updateAnswer} 
+                                   type={question.type} 
+                                   color={props.color}/>)
+    })
     return (
         <>{list}</>
     )
