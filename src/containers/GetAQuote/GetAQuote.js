@@ -2,29 +2,20 @@ import React, { Component } from 'react';
 import './GetAQuote.scss';
 import Content from '../../components/Content/Content';
 import QuotationQuestions from '../QuotationQuestions/QuotationQuestions';
+import {getBatch} from '../../mocking/Batch';
 
 class GetAQuote extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            // questions: [],
-            questions: [],
-            batch: 0,
-         }
-    }
-
-    addBatch = _ => {
-        if(this.state.batch < this.props.data.questions.length) {
-            let new_batch = this.props.data.questions[this.state.batch];
-            this.setState(prevState => ({
-                questions: [...prevState.questions, new_batch], 
-                batch: prevState.batch + 1
-            }))
+           questions: [[{key:'isSelfAssessment', displayValue: "Do you only require your income tax return to be submitted?", type: "boolean"}]],
+           answers: {},
+           batch: 0
         }
     }
 
-    addBatchTwo = _ => {
-
+    getNewBatch = (answers, batch) => {
+        console.log("Helo");
     }
 
     render() { 
@@ -51,10 +42,19 @@ class GetAQuote extends Component {
                 </div>
             </div>
 
-            <QuotationQuestions questions={this.state.questions} colors={this.props.colors} addBatch={this.addBatch}/>
+            <QuotationQuestions questions={this.state.questions} colors={this.props.colors} getNewBatch={this.getNewBatch}/>
         </div>
         );
     }
 }
  
 export default GetAQuote;
+
+// [
+//     [
+//         {},
+//     ], 
+//     [
+//         {},
+//     ]
+// ]

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./containers/App";
 import MockData from "../mockdata.json"
 import {hitEndpoint} from "./apitest/QuoteFunctions";
-import * as QuoteMock from './mocking/mock';
+import {getBatch} from './mocking/Batch';
 
 ReactDOM.render(<App colors={MockData.colors}  
                      landingpage={MockData.sections.landingpage} 
@@ -35,4 +35,4 @@ fetch('https://api.certaxnorwich.accountant/getUID', {
 
 // hitEndpoint();
 
-console.log( QuoteMock.getBatch({requireBookeeping: true}, 4) );
+console.log( getBatch({requireBookeeping: true}, 4) );

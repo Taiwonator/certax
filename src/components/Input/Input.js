@@ -6,7 +6,7 @@ const Input = (props) => {
     const [locked, setLocked] = useState(false);
 
     let output = null;
-    if(props.type == 'multi') {
+    if(props.type == 'selection') {
         let style = (locked) ? {color: 'white', backgroundColor: props.color} : {color: props.color, backgroundColor: 'unset'}
         let input = <>
                         <select defaultValue={'DEFAULT'} onChange={e => setValue(e.target.value)} style={style} disabled={locked}>
@@ -18,7 +18,7 @@ const Input = (props) => {
                     </>;
         output = input;
 
-    } else if(props.type == 'binary') {
+    } else if(props.type == 'boolean') {
         let input = <div className='radio-wrapper'>
         <div className='radio-container'>
             <input type='radio' id={`no_${props.question}`} name={`yes-no_${props.question}`} value={'no'} onChange={e => setValue(e.target.value)} disabled={locked}/>
