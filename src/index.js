@@ -33,6 +33,6 @@ fetch('https://api.certaxnorwich.accountant/getUID', {
     console.error('Error:', error);
 });
 
-hitEndpoint();
+// hitEndpoint();
 
-console.log(QuoteMock.getBatchThree({service: 'property investor'}));
+console.log(QuoteMock.getBatch({}, 3));
