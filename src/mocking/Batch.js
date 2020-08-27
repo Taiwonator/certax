@@ -1,11 +1,12 @@
-const getReset = (answers) => 
-({
-    answers: {},
-    batch: 0
+const getReset = (answers) => ({
+    questions: [],
+    newQuestions: [],
+    quote: 0, 
+    batch: 0, 
+    moreQuestionsAvailable: true
 })
 
-const getBatchOne = (answers) =>  
-({
+const getBatchOne = (answers) => ({
     questions : {},
     newQuestions : [
       {
@@ -19,11 +20,14 @@ const getBatchOne = (answers) =>
     moreQuestionsAvailable : true
 })
 
-const getBatchTwo = (answers) => 
-({
-    questions : {
-        'isSelfAssessment': true
-      },
+const getBatchTwo = (answers) => {
+  let moreQuestionsAvailable = true;
+  if(answers.isSelfAssessment) {
+    moreQuestionsAvailable = false;
+  }
+
+  return ({
+    questions : answers,
       newQuestions : [
         {
           key: 'service',
@@ -43,8 +47,8 @@ const getBatchTwo = (answers) =>
       ],
       quote : 500,
       batch : 2,
-      moreQuestionsAvailable : true
-})
+      moreQuestionsAvailable
+})}
 
 const getBatchThree = (answers) => {
   
@@ -93,16 +97,11 @@ const getBatchThree = (answers) => {
 
 
     return ({
-        questions : {
-            'isSelfAssessment': true,
-            'service':'Services',
-            'legalType':'Limited Company',
-            'isVat':true,
-          },
-          newQuestions,
-          quote : 1200,
-          batch : 3,
-          moreQuestionsAvailable : true,
+        questions : answers,
+        newQuestions,
+        quote : 1200,
+        batch : 3,
+        moreQuestionsAvailable: true
     })
 }
 
@@ -114,38 +113,46 @@ const getBatchFour = (answers) => {
         type: 'number'
     }
 
+    let moreQuestionsAvailable = true;
     if(answers.requireBookeeping) {
         newQuestions.push(income_question);
+    } else {
+      moreQuestionsAvailable = false;
     }
 
     return ({
-        questions : {
-            'isSelfAssessment': true,
-            'service':'Services',
-            'legalType':'Limited Company',
-            'isVat':true,
-            'requireBookeeping': true, 
-            ///
-          },
-          newQuestions,
-          quote : 1600,
-          batch : 4,
-          moreQuestionsAvailable : false,
+        questions : answers,
+        newQuestions,
+        quote : 1600,
+        batch : 4,
+        moreQuestionsAvailable,
     })
+}
+
+const getBatchFive = (answers) => {
+  return ({
+    questions : answers,
+    newQuestions,
+    quote : 3000,
+    batch : 5,
+    moreQuestionsAvailable: false,
+})
 }
 
 export const getBatch = (answers, batch) => {
   if(batch >= 0 && batch <= 4) {
     if (batch == 0) {
-        return getReset(answers, batch);
+        return getReset(answers);
     } else if (batch == 1) {
-        return getBatchOne(answers, batch);
+        return getBatchOne(answers);
     } else if (batch == 2) {
-        return getBatchTwo(answers, batch);
+        return getBatchTwo(answers);
     } else if (batch == 3) {
-        return getBatchThree(answers, batch);
+        return getBatchThree(answers);
     } else if (batch == 4) {
-        return getBatchFour(answers, batch);
+        return getBatchFour(answers);
+    } else if (batch == 5) {
+        return getBatchFive(answers);
     } else {
       console.log(`Unique ERROR | Batch: ${batch}`);
       return null;

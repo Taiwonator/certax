@@ -8,14 +8,65 @@ class GetAQuote extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-           questions: [[{key:'isSelfAssessment', displayValue: "Do you only require your income tax return to be submitted?", type: "boolean"}]],
-           answers: {},
-           batch: 0
+           questions: [],
+           answers: {isSelfAssessment: false},
+           batch: 0, 
+           quote: 0,
+           moreQuestionsAvailable: true, 
+           active: false
         }
     }
 
-    getNewBatch = (answers, batch) => {
-        console.log("Helo");
+    start = () => {
+        const batchObj = getBatch(this.state.answers, 1);
+        if(this.state.batch <= 1) {
+            this.setState({
+                questions: [batchObj.newQuestions], 
+                batch: 1, 
+                moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
+                quote: 0, 
+                active: true
+            })
+        }
+    }
+
+    getNewBatch = () => {
+        const batchObj = getBatch(this.state.answers, this.state.batch + 1);
+        console.log(batchObj.moreQuestionsAvailable);
+        if(batchObj.moreQuestionsAvailable) {
+            this.setState((prevState) => ({
+                questions: [...prevState.questions, batchObj.newQuestions], 
+                batch: prevState.batch + 1, 
+                moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
+                quote: batchObj.quote
+            }))
+        } else {
+            this.setState((prevState) => ({
+                moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
+                active: false
+            }))
+            // this.reset();
+        }
+    }
+
+    reset = () => {
+        const batchObj = getBatch({}, 0);
+        this.setState({
+            questions: [], 
+            answers: [],
+            batch: 0, 
+            moreQuestionsAvailable: batchObj.moreQuestionsAvailable,
+            quote: 0
+        })
+    }
+
+    updateAnswer = (key, value) => {
+        this.setState((prevState) => ({
+            answers: {
+                ...prevState.answers,
+                [key]: value
+            }
+        }));
     }
 
     render() { 
@@ -27,7 +78,9 @@ class GetAQuote extends Component {
                          paratext='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices.'
                          headercolor={this.props.colors.white}
                          paracolor={this.props.colors.white}
-                         align={'left'}/>
+                         align={'left'}
+                         buttontext={'Start now'}
+                         buttonOnClick={this.start}/>
                 </div>
                 <div className='get-a-quote-card-image-container'>
                     <div className='get-a-quote-card-image'/>
@@ -35,14 +88,14 @@ class GetAQuote extends Component {
                         <h3>YOUR PRICE</h3>
                         <div className='get-a-quote-price'>
                             <p className='get-a-quote-price-currency'>£</p>
-                            <p className='get-a-quote-price-value'>{this.props.data.quote}</p>
+                            <p className='get-a-quote-price-value'>{this.state.quote}</p>
                             <p className='get-a-quote-price-per'>/mon</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <QuotationQuestions questions={this.state.questions} colors={this.props.colors} getNewBatch={this.getNewBatch}/>
+            <QuotationQuestions questions={this.state.questions} colors={this.props.colors} answers={this.state.answers} quoteState={{active: this.state.active, moreQuestionsAvailable: this.state.moreQuestionsAvailable}}  updateAnswer={this.updateAnswer} start={this.start} getNewBatch={this.getNewBatch}/>
         </div>
         );
     }
@@ -58,3 +111,6 @@ export default GetAQuote;
 //         {},
 //     ]
 // ]
+
+// Need selection options {key: value, ..., key: value}
+// Need explanation string
