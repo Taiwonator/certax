@@ -115,7 +115,7 @@ const getBatchFour = (answers) => {
     }
 
     if(answers.requireBookeeping) {
-        answers.push(income_question);
+        newQuestions.push(income_question);
     }
 
     return ({
@@ -144,7 +144,7 @@ export const getBatch = (answers, batch) => {
         return getBatchTwo(answers, batch);
     } else if (batch == 3) {
         return getBatchThree(answers, batch);
-    } else if (bacth == 4) {
+    } else if (batch == 4) {
         return getBatchFour(answers, batch);
     } else {
       console.log(`Unique ERROR | Batch: ${batch}`);

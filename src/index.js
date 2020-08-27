@@ -35,4 +35,4 @@ fetch('https://api.certaxnorwich.accountant/getUID', {
 
 // hitEndpoint();
 
-console.log(QuoteMock.getBatch({}, 3));
+console.log( QuoteMock.getBatch({requireBookeeping: true}, 4) );
