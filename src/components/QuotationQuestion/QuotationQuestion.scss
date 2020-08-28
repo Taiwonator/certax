@@ -2,8 +2,8 @@
 @use '../../stylesheets/basics' as b;
 
 .quotation-question-container {
-    flex: 1;
     height: 300px;
+    flex: 1;
     border-style: solid;
     border-color: black;
     border-width: .5px;
@@ -11,13 +11,14 @@
     flex-direction: column;
     justify-content: space-evenly;
     padding: 1em;
-    min-height: 300px;
+    transition: all 1s ease-in-out;
 
     .quotation-question-text-container {
         display: flex;
         justify-content: space-between;
         flex-direction: column;
         height: 65%;
+        transition: height 1s ease-in-out;
 
         @include b.for-tablet() {
             justify-content: space-evenly;
@@ -38,5 +39,14 @@
                 font-size: 14px;
             }
         }
+    }
+}
+
+.locked {
+    opacity: .5;
+    height: 200px;
+
+    .quotation-question-text-container {
+        height: 90%;
     }
 }

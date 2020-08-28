@@ -26,6 +26,11 @@ class App extends Component {
         this.contactusRef = React.createRef();
     }
 
+    componentDidMount = () => {
+        
+    }
+    
+
     darkMode = _ => {
         if(!this.state.darkmode) {
             return '';
@@ -41,14 +46,17 @@ class App extends Component {
     }
 
     // Scroll to any general element
-    scrollToMyRef = (ref, yOffset) => window.scrollTo(0, ref.current.offsetTop + yOffset)
+    scrollToMyRef = (ref, yOffset) => {
+        window.scrollTo(0, ref.current.offsetTop + yOffset);
+        console.log(ref.current.offsetTop);
+    }
 
     scrollToHome = _ => this.scrollToMyRef(this.homeRef)
     scrollToAbout = _ => this.scrollToMyRef(this.aboutRef, -150)
     scrollToInfo = _ => this.scrollToMyRef(this.infoRef, -100)
     scrollToTestimonials = _ => this.scrollToMyRef(this.testimonialsRef, -300)
     scrollToGetAQuote = _ => this.scrollToMyRef(this.getaquoteRef, 250)
-    scrollToGetAQuote = _ => this.scrollToMyRef(this.getaquoteRef, 250)
+    scrollToQuoteQuestions = ref => this.scrollToMyRef(ref, this.getaquoteRef.current.offsetTop)
     scrollToServices = _ => this.scrollToMyRef(this.servicesRef, -100)
     scrollToContactUs = _ => this.scrollToMyRef(this.contactusRef, 0)
 
@@ -66,7 +74,7 @@ class App extends Component {
                 <AboutSection ref={this.aboutRef} scrollToInfo={this.scrollToInfo} scroll={this.scrollToTestimonials} darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
                 <InfoSection ref={this.infoRef} colors={this.props.colors} scroll={this.scrollToGetAQuote} data={this.props.info}/>
                 <TestimonialSection ref={this.testimonialsRef} colors={this.props.colors} data={this.props.testimonial}/>
-                <GetAQuoteSection ref={this.getaquoteRef} scrollToQuote={this.scrollToGetAQuote} darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
+                <GetAQuoteSection ref={this.getaquoteRef} scrollToQuote={this.scrollToGetAQuote} scrollToQuoteQuestions={this.scrollToQuoteQuestions} darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
                 <ServicesSection ref={this.servicesRef} scroll={this.scrollToContactUs} darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>
                 <ContactUsSection ref={this.contactusRef} colors={this.props.colors} data={this.props.contactus}/>
                 <Footer colors={this.props.colors}

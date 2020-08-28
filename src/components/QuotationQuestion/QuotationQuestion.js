@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import './QuotationQuestion.scss';
 import Input from '../Input/Input';
 
-const QuotationQuestion = (props) => {
+const QuotationQuestion = (props) => {    
     return ( 
-    <div className='quotation-question-container' style={{borderColor: props.color}}>
+    <div className={`quotation-question-container ${(props.locked) ? 'locked' : ''}`}>
         <div className='quotation-question-text-container'>
             <div className='quotation-question-text'>
                 <h3 style={{color: props.color}}>{props.question}</h3>

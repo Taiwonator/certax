@@ -17,6 +17,8 @@ class GetAQuote extends Component {
            allInputsFilled: false,
            lockedAnswers: {}
         }
+        
+        this.ref = React.createRef();
     }
 
     // start = () => {
@@ -40,7 +42,6 @@ class GetAQuote extends Component {
         for(var i = 0; i < keys.length; i++) {
             answersObj[keys[i]] = 0;
         }
-
         if(batchObj.moreQuestionsAvailable) {
             this.setState((prevState) => ({
                 answers: answersObj,
@@ -51,7 +52,8 @@ class GetAQuote extends Component {
                 active: true, 
                 allInputsFilled: false
                 
-            }))
+            }), () => this.props.scrollToQuoteQuestions(this.ref))
+
         } else {
             this.setState((prevState) => ({
                 moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
@@ -111,6 +113,11 @@ class GetAQuote extends Component {
         })
     }
 
+    scrollToMyRef = (ref, yOffset) => {
+        window.scrollTo(0, ref.current.offsetTop + yOffset);
+        console.log(ref.current.offsetTop);
+    }
+
     render() { 
         let content;
         if(!this.state.active && this.state.moreQuestionsAvailable) {
@@ -158,6 +165,7 @@ class GetAQuote extends Component {
                                 answers={this.state.answers} 
                                 lockedAnswers={this.state.lockedAnswers}
                                 quoteState={{active: this.state.active, moreQuestionsAvailable: this.state.moreQuestionsAvailable, allInputsFilled: this.state.allInputsFilled}}  
+                                ref={this.ref}
                                 updateAnswer={this.updateAnswer} 
                                 getNewBatch={this.getNewBatch} /> 
         </div>

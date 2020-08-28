@@ -3,8 +3,9 @@ import './QuotationQuestions.scss';
 import QuotationQuestion from '../../components/QuotationQuestion/QuotationQuestion';
 import {chunk} from '../../helperFunctions/arrayOperations';
 
-const QuotationQuestions = (props) => {
+const QuotationQuestions = React.forwardRef((props, ref) => {
     let bar;
+
     if (props.quoteState.active) {
         if(props.quoteState.allInputsFilled) {
             bar = <Bar text='Submit' color={props.colors.yellow} onClick={props.getNewBatch}/>
@@ -21,11 +22,11 @@ const QuotationQuestions = (props) => {
 
     return ( 
     <div className='quotation-questions-container'>
-        <BlockList questions={props.questions} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.colors.blue}/>
+        <BlockList questions={props.questions} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.colors.blue} ref={ref}/>
         {bar}
     </div> 
     );
-}
+})
 
 const Bar = (props) => {
    return ( 
@@ -35,17 +36,17 @@ const Bar = (props) => {
     );
 }
 
-const BlockList = (props) => {
+const BlockList = React.forwardRef((props, ref) => {
     let question_arrays = props.questions;
     let list = question_arrays.map(array => 
-        <Block key={`block_${array[0].key}_${array.length}`} questions={array} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.color} />
+        <Block key={`block_${array[0].key}_${array.length}`} questions={array} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.color} ref={ref}/>
     )
     return (
         <>{list}</>
     )
-}
+})
 
-const Block = (props) => {
+const Block = React.forwardRef((props, ref) => {
     let questions_chunked = chunk(props.questions, 3);
     if(props.questions.length == 4) {
         questions_chunked = chunk(props.questions, 2);
@@ -55,12 +56,12 @@ const Block = (props) => {
     )
 
     return (
-        <div className='quotation-questions-block'>
+        <div className='quotation-questions-block' ref={ref}>
             {/* <Bar text='' color={props.color} /> */}
             {rows}
         </div>
     )
-}
+})
 
 //keys simpilar us the first question key
 
