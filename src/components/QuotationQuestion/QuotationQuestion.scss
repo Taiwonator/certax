@@ -45,8 +45,14 @@
 .locked {
     opacity: .5;
     height: 225px;
+    @include b.for-tablet() {
+        height: 275px;
+    }
 
     .quotation-question-text-container {
         height: 90%;
+        @include b.for-tablet() {
+            height: 100%;
+        }
     }
 }
