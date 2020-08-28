@@ -15,7 +15,7 @@ const QuotationQuestions = (props) => {
         if(props.quoteState.moreQuestionsAvailable) {
             bar = ''
         } else {
-            bar = <Bar text='No more questions' color={props.colors.blue}/>
+            bar = <Bar text='No more questions (scroll up to reset)' color={props.colors.blue}/>
         }
     }
 

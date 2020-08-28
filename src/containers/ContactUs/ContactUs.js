@@ -13,6 +13,7 @@ const ContactUs = (props) => {
                      paracolor={props.colors.white}
 
                      buttontext={`Chat Now`}
+                     buttoninverse={true}
                      buttoncolor={props.colors.yellow}
                      buttonOnClick={props.chatnow}
                     //  buttonOnHoverText={props.email}

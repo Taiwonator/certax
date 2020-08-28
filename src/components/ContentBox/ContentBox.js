@@ -18,6 +18,7 @@ function ContentBox(props) {
                      paracolor={props.colors.lightblue}
                      buttontext='More info'
                      buttoncolor={props.colors.yellow}
+                     buttoninverse={true}
                      buttonOnClick={props.buttonOnClick}
                      align='center'/>
         </div>

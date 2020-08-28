@@ -120,6 +120,8 @@ class GetAQuote extends Component {
                                 paracolor={this.props.colors.white}
                                 align={'left'}
                                 buttontext='Start now'
+                                buttoncolor={this.props.colors.white}
+                                buttoninverse={false}
                                 buttonOnClick={this.getNewBatch}/>
         } else {
             content = <Content headertext='Instant Quotation'
@@ -128,6 +130,8 @@ class GetAQuote extends Component {
                          paracolor={this.props.colors.white}
                          align={'left'}
                          buttontext='Reset'
+                         buttoncolor={this.props.colors.yellow}
+                         buttoninverse={true}
                          buttonOnClick={this.reset}/>
         } 
         return ( 

@@ -13,6 +13,7 @@ const ServicesMainCard = (props) => {
                          headercolor={props.colors.white}
                          paracolor={props.colors.white}
                          buttontext={'Next'}
+                         buttoninverse={true}
                          buttoncolor={color}
                          buttonOnClick={props.buttonOnClick}
                          align={'left'}/>
