@@ -1,0 +1,25 @@
+@use '../../stylesheets/basics' as b;
+
+.login-button {
+    padding: 1em 0;
+    font-size: calc(16px + (18 - 16) * ((100vw - 480px) / (1920 - 480)));
+    font-weight: 100;
+    border-width: 1px;
+    border-style: solid;
+    text-align: center;
+    @include b.no-text-highlight;
+    transition: filter .05s ease-in-out, width .2s ease-in-out, background-color .1s ease-in-out;
+    min-width: 180px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+
+    &:hover {
+        filter: saturate(1.5);
+    }
+
+    &:active {
+        filter: saturate(2);
+    }
+}
