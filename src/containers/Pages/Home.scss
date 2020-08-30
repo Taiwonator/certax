@@ -1,4 +1,4 @@
-@use '../stylesheets/variables' as v;
+@use '../../stylesheets/variables' as v;
 
 * {
     box-sizing: border-box;
@@ -43,7 +43,7 @@ body::-webkit-scrollbar-thumb {
     scrollbar-width: thin !important;
   }
 
-  .app-container {
+  .home-container {
       transition: background-color .5s ease-in-out;
   }
 
