@@ -1,19 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./containers/App";
-import MockData from "../mockdata.json"
 import {hitEndpoint} from "./apitest/QuoteFunctions";
-import {getBatch} from './mocking/Batch';
+import App from "./containers/App";
 
-ReactDOM.render(<App colors={MockData.colors}  
-                     landingpage={MockData.sections.landingpage} 
-                     about={MockData.sections.about}
-                     info={MockData.sections.info}
-                     testimonial={MockData.sections.testimonial}
-                     getaquote={MockData.sections.getaquote}
-                     services={MockData.sections.services}
-                     contactus={MockData.sections.contactus}
-                     />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
 
 // fetch('https://api.certaxnorwich.accountant/getUID', {
 //     method: 'GET', // or 'PUT'
@@ -35,4 +25,3 @@ ReactDOM.render(<App colors={MockData.colors}
 
 // hitEndpoint();
 
-// console.log( getBatch({requireBookeeping: true}, 4) );

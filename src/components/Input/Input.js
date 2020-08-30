@@ -42,6 +42,16 @@ const Input = (props) => {
                     </div>
         output = input;
 
+    } else if (props.type == 'text') {
+        let input = <>
+                        <input placeholder={props.answerKey} type='text' id={`text_${props.answerKey}`} value={props.answer} onChange={e => props.updateInput(props.answerKey, e.target.value)} spellCheck={false} onKeyDown={props.onKeyDown}/>
+                    </>;
+        output = input;
+    } else if (props.type == 'password') {
+        let input = <>
+                        <input placeholder={props.answerKey} type='password' id={`password_${props.answerKey}`} value={props.answer} onChange={e => props.updateInput(props.answerKey, e.target.value)} spellCheck={false} onKeyDown={props.onKeyDown}/>
+                    </>;
+        output = input;
     } else {
         let input = <input placeholder='not valid' />
         output = input;
