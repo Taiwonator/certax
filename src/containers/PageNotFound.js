@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './PageNotFound.scss';
-import ContentButton from '../../components/ContentButton/ContentButton';
+import ContentButton from '../components/ContentButton/ContentButton';
 import { Link } from 'react-router-dom';
 
 const PageNotFound = (props) => {

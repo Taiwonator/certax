@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Login.scss';
-import CompanyLogo from '../../components/CompanyLogo/CompanyLogo';
-import CompanyName from '../../components/CompanyName/CompanyName';
-import Input from '../../components/Input/Input';
-import LoginButton from '../../components/LoginButton/LoginButton';
+import CompanyLogo from '../components/CompanyLogo/CompanyLogo';
+import CompanyName from '../components/CompanyName/CompanyName';
+import Input from '../components/Input/Input';
+import LoginButton from '../components/LoginButton/LoginButton';
 
 class Login extends Component {
     constructor(props) {

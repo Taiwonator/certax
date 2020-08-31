@@ -1,5 +1,5 @@
-@use '../../stylesheets/basics' as b;
-@use '../../stylesheets/variables' as v;
+@use '../stylesheets/basics' as b;
+@use '../stylesheets/variables' as v;
 
 .page-not-found-container {
     @include b.center-element;

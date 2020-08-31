@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import Home from './Pages/Home';
+import Home from './Home';
 import MockData from "../../mockdata.json";
-import Login from "./Pages/Login";
+import Login from "./Login";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import PageNotFound from "./Pages/PageNotFound";
-import AdminPanel from "./Pages/AdminPanel";
+import PageNotFound from "./PageNotFound";
+import AdminPanel from "./AdminPanel";
 
 class App extends Component {
     constructor(props) {

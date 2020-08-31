@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import './Home.scss';
-import LandingPage from '../LandingPage/LandingPage.js';
-import Navbar from '../Navbar/Navbar.js';
-import AboutSection from '../AboutSection/AboutSection.js';
-import InfoSection from '../InfoSection/InfoSection.js';
-import TestimonialSection from '../TestimonialSection/TestimonialSection.js';
-import GetAQuoteSection from '../GetAQuoteSection/GetAQuoteSection';
-import ServicesSection from '../ServicesSection/ServicesSection';
-import ContactUsSection from '../ContactUsSection/ContactUsSection';
-import Footer from '../Footer/Footer';
+import LandingPage from './LandingPage/LandingPage.js';
+import Navbar from './Navbar/Navbar.js';
+import AboutSection from './AboutSection/AboutSection.js';
+import InfoSection from './InfoSection/InfoSection.js';
+import TestimonialSection from './TestimonialSection/TestimonialSection.js';
+import GetAQuoteSection from './GetAQuoteSection/GetAQuoteSection';
+import ServicesSection from './ServicesSection/ServicesSection';
+import ContactUsSection from './ContactUsSection/ContactUsSection';
+import Footer from './Footer/Footer';
 
 class Home extends Component {
     constructor(props){
