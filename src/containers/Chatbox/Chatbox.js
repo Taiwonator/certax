@@ -6,8 +6,10 @@ class Chatbox extends Component {
         super(props);
         console.log(this.props);
         this.state = { 
-
+            active: false, 
+            
         }
+
         this.data = [
             {
                 name: 'Michael', 
@@ -22,32 +24,56 @@ class Chatbox extends Component {
         ]
     }
 
+    openChatbox = () => {
+        this.setState({
+            active: true
+        })
+    }
 
+    closeChatbox = () => {
+        this.setState({
+            active: false
+        })
+    }
 
     render() { 
         return ( 
-            <div className='chatbox-container'>
-                <div className='chatbox-top-bar'>
+            <>
+            <OpenChatBoxButton color={this.props.data.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
+            <div className={`${this.state.active && 'show'} chatbox-container`}>
+                <div className='chatbox-top-bar' style={{backgroundColor: this.props.data.colors.blue}}>
                     <div className='chatbox-top-bar-text'>
                         <h3>{this.props.data.name}</h3>
                         <p>Typing...</p>
                     </div>
-                    <ChatboxButton />
+                    <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
 
                 </div>
+                <div className='chatbox-input-container'>
+                    
+                </div>
             </div> 
+            </>
         );
     }
 }
 
-const ChatboxButton = () => (
-    <svg className='chatbox-top-bar-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.05 14">
-        <rect fill="white" x="832.25" y="212.85" width="17.5" height="2.3" transform="translate(-739 450.36) rotate(-45)"/>
-        <rect fill="white" x="850.9" y="205.25" width="2.3" height="17.5" transform="translate(-735.76 458.17) rotate(-45)"/>
+const CloseChatboxButton = (props) => (
+    <svg className='chatbox-top-bar-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.47 58.31" onClick={props.onClick}>
+        <rect fill='white' className="cross" x="966.31" y="450.9" width="3.44" height="79.13" transform="translate(-1002.11 366.88) rotate(-45)" />
+        <rect fill='white' className="cross" x="928.46" y="488.74" width="79.13" height="3.44" transform="translate(-1002.11 366.88) rotate(-45)" />
     </svg>
 )
+
+const OpenChatBoxButton = (props) => (
+    <svg onClick={props.onClick} className={`${(props.active && 'hidden')} chatbox-open-button`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.24 48">
+	<circle fill={props.color} cx="28.24" cy="24" r="24"/>
+	<path fill={props.color} d="M830.41,220.42s-22.65,2.35-22.65,22.65c0,0,12.1-11.32,22.65-8.39S830.41,220.42,830.41,220.42Z" transform="translate(-807.76 -199)"/>
+</svg>
+) 
+
 
 export default Chatbox;
 
