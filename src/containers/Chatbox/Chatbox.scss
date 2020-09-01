@@ -33,6 +33,10 @@
         justify-content: space-between;
         padding: 1em 8%;
 
+        @include b.for-phone() {
+            flex-basis: 10%;
+        }
+
         .chatbox-top-bar-text {
             h3 {
                 font-family: v.$text-font;
@@ -76,6 +80,11 @@
         height: 450px;
         margin: 0 2%;
         display: flex;
+
+        @include b.for-phone() {
+            flex-basis: 75%;
+            margin: 0;
+        }
     }
 
     .chatbox-input-container {
@@ -85,6 +94,10 @@
         justify-content: space-between;
         align-items: center;
         padding: 0 2em;
+
+        @include b.for-phone() {
+            flex-basis: 15%;
+        }
 
         .chatbox-input {
             border: none;
