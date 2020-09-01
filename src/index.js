@@ -23,5 +23,5 @@ ReactDOM.render(<App />, document.getElementById("root"));
 //     console.error('Error:', error);
 // });
 
-// hitEndpoint();
+hitEndpoint();
 

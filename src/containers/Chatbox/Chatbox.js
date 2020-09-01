@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 
 class Chatbox extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
         this.state = { 
             active: false, 
-            
+            typing: false
         }
 
         this.data = [
@@ -44,7 +43,7 @@ class Chatbox extends Component {
                 <div className='chatbox-top-bar' style={{backgroundColor: this.props.data.colors.blue}}>
                     <div className='chatbox-top-bar-text'>
                         <h3>{this.props.data.name}</h3>
-                        <p>Typing...</p>
+                        <Status typing={this.state.typing}/>
                     </div>
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
@@ -52,7 +51,7 @@ class Chatbox extends Component {
 
                 </div>
                 <div className='chatbox-input-container'>
-                    
+                    {/* <SendButton color={this.props.data.colors.blue} /> */}
                 </div>
             </div> 
             </>
@@ -73,6 +72,30 @@ const OpenChatBoxButton = (props) => (
 	<path fill={props.color} d="M830.41,220.42s-22.65,2.35-22.65,22.65c0,0,12.1-11.32,22.65-8.39S830.41,220.42,830.41,220.42Z" transform="translate(-807.76 -199)"/>
 </svg>
 ) 
+
+const Status = (props) => {
+    const [index, setIndex] = useState(0);
+    const word = ['Typing', 'Typing.', 'Typing..', 'Typing...'];
+    let text = (props.typing) ? word[index] : 'Active';
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIndex(index + 1);
+            if(index > 2) {
+                setIndex(0);
+            } 
+        }, 250);
+        return () => clearTimeout(timer);
+      });
+    return <p>{text}</p>
+}
+
+const SendButton = (props) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.41 27.46">
+            <path fill={props.color} d="M859.53,213.37l-26.39-12.23a1.5,1.5,0,0,0-2,1.88l4.25,11.71-4.26,11.71a1.5,1.5,0,0,0,.88,1.93,1.53,1.53,0,0,0,1.17-.05l26.39-12.22a1.5,1.5,0,0,0,0-2.73Z" transform="translate(-831 -201)" />
+        </svg>
+    )
+}
 
 
 export default Chatbox;

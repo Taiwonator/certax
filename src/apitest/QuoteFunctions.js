@@ -11,8 +11,10 @@ export const hitEndpoint = _ => {
     })
         .then(response => {
             if(response.ok) {
+                console.log(response);
                 return response.json();
             }
         })
         .then(data => console.log(data))
 }
+
