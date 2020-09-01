@@ -81,6 +81,10 @@
     .chatbox-input-container {
         height: 75px;
         background: white;
+
+        .send-button {
+            height: 25px;
+        }
     }
 }
 
