@@ -6,12 +6,12 @@ export const hitEndpoint = _ => {
             'Content-Type': 'application/json'
         }, 
         mode: 'no-cors', 
-        credentials: 'include', 
+        credentials: 'include',
         body: JSON.stringify({answers: {}, batch: 0})
     })
         .then(response => {
+            console.log(response);
             if(response.ok) {
-                console.log(response);
                 return response.json();
             }
         })
