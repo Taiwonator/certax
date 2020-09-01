@@ -51,6 +51,7 @@ class Chatbox extends Component {
 
                 </div>
                 <div className='chatbox-input-container'>
+                    <input className='chatbox-input' type='text' placeholder='Type your message...' />
                     <SendButton color={this.props.data.colors.blue} />
                 </div>
             </div> 
