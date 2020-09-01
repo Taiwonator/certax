@@ -1,0 +1,59 @@
+@use '../../stylesheets/basics' as b;
+@use '../../stylesheets/variables' as v;
+
+.chatbox-container {
+    position: absolute;
+    height: 500px;
+    width: 500px;
+    background: grey;
+    z-index: 10;
+    @include b.center-element;
+
+    .chatbox-top-bar {
+        background-color: #5661AF;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1em 8%;
+
+        .chatbox-top-bar-text {
+            h3 {
+                font-family: v.$text-font;
+                font-size: 24px;
+                font-weight: 300;
+                margin-bottom: .2em;
+            } 
+
+            p {
+                font-size: 12px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                &:before {
+                    content: "";
+                    height: 10px;
+                    width: 10px;
+                    border-radius: 100%;
+                    background-color: #44EA9A;
+                    margin-right: .5em;
+                }
+            }
+        }
+
+        .chatbox-top-bar-button {
+            height: 45px;
+            width: 45px;
+            padding: 2%;
+
+            &:hover {
+                filter: brightness(.8);
+            }
+        }
+    }
+
+    .chatbox-body {
+        background-color: #FCFCFC;
+    }
+}

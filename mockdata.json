@@ -148,7 +148,15 @@
         "contactus": {
             "email": "dummyemail@gmail.com", 
             "image": "https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-        }
+        } 
+    }, 
+    "chatbox": {
+        "colors": {
+            "blue": "#5661AF", 
+            "yellow": "#E2AA60"
+        }, 
+        "name": "Certax", 
+        "logo": "./src/images/WhiteCertax.png"
     }
 }
 

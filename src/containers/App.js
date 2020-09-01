@@ -43,7 +43,8 @@ class App extends Component {
                                     testimonial={MockData.sections.testimonial}
                                     getaquote={MockData.sections.getaquote}
                                     services={MockData.sections.services}
-                                    contactus={MockData.sections.contactus} />
+                                    contactus={MockData.sections.contactus} 
+                                    chatbox={MockData.chatbox}/>
                         )}> 
                     </Route>
                     <Route path='/admin' 

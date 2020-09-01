@@ -9,6 +9,7 @@ import GetAQuoteSection from './GetAQuoteSection/GetAQuoteSection';
 import ServicesSection from './ServicesSection/ServicesSection';
 import ContactUsSection from './ContactUsSection/ContactUsSection';
 import Footer from './Footer/Footer';
+import Chatbox from './Chatbox/Chatbox';
 
 class Home extends Component {
     constructor(props){
@@ -69,7 +70,7 @@ class Home extends Component {
                         labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact Us']}
                         label_scrolls={[this.scrollToAbout, this.scrollToTestimonials, this.scrollToGetAQuote, this.scrollToServices, this.scrollToContactUs]}
                         />
-                
+                <Chatbox data={this.props.chatbox}/>
                 <LandingPage ref={this.homeRef} scroll={this.scrollToAbout} darkMode={this.darkMode} colors={this.props.colors} data={this.props.landingpage} />
                 <AboutSection ref={this.aboutRef} scrollToInfo={this.scrollToInfo} scroll={this.scrollToTestimonials} darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
                 <InfoSection ref={this.infoRef} colors={this.props.colors} scroll={this.scrollToGetAQuote} data={this.props.info}/>
