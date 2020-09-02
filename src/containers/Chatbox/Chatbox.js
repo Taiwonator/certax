@@ -5,7 +5,7 @@ class Chatbox extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            active: false, 
+            active: true, 
             typing: false
         }
 
@@ -48,21 +48,7 @@ class Chatbox extends Component {
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
-                    <div className='chatbox-messages-container'>
-                        <div className='chatbox-avatar'></div>
-                        <div className='chatbox-messages'>
-                            <p>Hello my name is</p>
-                            <p>Nice to meet you</p>
-                        </div>
-                    </div>
-
-                    <div className='chatbox-messages-container'>
-                        <div className='chatbox-avatar'></div>
-                        <div className='chatbox-messages'>
-                            <p>Hello my name is</p>
-                            <p>Nice to meet you</p>
-                        </div>
-                    </div>
+                    <MessageBlock image={this.props.data.logo}/>
                 </div>
                 <div className='chatbox-input-container'>
                     <input className='chatbox-input' type='text' placeholder='Type your message...' />
@@ -109,6 +95,22 @@ const SendButton = (props) => {
         <svg className='send-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.41 27.46">
             <path fill={props.color} d="M859.53,213.37l-26.39-12.23a1.5,1.5,0,0,0-2,1.88l4.25,11.71-4.26,11.71a1.5,1.5,0,0,0,.88,1.93,1.53,1.53,0,0,0,1.17-.05l26.39-12.22a1.5,1.5,0,0,0,0-2.73Z" transform="translate(-831 -201)" />
         </svg>
+    )
+}
+
+const MessageBlock = (props) => {
+    //props.person = admin | bot | user
+    console.log(props.image);
+    return (
+                <div className='chatbox-messages-container'>
+                    <div className='chatbox-avatar'>
+                        <img src={props.image} />
+                    </div>
+                    <div className='chatbox-messages'>
+                        <p>Hello my name is</p>
+                        <p>Nice to meet you</p>
+                    </div>
+                </div>
     )
 }
 
