@@ -119,7 +119,7 @@ class GetAQuote extends Component {
 
     render() { 
         let content;
-        if(!this.state.active && this.state.moreQuestionsAvailable) {
+        if(!this.state.active && this.state.questions.length == 0) {
             content = <Content headertext='Instant Quotation'
                                 paratext='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices.'
                                 headercolor={this.props.colors.white}
