@@ -23,7 +23,6 @@ export const getABatch = (answers, questions, batch) => {
     const data = fetch("https://api.certaxnorwich.accountant/postQuote", {
         method: 'POST', 
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         }, 
         credentials: 'include',
@@ -41,6 +40,19 @@ export const getABatch = (answers, questions, batch) => {
         .catch(error => console.log("Error: ", error))
     return data;
 }
+
+// export async function getABatch(answers, questions, batch) {
+//     let jsonObject = {answers: convertObject(answers, questions), batch}
+//     const response = await fetch("https://api.certaxnorwich.accountant/postQuote", {
+//         method: 'POST', 
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }, 
+//         credentials: 'include',
+//         body: JSON.stringify(jsonObject)
+//     });
+//     return response.json();
+// }
 
 const convertObject = (answers, questions) => {
     let answers_array = {};

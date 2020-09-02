@@ -55,6 +55,14 @@ class Chatbox extends Component {
                             <p>Nice to meet you</p>
                         </div>
                     </div>
+
+                    <div className='chatbox-messages-container'>
+                        <div className='chatbox-avatar'></div>
+                        <div className='chatbox-messages'>
+                            <p>Hello my name is</p>
+                            <p>Nice to meet you</p>
+                        </div>
+                    </div>
                 </div>
                 <div className='chatbox-input-container'>
                     <input className='chatbox-input' type='text' placeholder='Type your message...' />
