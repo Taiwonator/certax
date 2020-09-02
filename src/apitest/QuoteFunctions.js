@@ -9,11 +9,67 @@ export const hitEndpoint = _ => {
         body: JSON.stringify({answers: {}, batch: 0})
     })
         .then(response => {
-            console.log(response);
             if(response.ok) {
                 return response.json();
             }
         })
         .then(data => console.log(data))
 }
+
+
+
+export const getABatch = (answers, questions, batch) => {
+    let jsonObject = {answers: convertObject(answers, questions), batch}
+    console.log(jsonObject);
+    fetch("https://api.certaxnorwich.accountant/postQuote", {
+        method: 'POST', 
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }, 
+        credentials: 'include',
+        body: JSON.stringify(jsonObject)
+    })
+        .then(response => {
+            if(response.ok) {
+                return response.json();
+            }
+        })
+        .then(data => console.log(data))
+}
+
+const convertObject = (answers, questions) => {
+    let answers_array = {};
+    if(Object.keys(answers).length === 0 && answers.constructor === Object) {
+        
+    } else {
+        const answer_keys = Object.keys(answers).map((key) => {
+            answers_array[key] = {
+                                    'questionKey': getQuestionFromKey(questions, key), 
+                                    'answer': answers[key]
+                                }
+        })
+    }
+    return answers_array;
+}
+
+const getQuestionFromKey = (questions, key) => {
+    let questions_array = [];
+    for(var i = 0; i < questions.length; i++) {
+        for(var j = 0; j < questions[i].length; j++) {
+            let question = questions[i][j];
+            if(!questions_array.includes(question)) {
+                questions_array.push(question);
+            }
+        }
+    }
+    let displayValue = '';
+    const questions_keys = questions_array.map((question) => {
+        if(question.key == key) {
+           displayValue = question.displayValue;
+        }
+    })
+    return displayValue;
+}
+
 

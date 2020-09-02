@@ -49,7 +49,6 @@ class Home extends Component {
     // Scroll to any general element
     scrollToMyRef = (ref, yOffset) => {
         window.scrollTo(0, ref.current.offsetTop + yOffset);
-        console.log(ref.current.offsetTop);
     }
 
     scrollToHome = _ => this.scrollToMyRef(this.homeRef)
