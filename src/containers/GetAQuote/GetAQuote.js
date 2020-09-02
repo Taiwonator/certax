@@ -19,24 +19,27 @@ class GetAQuote extends Component {
            allInputsFilled: false,
            lockedAnswers: {}
         }
-        
+        // console.log(this.increment(1000, 1, true));
         this.ref = React.createRef();
     }
 
     getNewBatch = async () => {
         this.lockAnswers();
-        let batchObj;
+        // let batchObj;
         if(this.state.batch == 0) {
-            batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
+            // batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
         } else {
-            batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.quote);
+            // batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.quote);
         }
-        console.log("Batch Object in Get A Quote", batchObj);
-        // const batchObj = getBatch(this.state.answers, this.state.batch + 1);
+        let batchObj = getBatch(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
         let answersObj = this.state.answers;
         for(var i = 0; i < keys.length; i++) {
-            answersObj[keys[i]] = 0;
+            if(batchObj.newQuestions[i].type == 'number') {
+                answersObj[keys[i]] = 0;
+            } else {
+                answersObj[keys[i]] = null;
+            }
         }
         if(batchObj.newQuestions.length != 0) {
             this.setState((prevState) => ({
@@ -61,6 +64,10 @@ class GetAQuote extends Component {
         }
     }
 
+    initAnswersObject = () => {
+        
+    }
+
     reset = () => {
         const batchObj = getBatch({}, 0);
         this.setState({
@@ -75,9 +82,19 @@ class GetAQuote extends Component {
         })
     }
 
-    updateAnswer = (key, value) => {
-        if(value < 0) {
-            value = 0;
+    updateAnswer = (key, value, int) => {
+        if(int) {
+            if(value.length != 0) {
+                value = parseInt(value);
+                if(value < 0) {
+                    value = 0;
+                }
+            } else {
+                value = 0;
+                console.log(value);
+            }
+        } else {
+            value = String(value);
         }
         this.setState((prevState) => ({
             answers: {
@@ -89,7 +106,7 @@ class GetAQuote extends Component {
 
     checkInputs = () => {
         var answers = this.state.answers;
-        if(Object.values(answers).includes(0)) {
+        if(Object.values(answers).includes(null)) {
             
         } else {
             this.setState({
@@ -115,6 +132,22 @@ class GetAQuote extends Component {
 
     scrollToMyRef = (ref, yOffset) => {
         window.scrollTo(0, ref.current.offsetTop + yOffset);
+    }
+
+    increment = (value, step, increase) => {
+        let out;
+        const mult = (step > 0) ? 1 : -1;
+        if(increase) {
+            if(value >= 0 && value < 10) {
+                out = value + (step*1);
+            } else {
+                const upperTen = Math.pow(10, Math.ceil(Math.log10(value + mult)));
+                out = value + (step*(upperTen / 10));
+            }
+        } else {
+            out = value + step;
+        }
+        return out;
     }
 
     render() { 
@@ -149,7 +182,7 @@ class GetAQuote extends Component {
                 <div className='get-a-quote-card-image-container'>
                     <div className='get-a-quote-card-image'/>
                     <div className='get-a-quote-price-container'>
-                        <h3>YOUR PRICE</h3>
+                        <h3>YOUR APPROX. PRICE</h3>
                         <div className='get-a-quote-price'>
                             <p className='get-a-quote-price-currency'>£</p>
                             <p className='get-a-quote-price-value'>{(this.state.quote / 12).toFixed(2)}</p>
@@ -166,7 +199,8 @@ class GetAQuote extends Component {
                                 quoteState={{active: this.state.active, moreQuestionsAvailable: this.state.moreQuestionsAvailable, allInputsFilled: this.state.allInputsFilled}}  
                                 ref={this.ref}
                                 updateAnswer={this.updateAnswer} 
-                                getNewBatch={this.getNewBatch} /> 
+                                getNewBatch={this.getNewBatch} 
+                                increment={this.increment}/> 
         </div>
         );
     }
@@ -193,4 +227,5 @@ export default GetAQuote;
 // Fix number input X
 // Lock inputs X
 // Create Start Again feature X
+
 // Fix returning questions multiple times

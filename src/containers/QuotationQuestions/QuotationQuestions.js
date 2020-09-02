@@ -22,7 +22,7 @@ const QuotationQuestions = React.forwardRef((props, ref) => {
 
     return ( 
     <div className='quotation-questions-container'>
-        <BlockList questions={props.questions} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.colors.blue} ref={ref}/>
+        <BlockList questions={props.questions} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} increment={props.increment} color={props.colors.blue} ref={ref}/>
         {bar}
     </div> 
     );
@@ -39,7 +39,7 @@ const Bar = (props) => {
 const BlockList = React.forwardRef((props, ref) => {
     let question_arrays = props.questions;
     let list = question_arrays.map(array => 
-        <Block key={`block_${array[0].key}_${array.length}`} questions={array} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.color} ref={ref}/>
+        <Block key={`block_${array[0].key}_${array.length}`} questions={array} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} increment={props.increment} color={props.color} ref={ref}/>
     )
     return (
         <>{list}</>
@@ -52,7 +52,7 @@ const Block = React.forwardRef((props, ref) => {
         questions_chunked = chunk(props.questions, 2);
     }
     let rows = questions_chunked.map(row => 
-        <Row key={`row_${row[0].key}_${row.length}`} questions={row} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.color}/>
+        <Row key={`row_${row[0].key}_${row.length}`} questions={row} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} increment={props.increment} color={props.color}/>
     )
 
     return (
@@ -68,7 +68,7 @@ const Block = React.forwardRef((props, ref) => {
 const Row = (props) => {
     return (
             <div className='quotation-questions-row'>
-                <QuotationQuestionList questions={props.questions} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} color={props.color} />
+                <QuotationQuestionList questions={props.questions} answers={props.answers} lockedAnswers={props.lockedAnswers} updateAnswer={props.updateAnswer} increment={props.increment} color={props.color} />
             </div>
     )
 }
@@ -83,7 +83,8 @@ const QuotationQuestionList = (props) => {
                                    locked={props.lockedAnswers[question.key]} 
                                    answer={props.answers[question.key]} 
                                    answerKey={question.key} 
-                                   updateAnswer={props.updateAnswer} 
+                                   updateAnswer={props.updateAnswer}
+                                   increment={props.increment} 
                                    type={question.type} 
                                    color={props.color}/>)
     })

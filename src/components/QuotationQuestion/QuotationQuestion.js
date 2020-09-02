@@ -10,7 +10,7 @@ const QuotationQuestion = (props) => {
                 <h3 style={{color: props.color}}>{props.question}</h3>
                 <p>{props.info}</p>
             </div>
-            <Input answerKey={props.answerKey} question={props.question} answer={props.answer} selections={props.selections} locked={props.locked} type={props.type} updateAnswer={props.updateAnswer} color={props.color}/>
+            <Input answerKey={props.answerKey} question={props.question} answer={props.answer} selections={props.selections} locked={props.locked} type={props.type} updateAnswer={props.updateAnswer} increment={props.increment} color={props.color}/>
        </div>
     </div> 
     );

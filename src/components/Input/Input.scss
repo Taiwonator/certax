@@ -115,3 +115,13 @@ input[type='text'], input[type='password'] {
     color: #525288;
     transition: all .25s ease-in-out;
 }
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
