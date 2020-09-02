@@ -97,9 +97,10 @@
 
             .chatbox-avatar {
                 background: rgb(82, 82, 136);
-                width: 50px;
+                min-width: 50px;
                 height: 50px;
                 border-radius: 100%;
+                display: flex;
             }
 
             .chatbox-messages {
@@ -111,7 +112,8 @@
                 p {
                     background: #F1F0F0;
                     padding: 1em;
-                    border-radius: 15px;
+                    border-radius: 25px;
+                    margin-bottom: .5em;
                 }
             }
         }

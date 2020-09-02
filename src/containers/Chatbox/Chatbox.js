@@ -48,7 +48,7 @@ class Chatbox extends Component {
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
-                    <MessageBlock />
+                    <MessageBlock sender={'user'}/>
                 </div>
                 <div className='chatbox-input-container'>
                     <input className='chatbox-input' type='text' placeholder='Type your message...' />
@@ -101,13 +101,12 @@ const SendButton = (props) => {
 const MessageBlock = (props) => {
     //props.person = admin | bot | user
     return (
-                <div className='chatbox-messages-container'>
-                    <div className='chatbox-avatar'>
-                        {/* <img src={props.image} /> */}
-                    </div>
+                <div className={`chatbox-messages-container ${props.sender == 'user' && 'user'}`}>
+                    {/* <div className='chatbox-avatar'></div> */}
                     <div className='chatbox-messages'>
                         <p>Hi</p>
                         <p>Hello my name is Michael</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices</p>
                     </div>
                 </div>
     )
