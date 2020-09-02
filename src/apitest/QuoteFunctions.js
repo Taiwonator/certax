@@ -77,7 +77,7 @@ const convertObject = (answers, questions) => {
     } else {
         const answer_keys = Object.keys(answers).map((key) => {
             answers_array[key] = {
-                                    'questionKey': getQuestionFromKey(questions, key), 
+                                    'questionKey': key, 
                                     'answer': answers[key]
                                 }
         })
@@ -85,23 +85,23 @@ const convertObject = (answers, questions) => {
     return answers_array;
 }
 
-const getQuestionFromKey = (questions, key) => {
-    let questions_array = [];
-    for(var i = 0; i < questions.length; i++) {
-        for(var j = 0; j < questions[i].length; j++) {
-            let question = questions[i][j];
-            if(!questions_array.includes(question)) {
-                questions_array.push(question);
-            }
-        }
-    }
-    let displayValue = '';
-    const questions_keys = questions_array.map((question) => {
-        if(question.key == key) {
-           displayValue = question.displayValue;
-        }
-    })
-    return displayValue;
-}
+// const getQuestionFromKey = (questions, key) => {
+//     let questions_array = [];
+//     for(var i = 0; i < questions.length; i++) {
+//         for(var j = 0; j < questions[i].length; j++) {
+//             let question = questions[i][j];
+//             if(!questions_array.includes(question)) {
+//                 questions_array.push(question);
+//             }
+//         }
+//     }
+//     let displayValue = '';
+//     const questions_keys = questions_array.map((question) => {
+//         if(question.key == key) {
+//            displayValue = question.displayValue;
+//         }
+//     })
+//     return displayValue;
+// }
 
 
