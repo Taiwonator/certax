@@ -24,7 +24,8 @@ class GetAQuote extends Component {
 
     getNewBatch = () => {
         this.lockAnswers();
-        const batchObj = getABatch(this.state.answers, this.state.questions, this.state.batch + 1);
+        const batchObj = getABatch(this.state.answers, this.state.questions, this.state.batch);
+        console.log("Batch Object in Get A Quote", batchObj);
         // const batchObj = getBatch(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
         let answersObj = this.state.answers;

@@ -38,6 +38,7 @@ export const getABatch = (answers, questions, batch) => {
             console.log("Batch Data:", data);
             return data;
         })
+        .catch(error => console.log("Error: ", error))
 }
 
 const convertObject = (answers, questions) => {
