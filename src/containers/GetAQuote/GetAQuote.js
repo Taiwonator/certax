@@ -27,11 +27,11 @@ class GetAQuote extends Component {
         this.lockAnswers();
         // let batchObj;
         if(this.state.batch == 0) {
-            // batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
+            batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
         } else {
-            // batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.quote);
+            batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.quote);
         }
-        let batchObj = getBatch(this.state.answers, this.state.batch + 1);
+        // let batchObj = getBatch(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
         let answersObj = this.state.answers;
         for(var i = 0; i < keys.length; i++) {
