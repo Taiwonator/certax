@@ -35,7 +35,10 @@ export const getABatch = (answers, questions, batch) => {
                 return response.json();
             }
         })
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data);
+            return data;
+        })
 }
 
 const convertObject = (answers, questions) => {
