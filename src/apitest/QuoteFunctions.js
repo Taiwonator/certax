@@ -5,7 +5,6 @@ export const hitEndpoint = _ => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }, 
-        mode: 'no-cors', 
         credentials: 'include',
         body: JSON.stringify({answers: {}, batch: 0})
     })
