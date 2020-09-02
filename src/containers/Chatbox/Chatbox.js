@@ -48,7 +48,9 @@ class Chatbox extends Component {
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
+                    <MessageBlock sender={'admin'} color={this.props.data.colors.blue}/>
                     <MessageBlock sender={'user'} color={this.props.data.colors.blue}/>
+                    
                 </div>
                 <div className='chatbox-input-container'>
                     <input className='chatbox-input' type='text' placeholder='Type your message...' />
@@ -100,7 +102,7 @@ const SendButton = (props) => {
 
 const MessageBlock = (props) => {
     //props.person = admin | bot | user
-    const avatar = <div className='chatbox-avatar' style={{backgroundColor: props.color}}></div>;
+    const avatar = (props.sender == 'bot' || props.sender == 'admin') && <div className='chatbox-avatar' style={{backgroundColor: props.color}}></div>;
     return (
                 <div className={`chatbox-messages-container ${props.sender == 'user' && 'user'}`}>
                     { avatar }

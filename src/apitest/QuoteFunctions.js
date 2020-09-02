@@ -56,7 +56,12 @@ async function postData(url = '', data = {}) {
 }
 
 export const getABatch = async (answers, questions, batch, quote) => {
-    let jsonObject = {answers: convertObject(answers, questions), batch, quote}
+    let jsonObject = {};
+    if(quote) {
+        jsonObject = {answers: convertObject(answers, questions), batch, quote}
+    } else {
+        jsonObject = {answers: convertObject(answers, questions), batch}
+    }
     return await postData("https://api.certaxnorwich.accountant/postQuote", jsonObject)
     .then(data => {
         console.log(data);

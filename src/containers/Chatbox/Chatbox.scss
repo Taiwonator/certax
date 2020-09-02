@@ -82,6 +82,7 @@
         padding: 1em;
         display: flex;
         flex-direction: column;
+        overflow-y: scroll;
 
         @include b.for-phone() {
             flex-basis: 75%;
@@ -89,6 +90,7 @@
         }
 
         .chatbox-messages-container {
+            margin-bottom: .5em;
             width: 80%;
             align-self: flex-start;
             display: flex;
@@ -114,6 +116,20 @@
                     padding: 1em;
                     border-radius: 25px;
                     margin-bottom: .5em;
+                }
+            }
+        }
+
+        .user {
+            align-self: flex-end;
+
+            .chatbox-messages {
+                align-items: flex-end;
+
+                p {
+                    background: rgb(82, 82, 136);
+                    color: white;
+                    font-weight: 100;
                 }
             }
         }
