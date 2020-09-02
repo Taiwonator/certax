@@ -1,3 +1,5 @@
+import 'regenerator-runtime/runtime';
+
 export const hitEndpoint = _ => {
     fetch("https://api.certaxnorwich.accountant/postQuote", {
         method: 'POST', 
@@ -18,41 +20,49 @@ export const hitEndpoint = _ => {
 
 
 
-export const getABatch = (answers, questions, batch) => {
-    let jsonObject = {answers: convertObject(answers, questions), batch}
-    const data = fetch("https://api.certaxnorwich.accountant/postQuote", {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json'
-        }, 
-        credentials: 'include',
-        body: JSON.stringify(jsonObject)
-    })
-        .then(response => {
-            if(response.ok) {
-                return response.json();
-            }
-        })
-        .then(data => {
-            console.log("Batch Data:", data);
-            return data;
-        })
-        .catch(error => console.log("Error: ", error))
-    return data;
-}
-
-// export async function getABatch(answers, questions, batch) {
+// export const getABatch = (answers, questions, batch) => {
 //     let jsonObject = {answers: convertObject(answers, questions), batch}
-//     const response = await fetch("https://api.certaxnorwich.accountant/postQuote", {
+//     const data = fetch("https://api.certaxnorwich.accountant/postQuote", {
 //         method: 'POST', 
 //         headers: {
 //             'Content-Type': 'application/json'
 //         }, 
 //         credentials: 'include',
 //         body: JSON.stringify(jsonObject)
-//     });
-//     return response.json();
+//     })
+//         .then(response => {
+//             if(response.ok) {
+//                 return response.json();
+//             }
+//         })
+//         .then(data => {
+//             console.log("Batch Data:", data);
+//             return data;
+//         })
+//         .catch(error => console.log("Error: ", error))
+//     return data;
 // }
+
+async function postData(url = '', data = {}) {
+    const response = await fetch(url, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json'
+        }, 
+        credentials: 'include',
+        body: JSON.stringify(data)
+    });
+    return response.json();
+}
+
+export const getABatch = async (answers, questions, batch) => {
+    let jsonObject = {answers: convertObject(answers, questions), batch}
+    return data = await postData("https://api.certaxnorwich.accountant/postQuote", jsonObject)
+    .then(data => {
+        console.log(data);
+        return data;
+    })
+}
 
 const convertObject = (answers, questions) => {
     let answers_array = {};

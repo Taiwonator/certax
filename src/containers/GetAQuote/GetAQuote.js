@@ -4,6 +4,7 @@ import Content from '../../components/Content/Content';
 import QuotationQuestions from '../QuotationQuestions/QuotationQuestions';
 import { getBatch } from '../../mocking/Batch';
 import { getABatch } from '../../apitest/QuoteFunctions';
+import 'regenerator-runtime/runtime';
 
 class GetAQuote extends Component {
     constructor(props) {
@@ -22,9 +23,9 @@ class GetAQuote extends Component {
         this.ref = React.createRef();
     }
 
-    getNewBatch = () => {
+    getNewBatch = async () => {
         this.lockAnswers();
-        const batchObj = getABatch(this.state.answers, this.state.questions, this.state.batch);
+        const batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
         console.log("Batch Object in Get A Quote", batchObj);
         // const batchObj = getBatch(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
