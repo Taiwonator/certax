@@ -38,7 +38,7 @@ class GetAQuote extends Component {
         for(var i = 0; i < keys.length; i++) {
             answersObj[keys[i]] = 0;
         }
-        if(this.state.moreQuestionsAvailable) {
+        if(batchObj.moreQuestionsAvailable) {
             this.setState((prevState) => ({
                 answers: answersObj,
                 questions: [...prevState.questions, batchObj.newQuestions], 
