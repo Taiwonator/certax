@@ -6,7 +6,8 @@ class Chatbox extends Component {
         super(props);
         this.state = { 
             active: true, 
-            typing: false
+            typing: false, 
+            message: ''
         }
 
         this.data = [
@@ -35,6 +36,24 @@ class Chatbox extends Component {
         })
     }
 
+    handleMessageChange = (e) => {
+        this.setState({
+            message: e.target.value
+        }, () => this.checkIfTyping())
+    }
+
+    checkIfTyping = () => {
+        if(this.state.message == '') {
+            this.setState({
+                typing: false
+            })
+        } else if(this.state.message != '' && !this.state.typing) {
+            this.setState({
+                typing: true
+            })
+        }
+    }
+
     render() { 
         return ( 
             <>
@@ -53,7 +72,7 @@ class Chatbox extends Component {
                     
                 </div>
                 <div className='chatbox-input-container'>
-                    <input className='chatbox-input' type='text' placeholder='Type your message...' />
+                    <input className='chatbox-input' type='text' placeholder='Type your message...' value={this.state.message} onChange={this.handleMessageChange} />
                     <SendButton color={this.props.data.colors.blue} />
                 </div>
             </div> 

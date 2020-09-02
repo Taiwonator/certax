@@ -98,6 +98,10 @@ class GetAQuote extends Component {
         }
     }
 
+    returnQuote = () => {
+        return (this.state.quote / 12).toFixed(2)
+    }
+
     lockAnswers = () => {
         var answers = this.state.answers;
         let lockedAnswers = {};
@@ -148,7 +152,7 @@ class GetAQuote extends Component {
                         <h3>YOUR PRICE</h3>
                         <div className='get-a-quote-price'>
                             <p className='get-a-quote-price-currency'>£</p>
-                            <p className='get-a-quote-price-value'>{this.state.quote/12}</p>
+                            <p className='get-a-quote-price-value'>{(this.state.quote / 12).toFixed(2)}</p>
                             <p className='get-a-quote-price-per'>/mon</p>
                         </div>
                     </div>
