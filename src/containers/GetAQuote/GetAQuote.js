@@ -26,6 +26,10 @@ class GetAQuote extends Component {
     getNewBatch = async () => {
         this.lockAnswers();
         const batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
+        batchObj = await getABatch(this.state.answers, this.state.questions, 0);
+        batchObj = await getABatch(this.state.answers, this.state.questions, 1);
+        batchObj = await getABatch(this.state.answers, this.state.questions, 2);
+        batchObj = await getABatch(this.state.answers, this.state.questions, 3);
         console.log("Batch Object in Get A Quote", batchObj);
         // const batchObj = getBatch(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);

@@ -79,6 +79,7 @@
         background-color: #FCFCFC;
         height: 450px;
         margin: 0 2%;
+        padding: 1em;
         display: flex;
         flex-direction: column;
 
@@ -88,17 +89,30 @@
         }
 
         .chatbox-messages-container {
-            background: #F1F0F0;
             width: 80%;
             align-self: flex-start;
             display: flex;
             flex-direction: row;
+            align-items: flex-start;
 
             .chatbox-avatar {
-                background: #5661AF;
+                background: rgb(82, 82, 136);
                 width: 50px;
                 height: 50px;
                 border-radius: 100%;
+            }
+
+            .chatbox-messages {
+                margin-left: .5em;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                p {
+                    background: #F1F0F0;
+                    padding: 1em;
+                    border-radius: 15px;
+                }
             }
         }
     }
