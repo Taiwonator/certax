@@ -23,5 +23,3 @@ fetch('https://api.certaxnorwich.accountant/getUID', {
     console.error('Error:', error);
 });
 
-hitEndpoint();
-
