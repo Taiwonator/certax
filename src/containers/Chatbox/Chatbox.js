@@ -48,7 +48,12 @@ class Chatbox extends Component {
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
-                    <div className='chatbox-message-container'>
+                    <div className='chatbox-messages-container'>
+                        <div className='chatbox-avatar'></div>
+                        <div className='chatbox-messages'>
+                            <p>Hello my name is</p>
+                            <p>Nice to meet you</p>
+                        </div>
                     </div>
                 </div>
                 <div className='chatbox-input-container'>

@@ -20,7 +20,7 @@ export const hitEndpoint = _ => {
 
 export const getABatch = (answers, questions, batch) => {
     let jsonObject = {answers: convertObject(answers, questions), batch}
-    fetch("https://api.certaxnorwich.accountant/postQuote", {
+    const data = fetch("https://api.certaxnorwich.accountant/postQuote", {
         method: 'POST', 
         headers: {
             'Accept': 'application/json',
@@ -39,6 +39,7 @@ export const getABatch = (answers, questions, batch) => {
             return data;
         })
         .catch(error => console.log("Error: ", error))
+    return data;
 }
 
 const convertObject = (answers, questions) => {
