@@ -13,7 +13,7 @@ const QuotationQuestions = React.forwardRef((props, ref) => {
             bar = <Bar text='Answer all questions' color={props.colors.grey}/>
         }
     } else {
-        if(props.quoteState.moreQuestionsAvailable) {
+        if(props.questions.length == 0) {
             bar = ''
         } else {
             bar = <Bar text='Scroll up to see quote' color={props.colors.blue}/>
