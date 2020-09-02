@@ -117,7 +117,6 @@ class GetAQuote extends Component {
 
     scrollToMyRef = (ref, yOffset) => {
         window.scrollTo(0, ref.current.offsetTop + yOffset);
-        console.log(ref.current.offsetTop);
     }
 
     render() { 
