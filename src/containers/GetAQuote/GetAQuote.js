@@ -25,7 +25,7 @@ class GetAQuote extends Component {
 
     getNewBatch = async () => {
         this.lockAnswers();
-        const batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
+        const batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.quote);
         console.log("Batch Object in Get A Quote", batchObj);
         // const batchObj = getBatch(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
@@ -143,7 +143,7 @@ class GetAQuote extends Component {
                         <h3>YOUR PRICE</h3>
                         <div className='get-a-quote-price'>
                             <p className='get-a-quote-price-currency'>£</p>
-                            <p className='get-a-quote-price-value'>{this.state.quote}</p>
+                            <p className='get-a-quote-price-value'>{this.state.quote/12}</p>
                             <p className='get-a-quote-price-per'>/mon</p>
                         </div>
                     </div>
@@ -184,3 +184,4 @@ export default GetAQuote;
 // Fix number input X
 // Lock inputs X
 // Create Start Again feature X
+// Fix returning questions multiple times
