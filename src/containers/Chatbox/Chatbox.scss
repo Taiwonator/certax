@@ -95,7 +95,7 @@
             align-self: flex-start;
             display: flex;
             flex-direction: row;
-            align-items: flex-start;
+            align-items: flex-end;
 
             .chatbox-avatar {
                 position: relative;
@@ -116,7 +116,7 @@
                     background: #F1F0F0;
                     padding: 1em;
                     border-radius: 25px;
-                    margin-bottom: .5em;
+                    margin-top: .5em;
                     overflow-wrap: break-word;
                     max-width: 200px;
                 }
