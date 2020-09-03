@@ -68,12 +68,13 @@ class Chatbox extends Component {
     }
 
     sendMessage = () => {
-        console.log("Message sent", this.state.message.length);
-        this.addMessage();
-        this.setState((prevState) => ({
-            message: '', 
-        }), () => this.checkIfTyping())
-        
+        if(this.state.message != '') {
+            console.log("Message sent", this.state.message.length);
+            this.addMessage();
+            this.setState((prevState) => ({
+                message: '', 
+            }), () => this.checkIfTyping())
+        } 
     }
 
     addMessage = () => {
