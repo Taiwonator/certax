@@ -163,9 +163,11 @@
 
         .send-button {
             height: 25px;
-
             &:hover {
                 filter: brightness(.8);
+            }
+            * {
+                transition: all .2s ease-in-out;
             }
         }
     }

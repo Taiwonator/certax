@@ -9,6 +9,7 @@ class Chatbox extends Component {
             active: false, 
             typing: false, 
             message: '', 
+            sendable: false,
             user: {
                 userAlias: 'Guest',
                 userType: 'guest'
@@ -51,7 +52,22 @@ class Chatbox extends Component {
     handleMessageChange = (e) => {
         this.setState({
             message: e.target.value
-        }, () => this.checkIfTyping())
+        }, () => {
+            this.checkIfTyping();
+            this.checkIfSendable();
+        })
+    }
+
+    checkIfSendable = () => {
+        if(this.state.message == '') {
+            this.setState({
+                sendable: false
+            })
+        } else {
+            this.setState({
+                sendable: true
+            })
+        }
     }
 
     checkIfTyping = () => {
@@ -67,13 +83,14 @@ class Chatbox extends Component {
     }
 
     sendMessage = () => {
-        if(this.state.message != '') {
+        if(this.state.sendable) {
             console.log("Message sent", this.state.message.length);
             this.addMessage();
             this.setState((prevState) => ({
-                message: '', 
+                message: ''
             }), () => {
                 this.checkIfTyping();
+                this.checkIfSendable();
                 this.scrollToBottom();
             })
         } 
@@ -165,7 +182,7 @@ class Chatbox extends Component {
                 </div>
                 <div className='chatbox-input-container'>
                     <input className='chatbox-input' type='text' placeholder='Type your message...' value={this.state.message} onChange={this.handleMessageChange} onKeyDown={this.handleKeyDown}/>
-                    <SendButton color={this.props.colors.blue} onClick={this.sendMessage}/>
+                    <SendButton color={(this.state.sendable) ? this.props.colors.blue : this.props.colors.grey} onClick={this.sendMessage}/>
                 </div>
             </div> 
             </>
