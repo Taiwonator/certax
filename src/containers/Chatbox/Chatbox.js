@@ -25,16 +25,15 @@ class Chatbox extends Component {
                     }
             ]
         }
+        this.messageEndRef = React.createRef();
     }
-
-// {
-//     userType: '', 
-//     time: '', 
-//     messages: ['', '']
-// }
 
     componentDidMount() {
 
+    }
+
+    scrollToBottom = () => {
+        this.messageEndRef.current.scrollIntoView({behavior: 'smooth'});
     }
 
     openChatbox = () => {
@@ -73,7 +72,10 @@ class Chatbox extends Component {
             this.addMessage();
             this.setState((prevState) => ({
                 message: '', 
-            }), () => this.checkIfTyping())
+            }), () => {
+                this.checkIfTyping();
+                this.scrollToBottom();
+            })
         } 
     }
 
@@ -159,8 +161,7 @@ class Chatbox extends Component {
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
-                    <MessageController messages={this.state.messages} colors={this.props.colors} userType={this.state.user.userType}/>
-                    
+                    <MessageController messages={this.state.messages} colors={this.props.colors} userType={this.state.user.userType} ref={this.messageEndRef}/>
                 </div>
                 <div className='chatbox-input-container'>
                     <input className='chatbox-input' type='text' placeholder='Type your message...' value={this.state.message} onChange={this.handleMessageChange} onKeyDown={this.handleKeyDown}/>
@@ -241,8 +242,9 @@ const MessageBlock = (props) => {
     let list = messages.map((message) => {
         const key = `message_${new Date().getTime()}_${message.length}`;
         return (
-            <p key={key}>{message}</p>)
-        })
+            <p key={key}>{message}</p>
+        )
+    })
 
     return (
                 <div className={`chatbox-messages-container ${props.userType == props.messageUserType ? 'sender' : ''}`}>
@@ -254,7 +256,7 @@ const MessageBlock = (props) => {
     )
 }
 
-const MessageController = (props) => {
+const MessageController = React.forwardRef((props, ref) => {
     const message_blocks = props.messages;
 
     let list = message_blocks.map((block) => (
@@ -263,9 +265,10 @@ const MessageController = (props) => {
     return (
         <>
             {list}
+            <div ref={ref} />
         </>
     )
-}
+})
 
 const WhiteC = (props) => (
     <svg className={`chatbox-avatar-icon ${(props.onClick != undefined) ? 'clickable' : ''}`} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.13 226.05" onClick={props.onClick}>
