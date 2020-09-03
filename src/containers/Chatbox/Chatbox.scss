@@ -85,7 +85,7 @@
         overflow-y: scroll;
 
         @include b.for-phone() {
-            flex-basis: 75%;
+            flex-basis: 80%;
             margin: 0;
         }
 
@@ -153,7 +153,7 @@
         z-index: 0;
 
         @include b.for-phone() {
-            flex-basis: 15%;
+            flex-basis: 10%;
         }
 
         .chatbox-input {
