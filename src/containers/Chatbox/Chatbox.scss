@@ -90,7 +90,7 @@
         }
 
         .chatbox-messages-container {
-            margin-bottom: .5em;
+            margin-bottom: 1em;
             width: 80%;
             align-self: flex-start;
             display: flex;
@@ -116,9 +116,13 @@
                     background: #F1F0F0;
                     padding: 1em;
                     border-radius: 25px;
-                    margin-top: .5em;
+                    margin-top: .25em;
                     overflow-wrap: break-word;
                     max-width: 200px;
+
+                    @include b.for-phone() {
+                        max-width: 70vw;
+                    }
                 }
             }
         }
