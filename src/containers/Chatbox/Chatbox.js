@@ -7,7 +7,18 @@ class Chatbox extends Component {
         this.state = { 
             active: false, 
             typing: false, 
-            message: ''
+            message: '', 
+            sender: 'admin', 
+            messages: [
+                    {
+                        sender: 'admin', 
+                        messages: ['Hello', 'My name is Michael']
+                    }, 
+                    {
+                        sender: 'user', 
+                        messages: ['Hi', 'Lorem ipsum dolor sit amet']
+                    }
+            ]
         }
 
         this.data = [
@@ -24,8 +35,7 @@ class Chatbox extends Component {
         ]
     }
 
-    // {
-//     name: '', 
+// {
 //     sender: '', 
 //     time: '', 
 //     messages: ['', '']
@@ -63,10 +73,32 @@ class Chatbox extends Component {
 
     sendMessage = () => {
         console.log("Message sent");
+        this.addMessage();
         this.setState((prevState) => ({
             message: '', 
         }), () => this.checkIfTyping())
         
+    }
+
+    addMessage = () => {
+        const lastMessage = this.state.messages[this.state.messages.length - 1];
+        if(lastMessage.sender == this.state.sender) {
+            let messages = [...this.state.messages];
+            let lastMessage = messages[this.state.messages.length - 1];
+            lastMessage.messages.push(this.state.message);
+            messages[this.state.messages.length - 1] = lastMessage;
+            
+            this.setState((prevState) => ({
+                messages
+            }))
+        } else {
+            this.setState((prevState) => ({
+                messages: [...prevState.messages, {
+                    sender: this.state.sender, 
+                    messages: [this.state.message]
+                }]
+            }))
+        }
     }
 
     handleKeyDown = (e) => {
@@ -75,12 +107,24 @@ class Chatbox extends Component {
         }
     }
 
+    switchSender = () => {
+        if(this.state.sender == 'user') {
+            this.setState({
+                sender: 'admin'
+            })
+        } else {
+            this.setState({
+                sender: 'user'
+            })
+        }
+    }
+
     render() { 
         return ( 
             <>
             <OpenChatBoxButton color={this.props.data.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
             <div className={`${this.state.active && 'show'} chatbox-container`}>
-                <div className='chatbox-top-bar' style={{backgroundColor: this.props.data.colors.blue}}>
+                <div className='chatbox-top-bar' style={{backgroundColor: this.props.data.colors.blue}} onClick={this.switchSender}>
                     <div className='chatbox-top-bar-text'>
                         <h3>{this.props.data.name}</h3>
                         <Status typing={this.state.typing}/>
@@ -88,8 +132,9 @@ class Chatbox extends Component {
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
-                    <MessageBlock sender={'admin'} color={this.props.data.colors.blue}/>
-                    <MessageBlock sender={'user'} color={this.props.data.colors.blue}/>
+                    {/* <MessageBlock sender={'admin'} color={this.props.data.colors.blue}/>
+                    <MessageBlock sender={'user'} color={this.props.data.colors.blue}/> */}
+                    <MessageController messages={this.state.messages} />
                     
                 </div>
                 <div className='chatbox-input-container'>
@@ -143,18 +188,31 @@ const SendButton = (props) => {
 const MessageBlock = (props) => {
     //props.person = admin | bot | user
     const avatar = (props.sender == 'bot' || props.sender == 'admin') && <div className='chatbox-avatar' style={{backgroundColor: props.color}}></div>;
+    const messages = props.messages;
+    let list = messages.map((message) => (
+        <p key={message}>{message}</p>
+    ))
     return (
-                <div className={`chatbox-messages-container ${props.sender == 'user' && 'user'}`}>
+                <div className={`chatbox-messages-container ${props.sender == 'user' ? 'user' : ''}`}>
                     { avatar }
                     <div className='chatbox-messages'>
-                        <p>Hi</p>
-                        <p>Hello my name is Michael</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices</p>
+                        {list}
                     </div>
                 </div>
     )
 }
 
+const MessageController = (props) => {
+    const message_blocks = props.messages;
+    let list = message_blocks.map((block) => (
+        <MessageBlock key={`block_${block.messages[0]}`} sender={block.sender} messages={block.messages}/>
+    ))
+    return (
+        <>
+            {list}
+        </>
+    )
+}
 
 
 export default Chatbox;
