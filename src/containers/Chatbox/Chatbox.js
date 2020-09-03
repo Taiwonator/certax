@@ -9,22 +9,22 @@ class Chatbox extends Component {
             active: false, 
             typing: false, 
             message: '', 
-            sender: 'admin', 
+            userType: 'guest', 
             messages: [
-                    {
-                        sender: 'admin', 
-                        messages: ['Hello', 'My name is Michael']
-                    }, 
                     // {
-                    //     sender: 'user', 
-                    //     messages: ['Hi', 'Lorem ipsum dolor sit amet']
+                    //     userType: 'admin', 
+                    //     messages: ['Hello', 'My name is Michael']
+                    // }, 
+                    // {
+                    //     userType: 'bot', 
+                    //     messages: ['Hi', 'I am a bot']
                     // }
             ]
         }
     }
 
 // {
-//     sender: '', 
+//     userType: '', 
 //     time: '', 
 //     messages: ['', '']
 // }
@@ -73,20 +73,29 @@ class Chatbox extends Component {
     }
 
     addMessage = () => {
-        const lastMessage = this.state.messages[this.state.messages.length - 1];
-        if(lastMessage.sender == this.state.sender) {
-            let messages = [...this.state.messages];
-            let lastMessage = messages[this.state.messages.length - 1];
-            lastMessage.messages.push(this.state.message);
-            messages[this.state.messages.length - 1] = lastMessage;
-            
-            this.setState((prevState) => ({
-                messages
-            }))
+        if(this.state.messages.length != 0) {
+            const lastMessage = this.state.messages[this.state.messages.length - 1];
+            if(lastMessage.userType == this.state.userType) {
+                let messages = [...this.state.messages];
+                let lastMessage = messages[this.state.messages.length - 1];
+                lastMessage.messages.push(this.state.message);
+                messages[this.state.messages.length - 1] = lastMessage;
+                
+                this.setState((prevState) => ({
+                    messages
+                }))
+            } else {
+                this.setState((prevState) => ({
+                    messages: [...prevState.messages, {
+                        userType: this.state.userType, 
+                        messages: [this.state.message]
+                    }]
+                }))
+            }
         } else {
             this.setState((prevState) => ({
-                messages: [...prevState.messages, {
-                    sender: this.state.sender, 
+                messages: [{
+                    userType: this.state.userType, 
                     messages: [this.state.message]
                 }]
             }))
@@ -103,14 +112,14 @@ class Chatbox extends Component {
         }
     }
 
-    switchSender = () => {
-        if(this.state.sender == 'user') {
+    switchuserType = () => {
+        if(this.state.userType == 'guest') {
             this.setState({
-                sender: 'admin'
+                userType: 'admin'
             })
-        } else {
+        } else if (this.state.userType == 'admin'){
             this.setState({
-                sender: 'user'
+                userType: 'guest'
             })
         }
     }
@@ -118,24 +127,23 @@ class Chatbox extends Component {
     render() { 
         return ( 
             <>
-            <OpenChatBoxButton color={this.props.data.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
+            <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
             <div className={`${this.state.active && 'show'} chatbox-container`}>
-                <div className='chatbox-top-bar' style={{backgroundColor: this.props.data.colors.blue}} onClick={this.switchSender}>
+                <div className='chatbox-top-bar' style={{backgroundColor: this.props.colors.blue}} onClick={this.switchuserType}>
                     <div className='chatbox-top-bar-text'>
                         <h3>{this.props.data.name}</h3>
                         <Status typing={this.state.typing}/>
                     </div>
+                    {/* <SwitchChatButton /> */}
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
-                    {/* <MessageBlock sender={'admin'} color={this.props.data.colors.blue}/>
-                    <MessageBlock sender={'user'} color={this.props.data.colors.blue}/> */}
-                    <MessageController messages={this.state.messages} />
+                    <MessageController messages={this.state.messages} colors={this.props.colors} userType={this.state.userType}/>
                     
                 </div>
                 <div className='chatbox-input-container'>
                     <input className='chatbox-input' type='text' placeholder='Type your message...' value={this.state.message} onChange={this.handleMessageChange} onKeyDown={this.handleKeyDown}/>
-                    <SendButton color={this.props.data.colors.blue} onClick={this.sendMessage}/>
+                    <SendButton color={this.props.colors.blue} onClick={this.sendMessage}/>
                 </div>
             </div> 
             </>
@@ -168,6 +176,10 @@ const OpenChatBoxButton = (props) => {
     )
 }
 
+const SwitchChatButton = (props) => {
+    return (<div />)
+}
+
 const Status = (props) => {
     const [index, setIndex] = useState(0);
     const word = ['Typing', 'Typing.', 'Typing..', 'Typing...'];
@@ -193,14 +205,24 @@ const SendButton = (props) => {
 }
 
 const MessageBlock = (props) => {
-    //props.person = admin | bot | user
-    const avatar = (props.sender == 'bot' || props.sender == 'admin') && <div className='chatbox-avatar' style={{backgroundColor: props.color}}></div>;
+    let avatar;
+    if(props.messageUserType != props.userType) {
+        if(props.messageUserType == 'bot') {
+            avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.yellow}}><BotIcon /></div>
+        } else if (props.messageUserType == 'admin') {
+            avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><WhiteC /></div>
+        }
+    }
+
     const messages = props.messages;
-    let list = messages.map((message) => (
-        <p key={message}>{message}</p>
-    ))
+    let list = messages.map((message) => {
+        const key = `message_${new Date().getTime()}_${message.length}`;
+        return (
+            <p key={key}>{message}</p>)
+        })
+
     return (
-                <div className={`chatbox-messages-container ${props.sender == 'user' ? 'user' : ''}`}>
+                <div className={`chatbox-messages-container ${props.userType == props.messageUserType ? 'guest' : ''}`}>
                     { avatar }
                     <div className='chatbox-messages'>
                         {list}
@@ -211,8 +233,9 @@ const MessageBlock = (props) => {
 
 const MessageController = (props) => {
     const message_blocks = props.messages;
+
     let list = message_blocks.map((block) => (
-        <MessageBlock key={`block_${block.messages[0]}`} sender={block.sender} messages={block.messages}/>
+        <MessageBlock key={`block_${block.messages[0]}_${new Date().getTime()}`} messageUserType={block.userType} userType={props.userType} messages={block.messages} colors={props.colors}/>
     ))
     return (
         <>
@@ -220,6 +243,33 @@ const MessageController = (props) => {
         </>
     )
 }
+
+const WhiteC = (props) => (
+    <svg className={`chatbox-avatar-icon ${(props.onClick != undefined) ? 'clickable' : ''}`} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.13 226.05" onClick={props.onClick}>
+        <path fill='white' d="M1073.65,351.91a94.52,94.52,0,0,1-13.55,88.61,99.7,99.7,0,0,0-150.69-114.4,94.61,94.61,0,0,1,164.24,25.79Z" transform="translate(-875.02 -289)" />
+        <path fill='white' d="M945.26,513.56A94.51,94.51,0,0,1,875,457.87a99.7,99.7,0,0,0,174-74.18,94.6,94.6,0,0,1-103.8,129.87Z" transform="translate(-875.02 -289)" />
+        <path fill='white' d="M970.52,341.59c12.87,0,22.36,3.56,28.46,9.65l4.57-8.13h6.27s-3.22,16.1-3.22,23.38v11.18h-7.11v-6.44c0-14.06-11-23.71-28.8-23.71-29.82,0-36.25,27.44-36.25,52.51,0,27.78,7.79,52.35,37.27,52.35,17.95,0,27.78-9.49,31.84-27.11l6.78,1c-3.39,15.92-12.54,32-40,32-33.71,0-51.16-24.06-51.16-58.79C919.19,364.46,937.32,341.59,970.52,341.59Z" transform="translate(-875.02 -289)" />
+    </svg>
+)
+
+const BotIcon = (props) => (
+    <svg className={`chatbox-avatar-icon ${(props.onClick != undefined) ? 'clickable' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.29 22.42" onClick={props.onClick}>
+        <title>BotIcon</title>
+        <path fill='white' d="M865.84,210h0Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M865.8,208.49a.34.34,0,0,1-.34.33.34.34,0,0,1-.33-.33h0a7.34,7.34,0,0,0-7.28-6.41h-14a7.34,7.34,0,0,0-7.28,6.41h0a.35.35,0,0,1-.34.33.33.33,0,0,1-.33-.33.22.22,0,0,1,0-.08,8,8,0,0,1,7.94-7h14a8,8,0,0,1,7.94,7A.22.22,0,0,1,865.8,208.49Z" transform="translate(-833 -195)" />
+        <ellipse fill='white' cx="10" cy="14.43" rx="2" ry="3" />
+        <ellipse fill='white' cx="27" cy="14.43" rx="2" ry="3" />
+        <path fill='white' d="M850.84,200.12a2.56,2.56,0,1,1,2.56-2.56A2.56,2.56,0,0,1,850.84,200.12Zm0-4.46a1.9,1.9,0,1,0,1.89,1.9A1.89,1.89,0,0,0,850.84,195.66Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M834.45,205.9a6.85,6.85,0,0,0,0,6.38,2.33,2.33,0,0,0,1.44,1.2.33.33,0,0,1,.27.32h0a.34.34,0,0,1-.34.34h-.06a2.92,2.92,0,0,1-1.89-1.52,7.58,7.58,0,0,1,0-7.05,2.92,2.92,0,0,1,1.89-1.52.33.33,0,0,1,.39.26s0,0,0,.07h0a.33.33,0,0,1-.27.32A2.29,2.29,0,0,0,834.45,205.9Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M866.84,212.27a6.91,6.91,0,0,0,0-6.38,2.35,2.35,0,0,0-1.45-1.2.32.32,0,0,1-.26-.32h0a.32.32,0,0,1,.33-.34h.06a2.92,2.92,0,0,1,1.89,1.52,7.52,7.52,0,0,1,0,7.05,2.92,2.92,0,0,1-1.89,1.52.33.33,0,0,1-.39-.26v-.07h0a.32.32,0,0,1,.26-.32A2.33,2.33,0,0,0,866.84,212.27Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M835.89,208.41s0,.05,0,.08A.22.22,0,0,1,835.89,208.41Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M835.85,210.07V210A.21.21,0,0,0,835.85,210.07Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M865.8,208.49a.22.22,0,0,0,0-.08A.22.22,0,0,1,865.8,208.49Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M865.83,210h0v.08h0a8,8,0,0,1-8,7.35h-14a8,8,0,0,1-8-7.35h0V210h0a.34.34,0,0,1,.36-.31.35.35,0,0,1,.31.34h0a7.34,7.34,0,0,0,7.31,6.74h14a7.35,7.35,0,0,0,7.32-6.74h0a.34.34,0,0,1,.67,0Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M835.84,210h0Z" transform="translate(-833 -195)" />
+        <path fill='white' d="M865.84,210s0,0,0,.06a.22.22,0,0,1,0-.08Z" transform="translate(-833 -195)" />
+    </svg>
+)
 
 
 export default Chatbox;
