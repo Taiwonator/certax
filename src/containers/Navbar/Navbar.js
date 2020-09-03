@@ -15,6 +15,12 @@ class Navbar extends Component {
     toggleNavbar = () => {
         this.setState({
             active: !this.state.active
+        }, () => {
+            if(this.state.active) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         });
     }
 

@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
+import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 
 class Chatbox extends Component {
     constructor(props) {
@@ -14,25 +15,12 @@ class Chatbox extends Component {
                         sender: 'admin', 
                         messages: ['Hello', 'My name is Michael']
                     }, 
-                    {
-                        sender: 'user', 
-                        messages: ['Hi', 'Lorem ipsum dolor sit amet']
-                    }
+                    // {
+                    //     sender: 'user', 
+                    //     messages: ['Hi', 'Lorem ipsum dolor sit amet']
+                    // }
             ]
         }
-
-        this.data = [
-            {
-                name: 'Michael', 
-                time: '4:00pm', 
-                messages: ['Hello my name is Michael', 'Aiight sweet']
-            }, 
-            {
-                name: 'Ben', 
-                time: '6:00pm', 
-                messages: ['Yo I am Ben', 'Nice to meet ya', 'I']
-            }
-        ]
     }
 
 // {
@@ -40,6 +28,10 @@ class Chatbox extends Component {
 //     time: '', 
 //     messages: ['', '']
 // }
+
+    componentDidMount() {
+
+    }
 
     openChatbox = () => {
         this.setState({
@@ -72,7 +64,7 @@ class Chatbox extends Component {
     }
 
     sendMessage = () => {
-        console.log("Message sent");
+        console.log("Message sent", this.state.message.length);
         this.addMessage();
         this.setState((prevState) => ({
             message: '', 
@@ -99,6 +91,10 @@ class Chatbox extends Component {
                 }]
             }))
         }
+    }
+
+    checkMessage = (message) => {
+        const x = message.length / 20
     }
 
     handleKeyDown = (e) => {
@@ -154,12 +150,23 @@ const CloseChatboxButton = (props) => (
     </svg>
 )
 
-const OpenChatBoxButton = (props) => (
-    <svg onClick={props.onClick} className={`${(props.active && 'hidden')} chatbox-open-button`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.24 48">
-	<circle fill={props.color} cx="28.24" cy="24" r="24"/>
-	<path fill={props.color} d="M830.41,220.42s-22.65,2.35-22.65,22.65c0,0,12.1-11.32,22.65-8.39S830.41,220.42,830.41,220.42Z" transform="translate(-807.76 -199)"/>
-</svg>
-) 
+const OpenChatBoxButton = (props) => {
+    const width = useWindowDimensions().width;
+    if(width < 600) {
+        if(props.active) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+    
+    return (
+        <svg onClick={props.onClick} className={`${(props.active && 'hidden')} chatbox-open-button`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.24 48">
+        <circle fill={props.color} cx="28.24" cy="24" r="24"/>
+        <path fill={props.color} d="M830.41,220.42s-22.65,2.35-22.65,22.65c0,0,12.1-11.32,22.65-8.39S830.41,220.42,830.41,220.42Z" transform="translate(-807.76 -199)"/>
+    </svg>
+    )
+}
 
 const Status = (props) => {
     const [index, setIndex] = useState(0);
