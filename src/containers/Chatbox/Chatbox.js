@@ -256,8 +256,8 @@ const MessageBlock = (props) => {
     }
 
     const messages = props.messages;
-    let list = messages.map((message) => {
-        const key = `message_${new Date().getTime()}_${message.length}`;
+    let list = messages.map((message, i) => {
+        const key = `message_${new Date().getTime()}_${i}`;
         return (
             <p key={key}>{message}</p>
         )
@@ -276,8 +276,8 @@ const MessageBlock = (props) => {
 const MessageController = React.forwardRef((props, ref) => {
     const message_blocks = props.messages;
 
-    let list = message_blocks.map((block) => (
-        <MessageBlock key={`block_${block.messages[0]}_${new Date().getTime()}`} messageUserType={block.userType} userType={props.userType} messages={block.messages} colors={props.colors}/>
+    let list = message_blocks.map((block, i) => (
+        <MessageBlock key={`block_${new Date().getTime()}_${i}`} messageUserType={block.userType} userType={props.userType} messages={block.messages} colors={props.colors}/>
     ))
     return (
         <>
