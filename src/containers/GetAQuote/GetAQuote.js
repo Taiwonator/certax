@@ -25,7 +25,7 @@ class GetAQuote extends Component {
 
     getNewBatch = async () => {
         this.lockAnswers();
-        // let batchObj;
+        let batchObj;
         if(this.state.batch == 0) {
             batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
         } else {
