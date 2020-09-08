@@ -16,14 +16,7 @@ class Chatbox extends Component {
             },
             userType: 'guest', 
             messages: [
-                    {
-                        userType: 'admin', 
-                        messages: ['Hello', 'My name is Michael']
-                    }, 
-                    {
-                        userType: 'bot', 
-                        messages: ['Hi', 'I am a bot']
-                    }
+
             ]
         }
         this.messageEndRef = React.createRef();
@@ -97,12 +90,13 @@ class Chatbox extends Component {
     }
 
     addMessage = () => {
+        const messageObj = {message: this.state.message, date: new Date(), dateVisible: false};
         if(this.state.messages.length != 0) {
             const lastMessage = this.state.messages[this.state.messages.length - 1];
             if(lastMessage.userType == this.state.user.userType) {
                 let messages = [...this.state.messages];
                 let lastMessage = messages[this.state.messages.length - 1];
-                lastMessage.messages.push(this.state.message);
+                lastMessage.messages.push(messageObj);
                 messages[this.state.messages.length - 1] = lastMessage;
                 
                 this.setState((prevState) => ({
@@ -112,7 +106,7 @@ class Chatbox extends Component {
                 this.setState((prevState) => ({
                     messages: [...prevState.messages, {
                         userType: this.state.user.userType, 
-                        messages: [this.state.message]
+                        messages: [messageObj]
                     }]
                 }))
             }
@@ -120,7 +114,7 @@ class Chatbox extends Component {
             this.setState((prevState) => ({
                 messages: [{
                     userType: this.state.user.userType, 
-                    messages: [this.state.message]
+                    messages: [messageObj]
                 }]
             }))
         }
@@ -162,6 +156,10 @@ class Chatbox extends Component {
         } else {
             return '';
         }
+    }
+
+    toggleDateVisbility = () => {
+
     }
 
     render() { 
@@ -243,6 +241,14 @@ const SendButton = (props) => {
     )
 }
 
+const Timestamp = (props) => {
+    const date = props.date;
+    console.log(props.visible);
+    return (
+        <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse-timestamp'}`}>{props.date.getTime()}</h4>
+    )
+}
+
 const MessageBlock = (props) => {
     let avatar;
     if(props.messageUserType != props.userType) {
@@ -259,12 +265,15 @@ const MessageBlock = (props) => {
     let list = messages.map((message, i) => {
         const key = `message_${new Date().getTime()}_${i}`;
         return (
-            <p key={key}>{message}</p>
+            <div key={key} className='chatbox-message'>
+                <Timestamp date={message.date} visible={message.dateVisible}/>
+                <p>{message.message}</p>
+            </div>
         )
     })
 
     return (
-                <div className={`chatbox-messages-container ${props.userType == props.messageUserType ? 'sender' : ''}`}>
+                <div className={`chatbox-messages-container ${props.userType == props.messageUserType ? 'sender' : 'receiver'}`}>
                     { avatar }
                     <div className='chatbox-messages'>
                         {list}
