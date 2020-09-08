@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
+import { formatDate } from '../../helperFunctions/dateOperations.js';
 
 class Chatbox extends Component {
     constructor(props) {
@@ -233,7 +234,7 @@ const SwitchChatButton = (props) => {
 const Status = (props) => {
     const [index, setIndex] = useState(0);
     const word = ['Typing', 'Typing.', 'Typing..', 'Typing...'];
-    let text = (props.typing) ? word[index] : 'Active';
+    let text = (props.typing) ? word[index] : "Active";
     useEffect(() => {
         const timer = setTimeout(() => {
             setIndex(index + 1);
@@ -255,18 +256,10 @@ const SendButton = (props) => {
 }
 
 const Timestamp = (props) => {
-    const date = props.date;
-    let style = {}
-    if(props.dateVisible) {
-        style = {
-            
-        }
-    } else {
-
-    }
-
+    let time = formatDate(props.date);
+    console.log(time);
     return (
-        <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse-timestamp'}`}>{props.date.getTime()}</h4>
+        <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse-timestamp'}`}>{time}</h4>
     )
 }
 
