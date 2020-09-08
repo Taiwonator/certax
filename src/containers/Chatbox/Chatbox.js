@@ -158,8 +158,21 @@ class Chatbox extends Component {
         }
     }
 
-    toggleDateVisbility = () => {
-
+    toggleDateVisbility = (m) => {
+        const messages = this.state.messages;
+        let new_messages = messages.map(function(messages) {
+            let block_messages = messages.messages;
+            for(var i = 0; i < block_messages.length; i++) {
+                if(block_messages[i] == m) {
+                    block_messages[i].dateVisible = !block_messages[i].dateVisible;
+                    return block_messages;
+                }
+            }
+        })
+        this.setState((prevState) => ({
+            new_messages
+        }))
+        
     }
 
     render() { 
@@ -176,7 +189,7 @@ class Chatbox extends Component {
                     <CloseChatboxButton onClick={this.closeChatbox}/>
                 </div>
                 <div className='chatbox-body'>
-                    <MessageController messages={this.state.messages} colors={this.props.colors} userType={this.state.user.userType} ref={this.messageEndRef}/>
+                    <MessageController messages={this.state.messages} colors={this.props.colors} userType={this.state.user.userType} ref={this.messageEndRef} toggleDateVisbility={this.toggleDateVisbility}/>
                 </div>
                 <div className='chatbox-input-container'>
                     <input className='chatbox-input' type='text' placeholder='Type your message...' value={this.state.message} onChange={this.handleMessageChange} onKeyDown={this.handleKeyDown}/>
@@ -243,7 +256,15 @@ const SendButton = (props) => {
 
 const Timestamp = (props) => {
     const date = props.date;
-    console.log(props.visible);
+    let style = {}
+    if(props.dateVisible) {
+        style = {
+            
+        }
+    } else {
+
+    }
+
     return (
         <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse-timestamp'}`}>{props.date.getTime()}</h4>
     )
@@ -267,7 +288,7 @@ const MessageBlock = (props) => {
         return (
             <div key={key} className='chatbox-message'>
                 <Timestamp date={message.date} visible={message.dateVisible}/>
-                <p>{message.message}</p>
+                <p onClick={() => props.toggleDateVisbility(message)}>{message.message}</p>
             </div>
         )
     })
@@ -286,7 +307,7 @@ const MessageController = React.forwardRef((props, ref) => {
     const message_blocks = props.messages;
 
     let list = message_blocks.map((block, i) => (
-        <MessageBlock key={`block_${new Date().getTime()}_${i}`} messageUserType={block.userType} userType={props.userType} messages={block.messages} colors={props.colors}/>
+        <MessageBlock key={`block_${new Date().getTime()}_${i}`} messageUserType={block.userType} userType={props.userType} messages={block.messages} colors={props.colors} toggleDateVisbility={props.toggleDateVisbility}/>
     ))
     return (
         <>
