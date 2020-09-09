@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './GetAQuote.scss';
 import Content from '../../components/Content/Content';
 import QuotationQuestions from '../QuotationQuestions/QuotationQuestions';
-import { getBatch } from '../../mocking/Batch';
+import { getBatch, getABatchMock } from '../../mocking/Batch';
 import { getABatch } from '../../apitest/QuoteFunctions';
 import 'regenerator-runtime/runtime';
 
@@ -25,13 +25,13 @@ class GetAQuote extends Component {
 
     getNewBatch = async () => {
         this.lockAnswers();
-        let batchObj;
+        // let batchObj;
         if(this.state.batch == 0) {
-            batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
+            // batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
         } else {
-            batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.quote);
+            // batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.quote);
         }
-        // let batchObj = getBatch(this.state.answers, this.state.batch + 1);
+        let batchObj = await getABatchMock(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
         let answersObj = this.state.answers;
         for(var i = 0; i < keys.length; i++) {

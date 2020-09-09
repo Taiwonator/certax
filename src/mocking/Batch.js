@@ -185,3 +185,9 @@ export const getBatch = (answers, batch) => {
       return null;
   }
 }
+
+export const getABatchMock = async (answers, batch) => {
+  let obj = getBatch(answers, batch);
+  await new Promise(resolve => setTimeout(resolve, 500));
+  return obj;
+}
