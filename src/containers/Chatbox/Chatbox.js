@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
-import { formatDate } from '../../helperFunctions/dateOperations.js';
+import { returnDate } from '../../helperFunctions/dateOperations.js';
 
 class Chatbox extends Component {
     constructor(props) {
@@ -104,6 +104,7 @@ class Chatbox extends Component {
                     messages
                 }))
             } else {
+                messageObj.dateVisible = true;
                 this.setState((prevState) => ({
                     messages: [...prevState.messages, {
                         userType: this.state.user.userType, 
@@ -112,6 +113,7 @@ class Chatbox extends Component {
                 }))
             }
         } else {
+            messageObj.dateVisible = true;
             this.setState((prevState) => ({
                 messages: [{
                     userType: this.state.user.userType, 
@@ -256,7 +258,7 @@ const SendButton = (props) => {
 }
 
 const Timestamp = (props) => {
-    let time = formatDate(props.date);
+    let time = returnDate(props.date);
     console.log(time);
     return (
         <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse-timestamp'}`}>{time}</h4>
