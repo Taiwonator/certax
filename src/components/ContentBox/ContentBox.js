@@ -8,6 +8,8 @@ import ScrollDownButton from '../ScrollDownButton/ScrollDownButton';
 function ContentBox(props) {
     return (
         <div style={{backgroundColor: props.darkMode()}} className='content-box-container'>
+            <div style={{borderColor: props.colors.yellow, borderRight: 'none'}} className='content-box-left-half' />
+            <div style={{borderColor: props.colors.blue, borderLeft: 'none'}} className='content-box-right-half' />
             <Staircase position='TR' color={props.colors.yellow} type='mini'/>
             <Staircase position='TL' color={props.colors.blue} type='mini'/> 
             <Staircase position='BR' color={props.colors.blue} type='mini'/>

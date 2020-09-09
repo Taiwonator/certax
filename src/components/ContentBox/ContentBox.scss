@@ -8,6 +8,7 @@
 }
 
 .content-box-container {
+    position: relative;
     width: 90%;
     height: 80%;
     max-width: 1135px;
@@ -25,5 +26,21 @@
         @include for-phone() {
             display: none;
         }
+    }
+
+    .content-box-left-half, .content-box-right-half {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+        border-width: 1px;
+        border-style: solid;
+    }
+
+    .content-box-left-half {
+        left: 0;
+    }
+
+    .content-box-right-half {
+        right: 0;
     }
 }
