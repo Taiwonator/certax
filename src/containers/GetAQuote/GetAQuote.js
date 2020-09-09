@@ -17,7 +17,8 @@ class GetAQuote extends Component {
            moreQuestionsAvailable: true, 
            active: false, 
            allInputsFilled: false,
-           lockedAnswers: {}
+           lockedAnswers: {}, 
+           requestProcessing: false
         }
         // console.log(this.increment(1000, 1, true));
         this.ref = React.createRef();
@@ -25,13 +26,8 @@ class GetAQuote extends Component {
 
     getNewBatch = async () => {
         this.lockAnswers();
-        // let batchObj;
-        if(this.state.batch == 0) {
-            // batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch);
-        } else {
-            // batchObj = await getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.quote);
-        }
-        let batchObj = await getABatchMock(this.state.answers, this.state.batch + 1);
+        let batchObj = await this.getBatchObj(this.state.answers, this.state.quote, this.state.batch, this.state.quote);
+        // let batchObj = await this.getBatchObj(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
         let answersObj = this.state.answers;
         for(var i = 0; i < keys.length; i++) {
@@ -41,31 +37,46 @@ class GetAQuote extends Component {
                 answersObj[keys[i]] = null;
             }
         }
-        if(batchObj.newQuestions.length != 0) {
-            this.setState((prevState) => ({
-                answers: answersObj,
-                questions: [...prevState.questions, batchObj.newQuestions], 
-                batch: batchObj.batch, 
-                moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
-                quote: batchObj.quote, 
-                active: true, 
-                allInputsFilled: false
-                
-            }), () => {this.props.scrollToQuoteQuestions(this.ref);})
+        if(this.state.requestProcessing) {
+            if(batchObj.newQuestions.length != 0) {
+                this.setState((prevState) => ({
+                    answers: answersObj,
+                    questions: [...prevState.questions, batchObj.newQuestions], 
+                    batch: batchObj.batch, 
+                    moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
+                    quote: batchObj.quote, 
+                    active: true, 
+                    allInputsFilled: false, 
+                    requestProcessing: false
+                    
+                }), () => {this.props.scrollToQuoteQuestions(this.ref);})
 
-        } else {
-            this.setState((prevState) => ({
-                moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
-                active: false, 
-                quote: batchObj.quote, 
-                batch: batchObj.batch
-            }))
-            this.props.scrollToQuote();
+            } else {
+                this.setState((prevState) => ({
+                    moreQuestionsAvailable: batchObj.moreQuestionsAvailable, 
+                    active: false, 
+                    quote: batchObj.quote, 
+                    batch: batchObj.batch
+                }))
+                this.props.scrollToQuote();
+            }
         }
     }
 
     initAnswersObject = () => {
-        
+    }
+
+    getBatchObj = (answers, questions, batch, quote) => {
+        this.setState({
+            requestProcessing: true
+        })
+        if(batch == 0) {
+            return getABatch(answers, questions, batch);
+        } else {
+            return getABatch(answers, questions, batch, quote);
+        }
+        return 
+        // return getABatchMock(this.state.answers, this.state.batch + 1);
     }
 
     reset = () => {

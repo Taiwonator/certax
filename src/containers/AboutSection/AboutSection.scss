@@ -1,10 +1,5 @@
 @use '../../stylesheets/variables' as v;
-
-@mixin for-phone {
-    @media (max-width: v.$phone) {
-        @content;
-    }
-}
+@use '../../stylesheets/basics' as b;
 
 .about-section-container {
     position: relative;
@@ -28,7 +23,10 @@
             display: flex;
             margin: 0 auto;
             position: relative;
-            @include for-phone() {
+            @include b.for-tablet() {
+                width: 90vw;
+            }
+            @include b.for-phone() {
                 width: 90vw;
             }
         }

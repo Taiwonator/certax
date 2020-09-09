@@ -22,11 +22,15 @@ const getBatchOne = (answers) => ({
 })
 
 const getBatchTwo = (answers) => {
-  let moreQuestionsAvailable = true;
-  if(answers.isSelfAssessment) {
-    moreQuestionsAvailable = false;
-  }
-
+  if(answers.isSelfAssessment == true) {
+    console.log("Self assesment", answers.isSelfAssessment);
+    return {
+      questions: answers, 
+      newQuestions: [], 
+      quote: 240, 
+      moreQuestionsAvailable: false
+    };
+  } else {
   return ({
     questions : answers,
       newQuestions : [
@@ -63,8 +67,8 @@ const getBatchTwo = (answers) => {
       ],
       quote : 500,
       batch : 2,
-      moreQuestionsAvailable
-})}
+      moreQuestionsAvailable: true
+})}}
 
 const getBatchThree = (answers) => {
   
