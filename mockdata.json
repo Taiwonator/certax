@@ -8,7 +8,7 @@
         "textblack": "#2F2721", 
         "black": "#0F0F0F",
         "grey": "#707070",
-        "lightgrey": "#EEEEEE",  
+        "lightgrey": "#F5F5F5",  
         "white": "#FFFFFF"
     },
 
@@ -155,8 +155,11 @@
             "blue": "#525288", 
             "yellow": "#E2AA60"
         }, 
-        "name": "Certax", 
-        "logo": "./src/images/WhiteCertaxC.png"
+        "user": {
+            "id": "123",
+            "alias": "Certax", 
+            "type": "admin" 
+        }
     }
 }
 

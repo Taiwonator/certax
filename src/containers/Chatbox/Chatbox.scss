@@ -21,7 +21,7 @@
     }
 
     & > div {
-        box-shadow: 0 0px 7px rgba(0, 0, 0, 0.25), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+        box-shadow: 0 0px 7px rgba(0, 0, 0, 0.25), 0 6px 5px 0 rgba(0, 0, 0, 0.25);
     }
 
     .chatbox-top-bar {
@@ -31,7 +31,9 @@
         align-items: center;
         justify-content: space-between;
         padding: 1em 8%;
+        min-height: 85px;
         transition: background-color .2s ease-in-out;
+        z-index: 0;
 
         @include b.for-phone() {
             flex-basis: 10%;
@@ -71,8 +73,7 @@
             
 
             .chatbox-top-bar-button {
-                width: 40px;
-                padding: 2%;
+                width: 30px;
 
                 &:hover {
                     filter: brightness(.8);
@@ -292,6 +293,25 @@
     display: flex;
 }
 
+.center-top {
+    left: 50%;
+    top: 0%;
+    transform: translate(-50%, -75%);
+    border-radius: 100px;
+
+    @include b.for-phone() {
+        transform: translate(-50%, -100%);
+    }
+}
+
 .chatbox-switch-chat {
 
+}
+
+.chatbox-top-bar-button {
+    width: 30px;
+
+    &:hover {
+        filter: brightness(.8);
+    }
 }
