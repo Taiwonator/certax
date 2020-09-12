@@ -1,30 +1,100 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
-import { formatDate } from '../../helperFunctions/dateOperations.js';
+import { returnDate, dateHourDiff } from '../../helperFunctions/dateOperations.js';
 
 class Chatbox extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            active: false, 
-            typing: false, 
-            message: '', 
-            sendable: false,
-            user: {
-                userAlias: 'Guest',
-                userType: 'guest'
-            },
-            userType: 'guest', 
-            messages: [
+            active: false,
+            chatOpen: true,
 
-            ]
+            typing: false, 
+            sendable: false,
+            displayDate: true,
+            sender: {
+                alias: 'Guest',
+                type: 'guest'
+            },
+            responder: {
+                alias: 'Certax',
+                type: 'admin',
+            },
+            message: '', 
+            messages: [
+                
+            ], 
+            botMessages: [
+                {messages: [
+                    {message: 'Hello', date: new Date(), dateVisible: true}], writerType: 'bot'}, 
+
+            ],
+            cachedMessages: []
         }
+
         this.messageEndRef = React.createRef();
+        this.guests = [
+            {       
+                user: {
+                    id: 1, 
+                    alias: "Bobby Lee",
+                    type: "guest"
+                }, 
+                messages: [
+                    {messages: [
+                        {message: "Hello my name is Bobby", date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)", dateVisible: true}
+                    ], writerType: "guest"}
+                ], 
+                botMessages: [
+                    {messages: [
+                        {message: "Hi I'm a bot", date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)", dateVisible: true}
+                    ], writerType: "bot"}
+                ]
+            }, 
+            {
+                user: {
+                    id: 2, 
+                    alias: "Sheela Porter",
+                    type: "guest"
+                }, 
+                messages: [
+                    {messages: [
+                        {message: "F*ck you", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true}
+                    ], writerType: "guest"}
+                ], 
+                botMessages: [
+                    {messages: [
+                        {message: "Hi I'm a bot", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true}
+                    ], writerType: "bot"}
+                ]
+            }
+        ]
     }
+    
+    // user: {
+    //     id,
+    //     alias: '',
+    //     type: '', 
+    //     userMessages, 
+    //     userBotMessages
+    // }
+
+    // ME user info (id, alias, type)
+    
+    // YOU user info (id, alias, type)
+    // -- message info (userMessages, userBotMessages)
+    
 
     componentDidMount() {
 
+    }
+
+    toggleChatOpen = () => {
+        const chatOpen = this.state.chatOpen;
+        this.setState({
+            chatOpen: !chatOpen
+        })
     }
 
     scrollToBottom = () => {
@@ -78,7 +148,6 @@ class Chatbox extends Component {
 
     sendMessage = () => {
         if(this.state.sendable) {
-            console.log("Message sent", this.state.message.length);
             this.addMessage();
             this.setState((prevState) => ({
                 message: ''
@@ -91,10 +160,18 @@ class Chatbox extends Component {
     }
 
     addMessage = () => {
-        const messageObj = {message: this.state.message, date: new Date(), dateVisible: false};
+        let messageObj = {message: this.state.message, date: new Date(), dateVisible: false};
+        this.returnTimeSinceLastmessage();
+        if(this.state.displayDate == true) {
+            messageObj.dateVisible = true;
+            this.setState({
+                displayDate: false 
+            }) 
+        }
         if(this.state.messages.length != 0) {
+            // Same person who sent the last message talking
             const lastMessage = this.state.messages[this.state.messages.length - 1];
-            if(lastMessage.userType == this.state.user.userType) {
+            if(lastMessage.writerType == this.state.sender.type) {
                 let messages = [...this.state.messages];
                 let lastMessage = messages[this.state.messages.length - 1];
                 lastMessage.messages.push(messageObj);
@@ -104,25 +181,23 @@ class Chatbox extends Component {
                     messages
                 }))
             } else {
+                // Means it is the other individual talking
                 this.setState((prevState) => ({
                     messages: [...prevState.messages, {
-                        userType: this.state.user.userType, 
+                        writerType: this.state.sender.type, 
                         messages: [messageObj]
                     }]
                 }))
             }
         } else {
+            // First message sent
             this.setState((prevState) => ({
                 messages: [{
-                    userType: this.state.user.userType, 
+                    writerType: this.state.sender.type, 
                     messages: [messageObj]
                 }]
             }))
         }
-    }
-
-    checkMessage = (message) => {
-        const x = message.length / 20
     }
 
     handleKeyDown = (e) => {
@@ -131,31 +206,54 @@ class Chatbox extends Component {
         }
     }
 
-    switchUserType = () => {
-        if(this.state.user.userType == 'guest') {
+    switchSender = () => {
+        if(this.state.sender.type == 'guest') {
+            const sender = {senderAlias: 'Certax', type: 'admin'}
+            const responder = this.returnResponder(sender);
             this.setState((prevState) => ({
-                user: {
-                    userAlias: 'Certax',
-                    userType: 'admin'
-                }
+                sender, responder
             }))
-        } else if (this.state.user.userType == 'admin'){
+        } else {
+            const sender = {senderAlias: 'Guest', type: 'guest'}
+            const responder = this.returnResponder(sender);
             this.setState((prevState) => ({
-                user: {
-                    userAlias: 'Guest',
-                    userType: 'guest'
-                }
+                 sender, responder
             }))
         }
     }
 
-    returnResponderAlias = (alias) => {
-        if(alias == 'Guest') {
-            return 'Certax';
-        } else if (alias == 'Certax') {
-            return 'Guest'
+    toggleBotChat = () => {
+        if(this.state.responder.type != 'bot') {
+            const messages = this.state.messages;
+            const botMessages = this.state.botMessages;
+            this.setState({
+                responder: {
+                    alias: 'Certax Bot', 
+                    type: 'bot'
+                }, 
+                cachedMessages: messages, 
+                messages: botMessages
+            })
         } else {
-            return '';
+            const responder = this.returnResponder(this.state.sender);
+            const messages = this.state.cachedMessages;
+            const botMessages = this.state.messages;
+            this.setState({
+                responder, 
+                messages, 
+                botMessages, 
+                cachedMessages: []
+            })
+        }
+    }
+
+    returnResponder = (sender) => {
+        if(sender.type == 'admin') {
+            return {alias: 'Guest', type: 'guest'}
+        } else if (sender.type == 'guest'){
+            return {alias: 'Certax', type: 'admin'}
+        } else {
+            return ''
         }
     }
 
@@ -176,38 +274,84 @@ class Chatbox extends Component {
         
     }
 
+    returnTimeSinceLastmessage = () => {
+        const now = new Date();
+        if(this.state.messages.length != 0) {
+            let lastMessageBlock = this.state.messages[this.state.messages.length - 1];
+            let lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1];
+            let lastMessageDate = lastMessage.date;
+            console.log(dateHourDiff(lastMessageDate, now))
+            if(dateHourDiff(lastMessageDate, now) > 1) {
+                this.setState({
+                    displayDate: true
+                }) 
+            }
+        } else {
+            console.log("Messages list is empty");
+        }
+    }
+
     render() { 
+
+        var chatOpen = this.state.chatOpen;
+
         return ( 
             <>
             <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
             <div className={`${this.state.active && 'show'} chatbox-container`}>
-                <div className='chatbox-top-bar' style={{backgroundColor: this.props.colors.blue}} onClick={this.switchUserType}>
-                    <div className='chatbox-top-bar-text'>
-                        <h3>{this.returnResponderAlias(this.state.user.userAlias)}</h3>
-                        <Status typing={this.state.typing}/>
-                    </div>
-                    {/* <SwitchChatButton /> */}
-                    <CloseChatboxButton onClick={this.closeChatbox}/>
+
+                <div className='chatbox-top-bar' style={{backgroundColor: (this.state.responder.type == 'bot') ? this.props.colors.yellow : (!this.state.chatOpen) ? this.props.colors.lightgrey : this.props.colors.blue}}>
+
+                { (chatOpen) ? <MessageHeader responder={this.state.responder}
+                                              typing={this.state.typing}
+                                              colors={this.props.colors}
+                                              switchSender={this.switchSender}
+                                              toggleBotChat={this.toggleBotChat}
+                                              closeChatbox={this.closeChatbox} /> : 
+
+                               <ChatsHeader colors={this.props.colors}
+                                            closeChatbox={this.closeChatbox}/> }
+
+                
                 </div>
+
+
                 <div className='chatbox-body'>
-                    <MessageController messages={this.state.messages} colors={this.props.colors} userType={this.state.user.userType} ref={this.messageEndRef} toggleDateVisbility={this.toggleDateVisbility}/>
+
+                    { (chatOpen) ? <MessageController messages={this.state.messages} 
+                                       colors={this.props.colors} 
+                                       senderType={this.state.sender.type} 
+                                       ref={this.messageEndRef} 
+                                       toggleDateVisbility={this.toggleDateVisbility}/> : 
+
+                                    <ChatsController />}
+                    
+                    
+               
                 </div>
-                <div className='chatbox-input-container'>
-                    <input className='chatbox-input' type='text' placeholder='Type your message...' value={this.state.message} onChange={this.handleMessageChange} onKeyDown={this.handleKeyDown}/>
-                    <SendButton color={(this.state.sendable) ? this.props.colors.blue : this.props.colors.grey} onClick={this.sendMessage}/>
+
+
+                <div className='chatbox-input-container' onClick={this.toggleChatOpen}>
+
+                    { (chatOpen) ? <MessageInput messageValue={this.state.message} 
+                                      sendable={this.state.sendable}
+                                      colors={this.props.colors}
+                                      sendMessage={this.sendMessage}
+                                      handleMessageChange={this.handleMessageChange}
+                                      handleKeyDown={this.handleKeyDown} /> : 
+                                      
+                                    <ChatsFooter colors={this.props.colors}/>}
+                    
+                    
+
                 </div>
+
+
             </div> 
             </>
         );
     }
 }
-
-const CloseChatboxButton = (props) => (
-    <svg className='chatbox-top-bar-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.47 58.31" onClick={props.onClick}>
-        <rect fill='white' className="cross" x="966.31" y="450.9" width="3.44" height="79.13" transform="translate(-1002.11 366.88) rotate(-45)" />
-        <rect fill='white' className="cross" x="928.46" y="488.74" width="79.13" height="3.44" transform="translate(-1002.11 366.88) rotate(-45)" />
-    </svg>
-)
 
 const OpenChatBoxButton = (props) => {
     const width = useWindowDimensions().width;
@@ -227,8 +371,20 @@ const OpenChatBoxButton = (props) => {
     )
 }
 
-const SwitchChatButton = (props) => {
-    return (<div />)
+const MessageHeader = (props) => {
+    return (
+                <>    
+            <div className='chatbox-top-bar-text' onClick={props.switchSender}>
+                <h3>{props.responder.alias}</h3>
+                <Status typing={props.typing}/>
+            </div>
+            <div className='chatbox-top-bar-buttons'>
+                <SwitchChatButton responderType={props.responder.type} onClick={props.toggleBotChat} colors={props.colors}/>
+                <CloseChatboxButton color={'white'} onClick={props.closeChatbox}/>
+            </div>
+            </>
+
+    )
 }
 
 const Status = (props) => {
@@ -247,30 +403,42 @@ const Status = (props) => {
     return <p>{text}</p>
 }
 
-const SendButton = (props) => {
-    return (
-        <svg className='send-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.41 27.46" onClick={props.onClick}>
-            <path fill={props.color} d="M859.53,213.37l-26.39-12.23a1.5,1.5,0,0,0-2,1.88l4.25,11.71-4.26,11.71a1.5,1.5,0,0,0,.88,1.93,1.53,1.53,0,0,0,1.17-.05l26.39-12.22a1.5,1.5,0,0,0,0-2.73Z" transform="translate(-831 -201)" />
-        </svg>
+const SwitchChatButton = (props) => {
+    const icon = (props.responderType != 'bot') ? <BotIcon onClick={props.onClick}/> : <WhiteC onClick={props.onClick}/>
+    return (<div className={`chatbox-avatar chatbox-top-bar-button`} style={{backgroundColor: (props.responderType != 'bot' ? props.colors.yellow : props.colors.blue)}}>
+                {icon}
+            </div>
     )
 }
 
-const Timestamp = (props) => {
-    let time = formatDate(props.date);
-    console.log(time);
+const CloseChatboxButton = (props) => (
+    <svg className='chatbox-top-bar-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.47 58.31" onClick={props.onClick}>
+        <rect fill={props.color} className="cross" x="966.31" y="450.9" width="3.44" height="79.13" transform="translate(-1002.11 366.88) rotate(-45)" />
+        <rect fill={props.color} className="cross" x="928.46" y="488.74" width="79.13" height="3.44" transform="translate(-1002.11 366.88) rotate(-45)" />
+    </svg>
+)
+
+const MessageController = React.forwardRef((props, ref) => {
+    const message_blocks = props.messages;
+    let list = message_blocks.map((block, i) => (
+        <MessageBlock key={`block_${new Date().getTime()}_${i}`} blockWriterType={block.writerType} senderType={props.senderType} messages={block.messages} colors={props.colors} toggleDateVisbility={props.toggleDateVisbility}/>
+    ))
     return (
-        <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse-timestamp'}`}>{time}</h4>
+        <>
+            {list}
+            <div ref={ref} />
+        </>
     )
-}
+})
 
 const MessageBlock = (props) => {
     let avatar;
-    if(props.messageUserType != props.userType) {
-        if(props.messageUserType == 'bot') {
+    if(props.blockWriterType != props.senderType) {
+        if(props.blockWriterType == 'bot') {
             avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.yellow}}><BotIcon /></div>
-        } else if (props.messageUserType == 'admin') {
+        } else if (props.blockWriterType == 'admin') {
             avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><WhiteC /></div>
-        } else if (props.messageUserType == 'guest') {
+        } else if (props.blockWriterType == 'guest') {
             avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
         }
     }
@@ -287,7 +455,7 @@ const MessageBlock = (props) => {
     })
 
     return (
-                <div className={`chatbox-messages-container ${props.userType == props.messageUserType ? 'sender' : 'receiver'}`}>
+                <div className={`chatbox-messages-container ${props.senderType == props.blockWriterType ? 'sender' : 'responder'}`}>
                     { avatar }
                     <div className='chatbox-messages'>
                         {list}
@@ -296,19 +464,39 @@ const MessageBlock = (props) => {
     )
 }
 
-const MessageController = React.forwardRef((props, ref) => {
-    const message_blocks = props.messages;
+const Timestamp = (props) => {
+    let time = returnDate(props.date);
+    return (
+        <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse-timestamp'}`}>{time}</h4>
+    )
+}
 
-    let list = message_blocks.map((block, i) => (
-        <MessageBlock key={`block_${new Date().getTime()}_${i}`} messageUserType={block.userType} userType={props.userType} messages={block.messages} colors={props.colors} toggleDateVisbility={props.toggleDateVisbility}/>
-    ))
+const MessageInput = (props) => {
     return (
         <>
-            {list}
-            <div ref={ref} />
+            <input className='chatbox-input' type='text' placeholder='Type your message...' value={props.messageValue} onChange={props.handleMessageChange} onKeyDown={props.handleKeyDown}/>
+            <SendButton color={(props.sendable) ? props.colors.blue : props.colors.grey} onClick={props.sendMessage }/>
         </>
     )
-})
+}
+
+const SendButton = (props) => {
+    return (
+        <svg className='send-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.41 27.46" onClick={props.onClick}>
+            <path fill={props.color} d="M859.53,213.37l-26.39-12.23a1.5,1.5,0,0,0-2,1.88l4.25,11.71-4.26,11.71a1.5,1.5,0,0,0,.88,1.93,1.53,1.53,0,0,0,1.17-.05l26.39-12.22a1.5,1.5,0,0,0,0-2.73Z" transform="translate(-831 -201)" />
+        </svg>
+    )
+}
+
+
+
+
+
+
+
+
+
+
 
 const WhiteC = (props) => (
     <svg className={`chatbox-avatar-icon ${(props.onClick != undefined) ? 'clickable' : ''}`} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.13 226.05" onClick={props.onClick}>
@@ -344,6 +532,44 @@ const PersonIcon = () => (
     </svg>
 )
 
+const MessageIcon = (props) => (
+    <svg className='chatbox-avatar-icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475.04 332.17">
+        <path fill={props.colors.yellow} d="M1163,572.4h3.13v14.14c0,20.33-17.07,36.81-38.14,36.81H872.24l-.09,1.07a174.57,174.57,0,0,0,.79,37.23v.05c0,.22.07.44.09.67a.06.06,0,0,1,0,.06,7.85,7.85,0,0,1-5.81,8.19,8.32,8.32,0,0,1-8.8-2.66l-.61-.85-30.91-43.76H790.32c-21.07,0-38.15-16.48-38.15-36.81V445.87c0-20.33,17.08-36.82,38.15-36.82h2.89V516.28c0,30.94,26.09,56.12,58.14,56.12h236.48q-.13,6.95-.88,13.66l-.19,4-.31,5.43a27.52,27.52,0,0,0,20,23.36,29,29,0,0,0,8.12,1.15h0a28.71,28.71,0,0,0,22.19-10.45l.33-.42.93-1.28Z" transform="translate(-752.17 -338.79)"/>
+        <path fill={props.colors.blue} d="M1227.21,375.61V516.28c0,20.33-17.08,36.81-38.15,36.81h-36.59l-30.91,43.76-.61.85a8.35,8.35,0,0,1-8.8,2.67,7.86,7.86,0,0,1-5.81-8.2.06.06,0,0,1,0-.06c0-.23.05-.45.09-.67v-.05a174.49,174.49,0,0,0,.79-37.22l-.09-1.08H851.35c-21.07,0-38.14-16.48-38.14-36.81V375.61c0-20.33,17.07-36.82,38.14-36.82h337.71C1210.13,338.79,1227.21,355.28,1227.21,375.61Z" transform="translate(-752.17 -338.79)"/>
+    </svg>
+)
+
+
+
+const ChatsHeader = (props) => {
+    const style = {
+        display: 'flex',
+        flexDirection: 'row', 
+        alignItems: 'center' 
+    }
+    return (
+    <>    
+        <div className='chatbox-top-bar-text' style={style}>
+            <div className={`chatbox-avatar`} style={{background: 'none'}}><MessageIcon colors={props.colors}/></div>
+            <h3 style={{color: props.colors.textblack}}>Chats</h3>
+        </div>
+        <CloseChatboxButton color={props.colors.blue} onClick={props.closeChatbox}/>
+
+    </>
+    )
+}
+
+const ChatsController = (props) => {
+    return (
+        <div />
+    )
+}
+
+const ChatsFooter = (props) => {
+    return (
+        <div className={`chatbox-avatar center-top`} style={{backgroundColor: props.colors.blue}}><WhiteC /></div>
+    )
+}
 
 export default Chatbox;
 
