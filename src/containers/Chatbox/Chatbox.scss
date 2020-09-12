@@ -108,7 +108,7 @@
                 background: rgb(82, 82, 136);
                 min-width: 50px;
                 height: 50px;
-                border-radius: 100%;
+                border-radius: 20px;
                 display: flex;
             }
 
@@ -136,7 +136,7 @@
 
                     p {
                         padding: 1em;
-                        border-radius: 25px;
+                        border-radius: 15px;
                         margin-top: .25em;
                         overflow-wrap: break-word;
                         max-width: 200px;
@@ -176,7 +176,7 @@
                         background: rgb(82, 82, 136);
                         color: white;
                         align-self: flex-end;
-
+                        border-bottom-right-radius: 0;
                     }
                 }
             }
@@ -195,6 +195,7 @@
                     p {
                         background: #F1F0F0;
                         align-self: flex-start;
+                        border-bottom-left-radius: 0;
                     }
                 }
             }
@@ -287,7 +288,7 @@
     background: rgb(82, 82, 136);
     min-width: 50px;
     height: 50px;
-    border-radius: 100%;
+    border-radius: 5px;
     display: flex;
 }
 

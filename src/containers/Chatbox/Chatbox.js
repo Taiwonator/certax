@@ -239,35 +239,39 @@ class Chatbox extends Component {
             <>
             <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
             <div className={`${this.state.active && 'show'} chatbox-container`}>
-                <div className='chatbox-top-bar' style={{backgroundColor: (this.state.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
-                    <div className='chatbox-top-bar-text' onClick={this.switchSender}>
-                        <h3>{this.state.responder.alias}</h3>
-                        <Status typing={this.state.typing}/>
-                    </div>
-                    <div className='chatbox-top-bar-buttons'>
-                        <SwitchChatButton responderType={this.state.responder.type} onClick={this.toggleBotChat} colors={this.props.colors}/>
-                        <CloseChatboxButton onClick={this.closeChatbox}/>
-                    </div>
-                </div>
+
+                <ChatboxTopBar responder={this.state.responder}
+                               typing={this.state.typing}
+                               colors={this.props.colors}
+                               switchSender={this.switchSender}
+                               toggleBotChat={this.toggleBotChat}
+                               closeChatbox={this.closeChatbox} />
+
+
                 <div className='chatbox-body'>
+                    
                     <MessageController messages={this.state.messages} colors={this.props.colors} senderType={this.state.sender.type} ref={this.messageEndRef} toggleDateVisbility={this.toggleDateVisbility}/>
+               
                 </div>
+
+
                 <div className='chatbox-input-container'>
-                    <input className='chatbox-input' type='text' placeholder='Type your message...' value={this.state.message} onChange={this.handleMessageChange} onKeyDown={this.handleKeyDown}/>
-                    <SendButton color={(this.state.sendable) ? this.props.colors.blue : this.props.colors.grey} onClick={this.sendMessage}/>
+                    
+                    <ChatboxBottomBar messageValue={this.state.message} 
+                                      sendable={this.state.sendable}
+                                      colors={this.props.colors}
+                                      sendMessage={this.sendMessage}
+                                      handleMessageChange={this.handleMessageChange}
+                                      handleKeyDown={this.handleKeyDown} />
+
                 </div>
+
+
             </div> 
             </>
         );
     }
 }
-
-const CloseChatboxButton = (props) => (
-    <svg className='chatbox-top-bar-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.47 58.31" onClick={props.onClick}>
-        <rect fill='white' className="cross" x="966.31" y="450.9" width="3.44" height="79.13" transform="translate(-1002.11 366.88) rotate(-45)" />
-        <rect fill='white' className="cross" x="928.46" y="488.74" width="79.13" height="3.44" transform="translate(-1002.11 366.88) rotate(-45)" />
-    </svg>
-)
 
 const OpenChatBoxButton = (props) => {
     const width = useWindowDimensions().width;
@@ -287,11 +291,20 @@ const OpenChatBoxButton = (props) => {
     )
 }
 
-const SwitchChatButton = (props) => {
-    const icon = (props.responderType != 'bot') ? <BotIcon onClick={props.onClick}/> : <WhiteC onClick={props.onClick}/>
-    return (<div className={`chatbox-avatar chatbox-top-bar-button`} style={{backgroundColor: (props.responderType != 'bot' ? props.colors.yellow : props.colors.blue)}}>
-                {icon}
-            </div>
+const ChatboxTopBar = (props) => {
+    return (
+        <div className='chatbox-top-bar' style={{backgroundColor: (props.responder.type == 'bot') ? props.colors.yellow : props.colors.blue}}>
+                    
+        <div className='chatbox-top-bar-text' onClick={props.switchSender}>
+            <h3>{props.responder.alias}</h3>
+            <Status typing={props.typing}/>
+        </div>
+        <div className='chatbox-top-bar-buttons'>
+            <SwitchChatButton responderType={props.responder.type} onClick={props.toggleBotChat} colors={props.colors}/>
+            <CloseChatboxButton onClick={props.closeChatbox}/>
+        </div>
+
+    </div>
     )
 }
 
@@ -309,6 +322,30 @@ const Status = (props) => {
         return () => clearTimeout(timer);
       });
     return <p>{text}</p>
+}
+
+const SwitchChatButton = (props) => {
+    const icon = (props.responderType != 'bot') ? <BotIcon onClick={props.onClick}/> : <WhiteC onClick={props.onClick}/>
+    return (<div className={`chatbox-avatar chatbox-top-bar-button`} style={{backgroundColor: (props.responderType != 'bot' ? props.colors.yellow : props.colors.blue)}}>
+                {icon}
+            </div>
+    )
+}
+
+const CloseChatboxButton = (props) => (
+    <svg className='chatbox-top-bar-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.47 58.31" onClick={props.onClick}>
+        <rect fill='white' className="cross" x="966.31" y="450.9" width="3.44" height="79.13" transform="translate(-1002.11 366.88) rotate(-45)" />
+        <rect fill='white' className="cross" x="928.46" y="488.74" width="79.13" height="3.44" transform="translate(-1002.11 366.88) rotate(-45)" />
+    </svg>
+)
+
+const ChatboxBottomBar = (props) => {
+    return (
+        <>
+            <input className='chatbox-input' type='text' placeholder='Type your message...' value={props.messageValue} onChange={props.handleMessageChange} onKeyDown={props.handleKeyDown}/>
+            <SendButton color={(props.sendable) ? props.colors.blue : props.colors.grey} onClick={props.sendMessage }/>
+        </>
+    )
 }
 
 const SendButton = (props) => {
