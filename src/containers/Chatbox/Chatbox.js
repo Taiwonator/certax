@@ -162,12 +162,8 @@ class Chatbox extends Component {
 
     addMessage = () => {
         let messageObj = {message: this.state.message, date: new Date(), dateVisible: false, seen: false, seenVisibility: false};
-        this.returnTimeSinceLastmessage();
-        if(this.state.displayDate == true) {
+        if(this.displayDateChecker()) {
             messageObj.dateVisible = true;
-            this.setState({
-                displayDate: false 
-            }) 
         }
         if(this.state.messages.length != 0) {
             // Same person who sent the last message talking
@@ -258,51 +254,7 @@ class Chatbox extends Component {
         }
     }
 
-    toggleDateVisbility = (m) => {
-        const messages = this.state.messages;
-        let new_messages = messages.map(function(messages) {
-            let block_messages = messages.messages;
-            for(var i = 0; i < block_messages.length; i++) {
-                if(block_messages[i] == m) {
-                    block_messages[i].dateVisible = !block_messages[i].dateVisible;
-                } else {
-                    block_messages[i].dateVisible = false;
-                }
-            }
-            return block_messages;
-        })
-        this.setState((prevState) => ({
-            new_messages
-        }))
-        
-    }
-
-    seenMessage = (m) => {
-        const messages = this.state.messages;
-        let new_messages = messages.map(function(messages) {
-            let block_messages = messages.messages;
-            for(var i = 0; i < block_messages.length; i++) {
-                if(block_messages[i] == m) {
-                    block_messages[i].seen = true;
-                }
-                if(i == block_messages.length - 1) {
-                    block_messages[block_messages.length - 1].seenVisbility = true;
-                } else {
-                    block_messages[i].seenVisbility = false;
-                }
-            }
-            return block_messages;
-        })
-        this.setState((prevState) => ({
-            new_messages
-        }))
-    }
-
-
-
     messageOnClick = (m) => {
-        this.toggleDateVisbility(m);
-        this.seenMessage(m);
         const oldFocusedMessage = this.state.focusedMessage;
         let focusedMessage;
         if(oldFocusedMessage != m) {
@@ -315,7 +267,7 @@ class Chatbox extends Component {
         })
     }
 
-    returnTimeSinceLastmessage = () => {
+    displayDateChecker = () => {
         const now = new Date();
         if(this.state.messages.length != 0) {
             let lastMessageBlock = this.state.messages[this.state.messages.length - 1];
@@ -323,12 +275,17 @@ class Chatbox extends Component {
             let lastMessageDate = lastMessage.date;
             console.log(dateHourDiff(lastMessageDate, now))
             if(dateHourDiff(lastMessageDate, now) > 1) {
-                this.setState({
-                    displayDate: true
-                }) 
+                // this.setState({
+                //     displayDate: true
+                // }) 
+                return true;
             }
         } else {
-            console.log("Messages list is empty");
+            console.log("Messages list is empty")
+            // this.setState({
+            //     displayDate: true
+            // });
+            return true;
         }
     }
 
@@ -511,7 +468,12 @@ const MessageBlock = (props) => {
         let showDate = false, showSeen = false;
         if(props.focusedMessage == message) {
             showDate = true, showSeen = true;
+        } 
+
+        if(message.dateVisible) {
+            showDate = true;
         }
+
         return (
             <div key={key} className='chatbox-message'>
                 <Timestamp date={message.date} visible={showDate}/>
