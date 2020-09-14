@@ -186,7 +186,7 @@ class Chatbox extends Component {
                 messages[this.state.messages.length - 1] = lastMessage;
 
                 for(var i = 0; i < guests.length; i++) {
-                    if(guests[i].user == this.state.sender || guests[i].user == this.state.responder) {
+                    if(guests[i].user == this.state.guest.user) {
                         guest = guests[i];
                         index = i;
                     }
@@ -205,11 +205,12 @@ class Chatbox extends Component {
                 }))
             } else {
                 for(var i = 0; i < guests.length; i++) {
-                    if(guests[i].user == this.state.sender || guests[i].user == this.state.responder) {
+                    if(guests[i].user == this.state.guest.user) {
                         guest = guests[i];
                         index = i;
                     }
                 }
+                console.log(guest);
                 if(this.state.responder.type == 'guest') {
                     guest.messages = [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
                 } else if (this.state.responder.type == 'bot') {
@@ -228,7 +229,7 @@ class Chatbox extends Component {
         } else {
             // First message sent
             for(var i = 0; i < guests.length; i++) {
-                if(guests[i].user == this.state.sender || guests[i].user == this.state.responder) {
+                if(guests[i].user == this.state.guest.user) {
                     guest = guests[i];
                     index = i;
                 }
