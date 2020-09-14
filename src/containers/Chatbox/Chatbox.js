@@ -70,7 +70,8 @@ class Chatbox extends Component {
                         ], writerType: "bot"}
                     ]
                 }
-            ]
+            ], 
+            guest: {}
         }
 
         this.messageEndRef = React.createRef();
@@ -190,7 +191,13 @@ class Chatbox extends Component {
                         index = i;
                     }
                 }
-                guest.messages = messages;
+                if(this.state.responder.type == 'guest') {
+                    guest.messages = messages;
+                } else if(this.state.responder.type == 'bot') {
+                    guest.botMessages = messages;
+                } else {
+
+                }
                 guests[index] = guest;
 
                 this.setState((prevState) => ({
@@ -203,7 +210,11 @@ class Chatbox extends Component {
                         index = i;
                     }
                 }
-                guest.messages = [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
+                if(this.state.responder.type == 'guest') {
+                    guest.messages = [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
+                } else if (this.state.responder.type == 'bot') {
+                    guest.botMessages = [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
+                } 
                 guests[index] = guest;
 
                 // Means it is the other individual talking
@@ -222,14 +233,20 @@ class Chatbox extends Component {
                     index = i;
                 }
             }
-            guest.messages = [{writerType: this.state.sender.type, messages: [messageObj]}]
+            if(this.state.responder.type == 'guest') {
+                guest.messages = [{writerType: this.state.sender.type, messages: [messageObj]}]
+            } else if (this.state.responder.type == 'bot') {
+                guest.botMessages = [{writerType: this.state.sender.type, messages: [messageObj]}]
+            } else {
+                
+            }
             guests[index] = guest;
 
             this.setState((prevState) => ({
                 messages: [{
                     writerType: this.state.sender.type, 
                     messages: [messageObj]
-                }]
+                }], guests
             }))
         }
     }
@@ -241,26 +258,24 @@ class Chatbox extends Component {
     }
 
     switchSender = () => {
-        const sender = this.state.sender;
-        const responder = this.state.responder;
         if(this.state.sender.type != 'admin') {
-            this.setState({
+            this.setState((prevState) => ({
                 sender: {
                     alias: 'Certax', 
                     type: 'admin', 
                     id: '123'
                 }, 
-                responder: sender
-            })
+                responder: prevState.guest.user
+            }))
         } else {
-            this.setState({
+            this.setState((prevState) =>({
                 responder: {
                     alias: 'Certax', 
                     type: 'admin', 
                     id: '123'
                 }, 
-                sender: responder
-            })
+                sender: prevState.guest.user
+            }))
         }
     }
 
@@ -277,7 +292,7 @@ class Chatbox extends Component {
                 messages: botMessages
             })
         } else {
-            const responder = this.returnResponder(this.state.sender);
+            const responder = this.state.guest.user;
             const messages = this.state.cachedMessages;
             const botMessages = this.state.messages;
             this.setState({
@@ -286,16 +301,6 @@ class Chatbox extends Component {
                 botMessages, 
                 cachedMessages: []
             })
-        }
-    }
-
-    returnResponder = (sender) => {
-        if(sender.type == 'admin') {
-            return {alias: 'Guest', type: 'guest'}
-        } else if (sender.type == 'guest'){
-            return {alias: 'Certax', type: 'admin'}
-        } else {
-            return ''
         }
     }
 
@@ -354,7 +359,8 @@ class Chatbox extends Component {
             chatOpen: true, 
             messages: guest.messages, 
             botMessages: guest.botMessages, 
-            responder: guest.user
+            responder: guest.user, 
+            guest
         })
     }
 
