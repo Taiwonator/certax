@@ -51,7 +51,7 @@
 
         .chatbox-top-bar-right {
             display: flex;
-            width: 40%;
+            width: 35%;
             justify-content: space-between;
             align-items: center;
             
@@ -114,7 +114,7 @@
                         font-family: v.$text-font;
                         text-align: center;
                         font-size: 12px;
-                        margin: 1em 0;
+                        margin: .2em 0;
                         transition: all .3s ease-in-out;
                         opacity: .5;
                     } 
@@ -333,4 +333,60 @@
     font-weight: 100;
     opacity: .5;
     margin-top: .5em;
+}
+
+.chat-list-item-container {
+    height: 80px;
+    // background: red;
+    margin-bottom: 1em;
+    padding: 0 .5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @include b.no-text-highlight;
+
+    &:hover {
+        background: #EEEEEE;
+    }
+
+    .chatbox-avatar {
+        height: 60px;
+        width: 60px;
+        flex-basis: 20%;
+    }
+
+    .chat-list-item-content {
+        display: flex;
+        flex-direction: column;
+        margin-left: .75em;
+        flex-basis: 80%;
+
+        .chat-list-item-top-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            h3 {
+                font-family: v.$text-font;
+                color: #343434;
+            }
+
+            p {
+                font-size: 12px;
+                color: #676767;
+            }
+        }
+
+        .chat-list-item-bottom-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            p {
+                font-size: 14px;
+                color:#9E9E9E;
+            }
+        }
+    }
+
 }

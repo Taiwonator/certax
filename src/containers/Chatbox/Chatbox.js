@@ -1,25 +1,27 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
-import { returnDate, dateHourDiff } from '../../helperFunctions/dateOperations.js';
+import { returnDate, dateHourDiff, returnTime } from '../../helperFunctions/dateOperations.js';
 
 class Chatbox extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             active: false,
-            chatOpen: true,
+            chatOpen: false,
 
             typing: false, 
             sendable: false,
             displayDate: true,
-            sender: {
-                alias: 'Guest',
-                type: 'guest'
-            },
             responder: {
+                alias: 'Guest',
+                type: 'guest', 
+                id: '404'
+            },
+            sender: {
                 alias: 'Certax',
                 type: 'admin',
+                id: '123'
             },
             message: '',
             focusedMessage: '', 
@@ -28,49 +30,50 @@ class Chatbox extends Component {
             ], 
             botMessages: [
                 {messages: [
-                    {message: 'Hello', date: new Date(), dateVisible: true}], writerType: 'bot', seen: false, seenVisbility: false}, 
+                    {message: 'Hello', date: new Date(), dateVisible: true}], writerType: 'bot', seen: false, seenVisible: false}, 
 
             ],
-            cachedMessages: []
+            cachedMessages: [], 
+            guests: [
+                {       
+                    user: {
+                        id: 1, 
+                        alias: "Bobby Lee",
+                        type: "guest"
+                    }, 
+                    messages: [
+                        {messages: [
+                            {message: "Hello my name is Bobby", date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: false},
+                            {message: "Can I get some help from you? I am looking to start up", date: "Sat Sep 12 2020 22:02:09 GMT+0100 (GMT+01:00)", dateVisible: false, seen: false, seenVisible: true},
+                        ], writerType: "guest"}
+                    ], 
+                    botMessages: [
+                        {messages: [
+                            {message: "Hi I'm a bot", date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: false}
+                        ], writerType: "bot"}
+                    ]
+                }, 
+                {
+                    user: {
+                        id: 2, 
+                        alias: "Sheela Porter",
+                        type: "guest"
+                    }, 
+                    messages: [
+                        {messages: [
+                            {message: "F*ck you", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: true, seenVisible: false}
+                        ], writerType: "guest"}
+                    ], 
+                    botMessages: [
+                        {messages: [
+                            {message: "Hi I'm a bot nice to meet you :)", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: false}
+                        ], writerType: "bot"}
+                    ]
+                }
+            ]
         }
 
         this.messageEndRef = React.createRef();
-        this.guests = [
-            {       
-                user: {
-                    id: 1, 
-                    alias: "Bobby Lee",
-                    type: "guest"
-                }, 
-                messages: [
-                    {messages: [
-                        {message: "Hello my name is Bobby", date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisbility: false}
-                    ], writerType: "guest"}
-                ], 
-                botMessages: [
-                    {messages: [
-                        {message: "Hi I'm a bot", date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisbility: false}
-                    ], writerType: "bot"}
-                ]
-            }, 
-            {
-                user: {
-                    id: 2, 
-                    alias: "Sheela Porter",
-                    type: "guest"
-                }, 
-                messages: [
-                    {messages: [
-                        {message: "F*ck you", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: true, seenVisbility: false}
-                    ], writerType: "guest"}
-                ], 
-                botMessages: [
-                    {messages: [
-                        {message: "Hi I'm a bot", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisbility: false}
-                    ], writerType: "bot"}
-                ]
-            }
-        ]
     }
     
     // user: {
@@ -120,6 +123,7 @@ class Chatbox extends Component {
         }, () => {
             this.checkIfTyping();
             this.checkIfSendable();
+            this.seeAllMessages();
         })
     }
 
@@ -156,18 +160,19 @@ class Chatbox extends Component {
                 this.checkIfTyping();
                 this.checkIfSendable();
                 this.scrollToBottom();
+                this.seeAllMessages();
             })
         } 
     }
 
     addMessage = () => {
-        let messageObj = {message: this.state.message, date: new Date(), dateVisible: false, seen: false, seenVisibility: false};
-        this.returnTimeSinceLastmessage();
-        if(this.state.displayDate == true) {
+        let messageObj = {message: this.state.message, date: new Date(), dateVisible: false, seen: false, seenVisible: true};
+
+        let guests = this.state.guests;
+        let guest;
+        let index = 0;
+        if(this.displayDateChecker()) {
             messageObj.dateVisible = true;
-            this.setState({
-                displayDate: false 
-            }) 
         }
         if(this.state.messages.length != 0) {
             // Same person who sent the last message talking
@@ -176,22 +181,50 @@ class Chatbox extends Component {
                 let messages = [...this.state.messages];
                 let lastMessage = messages[this.state.messages.length - 1];
                 lastMessage.messages.push(messageObj);
+                lastMessage.messages[lastMessage.messages.length - 2].seenVisible = false;
                 messages[this.state.messages.length - 1] = lastMessage;
-                
+
+                for(var i = 0; i < guests.length; i++) {
+                    if(guests[i].user == this.state.sender || guests[i].user == this.state.responder) {
+                        guest = guests[i];
+                        index = i;
+                    }
+                }
+                guest.messages = messages;
+                guests[index] = guest;
+
                 this.setState((prevState) => ({
-                    messages
+                    messages, guests
                 }))
             } else {
+                for(var i = 0; i < guests.length; i++) {
+                    if(guests[i].user == this.state.sender || guests[i].user == this.state.responder) {
+                        guest = guests[i];
+                        index = i;
+                    }
+                }
+                guest.messages = [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
+                guests[index] = guest;
+
                 // Means it is the other individual talking
                 this.setState((prevState) => ({
                     messages: [...prevState.messages, {
                         writerType: this.state.sender.type, 
                         messages: [messageObj]
-                    }]
+                    }], guests
                 }))
             }
         } else {
             // First message sent
+            for(var i = 0; i < guests.length; i++) {
+                if(guests[i].user == this.state.sender || guests[i].user == this.state.responder) {
+                    guest = guests[i];
+                    index = i;
+                }
+            }
+            guest.messages = [{writerType: this.state.sender.type, messages: [messageObj]}]
+            guests[index] = guest;
+
             this.setState((prevState) => ({
                 messages: [{
                     writerType: this.state.sender.type, 
@@ -208,18 +241,26 @@ class Chatbox extends Component {
     }
 
     switchSender = () => {
-        if(this.state.sender.type == 'guest') {
-            const sender = {senderAlias: 'Certax', type: 'admin'}
-            const responder = this.returnResponder(sender);
-            this.setState((prevState) => ({
-                sender, responder
-            }))
+        const sender = this.state.sender;
+        const responder = this.state.responder;
+        if(this.state.sender.type != 'admin') {
+            this.setState({
+                sender: {
+                    alias: 'Certax', 
+                    type: 'admin', 
+                    id: '123'
+                }, 
+                responder: sender
+            })
         } else {
-            const sender = {senderAlias: 'Guest', type: 'guest'}
-            const responder = this.returnResponder(sender);
-            this.setState((prevState) => ({
-                 sender, responder
-            }))
+            this.setState({
+                responder: {
+                    alias: 'Certax', 
+                    type: 'admin', 
+                    id: '123'
+                }, 
+                sender: responder
+            })
         }
     }
 
@@ -258,51 +299,7 @@ class Chatbox extends Component {
         }
     }
 
-    toggleDateVisbility = (m) => {
-        const messages = this.state.messages;
-        let new_messages = messages.map(function(messages) {
-            let block_messages = messages.messages;
-            for(var i = 0; i < block_messages.length; i++) {
-                if(block_messages[i] == m) {
-                    block_messages[i].dateVisible = !block_messages[i].dateVisible;
-                } else {
-                    block_messages[i].dateVisible = false;
-                }
-            }
-            return block_messages;
-        })
-        this.setState((prevState) => ({
-            new_messages
-        }))
-        
-    }
-
-    seenMessage = (m) => {
-        const messages = this.state.messages;
-        let new_messages = messages.map(function(messages) {
-            let block_messages = messages.messages;
-            for(var i = 0; i < block_messages.length; i++) {
-                if(block_messages[i] == m) {
-                    block_messages[i].seen = true;
-                }
-                if(i == block_messages.length - 1) {
-                    block_messages[block_messages.length - 1].seenVisbility = true;
-                } else {
-                    block_messages[i].seenVisbility = false;
-                }
-            }
-            return block_messages;
-        })
-        this.setState((prevState) => ({
-            new_messages
-        }))
-    }
-
-
-
     messageOnClick = (m) => {
-        this.toggleDateVisbility(m);
-        this.seenMessage(m);
         const oldFocusedMessage = this.state.focusedMessage;
         let focusedMessage;
         if(oldFocusedMessage != m) {
@@ -315,7 +312,7 @@ class Chatbox extends Component {
         })
     }
 
-    returnTimeSinceLastmessage = () => {
+    displayDateChecker = () => {
         const now = new Date();
         if(this.state.messages.length != 0) {
             let lastMessageBlock = this.state.messages[this.state.messages.length - 1];
@@ -323,13 +320,42 @@ class Chatbox extends Component {
             let lastMessageDate = lastMessage.date;
             console.log(dateHourDiff(lastMessageDate, now))
             if(dateHourDiff(lastMessageDate, now) > 1) {
-                this.setState({
-                    displayDate: true
-                }) 
+                // this.setState({
+                //     displayDate: true
+                // }) 
+                return true;
             }
         } else {
-            console.log("Messages list is empty");
+            console.log("Messages list is empty")
+            // this.setState({
+            //     displayDate: true
+            // });
+            return true;
         }
+    }
+
+    seeAllMessages = () => {
+        let messages = this.state.messages;
+        for(var i = 0; i < messages.length; i++) {
+            if(messages[i].writerType == this.state.responder.type) {
+                for(var j = 0; j < messages[i].messages.length; j++) {
+                    messages[i].messages[j].seen = true;
+                }
+            }
+        }
+        this.setState({
+            messages
+        })
+    }
+
+    openChat = (guest) => {
+        console.log(`hello ${guest.user.alias}`);
+        this.setState({
+            chatOpen: true, 
+            messages: guest.messages, 
+            botMessages: guest.botMessages, 
+            responder: guest.user
+        })
     }
 
     render() { 
@@ -341,7 +367,7 @@ class Chatbox extends Component {
             <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
             <div className={`${this.state.active && 'show'} chatbox-container`}>
 
-                <div className='chatbox-top-bar' style={{backgroundColor: (this.state.responder.type == 'bot') ? this.props.colors.yellow : (!this.state.chatOpen) ? this.props.colors.lightgrey : this.props.colors.blue}}>
+                <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.chatOpen) ? '#FAFAFA' : (this.state.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
 
                 { (chatOpen) ? <MessageHeader responder={this.state.responder}
                                               typing={this.state.typing}
@@ -349,7 +375,8 @@ class Chatbox extends Component {
                                               switchSender={this.switchSender}
                                               toggleBotChat={this.toggleBotChat}
                                               closeChatbox={this.closeChatbox} 
-                                              closeChat={this.closeChat}/> : 
+                                              closeChat={this.closeChat}
+                                              seeAllMessages={this.seeAllMessages}/> : 
 
                                <ChatsHeader colors={this.props.colors}
                                             closeChatbox={this.closeChatbox}/> }
@@ -367,7 +394,9 @@ class Chatbox extends Component {
                                        ref={this.messageEndRef} 
                                        messageOnClick={this.messageOnClick}/> : 
 
-                                    <ChatsController />}
+                                    <ChatsController guests={this.state.guests} 
+                                                     colors={this.props.colors}
+                                                     openChat={this.openChat} />}
                     
                     
                
@@ -418,7 +447,8 @@ const MessageHeader = (props) => {
     return (
             <>    
                 <div className='chatbox-top-bar-left'>
-                    <CloseChat closeChat={props.closeChat}/>
+                    <CloseChat closeChat={props.closeChat}/> 
+                    {/* Change back to closeChat */}
                     <div className='chatbox-top-bar-text' onClick={props.switchSender}>
                         <h3>{props.responder.alias}</h3>
                         <Status typing={props.typing}/>
@@ -508,16 +538,29 @@ const MessageBlock = (props) => {
     let list = messages.map((message, i) => {
         const key = `message_${new Date().getTime()}_${i}`;
         const textAlign = (props.senderType == props.blockWriterType) ? 'right' : 'left';
-        let showDate = false, showSeen = false;
+        let showDate = false, showSeen = false, focusedMessage = false;
         if(props.focusedMessage == message) {
-            showDate = true, showSeen = true;
+            showDate = true, focusedMessage = true;
+            if(message.seen) {
+                showSeen = true;
+            }
+        } 
+
+        if(message.dateVisible) {
+            showDate = true;
         }
+
+        if(message.seen && message.seenVisible) {
+            showSeen = true;
+        }
+
         return (
             <div key={key} className='chatbox-message'>
                 <Timestamp date={message.date} visible={showDate}/>
-                <p onClick={() => props.messageOnClick(message)} >{message.message}</p>
+                <p onClick={() => props.messageOnClick(message)} style={{filter: (focusedMessage) ? 'brightness(.8)' : ''}} >{message.message}</p>
                 <SeenLabel textAlign={textAlign} visible={showSeen}/>
             </div>
+
         )
     })
 
@@ -635,9 +678,63 @@ const ChatsHeader = (props) => {
 }
 
 const ChatsController = (props) => {
-    //ALIAS, ACTIVE, MESSAGES,
+    //ALIAS, ACTIVE, MESSAGES, 
+    const guests = props.guests;
+    let guests_list = guests.map(guest => {
+        
+        let lastMessageBlock;
+        let lastMessage;
+        if(guest.messages.length != 0) {
+            for(var i = 0; i < guest.messages.length; i++) {
+                if(guest.messages[i].writerType == 'guest') {
+                    lastMessageBlock = guest.messages[i];
+                    lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1]; 
+                }
+            }
+        }
+
+        return (
+            <ChatListItem key={guest.user.id} 
+                          alias={guest.user.alias} 
+                          lastMessage={lastMessage.message} 
+                          lastMessageDate={new Date(lastMessage.date)} 
+                          colors={props.colors}
+                          guest={guest}
+                          openChat={props.openChat} />
+        )
+    })
     return (
-        <div />
+        <>{guests_list}</>
+    )
+}
+
+const ChatListItem = (props) => {
+    return (
+        <div className='chat-list-item-container' onClick={() => props.openChat(props.guest)}>
+            <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
+            <div className='chat-list-item-content'>
+                <div className='chat-list-item-top-row'>
+                    <h3>{props.alias}</h3>
+                    <p>{returnTime(props.lastMessageDate)}</p>
+                </div>
+                <div className='chat-list-item-bottom-row'>
+                    <TrimmedText text={props.lastMessage} />
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const TrimmedText = (props) => {
+    let out;
+    const charLimit = 32;
+    if(props.text.length > charLimit) {
+        out = props.text.substring(0, charLimit - 1) + "...";
+    } else {
+        out = props.text;
+    }
+    return (
+        <p>{out}</p>
     )
 }
 

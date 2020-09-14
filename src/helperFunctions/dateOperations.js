@@ -1,10 +1,12 @@
-export function dateHourDiff(dateTwo, dateOne) {
+export function dateHourDiff(d2, d1) {
+  const dateTwo = new Date(d2), dateOne = new Date(d1); 
   let diff = (dateTwo.getTime() - dateOne.getTime()) / 1000;
   diff /= (60 * 60);
   return Math.abs(Math.round(diff));
 }
 
-export function returnDate(date) {
+export function returnDate(d) {
+    const date = new Date(d);
     let month = date.getMonth(), 
         monthText = getMonthText(month),
         day = date.getDate(),
@@ -25,7 +27,17 @@ export function returnDate(date) {
     }
 }
 
-function compareDates(dateOne, dateTwo) {
+export function returnTime(date) {
+    let hour = date.getHours(), 
+    hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
+    minute = date.getMinutes(), 
+    minuteFormatted = minute < 10 ? "0" + minute : minute,
+    morning = hour < 12 ? "AM" : "PM";
+    return `${hourFormatted}:${minuteFormatted} ${morning}`;
+}
+
+function compareDates(d1, d2) {
+    const dateOne = new Date(d1), dateTwo = new Date(d2); 
     if(dateOne.getFullYear() == dateTwo.getFullYear()) {
         if(dateOne.getMonth() == dateTwo.getMonth()) {
             return Math.abs(dateOne.getDate() - dateTwo.getDate());
