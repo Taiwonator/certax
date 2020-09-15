@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
-import { returnDate, dateHourDiff, returnTime } from '../../helperFunctions/dateOperations.js';
+import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow } from '../../helperFunctions/dateOperations.js';
 
 class Chatbox extends Component {
     constructor(props) {
@@ -61,14 +61,53 @@ class Chatbox extends Component {
                     }, 
                     messages: [
                         {messages: [
-                            {message: "F*ck you", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: true, seenVisible: false}
+                            {message: "F*ck you", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: true}
                         ], writerType: "guest"}
                     ], 
                     botMessages: [
                         {messages: [
-                            {message: "Hi I'm a bot nice to meet you :)", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: false}
+                            {message: "Hi I'm a bot nice to meet you :)", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: true}
                         ], writerType: "bot"}
                     ]
+                },
+                {
+                    user: {
+                        id: 3, 
+                        alias: "Nigel Flippin",
+                        type: "guest"
+                    }, 
+                    messages: [
+                        {messages: [
+                            {message: "Hi gimme money", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: false}
+                        ], writerType: "guest"}
+                    ], 
+                    botMessages: []
+                }, 
+                // {
+                //     user: {
+                //         id: 4, 
+                //         alias: "Nobody Zebdob",
+                //         type: "guest"
+                //     }, 
+                //     messages: [], 
+                //     botMessages: []
+                // }, 
+                {
+                    user: {
+                        id: 5, 
+                        alias: "Pedro Nimbus",
+                        type: "guest"
+                    }, 
+                    messages: [
+                        {messages: [
+                            {message: "Alright", date: "Sat Sep 10 2020 06:25:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: false}, 
+                            {message: "Now you listen here", date: "Sat Sep 12 2020 06:25:40 GMT+0100 (GMT+01:00)", dateVisible: false, seen: false, seenVisible: false},
+                            {message: "I don't like you very much", date: "Sat Sep 12 2020 22:04:40 GMT+0100 (GMT+01:00)", dateVisible: false, seen: false, seenVisible: false},
+                            {message: "Oh and I forgot to say", date: "Sat Sep 13 2020 10:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: false},
+                            {message: "Get AIDS", date: "Sat Sep 14 2020 10:04:40 GMT+0100 (GMT+01:00)", dateVisible: true, seen: false, seenVisible: true},
+                        ], writerType: "guest"}
+                    ], 
+                    botMessages: []
                 }
             ], 
             guest: {}
@@ -98,7 +137,7 @@ class Chatbox extends Component {
     closeChat = () => {
         const chatOpen = this.state.chatOpen;
         this.setState({
-            chatOpen: false
+            chatOpen: false, message: ''
         })
     }
 
@@ -191,7 +230,7 @@ class Chatbox extends Component {
                         index = i;
                     }
                 }
-                if(this.state.responder.type == 'guest') {
+                if(this.state.responder.type == 'guest' || this.state.responder.type == 'admin') {
                     guest.messages = messages;
                 } else if(this.state.responder.type == 'bot') {
                     guest.botMessages = messages;
@@ -217,7 +256,7 @@ class Chatbox extends Component {
                     }
                 }
                 console.log(guest);
-                if(this.state.responder.type == 'guest') {
+                if(this.state.responder.type == 'guest' || this.state.responder.type == 'admin') {
                     guest.messages = [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
                 } else if (this.state.responder.type == 'bot') {
                     guest.botMessages = [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
@@ -239,7 +278,7 @@ class Chatbox extends Component {
                     index = i;
                 }
             }
-            if(this.state.responder.type == 'guest') {
+            if(this.state.responder.type == 'guest' || this.state.responder.type == 'admin') {
                 guest.messages = [{writerType: this.state.sender.type, messages: [messageObj]}]
             } else if (this.state.responder.type == 'bot') {
                 guest.botMessages = [{writerType: this.state.sender.type, messages: [messageObj]}]
@@ -361,13 +400,29 @@ class Chatbox extends Component {
 
     openChat = (guest) => {
         console.log(`hello ${guest.user.alias}`);
-        this.setState({
-            chatOpen: true, 
-            messages: guest.messages, 
-            botMessages: guest.botMessages, 
-            responder: guest.user, 
-            guest
-        })
+        if(this.state.sender.type == 'admin') {
+            this.setState({
+                chatOpen: true, 
+                messages: guest.messages, 
+                botMessages: guest.botMessages, 
+                responder: guest.user, 
+                guest
+            }, () => this.messageEndRef.current.scrollIntoView())
+        } else {
+            this.setState({
+                chatOpen: true, 
+                messages: guest.messages, 
+                botMessages: guest.botMessages, 
+                sender: guest.user, 
+                responder: {
+                    id: '123', 
+                    alias: 'Certax', 
+                    type: 'admin'
+                },
+                guest
+            }, () => this.messageEndRef.current.scrollIntoView())
+        }
+        
     }
 
     render() { 
@@ -690,33 +745,66 @@ const ChatsHeader = (props) => {
 }
 
 const ChatsController = (props) => {
-    //ALIAS, ACTIVE, MESSAGES, 
+
     const guests = props.guests;
-    let guests_list = guests.map(guest => {
+    let guestsList = guests.map(guest => {
         
         let lastMessageBlock;
         let lastMessage;
+        let writerType;
+
         if(guest.messages.length != 0) {
             for(var i = 0; i < guest.messages.length; i++) {
-                if(guest.messages[i].writerType == 'guest') {
-                    lastMessageBlock = guest.messages[i];
-                    lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1]; 
-                }
+                lastMessageBlock = guest.messages[i];
+                writerType = lastMessageBlock.writerType;
+                lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1]; 
             }
+        } else {
+            lastMessage = {
+                message: 'No messages', 
+                date: new Date()
+            };
         }
 
         return (
             <ChatListItem key={guest.user.id} 
                           alias={guest.user.alias} 
-                          lastMessage={lastMessage.message} 
-                          lastMessageDate={new Date(lastMessage.date)} 
+                          lastMessage={lastMessage}
+                          writerType={writerType}
                           colors={props.colors}
                           guest={guest}
                           openChat={props.openChat} />
         )
     })
+
+    // Order list
+    let orderedList = [];
+    let list = [...guestsList];
+    const listLength = list.length;
+
+    for(var j = 0; j < listLength; j++) { 
+        let leastSeconds, mostRecentMessage;
+        leastSeconds = secondsFromNow(list[0].props.lastMessage.date);
+        mostRecentMessage = list[0];
+
+        for(var i = 1; i < list.length; i++) {
+            if(secondsFromNow(list[i].props.lastMessage.date) < leastSeconds && !orderedList.includes(list[i])) {
+                leastSeconds = secondsFromNow(list[i].props.lastMessage.date);
+                mostRecentMessage = list[i];
+            } 
+        }
+
+        orderedList.push(mostRecentMessage);
+        list = list.filter(x => x != mostRecentMessage);
+        console.log(list);
+    }
+
+    
+    
+    
+    console.log(orderedList);
     return (
-        <>{guests_list}</>
+        <>{orderedList}</>
     )
 }
 
@@ -727,10 +815,10 @@ const ChatListItem = (props) => {
             <div className='chat-list-item-content'>
                 <div className='chat-list-item-top-row'>
                     <h3>{props.alias}</h3>
-                    <p>{returnTime(props.lastMessageDate)}</p>
+                    <p>{returnShortDate(new Date(props.lastMessage.date))}</p>
                 </div>
                 <div className='chat-list-item-bottom-row'>
-                    <TrimmedText text={props.lastMessage} />
+                    <TrimmedText text={props.lastMessage.message} seen={props.lastMessage.seen} writerType={props.writerType} colors={props.colors}/>
                 </div>
             </div>
         </div>
@@ -739,14 +827,37 @@ const ChatListItem = (props) => {
 
 const TrimmedText = (props) => {
     let out;
-    const charLimit = 32;
+    const charLimit = 25;
+    let style = {};
+    // Shortening
     if(props.text.length > charLimit) {
-        out = props.text.substring(0, charLimit - 1) + "...";
+        if(props.writerType != 'admin') {
+            out = `${props.text.substring(0, charLimit - 1)}...`;
+        } else {
+            out = `You: ${props.text.substring(0, charLimit - 5)}...`;
+        }
     } else {
-        out = props.text;
+        if(props.writerType != 'admin') {
+            out = props.text;
+        } else {
+            out = `You: ${props.text}`;
+        }
     }
+
+    if(props.seen || props.writerType == 'admin') {
+        style = {
+            color: '#9E9E9E', 
+            fontWeight: 100
+        }
+    } else {
+        style = {
+            color: props.colors.blue, 
+            fontWeight: 500
+        }
+    }
+
     return (
-        <p>{out}</p>
+        <p style={style}>{out}</p>
     )
 }
 

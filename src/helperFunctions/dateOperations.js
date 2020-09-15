@@ -14,14 +14,34 @@ export function returnDate(d) {
         hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
         minute = date.getMinutes(), 
         minuteFormatted = minute < 10 ? "0" + minute : minute,
-        morning = hour < 12 ? "am" : "pm";
+        morning = hour < 12 ? "AM" : "PM";
 
     let out;
     const now = new Date();
     if(compareDates(new Date(date), new Date(now)) == 0) {
         return `Today ${hourFormatted}:${minuteFormatted} ${morning}`;
-    } else if (compareDates(new Date(date), new Date(now) == 1)) {
+    } else if (compareDates(new Date(date), new Date(now)) == 1) {
         return `Yesterday ${hourFormatted}:${minuteFormatted} ${morning}`;
+    } else {
+        return `${day} ${monthText} ${hourFormatted}:${minuteFormatted} ${morning}`;
+    }
+}
+
+export function returnShortDate(d) {
+    const date = new Date(d);
+    let month = date.getMonth(), 
+        monthText = getMonthText(month),
+        day = date.getDate(),
+        hour = date.getHours(), 
+        hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
+        minute = date.getMinutes(), 
+        minuteFormatted = minute < 10 ? "0" + minute : minute,
+        morning = hour < 12 ? "AM" : "PM";
+
+    let out;
+    const now = new Date();
+    if(compareDates(new Date(date), new Date(now)) == 0) {
+        return `${hourFormatted}:${minuteFormatted} ${morning}`;
     } else {
         return `${day} ${monthText} ${hourFormatted}:${minuteFormatted} ${morning}`;
     }
@@ -34,6 +54,14 @@ export function returnTime(date) {
     minuteFormatted = minute < 10 ? "0" + minute : minute,
     morning = hour < 12 ? "AM" : "PM";
     return `${hourFormatted}:${minuteFormatted} ${morning}`;
+}
+
+export function secondsFromNow(d) {
+    const date = new Date(d);
+    const now = new Date();
+    let difference = (now.getTime() - date.getTime()) / 1000;
+    return Math.abs(difference);
+
 }
 
 function compareDates(d1, d2) {
