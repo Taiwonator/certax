@@ -766,10 +766,13 @@ const ChatsController = (props) => {
             };
         }
 
+        console.log("Last Message Block: ", lastMessageBlock);
+
         return (
             <ChatListItem key={guest.user.id} 
                           alias={guest.user.alias} 
                           lastMessage={lastMessage}
+                          lastMessageBlock={lastMessageBlock}
                           writerType={writerType}
                           colors={props.colors}
                           guest={guest}
@@ -796,7 +799,6 @@ const ChatsController = (props) => {
 
         orderedList.push(mostRecentMessage);
         list = list.filter(x => x != mostRecentMessage);
-        console.log(list);
     }
 
     
@@ -809,6 +811,21 @@ const ChatsController = (props) => {
 }
 
 const ChatListItem = (props) => {
+    let unseenMessageCount = 0;
+    if(props.lastMessageBlock.writerType == 'admin') {
+        unseenMessageCount = 0;
+    } else if (props.lastMessageBlock.writerType == 'guest'){
+        for(var i = 0; i < props.lastMessageBlock.messages.length; i++) {
+            if(!props.lastMessageBlock.messages[i].seen) {
+                unseenMessageCount++;
+            }
+        }
+    } else {
+        console.log("A BOT LAST MESSAGED?");
+    }
+
+    let unseenMessagesLabel = (unseenMessageCount == 0) ? '' : <p style={{backgroundColor: props.colors.blue}}>{unseenMessageCount}</p>;
+
     return (
         <div className='chat-list-item-container' onClick={() => props.openChat(props.guest)}>
             <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
@@ -819,6 +836,10 @@ const ChatListItem = (props) => {
                 </div>
                 <div className='chat-list-item-bottom-row'>
                     <TrimmedText text={props.lastMessage.message} seen={props.lastMessage.seen} writerType={props.writerType} colors={props.colors}/>
+                    <div className='chat-list-item-messages-counters'>
+                        {unseenMessagesLabel}
+                        {/* <p style={{backgroundColor: props.colors.yellow}}>2</p> */}
+                    </div>
                 </div>
             </div>
         </div>
