@@ -204,6 +204,7 @@ class Chatbox extends Component {
                     messages, guests
                 }))
             } else {
+                // Means it is the other individual talking
                 for(var i = 0; i < guests.length; i++) {
                     if(guests[i].user == this.state.guest.user) {
                         guest = guests[i];
@@ -218,7 +219,6 @@ class Chatbox extends Component {
                 } 
                 guests[index] = guest;
 
-                // Means it is the other individual talking
                 this.setState((prevState) => ({
                     messages: [...prevState.messages, {
                         writerType: this.state.sender.type, 
