@@ -148,7 +148,7 @@ class Chatbox extends Component {
     openChatbox = () => {
         this.setState({
             active: true
-        })
+        }, () => this.seeAllMessages())
     }
 
     closeChatbox = () => {
@@ -407,7 +407,7 @@ class Chatbox extends Component {
                 botMessages: guest.botMessages, 
                 responder: guest.user, 
                 guest
-            }, () => this.messageEndRef.current.scrollIntoView())
+            }, () => { this.messageEndRef.current.scrollIntoView(); this.seeAllMessages() })
         } else {
             this.setState({
                 chatOpen: true, 
@@ -420,7 +420,7 @@ class Chatbox extends Component {
                     type: 'admin'
                 },
                 guest
-            }, () => this.messageEndRef.current.scrollIntoView())
+            }, () => { this.messageEndRef.current.scrollIntoView(); this.seeAllMessages() })
         }
         
     }
