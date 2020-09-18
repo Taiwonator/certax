@@ -128,7 +128,17 @@ class Chatbox extends Component {
     
     // YOU user info (id, alias, type)
     // -- message info (userMessages, userBotMessages)
-    
+
+    // MESSAGE STORE
+    // {
+    //     [quoteID]: {
+    //         latestMessage: {
+
+    //         }, messages: {
+
+    //         }, typers: {}
+    //     },
+    // }
 
     componentDidMount() {
 
