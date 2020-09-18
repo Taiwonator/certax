@@ -118,10 +118,10 @@ class Chatbox extends Component {
                 "1111-2222-3333-4444": {
                     latestMessage: {
                         sender: "visitor", 
-                        text: "This is a new message", 
+                        text: "This is a newest message", 
                         date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
-                        id: 2, 
-                        seenBy: null
+                        id: 3, 
+                        seen: false
                     }, 
                     messages: [
                         {
@@ -129,21 +129,28 @@ class Chatbox extends Component {
                             text:"This is the oldest message",
                             date:"Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
                             id: 0,
-                            seenBy: null
+                            seen: true
                         },
                         {
                             sender: "client",
                             text:"This is an old message",
                             date:"Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
                             id: 1,
-                            seenBy: null
+                            seen: true
                         },
                         {
                             sender: "visitor", 
                             text: "This is a new message", 
                             date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
                             id: 2, 
-                            seenBy: null
+                            seen: true
+                        },
+                        {
+                            sender: "visitor", 
+                            text: "This is a newest message", 
+                            date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
+                            id: 3, 
+                            seen: false
                         }
                     ], 
                     typers: {}
@@ -182,7 +189,7 @@ class Chatbox extends Component {
 
     componentDidMount() {
         // console.log(this.convertMessageStore(this.state.messageStore));
-        this.getMessagesFromStore(this.state.messageStore, "1111-2222-3333-4444");
+        const messages = this.getMessagesFromStore(this.state.messageStore, "1111-2222-3333-4444");
         //message has -> seen
                  //   -> sender
                  //   -> time
@@ -201,18 +208,20 @@ class Chatbox extends Component {
         let messageBlocks = [];
         for(var i = 0; i < storeMessages.length; i++) {
             messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
+            console.log(messageBlocks);
         }
+        return messageBlocks;
     }
 
     addMessageToObject = (messageBlocks, message) => {
-        let messageObj = {text: message.text, date: message.date, seen: message.seenBy, dateVisible: false, seenVisible: true};
+        let messageObj = {text: message.text, date: message.date, seen: message.seen, dateVisible: false, seenVisible: true};
 
         // DATEVISIBLE: Method to determine whether date needs to be shown (If it is longer than an hour from its previous message)
         // SEENVISIBLE: If it is the 'latest message'
 
         if(messageBlocks.length == 0) {
             // First message sent
-
+            
             let messageBlock = {
                 sender: message.sender, 
                 messages: [messageObj]
@@ -221,11 +230,12 @@ class Chatbox extends Component {
             messageBlocks.push(messageBlock);
 
         } else {
-            
+            // Set previous message setVisible to false
+            messageBlocks[messageBlocks.length - 1].messages[messageBlocks[messageBlocks.length - 1].messages.length - 1].seenVisible = false;
             const lastMessageBlock = messageBlocks[messageBlocks.length - 1];
             if(lastMessageBlock.sender == message.sender) {
                 // Same sender who sent previous messages
-
+                message
                 messageBlocks[messageBlocks.length - 1].messages.push(messageObj);
 
 
