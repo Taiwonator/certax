@@ -9,10 +9,11 @@ class Chatbox extends Component {
         this.state = { 
             active: false,
             chatOpen: false,
-
-            typing: false, 
             sendable: false,
             displayDate: true,
+
+            typing: false, 
+            
             responder: {
                 alias: 'Guest',
                 type: 'guest', 
@@ -110,19 +111,50 @@ class Chatbox extends Component {
                     botMessages: []
                 }
             ], 
-            guest: {}
+            guest: {}, 
+            quoteID: "1111-2222-3333-4444", 
+
+            messageStore: {
+                "1111-2222-3333-4444": {
+                    latestMessage: {
+                        sender: "visitor", 
+                        text: "This is a new message", 
+                        date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
+                        id: 2, 
+                        seenBy: null
+                    }, 
+                    messages: [
+                        {
+                            sender: "visitor",
+                            text:"This is the oldest message",
+                            date:"Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
+                            id: 0,
+                            seenBy: null
+                        },
+                        {
+                            sender: "client",
+                            text:"This is an old message",
+                            date:"Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
+                            id: 1,
+                            seenBy: null
+                        },
+                        {
+                            sender: "visitor", 
+                            text: "This is a new message", 
+                            date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
+                            id: 2, 
+                            seenBy: null
+                        }
+                    ], 
+                    typers: {}
+                }
+
+            }
         }
 
         this.messageEndRef = React.createRef();
     }
-    
-    // user: {
-    //     id,
-    //     alias: '',
-    //     type: '', 
-    //     userMessages, 
-    //     userBotMessages
-    // }
+
 
     // ME user info (id, alias, type)
     
@@ -140,9 +172,79 @@ class Chatbox extends Component {
     //     },
     // }
 
-    componentDidMount() {
+    // DO
+    // Convert messageStore into current chatlists and messages 
 
+    // ASK SAM
+    // Mention bot messages to Sam, and potential for ALIAS
+    // Change TIME to DATE
+    // Change SEENBY to SEEN and have it be TRUE or FALSE
+
+    componentDidMount() {
+        // console.log(this.convertMessageStore(this.state.messageStore));
+        this.getMessagesFromStore(this.state.messageStore, "1111-2222-3333-4444");
+        //message has -> seen
+                 //   -> sender
+                 //   -> time
+                 //   -> text
+                 //   -> id
+        
+        // message on front end -> dateVisible
+                             // -> seenVisible
+
+        // messaegeBlock = sender messages
+        // messageObj = seen time text id seenVisible dateVisible
     }
+
+    getMessagesFromStore(store, quoteID) {
+        const storeMessages = (store[quoteID].messages);
+        let messageBlocks = [];
+        for(var i = 0; i < storeMessages.length; i++) {
+            messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
+        }
+    }
+
+    addMessageToObject = (messageBlocks, message) => {
+        let messageObj = {text: message.text, date: message.date, seen: message.seenBy, dateVisible: false, seenVisible: true};
+
+        // DATEVISIBLE: Method to determine whether date needs to be shown (If it is longer than an hour from its previous message)
+        // SEENVISIBLE: If it is the 'latest message'
+
+        if(messageBlocks.length == 0) {
+            // First message sent
+
+            let messageBlock = {
+                sender: message.sender, 
+                messages: [messageObj]
+            }
+
+            messageBlocks.push(messageBlock);
+
+        } else {
+            
+            const lastMessageBlock = messageBlocks[messageBlocks.length - 1];
+            if(lastMessageBlock.sender == message.sender) {
+                // Same sender who sent previous messages
+
+                messageBlocks[messageBlocks.length - 1].messages.push(messageObj);
+
+
+            } else {
+                // Different sender of message
+
+                let messageBlock = {
+                    sender: message.sender, 
+                    messages: [messageObj]
+                }
+                messageBlocks.push(messageBlock);
+
+            }
+        }
+
+        return messageBlocks;
+
+       
+    } 
 
     closeChat = () => {
         const chatOpen = this.state.chatOpen;
@@ -203,7 +305,7 @@ class Chatbox extends Component {
 
     sendMessage = () => {
         if(this.state.sendable) {
-            this.addMessage();
+            this.addMessage(this.state.message);
             this.setState((prevState) => ({
                 message: ''
             }), () => {
@@ -215,8 +317,8 @@ class Chatbox extends Component {
         } 
     }
 
-    addMessage = () => {
-        let messageObj = {message: this.state.message, date: new Date(), dateVisible: false, seen: false, seenVisible: true};
+    addMessage = (message) => {
+        let messageObj = {message, date: new Date(), dateVisible: false, seen: false, seenVisible: true};
 
         let guests = this.state.guests;
         let guest;
@@ -252,6 +354,8 @@ class Chatbox extends Component {
                 this.setState((prevState) => ({
                     messages, guests
                 }))
+                // Testing
+                return messages;
             } else {
                 // Means it is the other individual talking
                 let messages = [...this.state.messages];
@@ -265,7 +369,6 @@ class Chatbox extends Component {
                         index = i;
                     }
                 }
-                console.log(guest);
                 if(this.state.responder.type == 'guest' || this.state.responder.type == 'admin') {
                     guest.messages = [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
                 } else if (this.state.responder.type == 'bot') {
@@ -279,6 +382,8 @@ class Chatbox extends Component {
                         messages: [messageObj]
                     }], guests
                 }))
+                // Testing
+                return [...this.state.messages, {writerType: this.state.sender.type, messages: [messageObj]}];
             }
         } else {
             // First message sent
@@ -303,6 +408,8 @@ class Chatbox extends Component {
                     messages: [messageObj]
                 }], guests
             }))
+            // Testing
+            return [{writerType: this.state.sender.type, messages: [messageObj]}];
         }
     }
 
@@ -378,7 +485,7 @@ class Chatbox extends Component {
             let lastMessageBlock = this.state.messages[this.state.messages.length - 1];
             let lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1];
             let lastMessageDate = lastMessage.date;
-            console.log(dateHourDiff(lastMessageDate, now))
+            // console.log(dateHourDiff(lastMessageDate, now))
             if(dateHourDiff(lastMessageDate, now) > 1) {
                 // this.setState({
                 //     displayDate: true
@@ -776,7 +883,7 @@ const ChatsController = (props) => {
             };
         }
 
-        console.log("Last Message Block: ", lastMessageBlock);
+        // console.log("Last Message Block: ", lastMessageBlock);
 
         return (
             <ChatListItem key={guest.user.id} 
@@ -814,7 +921,7 @@ const ChatsController = (props) => {
     
     
     
-    console.log(orderedList);
+    // console.log(orderedList);
     return (
         <>{orderedList}</>
     )
