@@ -153,7 +153,19 @@ class Chatbox extends Component {
     // Change TIME to DATE
     // Change SEENBY to SEEN and have it be TRUE or FALSE
 
+    // CLIENT - Message store has all conversations {{},..{}} 
+    // VISITOR - Message store has 1 conversation {{}} 
+
     componentDidMount() {
+
+        // WEBSOCKET 
+        // REQUEST CONVERSATION OVERVIEW (client)
+        // REQUEST CONVERSATION (visitor) 
+
+
+
+
+
         // console.log(this.convertMessageStore(this.state.messageStore));
 
         // MESSAGES (of ID)
@@ -248,6 +260,9 @@ class Chatbox extends Component {
     }
 
     openChatbox = () => {
+        // WEBSOCKET 
+        // REQUEST CONVERSATION OVERVIEW
+
         this.setState({
             active: true
         }, () => this.seeAllMessages())
@@ -283,10 +298,16 @@ class Chatbox extends Component {
 
     checkIfTyping = () => {
         if(this.state.message == '') {
+            // WEB SOCKET
+            // SEND NOT TYPING EVENT 
+
             this.setState({
                 typing: false
             })
         } else if(this.state.message != '' && !this.state.typing) {
+            // WEB SOCKET
+            // SEND TYPING EVENT 
+
             this.setState({
                 typing: true
             })
@@ -295,7 +316,10 @@ class Chatbox extends Component {
 
     sendMessage = () => {
         if(this.state.sendable) {
-            // this.addMessage(this.state.message);
+
+            // (ASYNC) WEB SOCKET - SEND NEW MESSAGE EVENT
+            // RECIEVE NEW CONVERSATIONS 
+            // CONVERT INTO MESSAGES
 
             const messages = [...this.state.messages];
             let newMessages = this.addMessageToObject(messages, {text: this.state.message, date: new Date(), seen: false, sender: this.state.sender.type})
@@ -408,6 +432,9 @@ class Chatbox extends Component {
     }
 
     seeAllMessages = () => {
+        // WEB SOCKET
+        // SEEN BY
+
         let messages = this.state.messages;
         for(var i = 0; i < messages.length; i++) {
             if(messages[i].sender == this.state.responder.type) {
@@ -422,29 +449,6 @@ class Chatbox extends Component {
     }
 
     openChat = (quoteID) => {
-        // console.log(`hello ${guest.user.alias}`);
-        // if(this.state.sender.type == 'client') {
-        //     this.setState({
-        //         chatOpen: true, 
-        //         messages: guest.messages, 
-        //         botMessages: guest.botMessages, 
-        //         responder: guest.user, 
-        //         guest
-        //     }, () => { this.messageEndRef.current.scrollIntoView(); this.seeAllMessages() })
-        // } else {
-        //     this.setState({
-        //         chatOpen: true, 
-        //         messages: guest.messages, 
-        //         botMessages: guest.botMessages, 
-        //         sender: guest.user, 
-        //         responder: {
-        //             id: '123', 
-        //             alias: 'Certax', 
-        //             type: 'client'
-        //         },
-        //         guest
-        //     }, () => { this.messageEndRef.current.scrollIntoView(); this.seeAllMessages() })
-        // }
         const messages = this.getMessagesFromStore(this.state.messageStore, quoteID);
         this.setState({
             chatOpen: true, 
