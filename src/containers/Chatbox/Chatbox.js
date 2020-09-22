@@ -254,6 +254,7 @@ class Chatbox extends Component {
             chatOpen: false, message: ''
         })
     }
+    
 
     scrollToBottom = () => {
         this.messageEndRef.current.scrollIntoView({behavior: 'smooth'});
@@ -898,4 +899,19 @@ const ChatsFooter = (props) => {
 
 export default Chatbox;
 
-// Disable scroll when chatbox open
+// Empty message store => receiveConversation, receiveConversationOverviews, seenBy, nowTyping/stoppedTyping, newMessage EVENTS merge with message store
+//
+// receiveConversation merges: - latestMessage, messages
+// receiveConversationOverviews: - latestMessgae
+// receive seenBy: - a MESSAGE
+// receive nowTyping/stoppedTyping: - typers
+// receive newMessage: - latestMessage, messages
+
+// ACTIONS: 
+// 1) Start with clear chatbox (and store) and wait for message event
+// 2) Click on chat, and INTERACT
+// 3) A) Write a message
+//    B) Seen message
+//    C) nowTyping / stoppedTyping
+//    D) Receieve a message
+// 4) Close chat
