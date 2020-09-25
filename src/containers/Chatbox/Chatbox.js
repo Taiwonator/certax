@@ -16,14 +16,14 @@ class Chatbox extends Component {
             typing: false, 
             
             responder: {
-                alias: 'Guest',
-                type: 'visitor', 
-                id: '404'
+                alias: '',
+                type: '', 
+                id: ''
             },
             sender: {
                 alias: 'Certax',
                 type: 'client',
-                id: '123'
+                id: receiveClientID()
             },
             message: '',
             focusedMessage: '', 
@@ -36,7 +36,6 @@ class Chatbox extends Component {
 
             ],
             cachedMessages: [], 
-            quoteID: "1111-2222-3333-4444", 
 
             messageStore: {
                 
@@ -107,7 +106,7 @@ class Chatbox extends Component {
         // messageObj = seen time text id seenVisible dateVisible
     }
 
-    mergeNewMessgae(newMessage) {
+    mergeNewMessage(newMessage) {
         if(Object.keys(this.state.messageStore).length == 0) {
             this.setState({
                 messageStore: {
@@ -116,7 +115,7 @@ class Chatbox extends Component {
                         messages: [newMessage.message]
                     }
                 }
-            }, () => console.log(this.state.messageStore))
+            })
             
         } else {
             let messages = [];
@@ -134,7 +133,7 @@ class Chatbox extends Component {
                         messages
                     }
                 }
-            }), () => console.log(this.state.messageStore))
+            }))
         }
     }
 
@@ -164,7 +163,7 @@ class Chatbox extends Component {
                         latestMessage: conversationOverview.latestMessage
                     }
                 }
-            }), () => console.log(this.state.messageStore))
+            }))
         }
     } 
 
@@ -298,8 +297,10 @@ class Chatbox extends Component {
             // RECIEVE NEW CONVERSATIONS 
             // CONVERT INTO MESSAGES
 
+            // this.mergeNewMessage(newMessage(conversationID, this.state.message, this.state.sender.id))
+
             const messages = [...this.state.messages];
-            let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.type})
+            let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
 
             this.setState((prevState) => ({
                 message: '', messages: newMessages
@@ -319,33 +320,18 @@ class Chatbox extends Component {
     }
 
     switchSender = () => {
-        if(this.state.sender.type != 'client') {
-            this.setState((prevState) => ({
-                sender: {
-                    alias: 'Certax', 
-                    type: 'client', 
-                    id: '123'
-                }, 
-                responder: {
-                    alias: this.state.quoteID, 
-                    type: 'visitor', 
-                    id: '404'
-                }
-            }))
-        } else {
-            this.setState((prevState) =>({
-                responder: {
-                    alias: 'Certax', 
-                    type: 'client', 
-                    id: '123'
-                }, 
-                sender: {
-                    alias: this.state.quoteID, 
-                    type: 'visitor', 
-                    id: '404'
-                }
-            }))
-        }
+        this.setState((prevState) => ({
+            sender: {
+                alias: prevState.responder.alias, 
+                type: prevState.responder.type,  
+                id: prevState.responder.id, 
+            }, 
+            responder: {
+                alias: prevState.sender.alias, 
+                type: prevState.sender.type,
+                id: prevState.sender.id
+            }
+        }))
     }
 
     toggleBotChat = () => {
@@ -427,18 +413,37 @@ class Chatbox extends Component {
         
     }
 
-    openChat = (quoteID) => {
-        const messages = this.getMessagesFromStore(this.state.messageStore, quoteID);
+    openChat = (conversationID) => {
+        const messages = this.getMessagesFromStore(this.state.messageStore, conversationID);
         this.setState({
             chatOpen: true, 
             messages,
             responder: {
-                alias: quoteID, 
-                type: 'visitor', 
-                id: '404'
+                alias: this.state.messageStore[conversationID].participants[conversationID].name, 
+                type: this.returnType(conversationID), 
+                id: conversationID
             }, 
+            sender: {
+                alias: "Certax", 
+                type: "client", 
+                id: receiveClientID()
+            }
         }, () => { this.messageEndRef.current.scrollIntoView(); this.seeAllMessages() })
 
+    }
+
+    returnType = (id) => {
+        if(id == receiveClientID) {
+            return 'client'
+        } else {
+            const patt = /\d{4}-\d{4}-\d{4}-\d{4}/g
+            var result = patt.test(id);
+            if(result) {
+                return 'visitor'
+            } else {
+                return null;
+            }
+        } 
     }
 
     render() { 
@@ -450,7 +455,7 @@ class Chatbox extends Component {
             <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
             <div className={`${this.state.active && 'show'} chatbox-container`}>
 
-                <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.chatOpen) ? '#FAFAFA' : (this.state.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}} onClick={() => this.mergeNewMessgae(newMessage("1234-2345-3456-4567", "This is new text", "client"))} >
+                <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.chatOpen) ? '#FAFAFA' : (this.state.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
 
                 { (chatOpen) ? <MessageHeader responder={this.state.responder}
                                               typing={this.state.typing}
@@ -472,7 +477,7 @@ class Chatbox extends Component {
 
                     { (chatOpen) ? <MessageController messages={this.state.messages} 
                                        colors={this.props.colors} 
-                                       senderType={this.state.sender.type}
+                                       senderID={this.state.sender.id}
                                        focusedMessage={this.state.focusedMessage} 
                                        ref={this.messageEndRef} 
                                        messageOnClick={this.messageOnClick}/> : 
@@ -591,7 +596,7 @@ const MessageController = React.forwardRef((props, ref) => {
     let list = message_blocks.map((block, i) => (
         <MessageBlock key={`block_${new Date().getTime()}_${i}`} 
                       blockSender={block.sender} 
-                      senderType={props.senderType} 
+                      senderID={props.senderID} 
                       messages={block.messages} 
                       colors={props.colors} 
                       messageOnClick={props.messageOnClick}
@@ -607,21 +612,21 @@ const MessageController = React.forwardRef((props, ref) => {
 
 const MessageBlock = (props) => {
     let avatar;
-    if(props.blockSender != props.senderType) {
+    console.log(props.blockSende);
+    if(props.blockSender != props.senderID) {
         if(props.blockSender == 'bot') {
             avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.yellow}}><BotIcon /></div>
-        } else if (props.blockSender == 'client') {
+        } else if (props.blockSender == receiveClientID()) {
             avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><WhiteC /></div>
-        } else if (props.blockSender == 'visitor') {
+        } else {
             avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
         }
-        console.log(props.blockSender);
     }
 
     const messages = props.messages;
     let list = messages.map((message, i) => {
         const key = `message_${new Date().getTime()}_${i}`;
-        const textAlign = (props.senderType == props.blockSender) ? 'right' : 'left';
+        const textAlign = (props.senderID == props.blockSender) ? 'right' : 'left';
         let showTime = false, showSeen = false, focusedMessage = false;
         if(props.focusedMessage == message) {
             showTime = true, focusedMessage = true;
@@ -649,7 +654,7 @@ const MessageBlock = (props) => {
     })
 
     return (
-                <div className={`chatbox-messages-container ${props.senderType == props.blockSender ? 'sender' : 'responder'}`}>
+                <div className={`chatbox-messages-container ${props.senderID == props.blockSender ? 'sender' : 'responder'}`}>
                     { avatar }
                     <div className='chatbox-messages'>
                         {list}
@@ -768,14 +773,17 @@ const ChatsController = (props) => {
     let chatListItems = ArrayMessgaeStore.map(array => {
         let conversationID = array[0];
         let info = array[1];
+
+        let unseenCount = Math.abs(info.participants[conversationID].lastMessageSeenID - info.participants[receiveClientID()].lastMessageSeenID);
+        
         return (
         <ChatListItem latestMessage={info.latestMessage}
                       alias={info.participants[conversationID].name}
-                      quoteID={conversationID}
+                      conversationID={conversationID}
                       key={conversationID}
                       openChat={props.openChat}
                       colors={props.colors}
-                      unseenCount={2}/>
+                      unseenCount={unseenCount}/>
         )
     })
 
@@ -813,9 +821,8 @@ const ChatListItem = (props) => {
     }
 
     let unseenMessagesLabel = (unseenMessageCount == 0) ? '' : <p style={{backgroundColor: props.colors.blue}}>{unseenMessageCount}</p>;
-
     return (
-        <div className='chat-list-item-container' onClick={() => props.openChat(props.quoteID)}>
+        <div className='chat-list-item-container' onClick={() => props.openChat(props.conversationID)}>
             <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
             <div className='chat-list-item-content'>
                 <div className='chat-list-item-top-row'>
@@ -838,22 +845,23 @@ const TrimmedText = (props) => {
     let out;
     const charLimit = 25;
     let style = {};
+    
     // Shortening
     if(props.text.length > charLimit) {
-        if(props.sender != 'client') {
+        if(props.sender != receiveClientID()) {
             out = `${props.text.substring(0, charLimit - 1)}...`;
         } else {
             out = `You: ${props.text.substring(0, charLimit - 5)}...`;
         }
     } else {
-        if(props.sender != 'client') {
+        if(props.sender != receiveClientID()) {
             out = props.text;
         } else {
             out = `You: ${props.text}`;
         }
     }
 
-    if(props.seen || props.sender == 'client') {
+    if(props.seen || props.sender == receiveClientID()) {
         style = {
             color: '#9E9E9E', 
             fontWeight: 100
@@ -894,3 +902,5 @@ export default Chatbox;
 //    C) nowTyping / stoppedTyping
 //    D) Receieve a message
 // 4) Close chat
+
+// Open chat
