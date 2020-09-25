@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow } from '../../helperFunctions/dateOperations.js';
+import { newMessage } from '../../mocking/ChatboxEvents.js';
 
 class Chatbox extends Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class Chatbox extends Component {
             active: false,
             chatOpen: false,
             sendable: false,
-            displayDate: true,
+            displayTime: true,
 
             typing: false, 
             
@@ -31,98 +32,15 @@ class Chatbox extends Component {
             ], 
             botMessages: [
                 {messages: [
-                    {message: 'Hello', date: new Date(), dateVisible: true}], sender: 'bot', seen: false, seenVisible: false}, 
+                    {message: 'Hello', time: new Date(), timeVisible: true}], sender: 'bot', seen: false, seenVisible: false}, 
 
             ],
             cachedMessages: [], 
             quoteID: "1111-2222-3333-4444", 
 
             messageStore: {
-                "1111-2222-3333-4444": {
-                    latestMessage: {
-                        sender: "visitor", 
-                        text: "This is a newest message", 
-                        date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
-                        id: 3, 
-                        seen: false
-                    }, 
-                    messages: [
-                        {
-                            sender: "visitor",
-                            text:"This is the oldest message",
-                            date:"Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
-                            id: 0,
-                            seen: true
-                        },
-                        {
-                            sender: "client",
-                            text:"This is an old message",
-                            date:"Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
-                            id: 1,
-                            seen: true
-                        },
-                        {
-                            sender: "visitor", 
-                            text: "This is a new message", 
-                            date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
-                            id: 2, 
-                            seen: true
-                        },
-                        {
-                            sender: "visitor", 
-                            text: "This is a newest message", 
-                            date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
-                            id: 3, 
-                            seen: false
-                        }
-                    ], 
-                    typers: {}
-                }, 
-                "8888-7777-4444-5555":{
-                    latestMessagae: {
-                        sender: "visitor",
-                        text: "This is the lastest message from Bob",
-                        date: "Sat Sep 19 2020 12:24:06 GMT+0100 (GMT+01:00)",
-                        id: 4,
-                        seen: false,
-                    },
-                    messages: [
-                      {
-                        sender: "visitor",
-                        text: "This is the lastest message from Bob",
-                        date: "Sat Sep 19 2020 12:24:06 GMT+0100 (GMT+01:00)",
-                        id:4,
-                        seen: false
-                      }
-                    ],
-                    typers: {}
-                  }
-
+                
             }, 
-            conversationOverviews: [
-                {
-                    quoteID: "1111-2222-3333-4444", 
-                    latestMessagae: {
-                        sender: "visitor", 
-                        text: "This is a newest message", 
-                        date: "Sat Sep 12 2020 22:02:07 GMT+0100 (GMT+01:00)",
-                        id: 3, 
-                        seen: false
-                    }, 
-                    unseenCount: 2
-                }, 
-                {
-                    quoteID: "8888-7777-4444-5555", 
-                    latestMessagae: {
-                        sender: "visitor",
-                        text: "This is the lastest message from Bob",
-                        date: "Sat Sep 19 2020 12:24:06 GMT+0100 (GMT+01:00)",
-                        id: 4,
-                        seen: false,
-                    }, 
-                    unseenCount: 10
-                }
-            ]
         }
 
         this.messageEndRef = React.createRef();
@@ -162,7 +80,7 @@ class Chatbox extends Component {
         // REQUEST CONVERSATION OVERVIEW (client)
         // REQUEST CONVERSATION (visitor) 
 
-
+        
 
 
 
@@ -195,18 +113,47 @@ class Chatbox extends Component {
         // messageObj = seen time text id seenVisible dateVisible
     }
 
-    getMessagesFromStore(store, quoteID) {
-        console.log(quoteID);
-        const storeMessages = (store[quoteID].messages);
-        let messageBlocks = [];
-        for(var i = 0; i < storeMessages.length; i++) {
-            messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
+    mergeNewMessgae(newMessage) {
+        if(Object.keys(this.state.messageStore).length == 0) {
+            this.setState({
+                messageStore: {
+                    [newMessage.conversationID]: {
+                        latestMessage: newMessage.message, 
+                        messages: [newMessage.message]
+                    }
+                }
+            }, () => console.log(this.state.messageStore))
+            
+        } else {
+            let messages = [...this.state.messageStore[newMessage.conversationID].messages];
+            messages.push(newMessage.message);
+            
+            this.setState((prevState) => ({
+                messageStore: {
+                    [newMessage.conversationID]: {
+                        latestMessage: newMessage.message, 
+                        messages
+                    }
+                }
+            }), () => console.log(this.state.messageStore))
         }
-        return messageBlocks;
+    }
+
+    getMessagesFromStore(store, quoteID) {
+        if(store[quoteID] != undefined) {
+            const storeMessages = (store[quoteID].messages);
+            let messageBlocks = [];
+            for(var i = 0; i < storeMessages.length; i++) {
+                messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
+            }
+            return messageBlocks;
+        } else {
+            return null;
+        }
     }
 
     addMessageToObject = (messageBlocks, message) => {
-        let messageObj = {text: message.text, date: message.date, seen: message.seen, dateVisible: false, seenVisible: true};
+        let messageObj = {text: message.text, time: message.time, seen: message.seen, timeVisible: false, seenVisible: true};
 
         // DATEVISIBLE: Method to determine whether date needs to be shown (If it is longer than an hour from its previous message)
         // SEENVISIBLE: If it is the 'latest message'
@@ -323,7 +270,7 @@ class Chatbox extends Component {
             // CONVERT INTO MESSAGES
 
             const messages = [...this.state.messages];
-            let newMessages = this.addMessageToObject(messages, {text: this.state.message, date: new Date(), seen: false, sender: this.state.sender.type})
+            let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.type})
 
             this.setState((prevState) => ({
                 message: '', messages: newMessages
@@ -410,14 +357,14 @@ class Chatbox extends Component {
         })
     }
 
-    displayDateChecker = () => {
+    displayTimeChecker = () => {
         const now = new Date();
         if(this.state.messages.length != 0) {
             let lastMessageBlock = this.state.messages[this.state.messages.length - 1];
             let lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1];
-            let lastMessageDate = lastMessage.date;
+            let lastMessageTime = lastMessage.time;
             // console.log(dateHourDiff(lastMessageDate, now))
-            if(dateHourDiff(lastMessageDate, now) > 1) {
+            if(timeHourDiff(lastMessageTime, now) > 1) {
                 // this.setState({
                 //     displayDate: true
                 // }) 
@@ -472,7 +419,7 @@ class Chatbox extends Component {
             <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
             <div className={`${this.state.active && 'show'} chatbox-container`}>
 
-                <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.chatOpen) ? '#FAFAFA' : (this.state.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
+                <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.chatOpen) ? '#FAFAFA' : (this.state.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}} onClick={() => this.mergeNewMessgae(newMessage("1111-2222-3333-4444", "This is new text", "client"))} >
 
                 { (chatOpen) ? <MessageHeader responder={this.state.responder}
                                               typing={this.state.typing}
@@ -644,16 +591,16 @@ const MessageBlock = (props) => {
     let list = messages.map((message, i) => {
         const key = `message_${new Date().getTime()}_${i}`;
         const textAlign = (props.senderType == props.blockSender) ? 'right' : 'left';
-        let showDate = false, showSeen = false, focusedMessage = false;
+        let showTime = false, showSeen = false, focusedMessage = false;
         if(props.focusedMessage == message) {
-            showDate = true, focusedMessage = true;
+            showTime = true, focusedMessage = true;
             if(message.seen) {
                 showSeen = true;
             }
         } 
 
-        if(message.dateVisible) {
-            showDate = true;
+        if(message.timeVisible) {
+            showTime = true;
         }
 
         if(message.seen && message.seenVisible) {
@@ -662,7 +609,7 @@ const MessageBlock = (props) => {
 
         return (
             <div key={key} className='chatbox-message'>
-                <Timestamp date={message.date} visible={showDate}/>
+                <Timestamp time={message.time} visible={showTime}/>
                 <p onClick={() => props.messageOnClick(message)} style={{filter: (focusedMessage) ? 'brightness(.8)' : ''}} >{message.text}</p>
                 <SeenLabel textAlign={textAlign} visible={showSeen}/>
             </div>
@@ -681,7 +628,7 @@ const MessageBlock = (props) => {
 }
 
 const Timestamp = (props) => {
-    let time = returnDate(props.date);
+    let time = returnTime(props.time);
     return (
         <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse'}`}>{time}</h4>
     )
@@ -786,40 +733,44 @@ const ChatsHeader = (props) => {
 const ChatsController = (props) => {
 
     const conversationOverviews = props.conversationOverviews;
-    let overviews = conversationOverviews.map(overview => (
-            <ChatListItem key={overview.latestMessagae.date}
-                          alias={overview.quoteID}
-                          quoteID={overview.quoteID}
-                          latestMessage={overview.latestMessagae}
-                          colors={props.colors}
-                          openChat={props.openChat}
-                          unseenCount={overview.unseenCount}/>
-    ))
+    if(conversationOverviews != undefined) {
+        let overviews = conversationOverviews.map(overview => (
+                <ChatListItem key={overview.latestMessagae.time}
+                            alias={overview.quoteID}
+                            quoteID={overview.quoteID}
+                            latestMessage={overview.latestMessagae}
+                            colors={props.colors}
+                            openChat={props.openChat}
+                            unseenCount={overview.unseenCount}/>
+        ))
 
-    // Order list (NEED TO DO)
-    let orderedList = [];
-    let list = [...overviews];
-    const listLength = list.length;
+        // Order list (NEED TO DO)
+        let orderedList = [];
+        let list = [...overviews];
+        const listLength = list.length;
 
-    for(var j = 0; j < listLength; j++) { 
-        let leastSeconds, mostRecentMessage;
-        leastSeconds = secondsFromNow(list[0].props.latestMessage.date);
-        mostRecentMessage = list[0];
+        for(var j = 0; j < listLength; j++) { 
+            let leastSeconds, mostRecentMessage;
+            leastSeconds = secondsFromNow(list[0].props.latestMessage.time);
+            mostRecentMessage = list[0];
 
-        for(var i = 1; i < list.length; i++) {
-            if(secondsFromNow(list[i].props.latestMessage.date) < leastSeconds && !orderedList.includes(list[i])) {
-                leastSeconds = secondsFromNow(list[i].props.latestMessage.date);
-                mostRecentMessage = list[i];
-            } 
+            for(var i = 1; i < list.length; i++) {
+                if(secondsFromNow(list[i].props.latestMessage.time) < leastSeconds && !orderedList.includes(list[i])) {
+                    leastSeconds = secondsFromNow(list[i].props.latestMessage.time);
+                    mostRecentMessage = list[i];
+                } 
+            }
+
+            orderedList.push(mostRecentMessage);
+            list = list.filter(x => x != mostRecentMessage);
         }
 
-        orderedList.push(mostRecentMessage);
-        list = list.filter(x => x != mostRecentMessage);
+        return (
+            <>{orderedList}</>
+        )
+    } else {
+        return null;
     }
-
-    return (
-        <>{orderedList}</>
-    )
 }
 
 const ChatListItem = (props) => {
@@ -841,7 +792,7 @@ const ChatListItem = (props) => {
             <div className='chat-list-item-content'>
                 <div className='chat-list-item-top-row'>
                     <h3>{props.alias}</h3>
-                    <p>{returnShortDate(new Date(props.latestMessage.date))}</p>
+                    <p>{returnShortTime(new Date(props.latestMessage.time))}</p>
                 </div>
                 <div className='chat-list-item-bottom-row'>
                     <TrimmedText text={props.latestMessage.text} seen={props.latestMessage.seen} sender={props.latestMessage.sender} colors={props.colors}/>
