@@ -118,6 +118,15 @@ export function receiveConversation(conversationID) {
     }
 }
 
+export function seenBy(conversationID, participantID) {
+    return {
+        type: "seenBy", 
+        conversationID, 
+        participantID, 
+        messageID: 0
+    }
+}
+
 export function receiveClientID() {
     return clientID;
 }

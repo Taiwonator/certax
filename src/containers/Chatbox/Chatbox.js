@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow } from '../../helperFunctions/dateOperations.js';
-import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation } from '../../mocking/ChatboxEvents.js';
+import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation, seenBy } from '../../mocking/ChatboxEvents.js';
 import Underline from '../../components/Underline/Underline';
 
 class Chatbox extends Component {
@@ -47,33 +47,6 @@ class Chatbox extends Component {
     }
 
 
-    // ME user info (id, alias, type)
-    
-    // YOU user info (id, alias, type)
-    // -- message info (userMessages, userBotMessages)
-
-    // MESSAGE STORE
-    // {
-    //     [quoteID]: {
-    //         latestMessage: {
-
-    //         }, messages: {
-
-    //         }, typers: {}
-    //     },
-    // }
-
-    // DO
-    // Convert messageStore into current chatlists and messages 
-
-    // ASK SAM
-    // Mention bot messages to Sam, and potential for ALIAS
-    // Change TIME to DATE
-    // Change SEENBY to SEEN and have it be TRUE or FALSE
-
-    // CLIENT - Message store has all conversations {{},..{}} 
-    // VISITOR - Message store has 1 conversation {{}} 
-
     componentDidMount() {
 
         // WEBSOCKET 
@@ -83,28 +56,8 @@ class Chatbox extends Component {
         
         console.log(this.mergeReceiveConversationOverviews(receiveConversationOverviews()));
 
-        // OVERVIEW OF ALL MESSAGES
-        // [
-        //     {
-        //         quoteID: "1111-2222-3333-4444", 
-        //         latestMessage: {
-        //             sender, text, time, id, seen
-        //         }
-        //     }, 
-        // ]
+        console.log(this.mergeSeenBy(seenBy("1111-2222-3333-4444", "1111-2222-3333-4444")));
 
-
-        //message has -> seen
-                 //   -> sender
-                 //   -> time
-                 //   -> text
-                 //   -> id
-        
-        // message on front end -> dateVisible
-                             // -> seenVisible
-
-        // messaegeBlock = sender messages
-        // messageObj = seen time text id seenVisible dateVisible
     }
 
     mergeNewMessage(newMessage) {
@@ -235,6 +188,21 @@ class Chatbox extends Component {
 
        
     } 
+
+    mergeSeenBy(seenBy) {
+        // console.log(seenBy);
+        // this.setState((prevState) => ({
+        //     messageStore: {
+        //         ...prevState.messageStore, 
+        //         [seenBy.conversationID]: {
+        //             ...prevState.messageStore[seenBy.conversationID],
+        //             latestMessage: {
+        //                 seen
+        //             }
+        //         }
+        //     }
+        // }))
+    }
 
     closeChat = () => {
         const chatOpen = this.state.chatOpen;
@@ -791,7 +759,6 @@ const ChatsController = (props) => {
     const messageStore = props.messageStore;
     const ArrayMessageStore = Object.entries(messageStore);
     if(ArrayMessageStore.length != 0) {
-        console.log("Array", ArrayMessageStore);
         let chatListItems = ArrayMessageStore.map(array => {
             
             let conversationID = array[0];
