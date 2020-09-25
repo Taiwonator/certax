@@ -2,7 +2,8 @@ import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow } from '../../helperFunctions/dateOperations.js';
-import { newMessage, receiveClientID, receiveConversationOverviews } from '../../mocking/ChatboxEvents.js';
+import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation } from '../../mocking/ChatboxEvents.js';
+import Underline from '../../components/Underline/Underline';
 
 class Chatbox extends Component {
     constructor(props) {
@@ -167,9 +168,21 @@ class Chatbox extends Component {
         }
     } 
 
-    getMessagesFromStore(store, quoteID) {
-        if(store[quoteID] != undefined) {
-            const storeMessages = (store[quoteID].messages);
+    mergeReceiveConversation(conversation) {
+        this.setState((prevState) => ({
+            messageStore: {
+                ...prevState.messageStore, 
+                [conversation.conversationID]: {
+                    ...prevState.messageStore[conversation.conversationID], 
+                    messages: conversation.messages
+                }
+            }
+        }))
+    }
+
+    getMessagesFromStore(conversationID) {
+        if(this.state.messageStore[conversationID] != undefined) {
+            const storeMessages = (this.state.messageStore[conversationID].messages);
             let messageBlocks = [];
             for(var i = 0; i < storeMessages.length; i++) {
                 messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
@@ -242,6 +255,7 @@ class Chatbox extends Component {
         this.setState({
             active: true
         }, () => this.seeAllMessages())
+        
     }
 
     closeChatbox = () => {
@@ -298,12 +312,15 @@ class Chatbox extends Component {
             // CONVERT INTO MESSAGES
 
             // this.mergeNewMessage(newMessage(conversationID, this.state.message, this.state.sender.id))
+            // FIRE EVENT
+            // MessageController uses messageStore
 
-            const messages = [...this.state.messages];
-            let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
+            // const messages = [...this.state.messages];
+            // let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
+            this.mergeNewMessage(newMessage(this.state.conversationID, this.state.message, this.state.sender.id));
 
             this.setState((prevState) => ({
-                message: '', messages: newMessages
+                message: '',
             }), () => {
                 this.checkIfTyping();
                 this.checkIfSendable();
@@ -347,7 +364,7 @@ class Chatbox extends Component {
                 messages: botMessages
             })
         } else {
-            const responder = {alias: this.state.quoteID, type: 'visitor', id: '404'};
+            const responder = {alias: "Guest", type: 'visitor', id: '404'};
             const messages = this.state.cachedMessages;
             const botMessages = this.state.messages;
             this.setState({
@@ -413,8 +430,11 @@ class Chatbox extends Component {
         
     }
 
-    openChat = (conversationID) => {
-        const messages = this.getMessagesFromStore(this.state.messageStore, conversationID);
+    openChat = async(conversationID) => {
+        if(this.state.messageStore[conversationID].messages == undefined) {
+            await this.mergeReceiveConversation(receiveConversation(conversationID))
+        }
+        const messages = this.getMessagesFromStore(conversationID);
         this.setState({
             chatOpen: true, 
             messages,
@@ -427,7 +447,8 @@ class Chatbox extends Component {
                 alias: "Certax", 
                 type: "client", 
                 id: receiveClientID()
-            }
+            }, 
+            conversationID
         }, () => { this.messageEndRef.current.scrollIntoView(); this.seeAllMessages() })
 
     }
@@ -475,7 +496,7 @@ class Chatbox extends Component {
 
                 <div className='chatbox-body'>
 
-                    { (chatOpen) ? <MessageController messages={this.state.messages} 
+                    { (chatOpen) ? <MessageController messages={this.getMessagesFromStore(this.state.conversationID)} 
                                        colors={this.props.colors} 
                                        senderID={this.state.sender.id}
                                        focusedMessage={this.state.focusedMessage} 
@@ -491,7 +512,7 @@ class Chatbox extends Component {
                 </div>
 
 
-                <div className='chatbox-input-container' onClick={() => this.mergeReceiveConversationOverviews(receiveConversationOverviews())}>
+                <div className='chatbox-input-container'>
 
                     { (chatOpen) ? <MessageInput messageValue={this.state.message} 
                                       sendable={this.state.sendable}
@@ -612,7 +633,6 @@ const MessageController = React.forwardRef((props, ref) => {
 
 const MessageBlock = (props) => {
     let avatar;
-    console.log(props.blockSende);
     if(props.blockSender != props.senderID) {
         if(props.blockSender == 'bot') {
             avatar = <div className='chatbox-avatar' style={{backgroundColor: props.colors.yellow}}><BotIcon /></div>
@@ -769,47 +789,53 @@ const ChatsHeader = (props) => {
 const ChatsController = (props) => {
     // key, alias, quoteID, lastMessage, unseenCount, openChat, colors
     const messageStore = props.messageStore;
-    const ArrayMessgaeStore = Object.entries(messageStore);
-    let chatListItems = ArrayMessgaeStore.map(array => {
-        let conversationID = array[0];
-        let info = array[1];
+    const ArrayMessageStore = Object.entries(messageStore);
+    if(ArrayMessageStore.length != 0) {
+        console.log("Array", ArrayMessageStore);
+        let chatListItems = ArrayMessageStore.map(array => {
+            
+            let conversationID = array[0];
+            let info = array[1];
 
-        let unseenCount = Math.abs(info.participants[conversationID].lastMessageSeenID - info.participants[receiveClientID()].lastMessageSeenID);
-        
-        return (
-        <ChatListItem latestMessage={info.latestMessage}
-                      alias={info.participants[conversationID].name}
-                      conversationID={conversationID}
-                      key={conversationID}
-                      openChat={props.openChat}
-                      colors={props.colors}
-                      unseenCount={unseenCount}/>
-        )
-    })
+            let unseenCount = Math.abs(info.participants[conversationID].lastMessageSeenID - info.participants[receiveClientID()].lastMessageSeenID);
+            
+            return (
+            <ChatListItem latestMessage={info.latestMessage}
+                        alias={info.participants[conversationID].name}
+                        conversationID={conversationID}
+                        key={conversationID}
+                        openChat={props.openChat}
+                        colors={props.colors}
+                        unseenCount={unseenCount}/>
+            )
+        })
 
-    // Order list (NEED TO DO)
-    let orderedList = [];
-    let list = [...chatListItems];
-    const listLength = list.length;
+        // Order list (NEED TO DO)
+        let orderedList = [];
+        let list = [...chatListItems];
+        const listLength = list.length;
 
-    for(var j = 0; j < listLength; j++) { 
-        let leastSeconds, mostRecentMessage;
-        leastSeconds = secondsFromNow(list[0].props.latestMessage.time);
-        mostRecentMessage = list[0];
+        for(var j = 0; j < listLength; j++) { 
+            let leastSeconds, mostRecentMessage;
+            leastSeconds = secondsFromNow(list[0].props.latestMessage.time);
+            mostRecentMessage = list[0];
 
-        for(var i = 1; i < list.length; i++) {
-            if(secondsFromNow(list[i].props.latestMessage.time) < leastSeconds && !orderedList.includes(list[i])) {
-                leastSeconds = secondsFromNow(list[i].props.latestMessage.time);
-                mostRecentMessage = list[i];
-            } 
+            for(var i = 1; i < list.length; i++) {
+                if(secondsFromNow(list[i].props.latestMessage.time) < leastSeconds && !orderedList.includes(list[i])) {
+                    leastSeconds = secondsFromNow(list[i].props.latestMessage.time);
+                    mostRecentMessage = list[i];
+                } 
+            }
+
+            orderedList.push(mostRecentMessage);
+            list = list.filter(x => x != mostRecentMessage);
         }
-
-        orderedList.push(mostRecentMessage);
-        list = list.filter(x => x != mostRecentMessage);
+        return (
+            <>{orderedList}</>
+        )
+    } else {
+        return <div />
     }
-    return (
-        <>{orderedList}</>
-    )
 }
 
 const ChatListItem = (props) => {

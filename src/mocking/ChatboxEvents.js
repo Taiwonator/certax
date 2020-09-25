@@ -69,6 +69,55 @@ export function receiveConversationOverviews() {
     }
 }
 
+export function receiveConversation(conversationID) {
+    const conversations = {
+        "1111-2222-3333-4444": {
+            messages: [
+                {
+                    sender: "1111-2222-3333-4444", 
+                    text: "You absolute tosser", 
+                    time: "Fri Sep 25 2020 19:20:45 GMT+0100 (GMT+01:00)",
+                    messageID: 0
+                }, 
+                {
+                    sender: "1111-2222-3333-4444", 
+                    text: "Message back PLEASE", 
+                    time: "Fri Sep 25 2020 19:21:45 GMT+0100 (GMT+01:00)",
+                    messageID: 0
+                },
+                {
+                    sender: clientID, 
+                    text: "What do you want?", 
+                    time: "Fri Sep 25 2020 19:21:45 GMT+0100 (GMT+01:00)",
+                    messageID: 0
+                },
+                {
+                    sender: clientID, 
+                    text: "What a waste of space", 
+                    time: "Fri Sep 25 2020 21:21:45 GMT+0100 (GMT+01:00)",
+                    messageID: 0
+                },
+            ]
+        }, 
+        "1234-2345-3456-4567": {
+            messages: [
+                {
+                    sender: "1234-2345-3456-4567", 
+                    text: "Help me please!", 
+                    time: "Fri Sep 23 2020 19:20:45 GMT+0100 (GMT+01:00)",
+                    messageID: 0
+                }
+            ]
+        }
+    }
+
+    return {
+        type: "receiveConversation", 
+        conversationID, 
+        messages: conversations[conversationID].messages
+    }
+}
+
 export function receiveClientID() {
     return clientID;
 }
