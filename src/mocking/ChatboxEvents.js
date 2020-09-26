@@ -30,7 +30,7 @@ export function receiveConversationOverviews() {
                         name: "Jenny"
                     }, 
                     [clientID]: {
-                        lastMessageSeenID: 0, 
+                        lastMessageSeenID: 4, 
                         isTyping: false, 
                         isOnline: true, 
                         name: "Certax"
@@ -46,7 +46,7 @@ export function receiveConversationOverviews() {
             conversationID: "1234-2345-3456-4567", 
             participants: {
                 "1234-2345-3456-4567": {
-                    lastMessageSeenID: -1, 
+                    lastMessageSeenID: 3, 
                     isTyping: false, 
                     isOnline: false, 
                     name: "Jimbo"

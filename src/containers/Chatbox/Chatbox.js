@@ -412,13 +412,8 @@ class Chatbox extends Component {
         // SEEN BY
 
         const messages = [...this.state.messages];
-
-        let lastMessageID;
-        for(var i = 0; i < messages.length; i++) {
-            if(messages[i].sender == this.state.responder.id) {
-                lastMessageID = messages[i].messages[messages[i].messages.length - 1].messageID;
-            }
-        }
+        const lastMessageBlock = messages[messages.length - 1];
+        const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
         this.mergeSeenBy(seenBy(this.state.conversationID, this.state.sender.id, lastMessageID));
     }
 
@@ -797,8 +792,8 @@ const ChatsController = (props) => {
             let info = array[1];
 
             let unseenCount = Math.abs(info.participants[conversationID].lastMessageSeenID - info.participants[receiveClientID()].lastMessageSeenID);
-            console.log(`${info.participants[conversationID].name} ---> user last seen ID: ${info.participants[conversationID].lastMessageSeenID}, client last seen ID: ${info.participants[receiveClientID()].lastMessageSeenID}`);
-
+            // console.log(`${info.participants[conversationID].name} ---> user last seen ID: ${info.participants[conversationID].lastMessageSeenID}, client last seen ID: ${info.participants[receiveClientID()].lastMessageSeenID}`);
+            // console.log(`${info.participants[conversationID].name}  unseenCount:  ${unseenCount}`);
             return (
             <ChatListItem latestMessage={info.latestMessage}
                         alias={info.participants[conversationID].name}
@@ -847,6 +842,7 @@ const ChatListItem = (props) => {
     }
 
     let unseenMessagesLabel = (unseenMessageCount == 0) ? '' : <p style={{backgroundColor: props.colors.blue}}>{unseenMessageCount}</p>;
+    console.log(props.latestMessage);
     return (
         <div className='chat-list-item-container' onClick={() => props.openChat(props.conversationID)}>
             <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
