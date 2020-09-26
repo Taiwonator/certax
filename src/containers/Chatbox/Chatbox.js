@@ -54,10 +54,7 @@ class Chatbox extends Component {
         // REQUEST CONVERSATION (visitor) 
 
         
-        console.log(this.mergeReceiveConversationOverviews(receiveConversationOverviews()));
-
-        console.log(this.mergeSeenBy(seenBy("1111-2222-3333-4444", "1111-2222-3333-4444")));
-
+        this.mergeReceiveConversationOverviews(receiveConversationOverviews());
     }
 
     mergeNewMessage(newMessage) {
@@ -69,6 +66,11 @@ class Chatbox extends Component {
                         messages: [newMessage.message]
                     }
                 }
+            }, () => {
+                const messages = this.getMessagesFromStore(newMessage.conversationID);
+                this.setState({
+                    messages
+                })
             })
             
         } else {
@@ -87,8 +89,14 @@ class Chatbox extends Component {
                         messages
                     }
                 }
-            }))
+            }), () => {
+                const messages = this.getMessagesFromStore(newMessage.conversationID);
+                this.setState({
+                    messages
+                })
+            })
         }
+        return "newMessage merge complete"
     }
 
     mergeReceiveConversationOverviews(conversationOverviews) {
@@ -119,6 +127,8 @@ class Chatbox extends Component {
                 }
             }))
         }
+
+        return "ConversationOverviews merge complete"
     } 
 
     mergeReceiveConversation(conversation) {
@@ -131,6 +141,8 @@ class Chatbox extends Component {
                 }
             }
         }))
+
+        return "Conversation merge complete"
     }
 
     getMessagesFromStore(conversationID) {
@@ -147,13 +159,23 @@ class Chatbox extends Component {
     }
 
     addMessageToObject = (messageBlocks, message) => {
-        let messageObj = {text: message.text, time: message.time, seen: message.seen, timeVisible: false, seenVisible: true};
-
+        let messageObj = {messageID: message.messageID, text: message.text, time: message.time, seen: false, timeVisible: false, seenVisible: true};
         // DATEVISIBLE: Method to determine whether date needs to be shown (If it is longer than an hour from its previous message)
         // SEENVISIBLE: If it is the 'latest message'
+        
+        // Set Seen
+        
+        if(message.messageID <= this.state.messageStore[this.state.conversationID].participants[this.state.sender.id].lastMessageSeenID || message.messageID <= this.state.messageStore[this.state.conversationID].participants[this.state.responder.id].lastMessageSeenID) {
+            messageObj.seen = true;
+            // console.log(`${this.state.sender.id} has seen message (${message.messageID})`);
+        }
+
+        //  CHECK TIME BETWEEN THIS MESSAGE AND PREVIOUS MESSAGE
 
         if(messageBlocks.length == 0) {
             // First message sent
+            
+            messageObj.timeVisible = true;
             
             let messageBlock = {
                 sender: message.sender, 
@@ -190,18 +212,25 @@ class Chatbox extends Component {
     } 
 
     mergeSeenBy(seenBy) {
-        // console.log(seenBy);
-        // this.setState((prevState) => ({
-        //     messageStore: {
-        //         ...prevState.messageStore, 
-        //         [seenBy.conversationID]: {
-        //             ...prevState.messageStore[seenBy.conversationID],
-        //             latestMessage: {
-        //                 seen
-        //             }
-        //         }
-        //     }
-        // }))
+        let messageStore = {...this.state.messageStore};
+        messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
+
+        let messages = [...this.state.messages];
+        for(var i = 0; i < messages.length; i++) {
+            if(messages[i].sender == this.state.responder.id) {
+                for(var j = 0; j < messages[i].messages.length; j++) {
+                    messages[i].messages[j].seen = true;
+                }
+            }
+        }
+
+        this.setState((prevState) => ({
+            messageStore, messages
+        }))
+        
+
+
+        return "seenBy merge complete"
     }
 
     closeChat = () => {
@@ -222,7 +251,7 @@ class Chatbox extends Component {
 
         this.setState({
             active: true
-        }, () => this.seeAllMessages())
+        }) 
         
     }
 
@@ -293,7 +322,6 @@ class Chatbox extends Component {
                 this.checkIfTyping();
                 this.checkIfSendable();
                 this.scrollToBottom();
-                this.seeAllMessages();
             })
         } 
     }
@@ -316,7 +344,7 @@ class Chatbox extends Component {
                 type: prevState.sender.type,
                 id: prevState.sender.id
             }
-        }))
+        }), () => this.seeAllMessages() )
     }
 
     toggleBotChat = () => {
@@ -347,7 +375,7 @@ class Chatbox extends Component {
     messageOnClick = (m) => {
         const oldFocusedMessage = this.state.focusedMessage;
         let focusedMessage;
-        if(oldFocusedMessage != m) {
+        if(oldFocusedMessage.messageID != m.messageID) {
             focusedMessage = m;
         } else {
             focusedMessage = '';
@@ -364,7 +392,7 @@ class Chatbox extends Component {
             let lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1];
             let lastMessageTime = lastMessage.time;
             // console.log(dateHourDiff(lastMessageDate, now))
-            if(timeHourDiff(lastMessageTime, now) > 1) {
+            if(dateHourDiff(lastMessageTime, now) > 1) {
                 // this.setState({
                 //     displayDate: true
                 // }) 
@@ -383,29 +411,23 @@ class Chatbox extends Component {
         // WEB SOCKET
         // SEEN BY
 
-        // let messages = this.state.messages;
-        // for(var i = 0; i < messages.length; i++) {
-        //     if(messages[i].sender == this.state.responder.type) {
-        //         for(var j = 0; j < messages[i].messages.length; j++) {
-        //             messages[i].messages[j].seen = true;
-        //         }
-        //     }
-        // }
-        // this.setState({
-        //     messages
-        // })
+        const messages = [...this.state.messages];
 
-        
+        let lastMessageID;
+        for(var i = 0; i < messages.length; i++) {
+            if(messages[i].sender == this.state.responder.id) {
+                lastMessageID = messages[i].messages[messages[i].messages.length - 1].messageID;
+            }
+        }
+        this.mergeSeenBy(seenBy(this.state.conversationID, this.state.sender.id, lastMessageID));
     }
 
     openChat = async(conversationID) => {
         if(this.state.messageStore[conversationID].messages == undefined) {
             await this.mergeReceiveConversation(receiveConversation(conversationID))
         }
-        const messages = this.getMessagesFromStore(conversationID);
         this.setState({
             chatOpen: true, 
-            messages,
             responder: {
                 alias: this.state.messageStore[conversationID].participants[conversationID].name, 
                 type: this.returnType(conversationID), 
@@ -417,7 +439,17 @@ class Chatbox extends Component {
                 id: receiveClientID()
             }, 
             conversationID
-        }, () => { this.messageEndRef.current.scrollIntoView(); this.seeAllMessages() })
+        }, () => { 
+            const messages = this.getMessagesFromStore(conversationID);
+            this.setState({
+                messages
+            }, () => {
+                this.seeAllMessages();
+                this.messageEndRef.current.scrollIntoView(); 
+
+            })
+            
+        })
 
     }
 
@@ -616,7 +648,7 @@ const MessageBlock = (props) => {
         const key = `message_${new Date().getTime()}_${i}`;
         const textAlign = (props.senderID == props.blockSender) ? 'right' : 'left';
         let showTime = false, showSeen = false, focusedMessage = false;
-        if(props.focusedMessage == message) {
+        if(props.focusedMessage.messageID == message.messageID) {
             showTime = true, focusedMessage = true;
             if(message.seen) {
                 showSeen = true;
@@ -652,7 +684,7 @@ const MessageBlock = (props) => {
 }
 
 const Timestamp = (props) => {
-    let time = returnTime(props.time);
+    let time = returnDate(props.time);
     return (
         <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse'}`}>{time}</h4>
     )
@@ -765,7 +797,8 @@ const ChatsController = (props) => {
             let info = array[1];
 
             let unseenCount = Math.abs(info.participants[conversationID].lastMessageSeenID - info.participants[receiveClientID()].lastMessageSeenID);
-            
+            console.log(`${info.participants[conversationID].name} ---> user last seen ID: ${info.participants[conversationID].lastMessageSeenID}, client last seen ID: ${info.participants[receiveClientID()].lastMessageSeenID}`);
+
             return (
             <ChatListItem latestMessage={info.latestMessage}
                         alias={info.participants[conversationID].name}
@@ -896,4 +929,10 @@ export default Chatbox;
 //    D) Receieve a message
 // 4) Close chat
 
-// Open chat
+
+
+
+
+// SeenBy 
+// Typing
+// IsOnline

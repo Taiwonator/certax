@@ -1,5 +1,5 @@
 const clientID = "123456789";
-let count = 0;
+let count = 4;
 
 // newMessage
 export function newMessage(conversationID, text, sender) {
@@ -24,35 +24,35 @@ export function receiveConversationOverviews() {
                 conversationID: "1111-2222-3333-4444", 
                 participants: {
                     "1111-2222-3333-4444": {
-                        lastMessageSeenID: 4, 
+                        lastMessageSeenID: 2, 
                         isTyping: false, 
                         isOnline: false, 
                         name: "Jenny"
                     }, 
                     [clientID]: {
-                        lastMessageSeenID: 2, 
+                        lastMessageSeenID: 0, 
                         isTyping: false, 
                         isOnline: true, 
                         name: "Certax"
                     }
                 }, 
                 latestMessage: {
-                    sender: "1111-2222-3333-4444", 
-                    text: "This is the latest message from Jenny", 
-                    time: "Fri Sep 20 2020 15:11:30 GMT+0100 (GMT+01:00)",
+                    sender: clientID, 
+                    text: "What a waste of space", 
+                    time: "Fri Sep 25 2020 21:21:45 GMT+0100 (GMT+01:00)",
                     messageID: 4
                 }
            },{
             conversationID: "1234-2345-3456-4567", 
             participants: {
                 "1234-2345-3456-4567": {
-                    lastMessageSeenID: 10, 
+                    lastMessageSeenID: -1, 
                     isTyping: false, 
                     isOnline: false, 
                     name: "Jimbo"
                 }, 
                 [clientID]: {
-                    lastMessageSeenID: 3, 
+                    lastMessageSeenID: -1, 
                     isTyping: false, 
                     isOnline: true, 
                     name: "Certax"
@@ -60,9 +60,9 @@ export function receiveConversationOverviews() {
             }, 
             latestMessage: {
                 sender: "1234-2345-3456-4567", 
-                text: "Hi my name is Jimbo", 
-                time: "Fri Sep 23 2020 15:14:08 GMT+0100 (GMT+01:00)",
-                messageID: 10
+                text: "Help me please!", 
+                time: "Fri Sep 23 2020 19:20:45 GMT+0100 (GMT+01:00)",
+                messageID: 3
             }
            }
         ]
@@ -83,19 +83,19 @@ export function receiveConversation(conversationID) {
                     sender: "1111-2222-3333-4444", 
                     text: "Message back PLEASE", 
                     time: "Fri Sep 25 2020 19:21:45 GMT+0100 (GMT+01:00)",
-                    messageID: 0
+                    messageID: 1
                 },
                 {
                     sender: clientID, 
                     text: "What do you want?", 
                     time: "Fri Sep 25 2020 19:21:45 GMT+0100 (GMT+01:00)",
-                    messageID: 0
+                    messageID: 2
                 },
                 {
                     sender: clientID, 
                     text: "What a waste of space", 
                     time: "Fri Sep 25 2020 21:21:45 GMT+0100 (GMT+01:00)",
-                    messageID: 0
+                    messageID: 4
                 },
             ]
         }, 
@@ -105,7 +105,7 @@ export function receiveConversation(conversationID) {
                     sender: "1234-2345-3456-4567", 
                     text: "Help me please!", 
                     time: "Fri Sep 23 2020 19:20:45 GMT+0100 (GMT+01:00)",
-                    messageID: 0
+                    messageID: 3
                 }
             ]
         }
@@ -118,12 +118,12 @@ export function receiveConversation(conversationID) {
     }
 }
 
-export function seenBy(conversationID, participantID) {
+export function seenBy(conversationID, participantID, messageID) {
     return {
         type: "seenBy", 
         conversationID, 
         participantID, 
-        messageID: 0
+        messageID
     }
 }
 
