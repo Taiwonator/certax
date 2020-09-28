@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow } from '../../helperFunctions/dateOperations.js';
-import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation, seenBy } from '../../mocking/ChatboxEvents.js';
+import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation, seenBy, nowTyping, stoppedTyping } from '../../mocking/ChatboxEvents.js';
 import Underline from '../../components/Underline/Underline';
 
 class Chatbox extends Component {
@@ -245,6 +245,22 @@ class Chatbox extends Component {
         return "seenBy merge complete"
     }
 
+    mergeNowTyping(nowTyping) {
+        let messageStore = {...this.state.messageStore};
+        messageStore[nowTyping.conversationID].participants[nowTyping.participantID].isTyping = true;
+        this.setState({
+            messageStore
+        }, () => console.log(this.state.messageStore))
+    }
+
+    mergeStoppedTyping(stoppedTyping) {
+        let messageStore = {...this.state.messageStore};
+        messageStore[stoppedTyping.conversationID].participants[stoppedTyping.participantID].isTyping = false;
+        this.setState({
+            messageStore
+        }, () => console.log(this.state.messageStore))
+    }
+
     closeChat = () => {
         const chatOpen = this.state.chatOpen;
         this.setState({
@@ -299,6 +315,7 @@ class Chatbox extends Component {
         if(this.state.message == '') {
             // WEB SOCKET
             // SEND NOT TYPING EVENT 
+            this.mergeStoppedTyping(stoppedTyping(this.state.conversationID, this.state.sender.id));
 
             this.setState({
                 typing: false
@@ -306,6 +323,7 @@ class Chatbox extends Component {
         } else if(this.state.message != '' && !this.state.typing) {
             // WEB SOCKET
             // SEND TYPING EVENT 
+            this.mergeNowTyping(nowTyping(this.state.conversationID, this.state.sender.id));
 
             this.setState({
                 typing: true
@@ -331,6 +349,7 @@ class Chatbox extends Component {
             this.setState((prevState) => ({
                 message: '',
             }), () => {
+                // Stopped Typing
                 this.checkIfTyping();
                 this.checkIfSendable();
                 this.scrollToBottom();
@@ -345,6 +364,7 @@ class Chatbox extends Component {
     }
 
     switchSender = () => {
+        this.mergeStoppedTyping(stoppedTyping(this.state.conversationID, this.state.sender.id));
         this.setState((prevState) => ({
             sender: {
                 alias: prevState.responder.alias, 
@@ -355,8 +375,12 @@ class Chatbox extends Component {
                 alias: prevState.sender.alias, 
                 type: prevState.sender.type,
                 id: prevState.sender.id
-            }
-        }), () => this.seeAllMessages() )
+            }, 
+            message: ''
+        }), () => { 
+            this.seeAllMessages();
+            this.checkIfTyping();
+         } )
     }
 
     toggleBotChat = () => {
@@ -588,19 +612,14 @@ const CloseChat = (props) => {
 }
 
 const Status = (props) => {
-    const [index, setIndex] = useState(0);
-    const word = ['Typing', 'Typing.', 'Typing..', 'Typing...'];
-    let text = (props.typing) ? word[index] : "Active";
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIndex(index + 1);
-            if(index > 2) {
-                setIndex(0);
-            } 
-        }, 250);
-        return () => clearTimeout(timer);
-      });
-    return <p>{text}</p>
+    let text = (props.typing) ? "Typing" : "Active";
+    return (
+        <div className={`status ${props.typing ? 'typing' : ''}`}>{text}
+            <span/>
+            <span/>
+            <span/>
+        </div>
+    )
 }
 
 const SwitchChatButton = (props) => {
