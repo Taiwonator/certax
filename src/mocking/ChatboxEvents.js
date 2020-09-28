@@ -127,6 +127,22 @@ export function seenBy(conversationID, participantID, messageID) {
     }
 }
 
+export function nowTyping(conversationID, participantID) {
+    return {
+        type: "nowTyping", 
+        conversationID, 
+        participantID
+    }
+}
+
+export function stoppedTyping(conversationID, participantID) {
+    return {
+        type: "stoppedTyping", 
+        conversationID, 
+        participantID
+    }
+}
+
 export function receiveClientID() {
     return clientID;
 }
