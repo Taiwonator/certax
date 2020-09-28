@@ -47,7 +47,7 @@ export function receiveConversationOverviews() {
             participants: {
                 "1234-2345-3456-4567": {
                     lastMessageSeenID: 3, 
-                    isTyping: false, 
+                    isTyping: true, 
                     isOnline: true, 
                     name: "Jimbo"
                 }, 

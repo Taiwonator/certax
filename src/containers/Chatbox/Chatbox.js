@@ -286,7 +286,7 @@ class Chatbox extends Component {
     closeChatbox = () => {
         this.setState({
             active: false
-        })
+        }, () => this.checkIfTyping())
     }
 
     handleMessageChange = (e) => {
@@ -477,6 +477,9 @@ class Chatbox extends Component {
             }, () => {
                 this.seeAllMessages();
                 this.messageEndRef.current.scrollIntoView(); 
+                
+                // Probably not needed
+                this.checkIfTyping();
             })
             
         })
@@ -837,6 +840,7 @@ const ChatsController = (props) => {
                         alias={info.participants[conversationID].name}
                         conversationID={conversationID}
                         online={info.participants[conversationID].isOnline}
+                        typing={info.participants[conversationID].isTyping}
                         key={conversationID}
                         openChat={props.openChat}
                         colors={props.colors}
@@ -890,7 +894,7 @@ const ChatListItem = (props) => {
                     <p>{returnShortDate(new Date(props.latestMessage.time))}</p>
                 </div>
                 <div className='chat-list-item-bottom-row'>
-                    <TrimmedText text={props.latestMessage.text} seen={props.latestMessage.seen} sender={props.latestMessage.sender} colors={props.colors}/>
+                    <TrimmedText text={props.latestMessage.text} seen={props.latestMessage.seen} sender={props.latestMessage.sender} typing={props.typing} colors={props.colors}/>
                     <div className='chat-list-item-messages-counters'>
                         {unseenMessagesLabel}
                         {/* <p style={{backgroundColor: props.colors.yellow}}>2</p> */}
@@ -905,36 +909,48 @@ const TrimmedText = (props) => {
     let out;
     const charLimit = 25;
     let style = {};
-    
-    // Shortening
-    if(props.text.length > charLimit) {
-        if(props.sender != receiveClientID()) {
-            out = `${props.text.substring(0, charLimit - 1)}...`;
-        } else {
-            out = `You: ${props.text.substring(0, charLimit - 5)}...`;
-        }
-    } else {
-        if(props.sender != receiveClientID()) {
-            out = props.text;
-        } else {
-            out = `You: ${props.text}`;
-        }
-    }
 
-    if(props.seen || props.sender == receiveClientID()) {
-        style = {
-            color: '#9E9E9E', 
-            fontWeight: 100
+    // Shortening
+    if(!props.typing) {
+        if(props.text.length > charLimit) {
+            if(props.sender != receiveClientID()) {
+                out = `${props.text.substring(0, charLimit - 1)}...`;
+            } else {
+                out = `You: ${props.text.substring(0, charLimit - 5)}...`;
+            }
+        } else {
+            if(props.sender != receiveClientID()) {
+                out = props.text;
+            } else {
+                out = `You: ${props.text}`;
+            }
+        }
+
+        if(props.seen || props.sender == receiveClientID()) {
+            style = {
+                color: '#9E9E9E', 
+                fontWeight: 100
+            }
+        } else {
+            style = {
+                color: props.colors.blue, 
+                fontWeight: 500
+            }
         }
     } else {
+        out = "Typing";
         style = {
-            color: props.colors.blue, 
-            fontWeight: 500
+            color: props.colors.yellow, 
+            fontWeight: 100
         }
     }
 
     return (
-        <p style={style}>{out}</p>
+        <div className={`trimmed-text ${props.typing ? 'smallbounce' : ''}`} style={style}>{out}
+            <span style={{backgroundColor: props.colors.yellow}}/>
+            <span style={{backgroundColor: props.colors.yellow}}/>
+            <span style={{backgroundColor: props.colors.yellow}}/>
+        </div>
     )
 }
 

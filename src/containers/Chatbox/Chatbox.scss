@@ -387,6 +387,10 @@
     }
 }
 
+.smallbounce {
+    animation: smallbounce 1s infinite .4s;
+}
+
 // Taken from https://codepen.io/nunoooo/pen/OxbYop
 @keyframes bounce {
     0% {
@@ -394,6 +398,18 @@
     }
     50% {
       transform: translateY(8px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes smallbounce {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(3px);
     }
     100% {
       transform: translateY(0px);
@@ -451,7 +467,7 @@
             justify-content: space-between;
             align-items: flex-end;
 
-            p {
+            .trimmed-text {
                 font-size: 14px;
                 color:#9E9E9E;
             }
