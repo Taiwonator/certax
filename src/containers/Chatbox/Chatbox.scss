@@ -234,15 +234,6 @@
         align-items: center;
         font-weight: 300;
         opacity: 8;
-
-        &:before {
-            content: "";
-            height: 10px;
-            width: 10px;
-            border-radius: 100%;
-            background-color: #44EA9A;
-            margin-right: .5em;
-        }
     }
 }
 
@@ -347,6 +338,28 @@
         left: 100%;
         top: 100%;
         transform: translate(-75%, -75%);
+    }
+}
+
+.status-active {
+    &:before {
+        content: "";
+        height: 10px;
+        width: 10px;
+        border-radius: 100%;
+        background-color: #44EA9A;
+        margin-right: .5em;
+    }
+}
+
+.status-unactive {
+    &:before {
+        content: "";
+        height: 10px;
+        width: 10px;
+        border-radius: 100%;
+        background-color: #ea4444;
+        margin-right: .5em;
     }
 }
 

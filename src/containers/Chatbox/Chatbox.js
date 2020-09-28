@@ -510,6 +510,7 @@ class Chatbox extends Component {
 
                 { (chatOpen) ? <MessageHeader responder={this.state.responder}
                                               typing={this.state.typing}
+                                              online={true}
                                               colors={this.props.colors}
                                               switchSender={this.switchSender}
                                               toggleBotChat={this.toggleBotChat}
@@ -590,7 +591,7 @@ const MessageHeader = (props) => {
                     {/* Change back to closeChat */}
                     <div className='chatbox-top-bar-text' onClick={props.switchSender}>
                         <h3>{props.responder.alias}</h3>
-                        <Status typing={props.typing}/>
+                        <Status typing={props.typing} online={props.online}/>
                     </div>
                 </div>
                 <div className='chatbox-top-bar-right'>
@@ -612,9 +613,14 @@ const CloseChat = (props) => {
 }
 
 const Status = (props) => {
-    let text = (props.typing) ? "Typing" : "Active";
+    let text;
+    if(props.online) {
+        text = (props.typing) ? "Typing" : "Active";
+    } else {
+        text = "Offline";
+    }
     return (
-        <div className={`status ${props.typing ? 'typing' : ''}`}>{text}
+        <div className={`status ${props.typing ? 'typing' : ''} ${props.online ? 'status-active' : 'status-unactive'}`}>{text}
             <span/>
             <span/>
             <span/>
@@ -825,10 +831,12 @@ const ChatsController = (props) => {
             let unseenCount = info.latestMessage.messageID - info.participants[receiveClientID()].lastMessageSeenID;
             // console.log(`${info.participants[conversationID].name} ---> user last seen ID: ${info.participants[conversationID].lastMessageSeenID}, client last seen ID: ${info.participants[receiveClientID()].lastMessageSeenID}`);
             // console.log(`${info.participants[conversationID].name}  unseenCount:  ${unseenCount}`);
+            console.log(info);
             return (
             <ChatListItem latestMessage={info.latestMessage}
                         alias={info.participants[conversationID].name}
                         conversationID={conversationID}
+                        online={info.participants[conversationID].isOnline}
                         key={conversationID}
                         openChat={props.openChat}
                         colors={props.colors}
@@ -875,7 +883,7 @@ const ChatListItem = (props) => {
     let unseenMessagesLabel = (unseenMessageCount == 0) ? '' : <p style={{backgroundColor: props.colors.blue}}>{unseenMessageCount}</p>;
     return (
         <div className='chat-list-item-container' onClick={() => props.openChat(props.conversationID)}>
-            <div className={`chatbox-avatar`} style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
+            <div className={`chatbox-avatar ${props.online ? 'online': ''}`} style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
             <div className='chat-list-item-content'>
                 <div className='chat-list-item-top-row'>
                     <h3>{props.alias}</h3>

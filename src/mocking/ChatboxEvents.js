@@ -48,7 +48,7 @@ export function receiveConversationOverviews() {
                 "1234-2345-3456-4567": {
                     lastMessageSeenID: 3, 
                     isTyping: false, 
-                    isOnline: false, 
+                    isOnline: true, 
                     name: "Jimbo"
                 }, 
                 [clientID]: {
