@@ -12,7 +12,9 @@ class Chatbox extends Component {
             active: false,
             chatOpen: false,
             sendable: false,
+
             displayTime: true,
+            latestMessageTime: '',
 
             typing: false, 
             
@@ -146,12 +148,14 @@ class Chatbox extends Component {
     }
 
     getMessagesFromStore(conversationID) {
+        
         if(this.state.messageStore[conversationID] != undefined) {
             const storeMessages = (this.state.messageStore[conversationID].messages);
             let messageBlocks = [];
             for(var i = 0; i < storeMessages.length; i++) {
                 messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
             }
+            
             return messageBlocks;
         } else {
             return null;
@@ -171,6 +175,7 @@ class Chatbox extends Component {
         }
 
         //  CHECK TIME BETWEEN THIS MESSAGE AND PREVIOUS MESSAGE
+        // Have time of last message in state. On load, set to latest message. If new message.time....timeVisible == true
 
         if(messageBlocks.length == 0) {
             // First message sent
@@ -188,9 +193,16 @@ class Chatbox extends Component {
             // Set previous message setVisible to false
             messageBlocks[messageBlocks.length - 1].messages[messageBlocks[messageBlocks.length - 1].messages.length - 1].seenVisible = false;
             const lastMessageBlock = messageBlocks[messageBlocks.length - 1];
+
+            // Set previous message timeVisible to true
+            const prevMessage = messageBlocks[messageBlocks.length - 1].messages[messageBlocks[messageBlocks.length - 1].messages.length - 1];
+            if(dateHourDiff(prevMessage.time, messageObj.time) > 1) {
+                messageObj.timeVisible = true;
+            }
+
             if(lastMessageBlock.sender == message.sender) {
                 // Same sender who sent previous messages
-                message
+
                 messageBlocks[messageBlocks.length - 1].messages.push(messageObj);
 
 
@@ -441,7 +453,6 @@ class Chatbox extends Component {
             }, () => {
                 this.seeAllMessages();
                 this.messageEndRef.current.scrollIntoView(); 
-
             })
             
         })
@@ -791,7 +802,8 @@ const ChatsController = (props) => {
             let conversationID = array[0];
             let info = array[1];
 
-            let unseenCount = Math.abs(info.participants[conversationID].lastMessageSeenID - info.participants[receiveClientID()].lastMessageSeenID);
+            // let unseenCount = Math.abs(info.participants[conversationID].lastMessageSeenID - info.participants[receiveClientID()].lastMessageSeenID);
+            let unseenCount = info.latestMessage.messageID - info.participants[receiveClientID()].lastMessageSeenID;
             // console.log(`${info.participants[conversationID].name} ---> user last seen ID: ${info.participants[conversationID].lastMessageSeenID}, client last seen ID: ${info.participants[receiveClientID()].lastMessageSeenID}`);
             // console.log(`${info.participants[conversationID].name}  unseenCount:  ${unseenCount}`);
             return (
@@ -842,10 +854,9 @@ const ChatListItem = (props) => {
     }
 
     let unseenMessagesLabel = (unseenMessageCount == 0) ? '' : <p style={{backgroundColor: props.colors.blue}}>{unseenMessageCount}</p>;
-    console.log(props.latestMessage);
     return (
         <div className='chat-list-item-container' onClick={() => props.openChat(props.conversationID)}>
-            <div className='chatbox-avatar' style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
+            <div className={`chatbox-avatar`} style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
             <div className='chat-list-item-content'>
                 <div className='chat-list-item-top-row'>
                     <h3>{props.alias}</h3>
@@ -929,6 +940,6 @@ export default Chatbox;
 
 
 
-// SeenBy 
+// SeenBy X
 // Typing
 // IsOnline
