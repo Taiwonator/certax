@@ -114,7 +114,7 @@
                         font-family: v.$text-font;
                         text-align: center;
                         font-size: 12px;
-                        margin: .2em 0;
+                        margin: .5em 0;
                         transition: all .3s ease-in-out;
                         opacity: .5;
                     } 
@@ -222,27 +222,18 @@
                 
     h3 {
         font-family: v.$text-font;
-        font-size: 22px;
+        font-size: 16px;
         font-weight: 300;
         margin-bottom: .2em;
     } 
 
-    p {
+    .status {
         font-size: 14px;
         display: flex;
         flex-direction: row;
         align-items: center;
         font-weight: 300;
         opacity: 8;
-
-        // &:before {
-        //     content: "";
-        //     height: 10px;
-        //     width: 10px;
-        //     border-radius: 100%;
-        //     background-color: #44EA9A;
-        //     margin-right: .5em;
-        // }
     }
 }
 
@@ -335,6 +326,96 @@
     margin-top: .5em;
 }
 
+.online {
+    &:before {
+        content: "";
+        height: 15px;
+        width: 15px;
+        border-radius: 6px;
+        background-color: #44EA9A;
+        margin-right: .5em;
+        position: relative;
+        left: 100%;
+        top: 100%;
+        transform: translate(-75%, -75%);
+    }
+}
+
+.status-active {
+    &:before {
+        content: "";
+        height: 10px;
+        width: 10px;
+        border-radius: 100%;
+        background-color: #44EA9A;
+        margin-right: .5em;
+    }
+}
+
+.status-unactive {
+    &:before {
+        content: "";
+        height: 10px;
+        width: 10px;
+        border-radius: 100%;
+        background-color: #ea4444;
+        margin-right: .5em;
+    }
+}
+
+.typing {
+    span {
+        height: 2px;
+        width: 2px;
+        border-radius: 100%;
+        background-color: white;
+        margin-right: .25em;
+        position: relative;
+        top: 100%;
+        left: 5%;
+        transform: translateY(200%);
+
+        &:nth-child(3) {
+            animation: bounce 1s infinite;
+          }
+          &:nth-child(2) {
+            animation: bounce 1s infinite .2s;
+          }
+          &:nth-child(1) {
+            animation: bounce 1s infinite .4s;
+          }
+    }
+}
+
+.smallbounce {
+    animation: smallbounce 1s infinite .4s;
+}
+
+// Taken from https://codepen.io/nunoooo/pen/OxbYop
+@keyframes bounce {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes smallbounce {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(3px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
 .chat-list-item-container {
     height: 80px;
     // background: red;
@@ -353,6 +434,8 @@
         height: 60px;
         width: 60px;
         flex-basis: 20%;
+
+        
     }
 
     .chat-list-item-content {
@@ -369,6 +452,7 @@
             h3 {
                 font-family: v.$text-font;
                 color: #343434;
+                font-size: 14px;
             }
 
             p {
@@ -383,7 +467,7 @@
             justify-content: space-between;
             align-items: flex-end;
 
-            p {
+            .trimmed-text {
                 font-size: 14px;
                 color:#9E9E9E;
             }

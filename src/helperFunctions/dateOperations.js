@@ -47,7 +47,8 @@ export function returnShortDate(d) {
     }
 }
 
-export function returnTime(date) {
+export function returnTime(d) {
+    const date = new Date(d);
     let hour = date.getHours(), 
     hourFormatted = hour % 12 || 12, // hour returned in 24 hour format
     minute = date.getMinutes(), 
