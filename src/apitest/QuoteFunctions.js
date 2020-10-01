@@ -55,12 +55,12 @@ export async function postData(url = '', data = {}) {
     return response.json();
 }
 
-export const getABatch = async (answers, questions, batch, quote) => {
+export const getABatch = async (answers, questions, batch, moreQuestionsAvailable, quote) => {
     let jsonObject = {};
     if(quote) {
-        jsonObject = {answers: convertObject(answers, questions), batch, quote}
+        jsonObject = {answers: convertObject(answers, questions), batch, moreQuestionsAvailable, quote}
     } else {
-        jsonObject = {answers: convertObject(answers, questions), batch}
+        jsonObject = {answers: convertObject(answers, questions), batch, moreQuestionsAvailable}
     }
     console.log("JSON Object being sent", jsonObject);
     return await postData("https://api.certaxnorwich.accountant/postQuote", jsonObject)
@@ -77,12 +77,25 @@ const convertObject = (answers, questions) => {
     } else {
         const answer_keys = Object.keys(answers).map((key) => {
             answers_array[key] = {
-                                    'questionKey': key, 
-                                    'answer': answers[key]
+                                    questionKey: key, 
+                                    answer: answers[key], 
+                                    displayValue: returnDisplayValue(questions, 'isSelfAssessment')
                                 }
+            console.log(answers_array);
         })
     }
     return answers_array;
+}
+
+const returnDisplayValue = (questions, key) => {
+    for(var i = 0; i < questions.length; i++) {
+        for(var j = 0; j < questions[i].length; j++){
+            console.log(questions[i][j]);
+            if(questions[i][j].key == key) {
+                return questions[i][j].displayValue;
+            }
+        }
+    }
 }
 
 // const getQuestionFromKey = (questions, key) => {

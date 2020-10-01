@@ -14,6 +14,7 @@ class App extends Component {
             password: '', 
             loggedin: false
         } 
+        console.log(document.cookie);
     }
 
     updateInput = (key, value, callback) => {

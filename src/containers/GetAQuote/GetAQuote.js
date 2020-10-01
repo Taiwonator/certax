@@ -26,7 +26,7 @@ class GetAQuote extends Component {
 
     getNewBatch = async () => {
         this.lockAnswers();
-        let batchObj = await this.getBatchObj(this.state.answers, this.state.quote, this.state.batch, this.state.quote);
+        let batchObj = await this.getBatchObj(this.state.answers, this.state.questions, this.state.batch, this.state.moreQuestionsAvailable, this.state.quote);
         // let batchObj = await this.getBatchObj(this.state.answers, this.state.batch + 1);
         let keys = batchObj.newQuestions.map(a => a.key);
         let answersObj = this.state.answers;
@@ -66,14 +66,14 @@ class GetAQuote extends Component {
     initAnswersObject = () => {
     }
 
-    getBatchObj = (answers, questions, batch, quote) => {
+    getBatchObj = (answers, questions, batch, moreQuestionsAvailable, quote) => {
         this.setState({
             requestProcessing: true
         })
         if(batch == 0) {
-            return getABatch(answers, questions, batch);
+            return getABatch(answers, questions, batch, moreQuestionsAvailable);
         } else {
-            return getABatch(answers, questions, batch, quote);
+            return getABatch(answers, questions, batch, moreQuestionsAvailable, quote);
         }
         return 
         // return getABatchMock(this.state.answers, this.state.batch + 1);
