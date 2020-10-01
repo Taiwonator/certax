@@ -1,5 +1,5 @@
 const clientID = "123456789";
-let count = 4;
+let count = 5;
 
 // newMessage
 export function newMessage(conversationID, text, sender) {
@@ -25,7 +25,7 @@ export function receiveConversationOverviews() {
                 participants: {
                     "1111-2222-3333-4444": {
                         lastMessageSeenID: 2, 
-                        isTyping: false, 
+                        isTyping: true, 
                         isOnline: false, 
                         name: "Jenny"
                     }, 
@@ -47,7 +47,7 @@ export function receiveConversationOverviews() {
             participants: {
                 "1234-2345-3456-4567": {
                     lastMessageSeenID: 3, 
-                    isTyping: true, 
+                    isTyping: false, 
                     isOnline: true, 
                     name: "Jimbo"
                 }, 
@@ -58,12 +58,12 @@ export function receiveConversationOverviews() {
                     name: "Certax"
                 }
             }, 
-            latestMessage: {
-                sender: "1234-2345-3456-4567", 
-                text: "Help me please!", 
-                time: "Fri Sep 23 2020 19:20:45 GMT+0100 (GMT+01:00)",
-                messageID: 3
-            }
+            latestMessage:  {
+                sender: "bot", 
+                text: "Hi this is a bot message", 
+                time: "Thu Oct 01 2020 15:09:29 GMT+0100 (GMT+01:00)", 
+                messageID: 5
+              }
            }
         ]
     }
@@ -106,6 +106,12 @@ export function receiveConversation(conversationID) {
                     text: "Help me please!", 
                     time: "Fri Sep 23 2020 19:20:45 GMT+0100 (GMT+01:00)",
                     messageID: 3
+                }, 
+                {
+                    sender: "bot", 
+                    text: "Hi this is a bot message", 
+                    time: "Thu Oct 01 2020 15:09:29 GMT+0100 (GMT+01:00)", 
+                    messageID: 5
                 }
             ]
         }
