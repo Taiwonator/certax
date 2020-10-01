@@ -8,42 +8,38 @@ import Underline from '../../components/Underline/Underline';
 class Chatbox extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            active: false,
-            chatOpen: false,
-            sendable: false,
-
-            displayTime: true,
-            latestMessageTime: '',
-
-            typing: false, 
-            
-            responder: {
-                alias: '',
-                type: '', 
-                id: ''
+        this.state = {
+            booleans: {
+                active: false, // *
+                chatOpen: false, // *
+                sendable: false, // *
+                botChat: false, // *
+                typing: false, // *
             },
-            sender: {
-                alias: 'Certax',
-                type: 'client',
-                id: receiveClientID()
+            chatInfo: {
+                responder: { // *
+                    alias: '',
+                    type: '', 
+                    id: ''
+                },
+                sender: { // *
+                    alias: 'Certax',
+                    type: 'client',
+                    id: receiveClientID()
+                },
+                message: '', // *
+                focusedMessage: '', // * 
+                messages: [], // *
+                conversationID: ''
             },
-            message: '',
-            focusedMessage: '', 
-            messages: [
-                
-            ], 
-            botMessages: [],
-            botChat: false,
-            cachedMessages: [], 
-
-            messageStore: {
-                
-            }, 
+            messageStore: {}, //* 
         }
 
         this.messageEndRef = React.createRef();
     }
+
+    // IF CLIENT 
+    // IF VISITOR (Receive Conversation only)
 
 
     componentDidMount() {
@@ -51,12 +47,14 @@ class Chatbox extends Component {
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW (client)
         // REQUEST CONVERSATION (visitor) 
+        
 
         
-        this.mergeReceiveConversationOverviews(receiveConversationOverviews());
+        this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
+        // mergeConvo (using cookie from quote) VISITOR
     }
 
-    mergeNewMessage(newMessage) {
+    mergeNewMessage = (newMessage) => { // *
         if(Object.keys(this.state.messageStore).length == 0) {
             this.setState({
                 messageStore: {
@@ -67,9 +65,12 @@ class Chatbox extends Component {
                 }
             }, () => {
                 const messages = this.getMessagesFromStore(newMessage.conversationID);
-                this.setState({
-                    messages
-                })
+                this.setState((prevState) => ({
+                    chatInfo: {
+                        ...prevState.chatInfo,
+                        messages
+                    }
+                }))
             })
             
         } else {
@@ -90,15 +91,18 @@ class Chatbox extends Component {
                 }
             }), () => {
                 const messages = this.getMessagesFromStore(newMessage.conversationID);
-                this.setState({
-                    messages
-                })
+                this.setState((prevState) => ({
+                    chatInfo: {
+                        ...prevState.chatInfo,
+                        messages
+                    }
+                }))
             })
         }
         return "newMessage merge complete"
     }
 
-    mergeReceiveConversationOverviews(conversationOverviews) {
+    mergeReceiveConversationOverviews = (conversationOverviews) => { // CLIENT
         const clientID = receiveClientID();
         for(var i = 0; i < conversationOverviews.conversationOverviews.length; i++) {
             let conversationOverview = conversationOverviews.conversationOverviews[i];
@@ -130,7 +134,7 @@ class Chatbox extends Component {
         return "ConversationOverviews merge complete"
     } 
 
-    mergeReceiveConversation(conversation) {
+    mergeReceiveConversation = (conversation) => { // *
         this.setState((prevState) => ({
             messageStore: {
                 ...prevState.messageStore, 
@@ -144,13 +148,13 @@ class Chatbox extends Component {
         return "Conversation merge complete"
     }
 
-    getMessagesFromStore(conversationID) {
+    getMessagesFromStore = (conversationID) => { // *
         
         if(this.state.messageStore[conversationID] != undefined) {
             const storeMessages = (this.state.messageStore[conversationID].messages);
             let messageBlocks = [];
             for(var i = 0; i < storeMessages.length; i++) {
-                if(!this.state.botChat) {
+                if(!this.state.booleans.botChat) {
                     messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
                 } else {
                     if(storeMessages[i].sender == 'bot') {
@@ -165,14 +169,14 @@ class Chatbox extends Component {
         }
     }
 
-    addMessageToObject = (messageBlocks, message) => {
+    addMessageToObject = (messageBlocks, message) => { //*
         let messageObj = {messageID: message.messageID, text: message.text, time: message.time, seen: false, timeVisible: false, seenVisible: true};
         // DATEVISIBLE: Method to determine whether date needs to be shown (If it is longer than an hour from its previous message)
         // SEENVISIBLE: If it is the 'latest message'
         
-        // Set Seen
-        
-        if(message.messageID <= this.state.messageStore[this.state.conversationID].participants[this.state.sender.id].lastMessageSeenID || message.messageID <= this.state.messageStore[this.state.conversationID].participants[this.state.responder.id].lastMessageSeenID) {
+        // Set Seen (Should work)
+
+        if(message.messageID <= this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].lastMessageSeenID) {
             messageObj.seen = true;
             // console.log(`${this.state.sender.id} has seen message (${message.messageID})`);
         }
@@ -226,13 +230,13 @@ class Chatbox extends Component {
        
     } 
 
-    mergeSeenBy(seenBy) {
+    mergeSeenBy = (seenBy) => { // *
         let messageStore = {...this.state.messageStore};
         messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
-        let messages = [...this.state.messages];
+        let messages = [...this.state.chatInfo.messages];
         for(var i = 0; i < messages.length; i++) {
-            if(messages[i].sender == this.state.responder.id) {
+            if(messages[i].sender == this.state.chatInfo.responder.id) {
                 for(var j = 0; j < messages[i].messages.length; j++) {
                     messages[i].messages[j].seen = true;
                 }
@@ -240,7 +244,10 @@ class Chatbox extends Component {
         }
 
         this.setState((prevState) => ({
-            messageStore, messages
+            chatInfo: {
+                ...prevState.chatInfo,
+                messageStore, messages
+            }
         }))
         
 
@@ -248,7 +255,7 @@ class Chatbox extends Component {
         return "seenBy merge complete"
     }
 
-    mergeNowTyping(nowTyping) {
+    mergeNowTyping = (nowTyping) => { // *
         let messageStore = {...this.state.messageStore};
         messageStore[nowTyping.conversationID].participants[nowTyping.participantID].isTyping = true;
         this.setState({
@@ -256,47 +263,65 @@ class Chatbox extends Component {
         }, () => console.log(this.state.messageStore))
     }
 
-    mergeStoppedTyping(stoppedTyping) {
+    mergeStoppedTyping = (stoppedTyping) => { // *
         let messageStore = {...this.state.messageStore};
         messageStore[stoppedTyping.conversationID].participants[stoppedTyping.participantID].isTyping = false;
         this.setState({
             messageStore
-        }, () => console.log(this.state.messageStore))
+        })
     }
 
-    closeChat = () => {
-        const chatOpen = this.state.chatOpen;
-        this.setState({
-            chatOpen: false, message: ''
-        })
+    closeChat = () => { // CLIENT
+        this.setState((prevState) => ({
+            booleans: {
+                ...prevState.booleans,
+                chatOpen: false,
+            },
+            chatInfo: {
+                ...prevState.chatInfo,
+                message: ''
+            }
+        })) 
     }
     
 
-    scrollToBottom = () => {
+    scrollToBottom = () => { // *
         this.messageEndRef.current.scrollIntoView({behavior: 'smooth'});
     }
 
-    openChatbox = () => {
+    openChatbox = () => { // *
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW
 
-        this.setState({
-            active: true, 
-        }) 
+        this.setState((prevState) => ({
+            booleans: {
+                ...prevState.booleans,
+                active: true,
+            } 
+        })) 
         
     }
 
-    closeChatbox = () => {
-        this.setState({
-            active: false
-        })
+    closeChatbox = () => { // *
+        this.setState((prevState) => ({
+            booleans: {
+                ...prevState.booleans,
+                active: false,
+            } 
+        })) 
     }
 
-    handleMessageChange = (e) => {
-        if(!this.state.botChat) {
-            this.setState({
-                message: e.target.value
-            }, () => {
+    handleMessageChange = (e) => { // *
+        // Not sure why (Added chatInfo and now needs this)
+        e.persist();
+
+        if(!this.state.booleans.botChat) {
+            this.setState( (prevState) => ({
+                chatInfo: {
+                    ...prevState.chatInfo,
+                    message: e.target.value
+                }
+            }), () => {
                 this.checkIfTyping();
                 this.checkIfSendable();
                 this.seeAllMessages();
@@ -304,40 +329,52 @@ class Chatbox extends Component {
         }
     }
 
-    checkIfSendable = () => {
+    checkIfSendable = () => { // *
         if(this.state.message == '') {
-            this.setState({
-                sendable: false
-            })
+            this.setState((prevState) => ({
+                booleans: {
+                    ...prevState.booleans,
+                    sendable: false
+                }
+            }))
         } else {
-            this.setState({
-                sendable: true
-            })
+            this.setState((prevState) => ({
+                booleans: {
+                    ...prevState.booleans,
+                    sendable: true
+                }
+            }))
         }
     }
 
-    checkIfTyping = () => {
-        if(this.state.message == '') {
+    checkIfTyping = () => { // *
+        if(this.state.chatInfo.message == '') {
             // WEB SOCKET
             // SEND NOT TYPING EVENT 
-            this.mergeStoppedTyping(stoppedTyping(this.state.conversationID, this.state.sender.id));
+            this.mergeStoppedTyping(stoppedTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
-            this.setState({
-                typing: false
-            })
-        } else if(this.state.message != '' && !this.state.typing) {
+            this.setState((prevState) => ({
+                booleans: {
+                    ...prevState.booleans, 
+                    typing: false
+                }
+            }))
+        } else if(this.state.chatInfo.message != '' && !this.state.booleans.typing) {
             // WEB SOCKET
             // SEND TYPING EVENT 
-            this.mergeNowTyping(nowTyping(this.state.conversationID, this.state.sender.id));
+            this.mergeNowTyping(nowTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
-            this.setState({
-                typing: true
-            })
+            this.setState((prevState) => ({
+                booleans: {
+                    ...prevState.booleans, 
+                    typing: true
+                }
+            }))
         }
     }
 
-    sendMessage = () => {
-        if(this.state.sendable) {
+    sendMessage = () => { // *
+        if(this.state.booleans.sendable) {
 
             // (ASYNC) WEB SOCKET - SEND NEW MESSAGE EVENT
             // RECIEVE NEW CONVERSATIONS 
@@ -349,10 +386,13 @@ class Chatbox extends Component {
 
             // const messages = [...this.state.messages];
             // let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
-            this.mergeNewMessage(newMessage(this.state.conversationID, this.state.message, this.state.sender.id));
+            this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
 
             this.setState((prevState) => ({
-                message: '',
+                chatInfo: {
+                    ...prevState.chatInfo,
+                    message: ''
+                }
             }), () => {
                 // Stopped Typing
                 this.checkIfTyping();
@@ -362,27 +402,30 @@ class Chatbox extends Component {
         } 
     }
 
-    handleKeyDown = (e) => {
+    handleKeyDown = (e) => { // *
         if (e.key === 'Enter') {
           this.sendMessage();
         }
     }
 
-    switchSender = () => {
-        if(!this.state.botChat) {
-            this.mergeStoppedTyping(stoppedTyping(this.state.conversationID, this.state.sender.id));
+    switchSender = () => { // TESTER
+        if(!this.state.booleans.botChat) {
+            this.mergeStoppedTyping(stoppedTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
             this.setState((prevState) => ({
-                sender: {
-                    alias: prevState.responder.alias, 
-                    type: prevState.responder.type,  
-                    id: prevState.responder.id, 
-                }, 
-                responder: {
-                    alias: prevState.sender.alias, 
-                    type: prevState.sender.type,
-                    id: prevState.sender.id
-                }, 
-                message: ''
+                chatInfo: {
+                    ...prevState.chatInfo,
+                    sender: {
+                        alias: prevState.chatInfo.responder.alias, 
+                        type: prevState.chatInfo.responder.type,  
+                        id: prevState.chatInfo.responder.id, 
+                    }, 
+                    responder: {
+                        alias: prevState.chatInfo.sender.alias, 
+                        type: prevState.chatInfo.sender.type,
+                        id: prevState.chatInfo.sender.id
+                    }, 
+                    message: '', 
+                }
             }), () => { 
                 this.seeAllMessages();
                 this.checkIfTyping();
@@ -390,50 +433,59 @@ class Chatbox extends Component {
         }
     }
 
-    toggleBotChat = () => {
+    toggleBotChat = () => { // *
         let obj = {}
-        if(this.state.responder.type != 'bot') {
+        if(this.state.chatInfo.responder.type != 'bot') {
             obj.botChat = true;
             obj.responder = {
                 alias: 'Certax Bot', 
                 type: 'bot', 
-                id: `bot${this.state.conversationID}`
+                id: receiveClientID()
             }
         } else {
             obj.botChat = false;
-            if(this.state.sender.id == receiveClientID()) {
+            if(this.state.chatInfo.sender.id == receiveClientID()) {
                 obj.responder = {
-                    alias: this.state.messageStore[this.state.conversationID].participants[this.state.conversationID].name, 
+                    alias: this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.conversationID].name, 
                     type: 'visitor', 
-                    id: this.state.conversationID
+                    id: this.state.chatInfo.conversationID
                 }
             } else {
                 obj.responder = {
-                    alias: this.state.messageStore[this.state.conversationID].participants[receiveClientID()].name, 
+                    alias: this.state.messageStore[this.state.chatInfo.conversationID].participants[receiveClientID()].name, 
                     type: 'client', 
                     id: receiveClientID()
                 }
             }
         }
-        this.setState({
-            botChat: obj.botChat, 
-            message: '', 
-            responder: obj.responder
-        }, () => this.updateMessages())
+        this.setState((prevState) => ({
+            booleans: {
+                ...prevState.booleans, 
+                botChat: obj.botChat
+            },
+            chatInfo: {
+                ...prevState.chatInfo,
+                message: '',
+                responder: obj.responder
+            },
+        }), () => this.updateMessages())
     }
 
-    updateMessages = (callback) => {
+    updateMessages = (callback) => { // *
         this.checkIfTyping();
-        const messages = this.getMessagesFromStore(this.state.conversationID);
-        this.setState({
-            messages
-        }, () => callback)
+        const messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
+        this.setState((prevState) => ({
+            chatInfo: {
+                ...prevState.chatInfo,
+                messages
+            }
+        }), () => callback)
     }
 
 
 
-    messageOnClick = (m) => {
-        const oldFocusedMessage = this.state.focusedMessage;
+    messageOnClick = (m) => { // *
+        const oldFocusedMessage = this.state.chatInfo.focusedMessage;
         let focusedMessage;
         if(oldFocusedMessage.messageID != m.messageID) {
             focusedMessage = m;
@@ -445,10 +497,10 @@ class Chatbox extends Component {
         })
     }
 
-    displayTimeChecker = () => {
+    displayTimeChecker = () => { // *
         const now = new Date();
         if(this.state.messages.length != 0) {
-            let lastMessageBlock = this.state.messages[this.state.messages.length - 1];
+            let lastMessageBlock = this.state.chatInfo.messages[this.state.chatInfo.messages.length - 1];
             let lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1];
             let lastMessageTime = lastMessage.time;
             // console.log(dateHourDiff(lastMessageDate, now))
@@ -467,39 +519,49 @@ class Chatbox extends Component {
         }
     }
 
-    seeAllMessages = () => {
+    seeAllMessages = () => { // *
         // WEB SOCKET
         // SEEN BY
 
-        const messages = [...this.state.messages];
+        const messages = [...this.state.chatInfo.messages];
         const lastMessageBlock = messages[messages.length - 1];
         const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
-        this.mergeSeenBy(seenBy(this.state.conversationID, this.state.sender.id, lastMessageID));
+        this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
     }
 
-    openChat = async(conversationID) => {
+    openChat = async(conversationID) => { // CLIENT
         if(this.state.messageStore[conversationID].messages == undefined) {
             await this.mergeReceiveConversation(receiveConversation(conversationID))
         }
-        this.setState({
-            chatOpen: true, 
-            responder: {
-                alias: this.state.messageStore[conversationID].participants[conversationID].name, 
-                type: this.returnType(conversationID), 
-                id: conversationID
-            }, 
-            sender: {
-                alias: "Certax", 
-                type: "client", 
-                id: receiveClientID()
-            }, 
-            conversationID, 
-            botChat: false
-        }, () => { 
+        this.setState( (prevState) => ({
+            booleans: {
+                ...prevState.booleans,
+                chatOpen: true,
+                botChat: false
+            },
+            chatInfo: {
+                ...prevState.chatInfo,
+                responder: {
+                    alias: this.state.messageStore[conversationID].participants[conversationID].name, 
+                    type: this.returnType(conversationID), 
+                    id: conversationID
+                }, 
+                sender: {
+                    alias: "Certax", 
+                    type: "client", 
+                    id: receiveClientID()
+                }, 
+                conversationID, 
+            },
+            
+        }), () => { 
             const messages = this.getMessagesFromStore(conversationID);
-            this.setState({
-                messages
-            }, () => {
+            this.setState((prevState) => ({
+                chatInfo: {
+                    ...prevState.chatInfo,
+                    messages
+                }
+            }), () => {
                 this.seeAllMessages();
                 this.messageEndRef.current.scrollIntoView(); 
                 
@@ -511,7 +573,7 @@ class Chatbox extends Component {
 
     }
 
-    returnType = (id) => {
+    returnType = (id) => { // *
         if(id == receiveClientID) {
             return 'client'
         } else {
@@ -527,18 +589,18 @@ class Chatbox extends Component {
 
     render() { 
 
-        var chatOpen = this.state.chatOpen;
+        var chatOpen = this.state.booleans.chatOpen;
 
         return ( 
             <>
-            <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.active}/>
-            <div className={`${this.state.active && 'show'} chatbox-container`}>
+            <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/>
+            <div className={`${this.state.booleans.active && 'show'} chatbox-container`}>
 
-                <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.chatOpen) ? '#FAFAFA' : (this.state.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
+                <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.booleans.chatOpen) ? '#FAFAFA' : (this.state.chatInfo.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
 
-                { (chatOpen) ? <MessageHeader responder={this.state.responder}
-                                              typing={this.state.typing}
-                                              online={this.state.messageStore[this.state.conversationID].participants[this.state.responder.id].isOnline}
+                { (chatOpen) ? <MessageHeader responder={this.state.chatInfo.responder} // *
+                                              typing={this.state.booleans.typing}
+                                              online={this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].isOnline}
                                               colors={this.props.colors}
                                               switchSender={this.switchSender}
                                               toggleBotChat={this.toggleBotChat}
@@ -546,7 +608,7 @@ class Chatbox extends Component {
                                               closeChat={this.closeChat}
                                               seeAllMessages={this.seeAllMessages}/> : 
 
-                               <ChatsHeader colors={this.props.colors}
+                               <ChatsHeader colors={this.props.colors} // CLIENT
                                             closeChatbox={this.closeChatbox}/> }
 
                 
@@ -555,14 +617,14 @@ class Chatbox extends Component {
 
                 <div className='chatbox-body'>
 
-                    { (chatOpen) ? <MessageController messages={this.getMessagesFromStore(this.state.conversationID)} 
+                    { (chatOpen) ? <MessageController messages={this.getMessagesFromStore(this.state.chatInfo.conversationID)} // *
                                        colors={this.props.colors} 
-                                       senderID={this.state.sender.id}
-                                       focusedMessage={this.state.focusedMessage} 
+                                       senderID={this.state.chatInfo.sender.id}
+                                       focusedMessage={this.state.chatInfo.focusedMessage} 
                                        ref={this.messageEndRef} 
                                        messageOnClick={this.messageOnClick}/> : 
 
-                                    <ChatsController messageStore={this.state.messageStore}
+                                    <ChatsController messageStore={this.state.messageStore} // CLIENT
                                                      colors={this.props.colors}
                                                      openChat={this.openChat} />}
                     
@@ -573,14 +635,15 @@ class Chatbox extends Component {
 
                 <div className='chatbox-input-container'>
 
-                    { (chatOpen) ? <MessageInput messageValue={this.state.message} 
-                                      sendable={this.state.sendable}
+                    { (chatOpen) ? <MessageInput messageValue={this.state.chatInfo.message} // *
+                                      sendable={this.state.booleans.sendable}
                                       colors={this.props.colors}
                                       sendMessage={this.sendMessage}
                                       handleMessageChange={this.handleMessageChange}
                                       handleKeyDown={this.handleKeyDown} /> : 
                                       
-                                    <ChatsFooter colors={this.props.colors}/>}
+                                    <ChatsFooter colors={this.props.colors}/> // CLIENT
+                                } 
                     
                     
 
@@ -593,7 +656,13 @@ class Chatbox extends Component {
     }
 }
 
-const OpenChatBoxButton = (props) => {
+// *
+// messageStore
+// chatInfo
+// booleans
+//
+
+const OpenChatBoxButton = (props) => { // *
     const width = useWindowDimensions().width;
     if(width < 600) {
         if(props.active) {
@@ -611,7 +680,7 @@ const OpenChatBoxButton = (props) => {
     )
 }
 
-const MessageHeader = (props) => {
+const MessageHeader = (props) => { // *
     return (
             <>    
                 <div className='chatbox-top-bar-left'>
@@ -631,7 +700,7 @@ const MessageHeader = (props) => {
     )
 }
 
-const CloseChat = (props) => {
+const CloseChat = (props) => { // CLIENT
     return (
         <svg className='chatbox-top-bar-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25.05" onClick={props.closeChat}>
             <rect fill="white" x="11.38" y="3.78" width="1.5" height="17.5" transform="translate(-10.71 18.05) rotate(-45)"/>
@@ -640,7 +709,7 @@ const CloseChat = (props) => {
     )
 }
 
-const Status = (props) => {
+const Status = (props) => { // *
     let text;
     if(props.online) {
         text = (props.typing) ? "Typing" : "Active";
@@ -656,7 +725,7 @@ const Status = (props) => {
     )
 }
 
-const SwitchChatButton = (props) => {
+const SwitchChatButton = (props) => { // *
     const icon = (props.responderType != 'bot') ? <BotIcon onClick={props.onClick}/> : <WhiteC onClick={props.onClick}/>
     return (<div className={`chatbox-avatar chatbox-top-bar-button`} style={{height: '50px', backgroundColor: (props.responderType != 'bot' ? props.colors.yellow : props.colors.blue)}}>
                 {icon}
@@ -664,14 +733,14 @@ const SwitchChatButton = (props) => {
     )
 }
 
-const CloseChatboxButton = (props) => (
+const CloseChatboxButton = (props) => ( // *
     <svg className='chatbox-top-bar-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64.47 58.31" onClick={props.onClick}>
         <rect fill={props.color} className="cross" x="966.31" y="450.9" width="3.44" height="79.13" transform="translate(-1002.11 366.88) rotate(-45)" />
         <rect fill={props.color} className="cross" x="928.46" y="488.74" width="79.13" height="3.44" transform="translate(-1002.11 366.88) rotate(-45)" />
     </svg>
 )
 
-const MessageController = React.forwardRef((props, ref) => {
+const MessageController = React.forwardRef((props, ref) => { // *
     const message_blocks = props.messages;
     let list = message_blocks.map((block, i) => (
         <MessageBlock key={`block_${new Date().getTime()}_${i}`} 
@@ -690,7 +759,7 @@ const MessageController = React.forwardRef((props, ref) => {
     )
 })
 
-const MessageBlock = (props) => {
+const MessageBlock = (props) => { // *
     let avatar;
     if(props.blockSender != props.senderID) {
         if(props.blockSender == 'bot') {
@@ -742,14 +811,14 @@ const MessageBlock = (props) => {
     )
 }
 
-const Timestamp = (props) => {
+const Timestamp = (props) => { // *
     let time = returnDate(props.time);
     return (
         <h4 className={`chatbox-timestamp ${(props.visible == true) ? '' : 'collapse'}`}>{time}</h4>
     )
 }
 
-const SeenLabel = (props) => {
+const SeenLabel = (props) => { // *
     const textAlign = props.textAlign;
     return (
         <h5 className={`seen ${(props.visible == true) ? '' : 'collapse'}`} style={{textAlign}}>Seen</h5>
@@ -757,7 +826,7 @@ const SeenLabel = (props) => {
 
 }
 
-const MessageInput = (props) => {
+const MessageInput = (props) => { // *
     return (
         <>
             <input className='chatbox-input' type='text' placeholder='Type your message...' value={props.messageValue} onChange={props.handleMessageChange} onKeyDown={props.handleKeyDown}/>
@@ -766,7 +835,7 @@ const MessageInput = (props) => {
     )
 }
 
-const SendButton = (props) => {
+const SendButton = (props) => { // *
     return (
         <svg className='send-button' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29.41 27.46" onClick={props.onClick}>
             <path fill={props.color} d="M859.53,213.37l-26.39-12.23a1.5,1.5,0,0,0-2,1.88l4.25,11.71-4.26,11.71a1.5,1.5,0,0,0,.88,1.93,1.53,1.53,0,0,0,1.17-.05l26.39-12.22a1.5,1.5,0,0,0,0-2.73Z" transform="translate(-831 -201)" />
@@ -784,7 +853,7 @@ const SendButton = (props) => {
 
 
 
-const WhiteC = (props) => (
+const WhiteC = (props) => ( // *
     <svg className={`chatbox-avatar-icon ${(props.onClick != undefined) ? 'clickable' : ''}`} id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.13 226.05" onClick={props.onClick}>
         <path fill='white' d="M1073.65,351.91a94.52,94.52,0,0,1-13.55,88.61,99.7,99.7,0,0,0-150.69-114.4,94.61,94.61,0,0,1,164.24,25.79Z" transform="translate(-875.02 -289)" />
         <path fill='white' d="M945.26,513.56A94.51,94.51,0,0,1,875,457.87a99.7,99.7,0,0,0,174-74.18,94.6,94.6,0,0,1-103.8,129.87Z" transform="translate(-875.02 -289)" />
@@ -792,7 +861,7 @@ const WhiteC = (props) => (
     </svg>
 )
 
-const BotIcon = (props) => (
+const BotIcon = (props) => ( // *
     <svg className={`chatbox-avatar-icon ${(props.onClick != undefined) ? 'clickable' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.29 22.42" onClick={props.onClick}>
         <title>BotIcon</title>
         <path fill='white' d="M865.84,210h0Z" transform="translate(-833 -195)" />
@@ -811,14 +880,14 @@ const BotIcon = (props) => (
     </svg>
 )
 
-const PersonIcon = () => (
+const PersonIcon = () => ( // *
     <svg className='chatbox-avatar-icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46.9 49.65">
         <rect fill='none' stroke='white' strokeLinecap='round' strokeMiterlimit='10' strokeWidth='4px' x="10.91" y="2" width="25.08" height="25.08" rx="12.54" />
         <path fill='none' stroke='white' strokeLinecap='round' strokeMiterlimit='10' strokeWidth='4px' d="M29.39,73.67A23.16,23.16,0,0,1,50.84,59.09h0A23.16,23.16,0,0,1,72.29,73.67" transform="translate(-27.39 -26.02)" />
     </svg>
 )
 
-const MessageIcon = (props) => (
+const MessageIcon = (props) => ( // *
     <svg className='chatbox-avatar-icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 475.04 332.17">
         <path fill={props.colors.yellow} d="M1163,572.4h3.13v14.14c0,20.33-17.07,36.81-38.14,36.81H872.24l-.09,1.07a174.57,174.57,0,0,0,.79,37.23v.05c0,.22.07.44.09.67a.06.06,0,0,1,0,.06,7.85,7.85,0,0,1-5.81,8.19,8.32,8.32,0,0,1-8.8-2.66l-.61-.85-30.91-43.76H790.32c-21.07,0-38.15-16.48-38.15-36.81V445.87c0-20.33,17.08-36.82,38.15-36.82h2.89V516.28c0,30.94,26.09,56.12,58.14,56.12h236.48q-.13,6.95-.88,13.66l-.19,4-.31,5.43a27.52,27.52,0,0,0,20,23.36,29,29,0,0,0,8.12,1.15h0a28.71,28.71,0,0,0,22.19-10.45l.33-.42.93-1.28Z" transform="translate(-752.17 -338.79)"/>
         <path fill={props.colors.blue} d="M1227.21,375.61V516.28c0,20.33-17.08,36.81-38.15,36.81h-36.59l-30.91,43.76-.61.85a8.35,8.35,0,0,1-8.8,2.67,7.86,7.86,0,0,1-5.81-8.2.06.06,0,0,1,0-.06c0-.23.05-.45.09-.67v-.05a174.49,174.49,0,0,0,.79-37.22l-.09-1.08H851.35c-21.07,0-38.14-16.48-38.14-36.81V375.61c0-20.33,17.07-36.82,38.14-36.82h337.71C1210.13,338.79,1227.21,355.28,1227.21,375.61Z" transform="translate(-752.17 -338.79)"/>
@@ -827,7 +896,7 @@ const MessageIcon = (props) => (
 
 
 
-const ChatsHeader = (props) => {
+const ChatsHeader = (props) => { // CLIENT
     const style = {
         display: 'flex',
         flexDirection: 'row', 
@@ -845,7 +914,7 @@ const ChatsHeader = (props) => {
     )
 }
 
-const ChatsController = (props) => {
+const ChatsController = (props) => { // CLIENT
     // key, alias, quoteID, lastMessage, unseenCount, openChat, colors
     const messageStore = props.messageStore;
     const ArrayMessageStore = Object.entries(messageStore);
@@ -901,7 +970,7 @@ const ChatsController = (props) => {
     }
 }
 
-const ChatListItem = (props) => {
+const ChatListItem = (props) => { // CLIENT
     let seen = false;
     if(props.latestMessage.messageID <= props.lastMessageSeenID) {
         seen = true;
@@ -934,7 +1003,7 @@ const ChatListItem = (props) => {
     )
 }
 
-const TrimmedText = (props) => {
+const TrimmedText = (props) => { // CLIENT
     let out;
     const charLimit = 25;
     let style = {};
@@ -999,7 +1068,7 @@ const TrimmedText = (props) => {
     )
 }
 
-const ChatsFooter = (props) => {
+const ChatsFooter = (props) => { // CLIENT
     return (
         <div className={`chatbox-avatar center-top`} style={{backgroundColor: props.colors.blue}}><WhiteC /></div>
     )
@@ -1028,6 +1097,4 @@ export default Chatbox;
 
 
 
-// SeenBy X
-// Typing
-// IsOnline
+// CHATBOX
