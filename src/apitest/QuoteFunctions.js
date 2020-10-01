@@ -43,7 +43,7 @@ export const hitEndpoint = _ => {
 //     return data;
 // }
 
-async function postData(url = '', data = {}) {
+export async function postData(url = '', data = {}) {
     const response = await fetch(url, {
         method: 'POST', 
         headers: {

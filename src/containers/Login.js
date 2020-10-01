@@ -4,6 +4,7 @@ import CompanyLogo from '../components/CompanyLogo/CompanyLogo';
 import CompanyName from '../components/CompanyName/CompanyName';
 import Input from '../components/Input/Input';
 import LoginButton from '../components/LoginButton/LoginButton';
+import {postData} from '../apitest/QuoteFunctions'
 
 class Login extends Component {
     constructor(props) {
@@ -79,14 +80,14 @@ class Login extends Component {
         }
     }
 
-    submit = () => {
+    submit = async () => {
         if(this.state.login_state != this.login_states.SUCCESS && this.state.login_state != this.login_states.ADMIN) {
-            if(this.validateDetails()) {
-                if(this.isCorrect(this.props.email, this.props.password)) {
-                    this.runLogin();
-                } else {
-                    this.switchState(this.login_states.FAIL);
-                }
+            const result = await postData("https://api.certaxnorwich.accountant/login", {email:this.props.email,password:this.props.password})
+            if(result.loggedIn) {
+                this.runLogin();
+            } else {
+                this.switchState(this.login_states.FAIL);
+                console.log(result.message)
             }
         }
     }
@@ -96,11 +97,15 @@ class Login extends Component {
             this.switchState(this.login_states.SUCCESS);
             this.props.updateInput('loggedin', true, () => console.log("Logged in"))
             setTimeout(() => {
-                this.openAdmin();
+                this.openMain();
             }, 1000)
         } else {
             this.switchState(this.login_states.LOGGEDIN);
         }
+    }
+
+    openMain = () => {
+        this.props.history.push("/")
     }
 
     openAdmin = () => {
