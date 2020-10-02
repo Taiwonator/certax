@@ -16,8 +16,8 @@ export function newMessage(conversationID, text, sender) {
     }
 }
 
-export function receiveConversationOverviews() {
-    return {
+export function receiveConversationOverviews(conversationID) {
+    const overviews = {
         type: "receiveConversationOverviews", 
         conversationOverviews: [
             {
@@ -67,6 +67,22 @@ export function receiveConversationOverviews() {
            }
         ]
     }
+    let out;
+    if(conversationID) {
+        for(var i = 0; i < overviews.conversationOverviews.length; i++) {
+            if(overviews.conversationOverviews[i].conversationID == conversationID) {
+                out = {
+                    type: 'receiveConversationOverviews', 
+                    conversationOverviews: [
+                        overviews.conversationOverviews[i]
+                    ]
+                }
+            }
+        }
+    } else {
+        out = overviews;
+    }
+    return out;
 }
 
 export function receiveConversation(conversationID) {

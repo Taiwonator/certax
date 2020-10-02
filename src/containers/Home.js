@@ -72,7 +72,7 @@ class Home extends Component {
                         labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact Us']}
                         label_scrolls={[this.scrollToAbout, this.scrollToTestimonials, this.scrollToGetAQuote, this.scrollToServices, this.scrollToContactUs]}
                         />
-                <Chatbox colors={this.props.colors} user={this.props.loggedIn} testing={true}/>
+                <Chatbox colors={this.props.colors} loggedIn={this.props.loggedIn} testing={true}/>
                 <LandingPage ref={this.homeRef} scroll={this.scrollToAbout} darkMode={this.darkMode} colors={this.props.colors} data={this.props.landingpage} />
                 <AboutSection ref={this.aboutRef} scrollToInfo={this.scrollToInfo} scroll={this.scrollToTestimonials} darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
                 <InfoSection ref={this.infoRef} colors={this.props.colors} scroll={this.scrollToGetAQuote} data={this.props.info}/>

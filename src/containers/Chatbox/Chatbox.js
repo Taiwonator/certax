@@ -23,9 +23,9 @@ class Chatbox extends Component {
                     id: ''
                 },
                 sender: { // *
-                    alias: 'Certax',
-                    type: 'client',
-                    id: receiveClientID()
+                    alias: '',
+                    type: '',
+                    id: ''
                 },
                 message: '', // *
                 focusedMessage: '', // * 
@@ -42,15 +42,20 @@ class Chatbox extends Component {
     // IF VISITOR (Receive Conversation only)
 
 
-    componentDidMount() {
+    async componentDidMount() {
 
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW (client)
         // REQUEST CONVERSATION (visitor) 
         
 
-        
-        this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
+        console.log(`loggedIn: ${this.props.loggedIn}`);
+        if(this.props.loggedIn) {
+            this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
+        } else {
+            await this.mergeReceiveConversationOverviews(receiveConversationOverviews('1111-2222-3333-4444')); // CLIENT
+            this.openChat('1111-2222-3333-4444');
+        }
         // mergeConvo (using cookie from quote) VISITOR
     }
 
@@ -530,9 +535,36 @@ class Chatbox extends Component {
     }
 
     openChat = async(conversationID) => { // CLIENT
+        let sender, responder;
+
         if(this.state.messageStore[conversationID].messages == undefined) {
             await this.mergeReceiveConversation(receiveConversation(conversationID))
         }
+
+        if(this.props.loggedIn) {
+            sender = {
+                alias: "Certax", 
+                type: "client", 
+                id: receiveClientID()
+            }
+            responder = {
+                alias: this.state.messageStore[conversationID].participants[conversationID].name, 
+                    type: this.returnType(conversationID), 
+                    id: conversationID
+            }
+        } else {
+            sender = {
+                alias: this.state.messageStore[conversationID].participants[conversationID].name, 
+                    type: this.returnType(conversationID), 
+                    id: conversationID
+            }
+            responder = {
+                alias: "Certax", 
+                type: "client", 
+                id: receiveClientID()
+            }
+        }
+
         this.setState( (prevState) => ({
             booleans: {
                 ...prevState.booleans,
@@ -541,16 +573,8 @@ class Chatbox extends Component {
             },
             chatInfo: {
                 ...prevState.chatInfo,
-                responder: {
-                    alias: this.state.messageStore[conversationID].participants[conversationID].name, 
-                    type: this.returnType(conversationID), 
-                    id: conversationID
-                }, 
-                sender: {
-                    alias: "Certax", 
-                    type: "client", 
-                    id: receiveClientID()
-                }, 
+                sender, 
+                responder,
                 conversationID, 
             },
             
@@ -590,7 +614,6 @@ class Chatbox extends Component {
     render() { 
 
         var chatOpen = this.state.booleans.chatOpen;
-
         return ( 
             <>
             <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/>
@@ -606,7 +629,9 @@ class Chatbox extends Component {
                                               toggleBotChat={this.toggleBotChat}
                                               closeChatbox={this.closeChatbox} 
                                               closeChat={this.closeChat}
-                                              seeAllMessages={this.seeAllMessages}/> : 
+                                              seeAllMessages={this.seeAllMessages}
+                                              loggedIn={this.props.loggedIn}
+                                              testing={this.props.testing} /> : 
 
                                <ChatsHeader colors={this.props.colors} // CLIENT
                                             closeChatbox={this.closeChatbox}/> }
@@ -684,10 +709,10 @@ const MessageHeader = (props) => { // *
     return (
             <>    
                 <div className='chatbox-top-bar-left'>
-                    <CloseChat closeChat={props.closeChat}/> 
+                    { (props.loggedIn) ? <CloseChat closeChat={props.closeChat}/> : '' } 
                     {/* Change back to closeChat */}
-                    <div className='chatbox-top-bar-text' onClick={props.switchSender}>
-                        <h3>{props.responder.alias}</h3>
+                    <div className='chatbox-top-bar-text'>
+                        { (props.testing) ? <h3 onClick={props.switchSender}>{props.responder.alias}</h3> : <h3>{props.responder.alias}</h3> }
                         <Status typing={props.typing} online={props.online}/>
                     </div>
                 </div>
@@ -1032,7 +1057,6 @@ const TrimmedText = (props) => { // CLIENT
             }
         }
 
-        console.log(props.seen);
         if(props.seen || props.sender == receiveClientID()) {
             style = {
                 color: '#9E9E9E', 
