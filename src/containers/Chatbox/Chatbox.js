@@ -8,6 +8,7 @@ import Underline from '../../components/Underline/Underline';
 class Chatbox extends Component {
     constructor(props) {
         super(props);
+        console.log("Hello");
         this.state = {
             booleans: {
                 active: false, // *
