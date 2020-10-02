@@ -14,6 +14,7 @@ class App extends Component {
             password: '', 
             loggedin: false
         } 
+        console.log(document.cookie);
     }
 
     updateInput = (key, value, callback) => {
@@ -44,7 +45,8 @@ class App extends Component {
                                     getaquote={MockData.sections.getaquote}
                                     services={MockData.sections.services}
                                     contactus={MockData.sections.contactus} 
-                                    chatbox={MockData.chatbox}/>
+                                    chatbox={MockData.chatbox}
+                                    loggedIn={this.state.loggedin}/>
                         )}> 
                     </Route>
                     <Route path='/admin' 

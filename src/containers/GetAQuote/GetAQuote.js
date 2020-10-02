@@ -26,12 +26,12 @@ class GetAQuote extends Component {
 
     getNewBatch = async () => {
         this.lockAnswers();
-        let batchObj = await this.getBatchObj(this.state.answers, this.state.quote, this.state.batch, this.state.quote);
-        // let batchObj = await this.getBatchObj(this.state.answers, this.state.batch + 1);
+        // let batchObj = await this.getBatchObj(this.state.answers, this.state.questions, this.state.batch, this.state.moreQuestionsAvailable, this.state.quote);
+        let batchObj = await this.mockBatch(this.state.answers, this.state.batch);
         let keys = batchObj.newQuestions.map(a => a.key);
         let answersObj = this.state.answers;
         for(var i = 0; i < keys.length; i++) {
-            if(batchObj.newQuestions[i].type == 'number') {
+            if(batchObj.newQuestions[i].type == 'number' || batchObj.newQuestions[i].type == 'bignumber') {
                 answersObj[keys[i]] = 0;
             } else {
                 answersObj[keys[i]] = null;
@@ -63,20 +63,24 @@ class GetAQuote extends Component {
         }
     }
 
-    initAnswersObject = () => {
-    }
 
-    getBatchObj = (answers, questions, batch, quote) => {
+    getBatchObj = (answers, questions, batch, moreQuestionsAvailable, quote) => {
         this.setState({
             requestProcessing: true
         })
         if(batch == 0) {
-            return getABatch(answers, questions, batch);
+            return getABatch(answers, questions, batch, moreQuestionsAvailable);
         } else {
-            return getABatch(answers, questions, batch, quote);
+            return getABatch(answers, questions, batch, moreQuestionsAvailable, quote);
         }
-        return 
         // return getABatchMock(this.state.answers, this.state.batch + 1);
+    }
+
+    mockBatch = (answers, batch) => {
+        this.setState({
+            requestProcessing: true
+        })
+        return getABatchMock(answers, batch + 1);
     }
 
     reset = () => {
@@ -156,7 +160,11 @@ class GetAQuote extends Component {
                 out = value + (step*(upperTen / 10));
             }
         } else {
-            out = value + step;
+            if(value + step >= 0) {
+                out = value + step;
+            } else {
+                out = 0;
+            }
         }
         return out;
     }
