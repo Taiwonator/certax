@@ -44,6 +44,8 @@ class Chatbox extends Component {
 
     async componentDidMount() {
 
+        const socket = new WebSocket('wss://api.certaxnorwich.accountant/messages');
+
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW (client)
         // REQUEST CONVERSATION (visitor) 
