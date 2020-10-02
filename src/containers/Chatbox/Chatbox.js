@@ -335,7 +335,7 @@ class Chatbox extends Component {
     }
 
     checkIfSendable = () => { // *
-        if(this.state.message == '') {
+        if(this.state.chatInfo.message == '') {
             this.setState((prevState) => ({
                 booleans: {
                     ...prevState.booleans,
@@ -379,6 +379,7 @@ class Chatbox extends Component {
     }
 
     sendMessage = () => { // *
+        console.log(this.state.booleans.sendable);
         if(this.state.booleans.sendable) {
 
             // (ASYNC) WEB SOCKET - SEND NEW MESSAGE EVENT
