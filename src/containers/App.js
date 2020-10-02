@@ -9,18 +9,24 @@ import AdminPanel from "./AdminPanel";
 class App extends Component {
     constructor(props) {
         super(props);
+        const loggedin = (this.getCookie('loggedIN')) ? true : false;
         this.state = {
             email: '', 
             password: '', 
-            loggedin: false
+            loggedin
         } 
-        console.log(document.cookie);
     }
 
     updateInput = (key, value, callback) => {
         this.setState(() => ({
             [key]: value
         }), () => callback())
+    }
+
+    getCookie = (name) => {
+        if(document.cookie.length != 0) {
+            return document.cookie.split('; ').find(row => row.startsWith(name)).split("=")[1];
+        }
     }
 
     render () {
