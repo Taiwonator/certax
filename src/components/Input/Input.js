@@ -42,6 +42,15 @@ const Input = (props) => {
                     </div>
         output = input;
 
+    } else if (props.type == 'bignumber') {
+        let style = (props.locked) ? {backgroundColor: props.color, color: 'white'} : {backgroundColor: 'white', color: props.color};
+        let input = <div className='number-input-container'>
+                        <div className="number-input-decrement" onClick={e => {if(!props.locked && !isNaN(props.answer))props.updateAnswer(props.answerKey, props.increment(props.answer, -10000, false), true) } }>–</div>
+                        <input className="number-input" style={style} type="number" placeholder={'number'} value={props.answer} min={0} max={10000000000} onChange={e => { props.updateAnswer(props.answerKey, e.target.value, true) }} disabled={props.locked}/>
+                        <div className="number-input-increment" onClick={e => {if(!props.locked && !isNaN(props.answer))props.updateAnswer(props.answerKey, props.increment(props.answer, 10000, false), true) } }>+</div>
+                    </div>
+        output = input;
+
     } else if (props.type == 'text') {
         let input = <>
                         <input placeholder={props.answerKey} type='text' id={`text_${props.answerKey}`} value={props.answer} onChange={e => props.updateInput(props.answerKey, e.target.value)} spellCheck={false} onKeyDown={props.onKeyDown}/>

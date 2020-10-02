@@ -15,6 +15,12 @@ const getBatchOne = (answers) => ({
         info: 'This is the info section for income tax return',
         type: 'boolean'
       },
+      {
+        key: 'bigNumber',
+        displayValue: 'Enter a big number',
+        info: 'This is a big number',
+        type: 'bignumber',
+      },
     ],
     quote : 200,
     batch : 1,
