@@ -41,22 +41,22 @@ class Chatbox extends Component {
     // IF CLIENT 
     // IF VISITOR (Receive Conversation only)
 
-
     async componentDidMount() {
 
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW (client)
         // REQUEST CONVERSATION (visitor) 
         
+        this.launchChat();        
+    }
 
-        console.log(`loggedIn: ${this.props.loggedIn}`);
+    launchChat = async() => {
         if(this.props.loggedIn) {
             this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
         } else {
             await this.mergeReceiveConversationOverviews(receiveConversationOverviews('1111-2222-3333-4444')); // CLIENT
             this.openChat('1111-2222-3333-4444');
         }
-        // mergeConvo (using cookie from quote) VISITOR
     }
 
     mergeNewMessage = (newMessage) => { // *
