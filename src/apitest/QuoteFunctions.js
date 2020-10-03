@@ -79,9 +79,8 @@ const convertObject = (answers, questions) => {
             answers_array[key] = {
                                     questionKey: key, 
                                     answer: answers[key], 
-                                    displayValue: returnDisplayValue(questions, 'isSelfAssessment')
+                                    displayValue: returnDisplayValue(questions, key)
                                 }
-            console.log(answers_array);
         })
     }
     return answers_array;

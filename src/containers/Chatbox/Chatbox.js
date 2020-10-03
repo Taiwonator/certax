@@ -44,8 +44,6 @@ class Chatbox extends Component {
 
     async componentDidMount() {
 
-        const socket = new WebSocket('wss://api.certaxnorwich.accountant/messages');
-
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW (client)
         // REQUEST CONVERSATION (visitor) 
@@ -77,7 +75,7 @@ class Chatbox extends Component {
                         ...prevState.chatInfo,
                         messages
                     }
-                }))
+                }), () => this.seeAllMessages())
             })
             
         } else {
@@ -103,7 +101,7 @@ class Chatbox extends Component {
                         ...prevState.chatInfo,
                         messages
                     }
-                }))
+                }), () => this.seeAllMessages())
             })
         }
         return "newMessage merge complete"
@@ -182,7 +180,7 @@ class Chatbox extends Component {
         // SEENVISIBLE: If it is the 'latest message'
         
         // Set Seen (Should work)
-
+        
         if(message.messageID <= this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].lastMessageSeenID) {
             messageObj.seen = true;
             // console.log(`${this.state.sender.id} has seen message (${message.messageID})`);
@@ -291,7 +289,6 @@ class Chatbox extends Component {
         })) 
     }
     
-
     scrollToBottom = () => { // *
         this.messageEndRef.current.scrollIntoView({behavior: 'smooth'});
     }
@@ -395,7 +392,6 @@ class Chatbox extends Component {
             // const messages = [...this.state.messages];
             // let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
             this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
-
             this.setState((prevState) => ({
                 chatInfo: {
                     ...prevState.chatInfo,
@@ -500,9 +496,12 @@ class Chatbox extends Component {
         } else {
             focusedMessage = '';
         }
-        this.setState({
-            focusedMessage
-        })
+        this.setState( (prevState) => ({
+            chatInfo: {
+                ...prevState.chatInfo,
+                focusedMessage
+            }
+        }))
     }
 
     displayTimeChecker = () => { // *
