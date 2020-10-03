@@ -64,6 +64,23 @@ export function receiveConversationOverviews(conversationID) {
                 time: "Thu Oct 01 2020 15:09:29 GMT+0100 (GMT+01:00)", 
                 messageID: 5
               }
+           },{
+            conversationID: "1234-1234-1234-1234", 
+            participants: {
+                "1234-1234-1234-1234": {
+                    lastMessageSeenID: -1, 
+                    isTyping: false, 
+                    isOnline: false, 
+                    name: "Jimbo"
+                }, 
+                [clientID]: {
+                    lastMessageSeenID: -1, 
+                    isTyping: false, 
+                    isOnline: false, 
+                    name: "Certax"
+                }
+            }, 
+            latestMessage:  {}
            }
         ]
     }
@@ -130,6 +147,9 @@ export function receiveConversation(conversationID) {
                     messageID: 5
                 }
             ]
+        }, 
+        "1234-1234-1234-1234": {
+            messages: []
         }
     }
 
@@ -160,6 +180,31 @@ export function nowTyping(conversationID, participantID) {
 export function stoppedTyping(conversationID, participantID) {
     return {
         type: "stoppedTyping", 
+        conversationID, 
+        participantID
+    }
+}
+
+export function changeName(conversationID, participantID, name) {
+    return {
+        type: "changeName", 
+        conversationID, 
+        participantID, 
+        name
+    }
+} 
+
+export function nowOnline(conversationID, participantID) {
+    return {
+        type: "nowOnline", 
+        conversationID, 
+        participantID
+    }
+}
+
+export function nowOffline(conversationID, participantID) {
+    return {
+        type: "nowOffline", 
         conversationID, 
         participantID
     }
