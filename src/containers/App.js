@@ -5,15 +5,18 @@ import Login from "./Login";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import PageNotFound from "./PageNotFound";
 import AdminPanel from "./AdminPanel";
+import { checkTime } from '../helperFunctions/dateOperations.js';
 
 class App extends Component {
     constructor(props) {
         super(props);
+        const allowChat = (checkTime(new Date())) && true;
         const loggedin = (this.getCookie('loggedIN')) ? true : false;
         this.state = {
             email: '', 
             password: '', 
-            loggedin
+            loggedin, 
+            allowChat
         } 
     }
 
@@ -52,7 +55,8 @@ class App extends Component {
                                     services={MockData.sections.services}
                                     contactus={MockData.sections.contactus} 
                                     chatbox={MockData.chatbox}
-                                    loggedIn={this.state.loggedin}/>
+                                    loggedIn={this.state.loggedin}
+                                    allowChat={this.state.allowChat}/>
                         )}> 
                     </Route>
                     <Route path='/admin' 
@@ -60,6 +64,7 @@ class App extends Component {
                     <Route path='*' component={PageNotFound}/>
                 </Switch>
             </Router>
+            <p onClick={() => this.setState({ allowChat: true })}>chat</p>
             </> 
         );
     }

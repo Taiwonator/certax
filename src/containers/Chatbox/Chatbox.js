@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow } from '../../helperFunctions/dateOperations.js';
-import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation, seenBy, nowTyping, stoppedTyping } from '../../mocking/ChatboxEvents.js';
+import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation, seenBy, nowTyping, stoppedTyping, changeName, nowOnline, nowOffline } from '../../mocking/ChatboxEvents.js';
 import Underline from '../../components/Underline/Underline';
 
 class Chatbox extends Component {
@@ -15,6 +15,8 @@ class Chatbox extends Component {
                 sendable: false, // *
                 botChat: false, // *
                 typing: false, // *
+                launched: false, 
+                nameChanged: false
             },
             chatInfo: {
                 responder: { // *
@@ -36,11 +38,11 @@ class Chatbox extends Component {
         }
 
         this.messageEndRef = React.createRef();
+        this.socket;
     }
 
     // IF CLIENT 
     // IF VISITOR (Receive Conversation only)
-
 
     async componentDidMount() {
 
@@ -48,15 +50,26 @@ class Chatbox extends Component {
         // REQUEST CONVERSATION OVERVIEW (client)
         // REQUEST CONVERSATION (visitor) 
         
+    }
 
-        console.log(`loggedIn: ${this.props.loggedIn}`);
+    launchChat = async() => {
+        this.socket = new WebSocket("wss://wss.certaxnorwich.accountant/");
+        
         if(this.props.loggedIn) {
-            this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
+            await this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
         } else {
-            await this.mergeReceiveConversationOverviews(receiveConversationOverviews('1111-2222-3333-4444')); // CLIENT
-            this.openChat('1111-2222-3333-4444');
+            await this.mergeReceiveConversationOverviews(receiveConversationOverviews('1234-1234-1234-1234')); // CLIENT
+            await this.openChat('1234-1234-1234-1234');
         }
-        // mergeConvo (using cookie from quote) VISITOR
+        this.sendBotMessage("Hello, please type your name and press enter");
+        
+        this.mergeNowOnline(nowOnline(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
+        this.setState((prevState) => ({
+            booleans: {
+                ...prevState.booleans,
+                launched: true
+            }
+        })) 
     }
 
     mergeNewMessage = (newMessage) => { // *
@@ -80,11 +93,12 @@ class Chatbox extends Component {
             
         } else {
             let messages = [];
+
             if(this.state.messageStore[newMessage.conversationID].messages != undefined) {
                 messages = [...this.state.messageStore[newMessage.conversationID].messages];
             }
-            messages.push(newMessage.message);
 
+            messages.push(newMessage.message);
             this.setState((prevState) => ({
                 messageStore: {
                     ...prevState.messageStore,
@@ -276,6 +290,58 @@ class Chatbox extends Component {
         })
     }
 
+    mergeChangeName = (changeName) => {
+        let messageStore = {...this.state.messageStore};
+        messageStore[changeName.conversationID].participants[changeName.participantID].name = changeName.name;
+        this.setState({
+            messageStore
+        })
+    }
+
+    setNewName = async() => {
+        if(this.state.booleans.sendable) {
+            this.mergeChangeName(changeName(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, this.state.chatInfo.message));
+            await this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
+            this.sendBotMessage(`Hello ${this.state.chatInfo.message}, it is nice to meet you :)`);
+            this.setState((prevState) => ({
+                chatInfo: {
+                    ...prevState.chatInfo,
+                    message: '',
+                    sender: {
+                        ...prevState.chatInfo.sender, 
+                        alias: prevState.chatInfo.message
+                    }
+                },
+                booleans: {
+                    ...prevState.booleans, 
+                    nameChanged: true
+                },
+            }), () => {
+                // Stopped Typing
+                this.checkIfTyping();
+                this.checkIfSendable();
+                this.scrollToBottom();
+            })
+        } 
+    }
+
+    mergeNowOnline = (nowOnline) => {
+        let messageStore = {...this.state.messageStore};
+        messageStore[nowOnline.conversationID].participants[nowOnline.participantID].isOnline = true;
+        this.setState({
+            messageStore
+        })
+    }
+
+    mergeNowOffline = (nowOffline) => {
+        let messageStore = {...this.state.messageStore};
+        messageStore[nowOffline.conversationID].participants[nowOffline.participantID].isOnline = true;
+        this.setState({
+            messageStore
+        })
+    }
+
+
     closeChat = () => { // CLIENT
         this.setState((prevState) => ({
             booleans: {
@@ -294,6 +360,9 @@ class Chatbox extends Component {
     }
 
     openChatbox = () => { // *
+        if(!this.state.booleans.launched) {
+            this.launchChat();
+        }
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW
 
@@ -381,6 +450,10 @@ class Chatbox extends Component {
         console.log(this.state.booleans.sendable);
         if(this.state.booleans.sendable) {
 
+            // this.socket.send({
+
+            // }) 
+
             // (ASYNC) WEB SOCKET - SEND NEW MESSAGE EVENT
             // RECIEVE NEW CONVERSATIONS 
             // CONVERT INTO MESSAGES
@@ -406,9 +479,18 @@ class Chatbox extends Component {
         } 
     }
 
+    sendBotMessage = (message) => {
+        this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
+        this.scrollToBottom();
+    }
+
     handleKeyDown = (e) => { // *
         if (e.key === 'Enter') {
-          this.sendMessage();
+            if(this.state.booleans.nameChanged) {
+                this.sendMessage();
+            } else {
+                this.setNewName();
+            }
         }
     }
 
@@ -529,11 +611,12 @@ class Chatbox extends Component {
     seeAllMessages = () => { // *
         // WEB SOCKET
         // SEEN BY
-
-        const messages = [...this.state.chatInfo.messages];
-        const lastMessageBlock = messages[messages.length - 1];
-        const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
-        this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
+        if(this.state.chatInfo.messages.length != 0) {
+            const messages = [...this.state.chatInfo.messages];
+            const lastMessageBlock = messages[messages.length - 1];
+            const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
+            this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
+        }
     }
 
     openChat = async(conversationID) => { // CLIENT
@@ -618,7 +701,7 @@ class Chatbox extends Component {
         var chatOpen = this.state.booleans.chatOpen;
         return ( 
             <>
-            <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/>
+            { (this.props.allowChat) ? <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/> : ''}
             <div className={`${this.state.booleans.active && 'show'} chatbox-container`}>
 
                 <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.booleans.chatOpen) ? '#FAFAFA' : (this.state.chatInfo.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
@@ -662,12 +745,24 @@ class Chatbox extends Component {
 
                 <div className='chatbox-input-container'>
 
-                    { (chatOpen) ? <MessageInput messageValue={this.state.chatInfo.message} // *
+                    { (chatOpen && !this.state.booleans.nameChanged) ? 
+                                     <MessageInput messageValue={this.state.chatInfo.message} // *
+                                      sendable={this.state.booleans.sendable}
+                                      colors={this.props.colors}
+                                      sendMessage={this.setNewName}
+                                      handleMessageChange={this.handleMessageChange}
+                                      handleKeyDown={this.handleKeyDown} /> : 
+                                      
+                                      (chatOpen && this.state.booleans.nameChanged) 
+                                      ? 
+
+                                      <MessageInput messageValue={this.state.chatInfo.message} // *
                                       sendable={this.state.booleans.sendable}
                                       colors={this.props.colors}
                                       sendMessage={this.sendMessage}
                                       handleMessageChange={this.handleMessageChange}
-                                      handleKeyDown={this.handleKeyDown} /> : 
+                                      handleKeyDown={this.handleKeyDown} />
+                                      : 
                                       
                                     <ChatsFooter colors={this.props.colors}/> // CLIENT
                                 } 
@@ -955,25 +1050,27 @@ const ChatsController = (props) => { // CLIENT
             let unseenCount = info.latestMessage.messageID - info.participants[receiveClientID()].lastMessageSeenID;
             // console.log(`${info.participants[conversationID].name} ---> user last seen ID: ${info.participants[conversationID].lastMessageSeenID}, client last seen ID: ${info.participants[receiveClientID()].lastMessageSeenID}`);
             // console.log(`${info.participants[conversationID].name}  unseenCount:  ${unseenCount}`);
-            return (
-            <ChatListItem latestMessage={info.latestMessage}
-                        alias={info.participants[conversationID].name}
-                        conversationID={conversationID}
-                        online={info.participants[conversationID].isOnline}
-                        typing={info.participants[conversationID].isTyping}
-                        key={conversationID}
-                        openChat={props.openChat}
-                        colors={props.colors}
-                        unseenCount={unseenCount}
-                        lastMessageSeenID={info.participants[receiveClientID()].lastMessageSeenID}/>
-            )
+            if(Object.keys(info.latestMessage).length != 0) {
+                return (
+                <ChatListItem latestMessage={info.latestMessage}
+                            alias={info.participants[conversationID].name}
+                            conversationID={conversationID}
+                            online={info.participants[conversationID].isOnline}
+                            typing={info.participants[conversationID].isTyping}
+                            key={conversationID}
+                            openChat={props.openChat}
+                            colors={props.colors}
+                            unseenCount={unseenCount}
+                            lastMessageSeenID={info.participants[receiveClientID()].lastMessageSeenID}/>
+                )
+            }
         })
-
+        chatListItems = chatListItems.filter( x => x != undefined );
         // Order list (NEED TO DO)
         let orderedList = [];
         let list = [...chatListItems];
         const listLength = list.length;
-
+        console.log(list);
         for(var j = 0; j < listLength; j++) { 
             let leastSeconds, mostRecentMessage;
             leastSeconds = secondsFromNow(list[0].props.latestMessage.time);

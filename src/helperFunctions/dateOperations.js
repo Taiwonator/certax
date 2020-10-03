@@ -65,6 +65,14 @@ export function secondsFromNow(d) {
 
 }
 
+export function checkTime(date) {
+    var d = new Date(date); // current time
+    var hours = d.getHours();
+    var mins = d.getMinutes();
+    var day = d.getDay();
+    return (day >= 1) && (day <= 5 )&& (hours >= 9) && (hours < 17 || hours === 17 && mins <= 0);
+}
+
 function compareDates(d1, d2) {
     const dateOne = new Date(d1), dateTwo = new Date(d2); 
     if(dateOne.getFullYear() == dateTwo.getFullYear()) {
