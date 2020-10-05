@@ -41,7 +41,6 @@ class QuoteCarousel extends Component {
       updateVisibleBoxes() {
         let no_boxes = 4;
         if(!this.props.wide) {
-            if(this.props.testimonials.length > 3) {
                 if(this.state.width < 1024 && this.state.width > 600) {
                     no_boxes = 2;
                 } else if(this.state.width >= 0 && this.state.width <= 600) {
@@ -49,13 +48,6 @@ class QuoteCarousel extends Component {
                 } else {
                     no_boxes = 4;
                 }
-            } else {
-                if(this.props.testimonials.length == 3 || this.props.testimonials.length == 1) {
-                    no_boxes = 1
-                } else {
-                    no_boxes = 2;
-                }
-            }
         } else {
             no_boxes = 1;
         }
@@ -67,7 +59,6 @@ class QuoteCarousel extends Component {
     updateListWidth() {
         let min_width = 25;
         if(!this.props.wide) {
-            if(this.props.testimonials.length > 3) {
                 if(this.state.width < 1024 && this.state.width > 600) {
                     min_width = 50;
                 } else if(this.state.width >= 0 && this.state.width <= 600) {
@@ -75,13 +66,6 @@ class QuoteCarousel extends Component {
                 } else {
                     min_width = 25;
                 }
-            } else {
-                if(this.props.testimonials.length == 3 || this.props.testimonials.length == 1) {
-                    min_width = 100
-                } else {
-                    min_width = 50;
-                }
-            }
         } else {
             min_width = 100;
         }
