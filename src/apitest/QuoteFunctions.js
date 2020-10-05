@@ -89,7 +89,6 @@ const convertObject = (answers, questions) => {
 const returnDisplayValue = (questions, key) => {
     for(var i = 0; i < questions.length; i++) {
         for(var j = 0; j < questions[i].length; j++){
-            console.log(questions[i][j]);
             if(questions[i][j].key == key) {
                 return questions[i][j].displayValue;
             }

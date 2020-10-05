@@ -12,7 +12,7 @@ const ContactUs = (props) => {
                      headercolor={props.colors.white}
                      paracolor={props.colors.white}
 
-                     buttontext={`Chat Now`}
+                     buttontext={`01603 821014`}
                      buttoninverse={true}
                      buttoncolor={props.colors.yellow}
                      buttonOnClick={props.chatnow}
@@ -20,7 +20,7 @@ const ContactUs = (props) => {
                     //  buttonOnHover={true}
 
                      twinbutton={true}
-                     twinbuttontext={`Email: ${props.email}`}
+                     twinbuttontext={props.email}
                      twinbuttoncolor={props.colors.blue}
                      twinbuttonOnClick={() => console.log(props.email)}
                      

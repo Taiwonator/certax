@@ -5,6 +5,9 @@ import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow }
 import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation, seenBy, nowTyping, stoppedTyping, changeName, nowOnline, nowOffline } from '../../mocking/ChatboxEvents.js';
 import Underline from '../../components/Underline/Underline';
 
+let socket = null;
+console.log(socket);
+
 class Chatbox extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +18,6 @@ class Chatbox extends Component {
                 sendable: false, // *
                 botChat: false, // *
                 typing: false, // *
-                launched: false, 
                 nameChanged: false
             },
             chatInfo: {
@@ -38,38 +40,87 @@ class Chatbox extends Component {
         }
 
         this.messageEndRef = React.createRef();
-        this.socket;
     }
 
     // IF CLIENT 
     // IF VISITOR (Receive Conversation only)
 
-    async componentDidMount() {
 
-        // WEBSOCKET 
-        // REQUEST CONVERSATION OVERVIEW (client)
-        // REQUEST CONVERSATION (visitor) 
-        
+    async componentDidMount() {
+        socket = await new WebSocket("wss://wss.certaxnorwich.accountant/");    
+        socket.onopen = () => {
+            console.log("Websocket open");
+            this.launchChat();
+        }
+        socket.onmessage = (message) => {
+            const dataFromServer = JSON.parse(message.data);
+            console.log(dataFromServer);
+            if(dataFromServer.type == "nowOnline") {
+                console.log("Received a now online event");
+                // this.mergeNowOnline(dataFromServer);
+            } else if (dataFromServer.type == "nowOffline") {
+                console.log("Received a now offline event");
+                // this.mergeNowOffline(dataFromServer);
+            } else if (dataFromServer.type == "changeName") {
+                console.log("Received a change name event");
+                // this.mergeChangeName(dataFromServer);
+            } else if (dataFromServer.type == "nowTyping") {
+                console.log("Received a now typing event");
+                // this.mergeNowTyping(dataFromServer);
+            } else if (dataFromServer.type == "stoppedTyping") {
+                console.log("Received a stopped typing event");
+                // this.mergeNowTyping(dataFromServer);
+            } else if (dataFromServer.type == "receiveConversationOverviews") {
+                console.log("Received conversation overviews");
+                // this.mergeReceiveConversation(dataFromServer);
+            } else if (dataFromServer.type == "receiveConversation") {
+                console.log("Received a conversation");
+                // this.mergeReceiveConversation(dataFromServer);
+            } else if (dataFromServer.type == "newMessage") {
+                console.log("Received new message");
+                // this.mergeNewMessage(dataFromServer);
+            }
+        }
     }
 
-    launchChat = async() => {
-        this.socket = new WebSocket("wss://wss.certaxnorwich.accountant/");
-        
+    componentWillUnmount() {
+        socket.close();
+    }
+
+    launchChat = async() => {   
         if(this.props.loggedIn) {
+            // REQUEST OVERVIEWS
+            socket.send({
+                type: "requestConversationOverviews"
+            })
             await this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
         } else {
+            // REQUEST OVERVIEWS
+            socket.send({
+                type: "requestConversationOverviews"
+            })
             await this.mergeReceiveConversationOverviews(receiveConversationOverviews('1234-1234-1234-1234')); // CLIENT
             await this.openChat('1234-1234-1234-1234');
         }
-        this.sendBotMessage("Hello, please type your name and press enter");
-        
-        this.mergeNowOnline(nowOnline(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
-        this.setState((prevState) => ({
-            booleans: {
-                ...prevState.booleans,
-                launched: true
+
+        socket.send({
+            type: "newMessage", 
+            conversationID: this.state.chatInfo.conversationID, 
+            message: {
+                sender: 'bot', 
+                text: "Hello, please type your name and press enter", 
+                time: new Date()
             }
-        })) 
+        })
+        this.sendBotMessage("Hello, please type your name and press enter");
+
+        // NOW ONLINE
+        socket.send({
+            type: "nowOnline", 
+            conversationID: this.state.chatInfo.conversationID, 
+            participantID: this.state.chatInfo.sender.id
+        })
+        this.mergeNowOnline(nowOnline(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id)); 
     }
 
     mergeNewMessage = (newMessage) => { // *
@@ -300,6 +351,30 @@ class Chatbox extends Component {
 
     setNewName = async() => {
         if(this.state.booleans.sendable) {
+            socket.send({
+                type: "changeName",
+                conversationID: this.state.chatInfo.conversationID,
+                participantID: this.state.chatInfo.sender.id,
+                name: this.state.chatInfo.message
+            })
+            socket.send({
+                type: "newMessage", 
+                conversationID: this.state.chatInfo.conversationID, 
+                message: {
+                    sender: this.state.chatInfo.sender.id, 
+                    text: this.state.chatInfo.message, 
+                    time: new Date()
+                }
+            })
+            socket.send({
+                type: "newMessage", 
+                conversationID: this.state.chatInfo.conversationID, 
+                message: {
+                    sender: 'bot', 
+                    text: `Hello ${this.state.chatInfo.message}, it is nice to meet you :)`, 
+                    time: new Date()
+                }
+            })
             this.mergeChangeName(changeName(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, this.state.chatInfo.message));
             await this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
             this.sendBotMessage(`Hello ${this.state.chatInfo.message}, it is nice to meet you :)`);
@@ -360,9 +435,6 @@ class Chatbox extends Component {
     }
 
     openChatbox = () => { // *
-        if(!this.state.booleans.launched) {
-            this.launchChat();
-        }
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW
 
@@ -424,6 +496,11 @@ class Chatbox extends Component {
         if(this.state.chatInfo.message == '') {
             // WEB SOCKET
             // SEND NOT TYPING EVENT 
+            socket.send({
+                type: "stopedTyping",
+                conversationID: this.state.chatInfo.conversationID,
+                participantID: this.state.chatInfo.sender.id
+            })
             this.mergeStoppedTyping(stoppedTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
             this.setState((prevState) => ({
@@ -435,6 +512,11 @@ class Chatbox extends Component {
         } else if(this.state.chatInfo.message != '' && !this.state.booleans.typing) {
             // WEB SOCKET
             // SEND TYPING EVENT 
+            socket.send({
+                type: "nowTyping",
+                conversationID: this.state.chatInfo.conversationID,
+                participantID: this.state.chatInfo.sender.id
+            })
             this.mergeNowTyping(nowTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
             this.setState((prevState) => ({
@@ -464,6 +546,15 @@ class Chatbox extends Component {
 
             // const messages = [...this.state.messages];
             // let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
+            socket.send({
+                type: "newMessage", 
+                conversationID: this.state.chatInfo.conversationID, 
+                message: {
+                    sender: this.state.chatInfo.sender.id, 
+                    text: this.state.chatInfo.message, 
+                    time: new Date()
+                }
+            })
             this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
             this.setState((prevState) => ({
                 chatInfo: {
@@ -480,6 +571,15 @@ class Chatbox extends Component {
     }
 
     sendBotMessage = (message) => {
+        socket.send({
+            type: "newMessage", 
+            conversationID: this.state.chatInfo.conversationID, 
+            message: {
+                sender: 'bot', 
+                text: message, 
+                time: new Date()
+            }
+        })
         this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
         this.scrollToBottom();
     }
@@ -615,6 +715,12 @@ class Chatbox extends Component {
             const messages = [...this.state.chatInfo.messages];
             const lastMessageBlock = messages[messages.length - 1];
             const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
+            socket.send({
+                type: "seenMessage",
+                conversationID: this.state.chatInfo.conversationID,
+                participantID: this.state.chatInfo.sender.id,
+                messageID: lastMessageID
+            })
             this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
         }
     }
@@ -623,6 +729,10 @@ class Chatbox extends Component {
         let sender, responder;
 
         if(this.state.messageStore[conversationID].messages == undefined) {
+            socket.send({
+                type: "requestConversation", 
+                conversationID
+            })
             await this.mergeReceiveConversation(receiveConversation(conversationID))
         }
 
@@ -701,13 +811,14 @@ class Chatbox extends Component {
         var chatOpen = this.state.booleans.chatOpen;
         return ( 
             <>
-            { (this.props.allowChat) ? <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/> : ''}
+            <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/>
             <div className={`${this.state.booleans.active && 'show'} chatbox-container`}>
 
                 <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.booleans.chatOpen) ? '#FAFAFA' : (this.state.chatInfo.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
 
                 { (chatOpen) ? <MessageHeader responder={this.state.chatInfo.responder} // *
                                               typing={this.state.booleans.typing}
+                                              // typing={this.state.messageStore[this.state.chatInfo.conversationID]} // other person typing value
                                               online={this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].isOnline}
                                               colors={this.props.colors}
                                               switchSender={this.switchSender}
