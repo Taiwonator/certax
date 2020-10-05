@@ -5,6 +5,8 @@ import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow }
 import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation, seenBy, nowTyping, stoppedTyping, changeName, nowOnline, nowOffline } from '../../mocking/ChatboxEvents.js';
 import Underline from '../../components/Underline/Underline';
 
+const socket = new WebSocket("wss://wss.certaxnorwich.accountant/");
+
 class Chatbox extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +39,6 @@ class Chatbox extends Component {
         }
 
         this.messageEndRef = React.createRef();
-        this.socket;
     }
 
     // IF CLIENT 
@@ -49,9 +50,7 @@ class Chatbox extends Component {
         
     }
 
-    launchChat = async() => {
-        this.socket = new WebSocket("wss://wss.certaxnorwich.accountant/");
-        
+    launchChat = async() => {        
         if(this.props.loggedIn) {
             await this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
         } else {

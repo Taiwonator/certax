@@ -23,12 +23,12 @@
 
         "about": {
             "headertext": "ABOUT CERTAX", 
-            "paratext": "I'm a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font. I’m a great place for you to tell a story and let your users know a little more about you."
+            "paratext": "Certax Accounting (Central &amp; East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities."
         }, 
 
         "info": {
             "headertext": "GET A QUOTE TODAY", 
-            "paratext": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et mauris in lacus viverra fringilla sit amet eu orci. Maecenas semper orci imperdiet ex pharetra pellentesque. Sed non vestibulum magna."
+            "paratext": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch. Our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges. We provide a free no obligation initial consultation to discuss your requirements after obtaining the fixed fee quotes on our website."
         }, 
 
         "testimonial": {
@@ -58,16 +58,33 @@
                 "text": "I have had the pleasure of using Alice Taiwo&#39;s Certax Tax Advisor Services in Norwich since 2012. Alice makes tax easy and gives me the confidence and peace of mind that my financial affairs have been calculated properly in line with the latest legislation. Always providing a warm welcome at very reasonable rates. Alice has turned a chore into a pleasure - I would recommend her to anyone.", 
                 "author": "Gilan Harrison (Property Investor)"
             }, {
-                "header": "Tax Max Satisfaction",
+                "header": "",
                 "text": "It's not very often that a tax issue becomes a death sentence! I felt utterly helpless and desperate until my sister recommended Alice from Certax who had assisted her with a 4 year backlog....I had 6!!! My tax situation was complex but Alice was not only willing to travel all the way from Norwich to Cambridge to assist me, she helped streamline my accounts, is knowledgeable, thorough, methodical, affordable, trustworthy and nothing is too much. Alice quickly understood my business, had a very good grasp of what was needed and explained what she would do to help in a language I could understand. This business relationship with Alice brought me back from the brink of bankruptcy! I would not hesitate to recommend Alice for her excellent services and expertise.", 
                 "author": "Lady P (International Language School Host)"
-            }],
+            }, {
+                "header": "",
+                "text": "Alice Taiwo has been our accountant since 2014. She is reliable, honest and trustworthy.  She isalways very helpful and professional. We definitely recommend her services as she has worked wellwith our business and has a large range of knowledge in the accountancy sector.", 
+                "author": "Denny Robles"
+            }, {
+                "header": "",
+                "text": "Alice Taiwo has been our business accountant for the last 7 years, she is always professional in her approach and deals with our accounts in a timely and extremely proficient manner, we would have no hesitation in recommending her to anyone in need of a first class accountant.", 
+                "author": "John & Jill McGrath"
+            }, {
+                "header": "",
+                "text": "We have been working with Alice and Certax Accounting team for seven years. They provide us with expert advice in relation to our annual accounts, tax and financial legislation. The team at Certax Accounting are very professional, and always give clear advice and guidance in a prompt and efficient manner.", 
+                "author": "Sergiu Nema"
+            }, {
+                "header": "",
+                "text": "I have used Alice for over 5 years now. She is always available to answer any questions and on hand to help with my business’s finances and accounts. She is a pleasure to work with and always very professional. She is friendly and approachable, and I will continue to use her and her services for many years to come.", 
+                "author": "Sergiu Nema"
+            }
+        ],
             "minitestimonials": [{
                 "text": "Excellent and efficient accounting, simply the best!", 
                 "author": "Tola Omotosho"
             }, {
-                "text": "Definition of professional", 
-                "author": "Carey Parker"
+                "text": "Excellent and efficient accounting, simply the best!", 
+                "author": "Dr Omotola Omotoso"
             }, 
             {
                 "text": "Exceptional, and super funny", 
@@ -114,32 +131,32 @@
         "services": {
             "services": [
                 {
-                    "title": "BOOKKEEPING", 
+                    "title": "Accounts & Bookkeeping", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
                     "image": "https://images.unsplash.com/photo-1554252116-ee59370d1f66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80"
                 },
                 {
-                    "title": "Bookkeeping (2)", 
+                    "title": "Tax Returns", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
                     "image": "https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
                 },
                 {
-                    "title": "Bookkeeping (3)", 
-                    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
+                    "title": "VAT", 
+                    "info": "Value Added Tax (VAT) can be tricky and quite confusing, very often resulting in errors which may carry hefty fines and penalties. We can save you the hassles and the potential financial loss by taking care of your VAT needs including the registration if you are eligible to register but not yet registered, deregistration if you are no longer required to be registered, preparation of the periodic calculation and submission of the return to HMRC.", 
                     "image": "https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80"
                 },
                 {
-                    "title": "Bookkeeping (4)", 
+                    "title": "Payroll / PAYE", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
                     "image": "https://images.unsplash.com/photo-1554224155-1696413565d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
                 },
                 {
-                    "title": "Bookkeeping (5)", 
+                    "title": "Company Formation", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
                     "image": "https://images.unsplash.com/photo-1563198804-b144dfc1661c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1341&q=80"
                 },
                 {
-                    "title": "Bookkeeping (6)", 
+                    "title": "Tax Enquiry Protection Service", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
                     "image": "https://images.unsplash.com/photo-1577722422778-cdfac7de2493?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
                 }
