@@ -15,7 +15,6 @@ class Chatbox extends Component {
                 sendable: false, // *
                 botChat: false, // *
                 typing: false, // *
-                launched: false, 
                 nameChanged: false
             },
             chatInfo: {
@@ -44,11 +43,9 @@ class Chatbox extends Component {
     // IF CLIENT 
     // IF VISITOR (Receive Conversation only)
 
-    async componentDidMount() {
+    componentDidMount() {
 
-        // WEBSOCKET 
-        // REQUEST CONVERSATION OVERVIEW (client)
-        // REQUEST CONVERSATION (visitor) 
+        this.launchChat();
         
     }
 
@@ -63,13 +60,7 @@ class Chatbox extends Component {
         }
         this.sendBotMessage("Hello, please type your name and press enter");
         
-        this.mergeNowOnline(nowOnline(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
-        this.setState((prevState) => ({
-            booleans: {
-                ...prevState.booleans,
-                launched: true
-            }
-        })) 
+        this.mergeNowOnline(nowOnline(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id)); 
     }
 
     mergeNewMessage = (newMessage) => { // *
@@ -360,9 +351,6 @@ class Chatbox extends Component {
     }
 
     openChatbox = () => { // *
-        if(!this.state.booleans.launched) {
-            this.launchChat();
-        }
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW
 
@@ -701,7 +689,7 @@ class Chatbox extends Component {
         var chatOpen = this.state.booleans.chatOpen;
         return ( 
             <>
-            { (this.props.allowChat) ? <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/> : ''}
+            <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/>
             <div className={`${this.state.booleans.active && 'show'} chatbox-container`}>
 
                 <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.booleans.chatOpen) ? '#FAFAFA' : (this.state.chatInfo.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>

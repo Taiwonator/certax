@@ -27,7 +27,7 @@ export function receiveConversationOverviews(conversationID) {
                         lastMessageSeenID: 2, 
                         isTyping: true, 
                         isOnline: false, 
-                        name: "Jenny"
+                        name: "1111-2222-3333-4444"
                     }, 
                     [clientID]: {
                         lastMessageSeenID: 4, 
@@ -49,7 +49,7 @@ export function receiveConversationOverviews(conversationID) {
                     lastMessageSeenID: 3, 
                     isTyping: false, 
                     isOnline: true, 
-                    name: "Jimbo"
+                    name: "1234-2345-3456-4567"
                 }, 
                 [clientID]: {
                     lastMessageSeenID: -1, 
@@ -71,7 +71,7 @@ export function receiveConversationOverviews(conversationID) {
                     lastMessageSeenID: -1, 
                     isTyping: false, 
                     isOnline: false, 
-                    name: "Jimbo"
+                    name: "1234-1234-1234-1234"
                 }, 
                 [clientID]: {
                     lastMessageSeenID: -1, 
