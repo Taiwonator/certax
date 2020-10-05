@@ -5,8 +5,8 @@ import ContactUs from '../ContactUs/ContactUs';
 const ContactUsSection = React.forwardRef((props, ref) => {
     return (
         <div ref={ref} className='contact-us-section-container'>
-            <ContactUs title='Need to find out more?'
-                       text='You can contact us anytime and we will respond within 24 hours'
+            <ContactUs title='Free initial consultation?'
+                       text="You can contact us anytime and we won't keep you waiting"
                        email={props.data.email}
                        chatnow={() => console.log("Chatting now!")}
                        backgroundImage={props.data.image}

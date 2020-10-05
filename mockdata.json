@@ -85,27 +85,6 @@
             }, {
                 "text": "Excellent and efficient accounting, simply the best!", 
                 "author": "Dr Omotola Omotoso"
-            }, 
-            {
-                "text": "Exceptional, and super funny", 
-                "author": "Fisher Maker"
-            }, {
-                "text": "Such a laid back accountant", 
-                "author": "Hyde Larpo"
-            }, 
-            {
-                "text": "Reliable and a hard worker", 
-                "author": "Claire Piper"
-            }, {
-                "text": "Big brain genius", 
-                "author": "Falpo Nick"
-            }, 
-            {
-                "text": "Best buisness decision ever made", 
-                "author": "Shidy Krispo"
-            }, {
-                "text": "Would 100% recommend", 
-                "author": "Daniel Crit"
             }]
         }, 
         "getaquote": {
@@ -163,7 +142,7 @@
             ]
         }, 
         "contactus": {
-            "email": "dummyemail@gmail.com", 
+            "email": "alicetaiwo@certax.co.uk", 
             "image": "https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
         } 
     }, 
