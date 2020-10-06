@@ -3,17 +3,18 @@
 .services-main-card-container {
     display: flex;
     flex-direction: row;
-    height: 1000px;
+    min-height: 1000px;
 
     @include b.for-phone() {
         flex-direction: column;
     }
 
     @include b.for-tablet() {
-        height: 800px;
+        // height: 800px;
     }
 
     .serivces-main-card-content {
+        padding: 2em 0;
         flex-basis: 55%;
         display: flex;
         justify-content: center;
