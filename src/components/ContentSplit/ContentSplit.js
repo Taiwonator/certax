@@ -15,7 +15,8 @@ function ContentSplit(props) {
                         buttoncolor={props.colors.blue}
                         buttoninverse={true}
                         buttonOnClick={props.scroll}
-                        align={props.alignContent}/>
+                        align={props.alignContent}
+                        text={props.content.text}/>
             <SVGCalculator colors={props.colors}/>
         </div>
     )

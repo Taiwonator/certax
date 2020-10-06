@@ -22,7 +22,8 @@ function ContentBox(props) {
                      buttoncolor={props.colors.yellow}
                      buttoninverse={true}
                      buttonOnClick={props.buttonOnClick}
-                     align='center'/>
+                     align='center'
+                     text={props.content.text}/>
         </div>
     )
 }

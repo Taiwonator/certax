@@ -24,7 +24,13 @@ const ContactUs = (props) => {
                      twinbuttoncolor={props.colors.blue}
                      twinbuttonOnClick={() => console.log(props.email)}
                      
-                     align={'center'}/>
+                     align={'center'}
+                     
+                     text={[{
+                        type: "para", 
+                        text: props.text, 
+                        highlightedWord: 'anytime'
+                    }]}/>
         </div>
     );
 }

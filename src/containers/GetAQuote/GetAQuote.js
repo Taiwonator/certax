@@ -106,7 +106,6 @@ class GetAQuote extends Component {
                 }
             } else {
                 value = 0;
-                console.log(value);
             }
         } else {
             value = String(value);
@@ -180,17 +179,25 @@ class GetAQuote extends Component {
                                 buttontext='Start now'
                                 buttoncolor={this.props.colors.white}
                                 buttoninverse={false}
-                                buttonOnClick={this.getNewBatch}/>
+                                buttonOnClick={this.getNewBatch}
+                                text={[{
+                                    type: "para", 
+                                    text: "As stated previously, our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges.", 
+                                }]}/>
         } else {
             content = <Content headertext='Instant Quotation'
-                         paratext='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices.'
+                         paratext=''
                          headercolor={this.props.colors.white}
                          paracolor={this.props.colors.white}
                          align={'left'}
                          buttontext='Reset'
                          buttoncolor={this.props.colors.yellow}
                          buttoninverse={true}
-                         buttonOnClick={this.reset}/>
+                         buttonOnClick={this.reset}
+                         text={[{
+                            type: "para", 
+                            text: "As stated previously, our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges.", 
+                        }]}/>
         } 
         return ( 
         <div className='get-a-quote-container'>

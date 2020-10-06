@@ -23,12 +23,24 @@
 
         "about": {
             "headertext": "ABOUT CERTAX", 
-            "paratext": "Certax Accounting (Central &amp; East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities."
+            "paratext": "Certax Accounting (Central &; East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities.",
+            "text": [
+                {
+                    "type": "para", 
+                    "text": "Certax Accounting (Central &; East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities."
+                }, {
+                    "type": "para", 
+                    "text": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch."
+                } ]
         }, 
 
         "info": {
             "headertext": "GET A QUOTE TODAY", 
-            "paratext": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch. Our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges. We provide a free no obligation initial consultation to discuss your requirements after obtaining the fixed fee quotes on our website."
+            "paratext": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch. Our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges. We provide a free no obligation initial consultation to discuss your requirements after obtaining the fixed fee quotes on our website.", 
+            "text": [{
+                "type": "para", 
+                "text": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch. Our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges. We provide a free no obligation initial consultation to discuss your requirements after obtaining the fixed fee quotes on our website."
+            }]
         }, 
 
         "testimonial": {
@@ -51,7 +63,7 @@
                 "author": "Sarah Jefford (Proprietor)"
             }, {
                 "header": "Amazing Accountant",
-                "text": "I have used Alice at Certax Accounting since I started my business in 2012. In all of this time, not only has she done my accounts so made my life easier, but she is professional at all times, approachable, open to discussion regarding my accounts and totally flexible in her approach to her work. Alice responds to all calls/e-mails as soon as she is free to do so. I fully recommend Alice and Certax Accounting (Central &amp; East Norwich) Ltd to any business.", 
+                "text": "I have used Alice at Certax Accounting since I started my business in 2012. In all of this time, not only has she done my accounts so made my life easier, but she is professional at all times, approachable, open to discussion regarding my accounts and totally flexible in her approach to her work. Alice responds to all calls/e-mails as soon as she is free to do so. I fully recommend Alice and Certax Accounting (Central & East Norwich) Ltd to any business.", 
                 "author": "Mrs C. Davison (Proprietor)"
             }, {
                 "header": "Friendly, Affordable, Efficient Tax Advisor",
@@ -112,32 +124,94 @@
                 {
                     "title": "Accounts & Bookkeeping", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
-                    "image": "https://images.unsplash.com/photo-1554252116-ee59370d1f66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80"
+                    "image": "https://images.unsplash.com/photo-1554252116-ee59370d1f66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80", 
+                    "text": [{
+                        "type": "para", 
+                        "text": "Whether you are a sole trade, in partnership or a limited company, maintaining accurate books and records of financial transactions and reporting them are essential. The last thing any business owner wants is spending their valuable time and business resources on routine bookkeeping and accounts preparation. Why not let us take these tedious tasks away from you to enable you focus on activities that are relevant to the growth and success of your business."
+                    }, 
+                    {
+                        "type": "para", 
+                        "text": "At Certax, we provide a fast and reliable bookkeeping service using technology. All our bookkeeping services are provided using Xero Accounting Software and Receipts App. All you need to do is send your receipts/invoices to us using the App that will be provided to you from the onset or via an email. We can even fetch the documents direct from your suppliers if they are listed on our document fetch provider database. You can then relax and let us take care of the rest."
+                    }]
                 },
                 {
                     "title": "Tax Returns", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
-                    "image": "https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                    "image": "https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80", 
+                    "text": [{
+                        "type": "para", 
+                        "text": "Due to the complexity of tax rules and regulation, completing the tax returns yourself can be confusing and stressful, increasing the risk of errors and late submission which can be costly. Let us take the stress away from you by handling your Self Assessment Tax Return and Corporation Tax Return for you."
+                    }, 
+                    {
+                        "type": "para", 
+                        "text": "Our service at Certax will help simplify the tasks and help to prevent any discrepancies in tax payments, potentially leaving you with more cash. We have the required expertise that will ensure no costly mistakes, overlooked tax saving opportunities, miscalculations or missed deadlines."
+                    }]
                 },
                 {
                     "title": "VAT", 
                     "info": "Value Added Tax (VAT) can be tricky and quite confusing, very often resulting in errors which may carry hefty fines and penalties. We can save you the hassles and the potential financial loss by taking care of your VAT needs including the registration if you are eligible to register but not yet registered, deregistration if you are no longer required to be registered, preparation of the periodic calculation and submission of the return to HMRC.", 
-                    "image": "https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80"
+                    "image": "https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80", 
+                    "text": [{
+                        "type": "para", 
+                        "text": "Value Added Tax (VAT) can be tricky and quite confusing, very often resulting in errors which may carry hefty fines and penalties. We can save you the hassles and the potential financial loss by taking care of your VAT needs including the registration if you are eligible to register but not yet registered, deregistration if you are no longer required to be registered, preparation of the periodic calculation and submission of the return to HMRC."
+                    }]
                 },
                 {
                     "title": "Payroll / PAYE", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
-                    "image": "https://images.unsplash.com/photo-1554224155-1696413565d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                    "image": "https://images.unsplash.com/photo-1554224155-1696413565d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80", 
+                    "text": [{
+                        "type": "para", 
+                        "text": "Payroll administration can place a significant demand on business owners’ time particularly since the introduction of Real Time Information (RTI). We can take the burden off you by handling your payroll activities for you. We provide paperless payroll service; all your payslips and other relevant payroll documents will be delivered to you electronically in a timely manner ensuring you comply with the relevant regulations and guidelines."
+                    }, 
+                    {
+                        "type": "para", 
+                        "text": "We will also support you with your auto enrolment duties where applicable. If you operate within Construction Industry, the burden of operating the Construction Industry Scheme (CIS) lies with you but we can provide support to ensure compliance. For further details, please see UK government guidelines for CIS scheme", 
+                        "highlightedWord": "UK government guidelines for CIS scheme"
+                    }]
                 },
                 {
                     "title": "Company Formation", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
-                    "image": "https://images.unsplash.com/photo-1563198804-b144dfc1661c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1341&q=80"
+                    "image": "https://images.unsplash.com/photo-1563198804-b144dfc1661c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1341&q=80", 
+                    "text": [{
+                        "type": "para", 
+                        "text": "We can assist you with your company formation. We also take care of the submission of various documents and update the register as required by Companies House."
+                    }]
                 },
                 {
                     "title": "Tax Enquiry Protection Service", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
-                    "image": "https://images.unsplash.com/photo-1577722422778-cdfac7de2493?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                    "image": "https://images.unsplash.com/photo-1577722422778-cdfac7de2493?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80", 
+                    "text": [{
+                        "type": "para", 
+                        "text": "We provide tax enquiry protection service to safeguard you against the taxman as HMRC is using sophisticated software to target all taxpayers. With the number of investigations rising every single year, you could be selected at random for an investigation by HMRC and this could cost you money even if you have done nothing wrong."
+                    }, {
+                        "type": "para", 
+                        "text": "An investigation can take months and cost thousands of pounds in professional fees. Even the very thoughtof an enquiry by HMRC can be daunting but when you are chosen for an investigation, we can help you atevery step of the process for a small annual cost." 
+                    }, {
+                        "type": "para", 
+                        "text": "Our Tax Investigation service provides you with the following benefits:"
+                    }, {
+                        "type": "bulletpoints", 
+                        "points": [{
+                            "type": "para", 
+                            "text": "Representation from us in the event of an HMRC investigation, with zero excess on fees of up to £100,000", 
+                            "highlightedWord": "Representation"
+                        }, {
+                            "type": "para", 
+                            "text": "Peace of mind. We will deal directly with HMRC on your behalf, safeguarding you from the concern and stress of unknown additional fees", 
+                            "highlightedWord": "Peace of mind"
+                        }, {
+                            "type": "para", 
+                            "text": "Access to experienced solicitors who will advise you on all areas of law including contract, property and landlord & tenant.", 
+                            "highlightedWord": "experienced solicitors"
+                        }, {
+                            "type": "para", 
+                            "text": "Access to Health & Safety support line for advice on your responsibilities and the implications of non-compliance", 
+                            "highlightedWord": "Health & Safety support line"
+                        }]
+                    }]
                 }
             ]
         }, 

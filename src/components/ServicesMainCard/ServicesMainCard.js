@@ -16,7 +16,8 @@ const ServicesMainCard = (props) => {
                          buttoninverse={true}
                          buttoncolor={color}
                          buttonOnClick={props.buttonOnClick}
-                         align={'left'}/>
+                         align={'left'}
+                         text={props.service.text}/>
             </div>
             <div className='services-main-card-image' style={{backgroundImage: `url(${props.service.image})` }}/>
         </div>
