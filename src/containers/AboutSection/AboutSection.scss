@@ -28,6 +28,7 @@
             }
             @include b.for-phone() {
                 width: 90vw;
+                height: 800px;
             }
         }
     }

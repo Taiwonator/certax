@@ -22,10 +22,14 @@ const AboutSection = React.forwardRef((props, ref) => {
         <div ref={ref} style={{borderBottomColor: (props.darkMode()) ? props.colors.yellow : props.colors.lightgrey}} className='about-section-container'>
             <div className='about-section-content-wrapper'>
                 <div className='about-section-content-container'>
+                    { width > phone_size ? 
+                    <>
                     <Staircase position='TR' color={props.colors.yellow} type='block'/>
                     <Staircase position='TL' color={props.colors.blue} type='block'/> 
                     <Staircase position='BR' color={props.colors.blue} type='block'/>
                     <Staircase position='BL' color={props.colors.yellow} type='block'/> 
+                    </>
+                    : ''}
                     <ContentBox darkMode={props.darkMode} colors={props.colors} content={props.data} buttonOnClick={props.scrollToInfo}/>
                 </div>
                 <ScrollDownButton scroll={props.scroll} color={props.colors.blue}/>
