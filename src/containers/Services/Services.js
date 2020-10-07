@@ -53,6 +53,7 @@ class Services extends Component {
             // Increased amount of time
             service_index, counter: -10
         }) 
+        this.props.scrollToServices();
     }
 
 

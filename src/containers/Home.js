@@ -59,7 +59,7 @@ class Home extends Component {
     scrollToTestimonials = _ => this.scrollToMyRef(this.testimonialsRef, -300)
     scrollToGetAQuote = _ => this.scrollToMyRef(this.getaquoteRef, 250)
     scrollToQuoteQuestions = ref => this.scrollToMyRef(ref, this.getaquoteRef.current.offsetTop)
-    scrollToServices = _ => this.scrollToMyRef(this.servicesRef, -100)
+    scrollToServices = _ => this.scrollToMyRef(this.servicesRef, 100)
     scrollToContactUs = _ => this.scrollToMyRef(this.contactusRef, 0)
 
     render() {
@@ -78,7 +78,7 @@ class Home extends Component {
                 <InfoSection ref={this.infoRef} colors={this.props.colors} scroll={this.scrollToGetAQuote} data={this.props.info}/>
                 <TestimonialSection ref={this.testimonialsRef} colors={this.props.colors} data={this.props.testimonial}/>
                 <GetAQuoteSection ref={this.getaquoteRef} scrollToQuote={this.scrollToGetAQuote} scrollToQuoteQuestions={this.scrollToQuoteQuestions} darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
-                <ServicesSection ref={this.servicesRef} scroll={this.scrollToContactUs} darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>
+                <ServicesSection ref={this.servicesRef} scroll={this.scrollToContactUs} scrollToServices={this.scrollToServices} darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>
                 <ContactUsSection ref={this.contactusRef} colors={this.props.colors} data={this.props.contactus}/>
                 <Footer colors={this.props.colors}
                         labels={['About', 'Testimonials', 'Quote', 'Services', 'Contact']}
