@@ -25,9 +25,9 @@ const Para = (props) => {
         const index = props.text.indexOf(props.highlightedWord);
         const before = props.text.substring(0, index);
         const after = props.text.substring(index + props.highlightedWord.length, props.text.length);
-        out = <p style={{color: props.color, textAlign: props.textAlign}}>{before}<span className='bold'>{props.highlightedWord}</span>{after}</p>
+        out = <p className='para' style={{color: props.color, textAlign: props.textAlign}}>{before}<span className='bold'>{props.highlightedWord}</span>{after}</p>
     } else {
-        out = <p style={{color: props.color, textAlign: props.textAlign}}>{props.text}</p>;
+        out = <p className='para' style={{color: props.color, textAlign: props.textAlign}}>{props.text}</p>;
     }
     return (
         <>{out}</>

@@ -10,7 +10,7 @@ import { checkTime } from '../helperFunctions/dateOperations.js';
 class App extends Component {
     constructor(props) {
         super(props);
-        const allowChat = (checkTime(new Date())) && true;
+        const allowChat = (checkTime(new Date())) && false;
         const loggedin = (this.getCookie('loggedIN')) ? true : false;
         this.state = {
             email: '', 
