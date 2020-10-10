@@ -1,4 +1,5 @@
 @use '../../stylesheets/basics' as b;
+@use '../../stylesheets/variables' as v;
 
 .quote-carousel-container {
     height: 200px;
@@ -84,6 +85,9 @@
                     justify-content: space-evenly;
                     padding: 10%;
                     @include b.no-text-highlight;
+                    @include b.for-smallPhone() {
+                        padding: 0%;
+                    }
 
                     h3 {
                         font-size: calc(18px + (25 - 18) * ((100vw - 480px) / (1920 - 480)));

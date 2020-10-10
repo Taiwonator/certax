@@ -6,10 +6,34 @@ import ToggleButton from '../../components/ToggleButton/ToggleButton.js';
 import NavbarItem from '../../components/NavbarItem/NavbarItem.js';
 import ToggleSwitch from '../../components/ToggleSwitch/ToggleSwitch';
 
+let lastScrollTop = 0;
+
 class Navbar extends Component {
     constructor(props) {
         super(props);
-        this.state = {active: false};
+        this.state = {active: false, hidden: false};
+    }
+
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll, { passive: true });
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll = () => {
+        if(window.pageYOffset > lastScrollTop) {
+            this.setState({
+                hidden: true
+            })
+        } else {
+            this.setState({
+                hidden: false
+            })
+        }
+
+        lastScrollTop = window.pageYOffset;
     }
 
     toggleNavbar = () => {
@@ -37,7 +61,7 @@ class Navbar extends Component {
 
     render() {
     return (
-        <nav style={{ backgroundColor: this.activeStateDarkMode()}} className={`navbar-container ${this.state.active ? 'navbar-active' : ''}`}>
+        <nav style={{ backgroundColor: this.activeStateDarkMode()}} className={`navbar-container ${this.state.active ? 'navbar-active' : ''} ${this.state.hidden ? 'hiddenNav' : ''}`} onScroll={() => console.log("Hekki")}>
             <div className='navbar-content'>
                 <CompanyTextLogo toggleDarkMode={this.props.toggleDarkMode} colors={this.props.colors}/>
                 <ToggleButton color={this.props.colors.blue} toggleNavbar={this.toggleNavbar} shape='bars' inverse='true'/>

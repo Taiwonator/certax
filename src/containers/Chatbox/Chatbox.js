@@ -571,17 +571,19 @@ class Chatbox extends Component {
     }
 
     sendBotMessage = (message) => {
-        socket.send({
-            type: "newMessage", 
-            conversationID: this.state.chatInfo.conversationID, 
-            message: {
-                sender: 'bot', 
-                text: message, 
-                time: new Date()
-            }
-        })
-        this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
-        this.scrollToBottom();
+        setTimeout(() => {
+            socket.send({
+                type: "newMessage", 
+                conversationID: this.state.chatInfo.conversationID, 
+                message: {
+                    sender: 'bot', 
+                    text: message, 
+                    time: new Date()
+                }
+            })
+            this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
+            this.scrollToBottom();
+        }, 2000)
     }
 
     handleKeyDown = (e) => { // *

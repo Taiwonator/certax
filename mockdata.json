@@ -23,11 +23,11 @@
 
         "about": {
             "headertext": "ABOUT CERTAX", 
-            "paratext": "Certax Accounting (Central &; East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities.",
+            "paratext": "Certax Accounting (Central & East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities.",
             "text": [
                 {
                     "type": "para", 
-                    "text": "Certax Accounting (Central &; East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities."
+                    "text": "Certax Accounting (Central & East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities."
                 }, {
                     "type": "para", 
                     "text": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch."
@@ -55,7 +55,7 @@
             }], 
             "longtestimonials": [{
                 "header": "Excellent service",
-                "text": "Tremendous help to rescue the company during a crucial tax investigation with the HMRC, our previous accountant were totally incompetent. But Alice from Certax Accounting took on the rather daunting challenge and the company&#39;s account is now back on track with appropriate accounting entries acceptable to the HMRC investigators. Comes highly recommended, very friendly and polite at all times.", 
+                "text": "Tremendous help to rescue the company during a crucial tax investigation with the HMRC, our previous accountant were totally incompetent. But Alice from Certax Accounting took on the rather daunting challenge and the company's account is now back on track with appropriate accounting entries acceptable to the HMRC investigators. Comes highly recommended, very friendly and polite at all times.", 
                 "author": "Akintola Dasaolu (Director)"
             }, {
                 "header": "5 Star Person / 5 Star Work",
@@ -67,7 +67,7 @@
                 "author": "Mrs C. Davison (Proprietor)"
             }, {
                 "header": "Friendly, Affordable, Efficient Tax Advisor",
-                "text": "I have had the pleasure of using Alice Taiwo&#39;s Certax Tax Advisor Services in Norwich since 2012. Alice makes tax easy and gives me the confidence and peace of mind that my financial affairs have been calculated properly in line with the latest legislation. Always providing a warm welcome at very reasonable rates. Alice has turned a chore into a pleasure - I would recommend her to anyone.", 
+                "text": "I have had the pleasure of using Alice Taiwo's Certax Tax Advisor Services in Norwich since 2012. Alice makes tax easy and gives me the confidence and peace of mind that my financial affairs have been calculated properly in line with the latest legislation. Always providing a warm welcome at very reasonable rates. Alice has turned a chore into a pleasure - I would recommend her to anyone.", 
                 "author": "Gilan Harrison (Property Investor)"
             }, {
                 "header": "",
