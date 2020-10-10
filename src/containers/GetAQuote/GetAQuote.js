@@ -20,7 +20,6 @@ class GetAQuote extends Component {
            lockedAnswers: {}, 
            requestProcessing: false
         }
-        // console.log(this.increment(1000, 1, true));
         this.ref = React.createRef();
     }
 
@@ -32,7 +31,7 @@ class GetAQuote extends Component {
         let answersObj = this.state.answers;
         for(var i = 0; i < keys.length; i++) {
             if(batchObj.newQuestions[i].type == 'number' || batchObj.newQuestions[i].type == 'bignumber') {
-                answersObj[keys[i]] = 0;
+                answersObj[keys[i]] = "";
             } else {
                 answersObj[keys[i]] = null;
             }
@@ -105,7 +104,7 @@ class GetAQuote extends Component {
                     value = 0;
                 }
             } else {
-                value = 0;
+                value = value;
             }
         } else {
             value = String(value);
@@ -120,8 +119,10 @@ class GetAQuote extends Component {
 
     checkInputs = () => {
         var answers = this.state.answers;
-        if(Object.values(answers).includes(null)) {
-            
+        if(Object.values(answers).includes(null) || Object.values(answers).includes("")) {
+            this.setState({
+                allInputsFilled: false
+            })
         } else {
             this.setState({
                 allInputsFilled: true

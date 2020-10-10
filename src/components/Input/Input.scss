@@ -89,6 +89,10 @@ select {
             width: 100px;
         }
         transition: all .25s ease-in-out;
+
+        &::placeholder {
+            color: rgb(199, 199, 199);
+        }
     }
 
     div {

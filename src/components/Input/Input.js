@@ -37,7 +37,7 @@ const Input = (props) => {
         let style = (props.locked) ? {backgroundColor: props.color, color: 'white'} : {backgroundColor: 'white', color: props.color};
         let input = <div className='number-input-container'>
                         <div className="number-input-decrement" onClick={e => {if(!props.locked && !isNaN(props.answer))props.updateAnswer(props.answerKey, props.increment(props.answer, -1, true), true) } }>–</div>
-                        <input className="number-input" style={style} type="number" placeholder={'number'} value={props.answer} min={0} max={10000000000} onChange={e => { props.updateAnswer(props.answerKey, e.target.value, true) }} disabled={props.locked}/>
+                        <input className="number-input" style={style} type="number" placeholder={'0'} value={props.answer} min={0} max={10000000000} onChange={e => { props.updateAnswer(props.answerKey, e.target.value, true) }} disabled={props.locked}/>
                         <div className="number-input-increment" onClick={e => {if(!props.locked && !isNaN(props.answer))props.updateAnswer(props.answerKey, props.increment(props.answer, 1, true), true) } }>+</div>
                     </div>
         output = input;
@@ -46,7 +46,7 @@ const Input = (props) => {
         let style = (props.locked) ? {backgroundColor: props.color, color: 'white'} : {backgroundColor: 'white', color: props.color};
         let input = <div className='number-input-container'>
                         <div className="number-input-decrement" onClick={e => {if(!props.locked && !isNaN(props.answer))props.updateAnswer(props.answerKey, props.increment(props.answer, -10000, false), true) } }>–</div>
-                        <input className="number-input" style={style} type="number" placeholder={'number'} value={props.answer} min={0} max={10000000000} onChange={e => { props.updateAnswer(props.answerKey, e.target.value, true) }} disabled={props.locked}/>
+                        <input className="number-input" style={style} type="number" placeholder={'0'} value={props.answer} min={0} max={10000000000} onChange={e => { props.updateAnswer(props.answerKey, e.target.value, true) }} disabled={props.locked}/>
                         <div className="number-input-increment" onClick={e => {if(!props.locked && !isNaN(props.answer))props.updateAnswer(props.answerKey, props.increment(props.answer, 10000, false), true) } }>+</div>
                     </div>
         output = input;
