@@ -90,20 +90,22 @@ class Chatbox extends Component {
     launchChat = async() => {   
         if(this.props.loggedIn) {
             // REQUEST OVERVIEWS
-            socket.send({
+            const conversationOverviewsRequest = JSON.stringify({
                 type: "requestConversationOverviews"
             })
+            socket.send(conversationOverviewsRequest)
             await this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
         } else {
             // REQUEST OVERVIEWS
-            socket.send({
+            const conversationOverviewsRequest = JSON.stringify({
                 type: "requestConversationOverviews"
             })
+            socket.send(conversationOverviewsRequest);
             await this.mergeReceiveConversationOverviews(receiveConversationOverviews('1234-1234-1234-1234')); // CLIENT
             await this.openChat('1234-1234-1234-1234');
         }
 
-        socket.send({
+        const newMessageEvent = JSON.stringify({
             type: "newMessage", 
             conversationID: this.state.chatInfo.conversationID, 
             message: {
@@ -112,14 +114,16 @@ class Chatbox extends Component {
                 time: new Date()
             }
         })
+        socket.send(newMessageEvent)
         this.sendBotMessage("Hello, please type your name and press enter");
 
         // NOW ONLINE
-        socket.send({
+        const nowOnlineEvent = JSON.stringify({
             type: "nowOnline", 
             conversationID: this.state.chatInfo.conversationID, 
             participantID: this.state.chatInfo.sender.id
-        })
+        }) 
+        socket.send(nowOnlineEvent)
         this.mergeNowOnline(nowOnline(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id)); 
     }
 
