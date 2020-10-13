@@ -54,6 +54,7 @@ class Chatbox extends Component {
             this.launchChat();
         }
         socket.onmessage = (message) => {
+            console.log(message)
             const dataFromServer = JSON.parse(message.data);
             console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {

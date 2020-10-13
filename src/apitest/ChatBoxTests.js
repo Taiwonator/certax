@@ -23,3 +23,6 @@ const clientMessage = {
         time: new Date(), 
     }
 }
+
+chatSocket.send(guestMessage)
+chatSocket.send(clientMessage)
