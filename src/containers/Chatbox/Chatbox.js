@@ -355,13 +355,13 @@ class Chatbox extends Component {
 
     setNewName = async() => {
         if(this.state.booleans.sendable) {
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "changeName",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id,
                 name: this.state.chatInfo.message
-            })
-            socket.send({
+            }))
+            socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
@@ -369,8 +369,8 @@ class Chatbox extends Component {
                     text: this.state.chatInfo.message, 
                     time: new Date()
                 }
-            })
-            socket.send({
+            }))
+            socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
@@ -378,7 +378,7 @@ class Chatbox extends Component {
                     text: `Hello ${this.state.chatInfo.message}, it is nice to meet you :)`, 
                     time: new Date()
                 }
-            })
+            }))
             this.mergeChangeName(changeName(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, this.state.chatInfo.message));
             await this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
             this.sendBotMessage(`Hello ${this.state.chatInfo.message}, it is nice to meet you :)`);
@@ -500,11 +500,11 @@ class Chatbox extends Component {
         if(this.state.chatInfo.message == '') {
             // WEB SOCKET
             // SEND NOT TYPING EVENT 
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "stopedTyping",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id
-            })
+            }))
             this.mergeStoppedTyping(stoppedTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
             this.setState((prevState) => ({
@@ -516,11 +516,11 @@ class Chatbox extends Component {
         } else if(this.state.chatInfo.message != '' && !this.state.booleans.typing) {
             // WEB SOCKET
             // SEND TYPING EVENT 
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "nowTyping",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id
-            })
+            }))
             this.mergeNowTyping(nowTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
             this.setState((prevState) => ({
@@ -550,15 +550,15 @@ class Chatbox extends Component {
 
             // const messages = [...this.state.messages];
             // let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
-                message: {
+                message: JSON.stringify({
                     sender: this.state.chatInfo.sender.id, 
                     text: this.state.chatInfo.message, 
                     time: new Date()
-                }
-            })
+                })
+            }))
             this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
             this.setState((prevState) => ({
                 chatInfo: {
@@ -576,7 +576,7 @@ class Chatbox extends Component {
 
     sendBotMessage = (message) => {
         setTimeout(() => {
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
@@ -584,7 +584,7 @@ class Chatbox extends Component {
                     text: message, 
                     time: new Date()
                 }
-            })
+            }))
             this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
             this.scrollToBottom();
         }, 2000)
@@ -721,12 +721,12 @@ class Chatbox extends Component {
             const messages = [...this.state.chatInfo.messages];
             const lastMessageBlock = messages[messages.length - 1];
             const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "seenMessage",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id,
                 messageID: lastMessageID
-            })
+            }))
             this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
         }
     }
@@ -735,10 +735,10 @@ class Chatbox extends Component {
         let sender, responder;
 
         if(this.state.messageStore[conversationID].messages == undefined) {
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "requestConversation", 
                 conversationID
-            })
+            }))
             await this.mergeReceiveConversation(receiveConversation(conversationID))
         }
 
