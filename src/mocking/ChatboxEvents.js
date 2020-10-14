@@ -102,7 +102,7 @@ export function receiveConversationOverviews(conversationID) {
     return out;
 }
 
-export function receiveConversation(conversationID) {
+export function loadConversation(conversationID) {
     const conversations = {
         "1111-2222-3333-4444": {
             messages: [
@@ -154,7 +154,7 @@ export function receiveConversation(conversationID) {
     }
 
     return {
-        type: "receiveConversation", 
+        type: "loadConversation", 
         conversationID, 
         messages: conversations[conversationID].messages
     }
