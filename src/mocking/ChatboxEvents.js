@@ -1,4 +1,4 @@
-const clientID = "123456789";
+const clientID = "clientID";
 let count = 5;
 
 // newMessage
