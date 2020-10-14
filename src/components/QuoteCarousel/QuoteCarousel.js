@@ -10,7 +10,7 @@ class QuoteCarousel extends Component {
             max_pointer: 0, 
             no_boxes: 4, 
             min_width: 25,
-            counter: 0
+            counter: 0, 
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
@@ -57,8 +57,10 @@ class QuoteCarousel extends Component {
       } 
       
       updateWindowDimensions() {
-        this.setState({ pointer: 0, width: window.innerWidth});
-      }
+        if(window.innerWidth != this.state.width) {
+            this.setState({ pointer: 0, width: window.innerWidth});
+            }
+        }
 
       updatePointerMax() {
           let max_pointer = Math.floor(this.props.testimonials.length / this.state.no_boxes) + 1;
