@@ -9,7 +9,8 @@ class QuoteCarousel extends Component {
             pointer: 0,
             max_pointer: 0, 
             no_boxes: 4, 
-            min_width: 25
+            min_width: 25,
+            counter: 0
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
@@ -21,11 +22,39 @@ class QuoteCarousel extends Component {
         this.updateListWidth();
         this.updateVisibleBoxes();
         this.updatePointerMax();
+
+        this.counterID = setInterval(
+            () => this.increment(),
+            1000
+          );
       }
       
       componentWillUnmount() {
         window.removeEventListener('resize', this.updateWindowDimensions);
+        clearInterval(this.counterID);
       }
+
+      increment() {
+          let counter = this.state.counter + 1;
+          this.setState({
+              counter
+          })
+          this.checkForNextQuote();
+      }
+
+
+      checkForNextQuote() {
+        if(this.state.counter % 5 == 0 && this.state.counter > 1) {
+            if(this.state.pointer < this.props.testimonials.length - 1) {
+                this.forwardButton();
+                console.log(this.props.testimonials.length); 
+            } else {
+                this.setState({
+                    pointer: 0
+                })
+            } 
+        }
+      } 
       
       updateWindowDimensions() {
         this.setState({ pointer: 0, width: window.innerWidth});
@@ -83,6 +112,10 @@ class QuoteCarousel extends Component {
             this.setState({
                 pointer
             })
+        } else {
+            this.setState({
+                pointer: this.props.testimonials.length - 1
+            })
         }
     }
 
@@ -95,8 +128,26 @@ class QuoteCarousel extends Component {
             this.setState({
                 pointer
             })
+        } else {
+            this.setState({
+                pointer: 0
+            })
         }
 
+    }
+
+    clickBack = () => {
+        this.backButton();
+        this.setState({
+            counter: -5
+        })
+    } 
+
+    clickForward = () => {
+        this.forwardButton();
+        this.setState({
+            counter: -5
+        })
     }
 
     returnLeft = () => {
@@ -106,7 +157,7 @@ class QuoteCarousel extends Component {
     render() {
     return (
             <div className={`quote-carousel-container ${(this.props.wide) ? 'tall' : ''}`}>
-                <div id='back' onClick={this.backButton} className='quote-carousel-button'>
+                <div id='back' onClick={this.clickBack} className='quote-carousel-button'>
                     <p style={{color: this.props.color}}>BACK</p>
                 </div>
                 <div className='quote-carousel-list-wrapper'>
@@ -114,7 +165,7 @@ class QuoteCarousel extends Component {
                         <QuoteCarouselList color={this.props.color} quotes={this.props.testimonials} wide={this.props.wide}/>
                     </div>
                 </div>
-                <div id='forward' onClick={this.forwardButton} className='quote-carousel-button'>
+                <div id='forward' onClick={this.clickForward} className='quote-carousel-button'>
                     <p style={{color: this.props.color}}>FORWARD</p>
                 </div>
             </div>
