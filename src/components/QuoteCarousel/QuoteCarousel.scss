@@ -104,8 +104,14 @@
                     }
 
                     h4 {
+                        // text-transform: uppercase;
+                        text-align: right;
+                    }
+
+                    h5 {
                         text-transform: uppercase;
                         text-align: right;
+                        font-weight: 300;
                     }
                 }
             }

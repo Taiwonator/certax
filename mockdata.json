@@ -56,47 +56,53 @@
             "longtestimonials": [{
                 "header": "Excellent service",
                 "text": "Tremendous help to rescue the company during a crucial tax investigation with the HMRC, our previous accountant were totally incompetent. But Alice from Certax Accounting took on the rather daunting challenge and the company's account is now back on track with appropriate accounting entries acceptable to the HMRC investigators. Comes highly recommended, very friendly and polite at all times.", 
-                "author": "Akintola Dasaolu (Director)"
+                "author": "Akintola Dasaolu (Director)", 
+                "company": "ADN Consulting Ltd, Norwich"
             }, {
                 "header": "5 Star Person / 5 Star Work",
                 "text": "I would just like to say for the past years I have known Alice Taiwo, it has been an absolute pleasure! Alice explains things to you in a way that you can understand. She has helped my daughter and I, put me on the right track with my businesses and I thank her very much for that. This lady is one accountant I truly recommend.", 
-                "author": "Sarah Jefford (Proprietor)"
+                "author": "Sarah Jefford (Proprietor)", 
+                "company": "Lifeboat Restaurant and B&B, Wells Next-the-Sea"
             }, {
                 "header": "Amazing Accountant",
                 "text": "I have used Alice at Certax Accounting since I started my business in 2012. In all of this time, not only has she done my accounts so made my life easier, but she is professional at all times, approachable, open to discussion regarding my accounts and totally flexible in her approach to her work. Alice responds to all calls/e-mails as soon as she is free to do so. I fully recommend Alice and Certax Accounting (Central & East Norwich) Ltd to any business.", 
-                "author": "Mrs C. Davison (Proprietor)"
+                "author": "Mrs C. Davison (Proprietor)", 
+                "company": "Diamond Home Support, Norwich"
             }, {
                 "header": "Friendly, Affordable, Efficient Tax Advisor",
                 "text": "I have had the pleasure of using Alice Taiwo's Certax Tax Advisor Services in Norwich since 2012. Alice makes tax easy and gives me the confidence and peace of mind that my financial affairs have been calculated properly in line with the latest legislation. Always providing a warm welcome at very reasonable rates. Alice has turned a chore into a pleasure - I would recommend her to anyone.", 
-                "author": "Gilan Harrison (Property Investor)"
+                "author": "Gilan Harrison", 
+                "company": "Property Investor, Norwich"
             }, {
                 "header": "",
                 "text": "It's not very often that a tax issue becomes a death sentence! I felt utterly helpless and desperate until my sister recommended Alice from Certax who had assisted her with a 4 year backlog....I had 6!!! My tax situation was complex but Alice was not only willing to travel all the way from Norwich to Cambridge to assist me, she helped streamline my accounts, is knowledgeable, thorough, methodical, affordable, trustworthy and nothing is too much. Alice quickly understood my business, had a very good grasp of what was needed and explained what she would do to help in a language I could understand. This business relationship with Alice brought me back from the brink of bankruptcy! I would not hesitate to recommend Alice for her excellent services and expertise.", 
-                "author": "Lady P (International Language School Host)"
+                "author": "Lady P", 
+                "company": "International Language School Host, Cambridge"
             }, {
                 "header": "",
                 "text": "Alice Taiwo has been our accountant since 2014. She is reliable, honest and trustworthy.  She isalways very helpful and professional. We definitely recommend her services as she has worked wellwith our business and has a large range of knowledge in the accountancy sector.", 
-                "author": "Denny Robles"
-            }, {
-                "header": "",
-                "text": "Alice Taiwo has been our business accountant for the last 7 years, she is always professional in her approach and deals with our accounts in a timely and extremely proficient manner, we would have no hesitation in recommending her to anyone in need of a first class accountant.", 
-                "author": "John & Jill McGrath"
+                "author": "Denny Robles", 
+                "company": "Ibertech Solutions Limited, Diss"
             }, {
                 "header": "",
                 "text": "We have been working with Alice and Certax Accounting team for seven years. They provide us with expert advice in relation to our annual accounts, tax and financial legislation. The team at Certax Accounting are very professional, and always give clear advice and guidance in a prompt and efficient manner.", 
-                "author": "Sergiu Nema"
+                "author": "Sergiu Nema", 
+                "company": "Nema & Sons LTD, Norwich"
             }, {
                 "header": "",
                 "text": "I have used Alice for over 5 years now. She is always available to answer any questions and on hand to help with my business’s finances and accounts. She is a pleasure to work with and always very professional. She is friendly and approachable, and I will continue to use her and her services for many years to come.", 
-                "author": "Sergiu Nema"
+                "author": "Dean Kelf", 
+                "company": "DK Electrical, Norwich"
+            }, {
+                "header": "",
+                "text": "Excellent and efficient accounting, simply the best!", 
+                "author": "Dr Omotola Omotoso", 
+                "company": "Apex Practice Ltd, Manchester"
             }
         ],
             "minitestimonials": [{
                 "text": "Excellent and efficient accounting, simply the best!", 
                 "author": "Tola Omotosho"
-            }, {
-                "text": "Excellent and efficient accounting, simply the best!", 
-                "author": "Dr Omotola Omotoso"
             }]
         }, 
         "getaquote": {
@@ -182,7 +188,7 @@
                 {
                     "title": "Tax Enquiry Protection Service", 
                     "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.", 
-                    "image": "https://images.unsplash.com/photo-1577722422778-cdfac7de2493?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80", 
+                    "image": "https://images.unsplash.com/photo-1544761634-dc512f2238a3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80", 
                     "text": [{
                         "type": "para", 
                         "text": "We provide tax enquiry protection service to safeguard you against the taxman as HMRC is using sophisticated software to target all taxpayers. With the number of investigations rising every single year, you could be selected at random for an investigation by HMRC and this could cost you money even if you have done nothing wrong."

@@ -132,6 +132,7 @@ const QuoteCarouselItem = (props) => {
             <p style={{color: props.color}}>{props.quote.text}</p>
             {underline}
             <h4 style={{color: props.color}}>{props.quote.author}</h4>
+            <h5 style={{color: props.color}}>{props.quote.company}</h5>
         </div>
     </div>
     )}

@@ -41,7 +41,7 @@ const BulletPoints = (props) => {
         </li>    
     );
     return(
-        <ul>
+        <ul style={{color: props.color}}>
             {points}
         </ul>
     )
