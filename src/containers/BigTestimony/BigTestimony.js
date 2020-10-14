@@ -21,7 +21,7 @@ function BigTestimony (props) {
     return (
         <div className='big-testimony-container'>
             <div className='big-testimony-content-container' style={{backgroundColor: style.backgroundColor, order}}>
-                <Quote authorColor={style.authorColor} text={props.testimony.text} author={props.testimony.author} child={props.child}/>
+                <Quote authorColor={style.authorColor} text={props.testimony.text} company={props.testimony.company} author={props.testimony.author} child={props.child}/>
             </div>
             <div className='big-testimony-image' style={{backgroundImage: `url(${props.testimony.image})`}}/>
         </div>

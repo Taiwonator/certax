@@ -17,7 +17,7 @@
     }
 
     h4 {
-        font-size: 20px;
+        font-size: 18px;
         text-transform: uppercase;
         max-width: 85%; // because before line is 15%
         // align-self: flex-end;
@@ -47,6 +47,12 @@
                 left: 100%;
             }
         }
+    }
+
+    h5 {
+        font-size: 16px;
+        font-weight: 400;
+        padding: 0 15px;
     }
 }
 

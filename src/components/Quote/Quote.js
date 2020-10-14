@@ -29,6 +29,7 @@ function Quote (props) {
         <div className='quote-container'>
             <p className='quote-text' style={text_style}>{props.text}</p>
             <h4 className={`quote-author ${(quote_style.textAlign == 'left') ? 'hide-left' : 'hide-right'}`} style={quote_style}><span>{props.author}</span></h4>
+            <h5 className={`quote-author ${(quote_style.textAlign == 'left') ? 'hide-left' : 'hide-right'}`} style={quote_style}><span>{props.company}</span></h5>
         </div>
     )
 }
