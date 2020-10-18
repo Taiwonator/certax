@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import './Chatbox.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import { returnDate, returnShortDate, dateHourDiff, returnTime, secondsFromNow } from '../../helperFunctions/dateOperations.js';
-import { newMessage, receiveClientID, receiveConversationOverviews, loadConversation, seenBy, nowTyping, stoppedTyping, changeName, nowOnline, nowOffline } from '../../mocking/ChatboxEvents.js';
+import { newMessage, receiveClientID, receiveConversationOverviews, receiveConversation, seenBy, nowTyping, stoppedTyping, changeName, nowOnline, nowOffline } from '../../mocking/ChatboxEvents.js';
 import Underline from '../../components/Underline/Underline';
 
 let socket = null;
@@ -53,7 +53,7 @@ class Chatbox extends Component {
             console.log("Websocket open");
             this.launchChat();
         }
-        socket.onmessage = (message) => {
+        socket.onmessage = async (message) => {
             const dataFromServer = JSON.parse(message.data);
             console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
@@ -72,11 +72,28 @@ class Chatbox extends Component {
                 console.log("Received a stopped typing event");
                 // this.mergeNowTyping(dataFromServer);
             } else if (dataFromServer.type == "receiveConversationOverviews") {
+
+                // NOW RECEIVED CONVERSATIONS OVERVIEW (Including the conversationID)
                 console.log("Received conversation overviews");
                 this.mergeReceiveConversationOverviews(dataFromServer);
-            } else if (dataFromServer.type == "loadConversation") {
+                // Set conversationID IF == user
+                if(dataFromServer.conversationOverviews.length == 1) {
+                    // User
+                    await this.setState((prevState) => ({
+                        chatInfo: {
+                            ...prevState.chatInfo,
+                            conversationID: dataFromServer.conversationOverviews[0].conversationID
+                        } 
+                    }))
+                    // Send a requestConversation & nowOnline
+                    socket.send(JSON.stringify({
+                        type: "requestConversation", 
+                        conversationID: this.state.chatInfo.conversationID
+                    }))
+                }
+            } else if (dataFromServer.type == "receiveConversation") {
                 console.log("Received a conversation");
-                this.mergeLoadConversation(dataFromServer);
+                this.mergeReceiveConversation(dataFromServer);
             } else if (dataFromServer.type == "newMessage") {
                 console.log("Received new message");
                 // this.mergeNewMessage(dataFromServer);
@@ -178,14 +195,14 @@ class Chatbox extends Component {
                         participants: {
                             [conversationOverview.conversationID]: {
                                 lastMessageSeenID: conversationOverview.participants[conversationOverview.conversationID].lastMessageSeenID, 
-                                isTyping: conversationOverview.participants[conversationOverview.conversationID].isTyping, 
-                                isOnline: conversationOverview.participants[conversationOverview.conversationID].isOnline, 
+                                isTyping: false, 
+                                isOnline: false, 
                                 name: conversationOverview.participants[conversationOverview.conversationID].name
                             }, 
                             [clientID]: {
                                 lastMessageSeenID: conversationOverview.participants[clientID].lastMessageSeenID,
-                                isTyping: conversationOverview.participants[clientID].isTyping,
-                                isOnline: conversationOverview.participants[clientID].isOnline,
+                                isTyping: false,
+                                isOnline: false,
                                 name: conversationOverview.participants[clientID].name 
                             }
                         }, 
@@ -198,7 +215,7 @@ class Chatbox extends Component {
         return "ConversationOverviews merge complete"
     } 
 
-    mergeLoadConversation = (conversation) => { // *
+    mergeReceiveConversation = (conversation) => { // *
         this.setState((prevState) => ({
             messageStore: {
                 ...prevState.messageStore, 
@@ -729,7 +746,7 @@ class Chatbox extends Component {
                 type: "requestConversation", 
                 conversationID
             })
-            await this.mergeLoadConversation(loadConversation(conversationID))
+            await this.mergeReceiveConversation(ReceiveConversation(conversationID))
         }
 
         if(this.props.loggedIn) {
@@ -1177,7 +1194,6 @@ const ChatsController = (props) => { // CLIENT
         let orderedList = [];
         let list = [...chatListItems];
         const listLength = list.length;
-        console.log(list);
         for(var j = 0; j < listLength; j++) { 
             let leastSeconds, mostRecentMessage;
             leastSeconds = secondsFromNow(list[0].props.latestMessage.time);

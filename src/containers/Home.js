@@ -10,6 +10,7 @@ import ServicesSection from './ServicesSection/ServicesSection';
 import ContactUsSection from './ContactUsSection/ContactUsSection';
 import Footer from './Footer/Footer';
 import Chatbox from './Chatbox/Chatbox';
+import NewLandingPage from './NewLandingPage/NewLandingPage';
 
 class Home extends Component {
     constructor(props){
@@ -73,6 +74,7 @@ class Home extends Component {
                         label_scrolls={[this.scrollToAbout, this.scrollToTestimonials, this.scrollToGetAQuote, this.scrollToServices, this.scrollToContactUs]}
                         />
                 { this.props.allowChat ? <Chatbox colors={this.props.colors} loggedIn={this.props.loggedIn} testing={true} allowChat={this.props.allowChat}/> : '' }
+                <NewLandingPage />
                 <LandingPage ref={this.homeRef} scroll={this.scrollToAbout} darkMode={this.darkMode} colors={this.props.colors} data={this.props.landingpage} />
                 <AboutSection ref={this.aboutRef} scrollToInfo={this.scrollToInfo} scroll={this.scrollToTestimonials} darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
                 <InfoSection ref={this.infoRef} colors={this.props.colors} scroll={this.scrollToGetAQuote} data={this.props.info}/>
