@@ -47,7 +47,8 @@ class Chatbox extends Component {
 
 
     async componentDidMount() {
-        socket = await new WebSocket("wss://wss.certaxnorwich.accountant/");    
+        socket = await new WebSocket("wss://wss.certaxnorwich.accountant/"); 
+        window.chatSocket = socket;   
         socket.onopen = () => {
             console.log("Websocket open");
             this.launchChat();
