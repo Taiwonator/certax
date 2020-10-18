@@ -48,7 +48,6 @@ class Chatbox extends Component {
 
     async componentDidMount() {
         socket = await new WebSocket("wss://wss.certaxnorwich.accountant/");    
-        window.chatSocket = socket    
         socket.onopen = () => {
             console.log("Websocket open");
             this.launchChat();
@@ -103,29 +102,20 @@ class Chatbox extends Component {
             })
             socket.send(conversationOverviewsRequest);
             await this.mergeReceiveConversationOverviews(receiveConversationOverviews('1234-1234-1234-1234')); // CLIENT
-            await this.openChat('1234-1234-1234-1234');
+            // await this.openChat('1234-1234-1234-1234');
         }
 
-        const newMessageEvent = JSON.stringify({
-            type: "newMessage", 
-            conversationID: this.state.chatInfo.conversationID, 
-            message: {
-                sender: 'bot', 
-                text: "Hello, please type your name and press enter", 
-                time: new Date()
-            }
-        })
-        socket.send(newMessageEvent)
-        this.sendBotMessage("Hello, please type your name and press enter");
-
-        // NOW ONLINE
-        const nowOnlineEvent = JSON.stringify({
-            type: "nowOnline", 
-            conversationID: this.state.chatInfo.conversationID, 
-            participantID: this.state.chatInfo.sender.id
-        }) 
-        socket.send(nowOnlineEvent)
-        this.mergeNowOnline(nowOnline(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id)); 
+        // const newMessageEvent = JSON.stringify({
+        //     type: "newMessage", 
+        //     conversationID: this.state.chatInfo.conversationID, 
+        //     message: {
+        //         sender: 'bot', 
+        //         text: "Hello, please type your name and press enter", 
+        //         time: new Date()
+        //     }
+        // })
+        // socket.send(newMessageEvent)
+        // this.sendBotMessage("Hello, please type your name and press enter");
     }
 
     mergeNewMessage = (newMessage) => { // *
@@ -1339,3 +1329,10 @@ export default Chatbox;
 
 
 // CHATBOX
+
+
+
+
+
+// Change isTyping to false when initiated
+// Opening websocket automatically shoots isOnline
