@@ -1,0 +1,54 @@
+@use '../../stylesheets/basics' as b;
+
+.new-landing-page-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .new-landing-page-content-wrapper {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        padding: 0 10%;
+        align-items: center;
+        justify-content: center;
+
+        @include b.for-tablet() {
+            flex-direction: column;
+            padding: 0;
+        }
+
+        .content-container {
+            height: 40vh;
+            flex-basis: 40%;
+
+            @include b.for-tablet() {
+                order: 2;
+            }
+
+            .buttons-container {
+                @include b.for-tablet() {
+                    justify-content: center !important;
+                }
+                .button {
+                    &:nth-child(2) {
+                        margin-left: .5em;
+                    }
+                }
+            }
+        }
+
+        .savings-graphic {
+            flex-basis: 40%;
+            
+            @include b.for-tablet() {
+                order: 1;
+                flex-basis: 20%;
+                margin-bottom: 2em;
+            }
+        }
+    }
+
+}

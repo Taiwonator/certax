@@ -42,19 +42,20 @@ const Content = (props) => {
     }
 
     // If the property twin is true, the second button will show
-    let twinbutton = (props.twinbutton) ? <ContentButton buttonOnClick={props.twinbuttonOnClick} inverse={true} color={props.twinbuttoncolor} text={props.twinbuttontext}/> : '';   
+    let twinbutton = (props.twinbutton) ? <ContentButton buttonOnClick={props.twinbuttonOnClick} inverse={props.twinbuttoninverse} color={props.twinbuttoncolor} text={props.twinbuttontext}/> : '';   
     let button =  (props.buttontext != null) ? <ContentButton buttonOnHoverText={props.buttonOnHoverText} 
                                                               buttonOnHover={props.buttonOnHover}
                                                               buttonOnClick={props.buttonOnClick} 
                                                               inverse={props.buttoninverse} 
                                                               color={props.buttoncolor} 
                                                               text={props.buttontext}/> : '';
+    let underline = (props.noUnderline) ? '' : <Underline color={props.headercolor} justifyContent={css_flex}/>
 
     return (
         <div className='content-container' style={content_container_style}>
             <div className='header-container'>
                 <h3 style={header_style}>{props.headertext}</h3>
-                <Underline color={props.headercolor} justifyContent={css_flex}/>
+                {underline}
             </div>
             {/* <p style={para_style}>{props.paratext}</p> */}
             <Text text={props.text} color={props.paracolor} textAlign={props.align}/>

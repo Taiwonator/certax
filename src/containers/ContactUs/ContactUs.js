@@ -20,6 +20,7 @@ const ContactUs = (props) => {
                     //  buttonOnHover={true}
 
                      twinbutton={true}
+                     twinbuttoninverse={true}
                      twinbuttontext={props.email}
                      twinbuttoncolor={props.colors.blue}
                      twinbuttonOnClick={() => console.log(props.email)}
