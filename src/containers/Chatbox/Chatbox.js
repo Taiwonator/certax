@@ -58,7 +58,7 @@ class Chatbox extends Component {
             console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
                 console.log("Received a now online event");
-                // this.mergeNowOnline(dataFromServer);
+                this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
                 console.log("Received a now offline event");
                 // this.mergeNowOffline(dataFromServer);
@@ -73,10 +73,10 @@ class Chatbox extends Component {
                 // this.mergeNowTyping(dataFromServer);
             } else if (dataFromServer.type == "receiveConversationOverviews") {
                 console.log("Received conversation overviews");
-                // this.mergeLoadConversation(dataFromServer);
+                this.mergeReceiveConversationOverviews(dataFromServer);
             } else if (dataFromServer.type == "loadConversation") {
                 console.log("Received a conversation");
-                // this.mergeLoadConversation(dataFromServer);
+                this.mergeLoadConversation(dataFromServer);
             } else if (dataFromServer.type == "newMessage") {
                 console.log("Received new message");
                 // this.mergeNewMessage(dataFromServer);
@@ -95,14 +95,12 @@ class Chatbox extends Component {
                 type: "requestConversationOverviews"
             })
             socket.send(conversationOverviewsRequest)
-            await this.mergeReceiveConversationOverviews(receiveConversationOverviews()); // CLIENT
         } else {
             // REQUEST OVERVIEWS
             const conversationOverviewsRequest = JSON.stringify({
                 type: "requestConversationOverviews"
             })
             socket.send(conversationOverviewsRequest);
-            await this.mergeReceiveConversationOverviews(receiveConversationOverviews('1234-1234-1234-1234')); // CLIENT
             // await this.openChat('1234-1234-1234-1234');
         }
 
