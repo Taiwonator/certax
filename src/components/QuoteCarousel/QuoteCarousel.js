@@ -47,7 +47,6 @@ class QuoteCarousel extends Component {
         if(this.state.counter % 5 == 0 && this.state.counter > 1) {
             if(this.state.pointer < this.props.testimonials.length - 1) {
                 this.forwardButton();
-                console.log(this.props.testimonials.length); 
             } else {
                 this.setState({
                     pointer: 0
