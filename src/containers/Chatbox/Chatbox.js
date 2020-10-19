@@ -86,10 +86,10 @@ class Chatbox extends Component {
                         } 
                     }))
                     // Send a requestConversation & nowOnline
-                    // socket.send(JSON.stringify({
-                    //     type: "requestConversation", 
-                    //     conversationID: this.state.chatInfo.conversationID
-                    // }))
+                    socket.send(JSON.stringify({
+                        type: "requestConversation", 
+                        conversationID: this.state.chatInfo.conversationID
+                    }))
                 }
             } else if (dataFromServer.type == "receiveConversation") {
                 console.log("Received a conversation");
