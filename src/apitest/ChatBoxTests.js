@@ -72,3 +72,10 @@ window.clientChangeName = {
     participantID: "clientID",
     name: "newClient"
 }
+
+window.seenMessage = {
+    type: "seenMessage",
+    conversationID: QUOTE_UID,
+    participantID: QUOTE_UID,
+    messageID: 60
+}
