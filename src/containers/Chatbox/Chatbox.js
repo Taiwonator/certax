@@ -34,7 +34,7 @@ class Chatbox extends Component {
                 message: '', // *
                 focusedMessage: '', // * 
                 messages: [], // *
-                conversationID: ''
+                conversationID: '65a10476-9d2c-4af3-afba-7af08717db06'
             },
             messageStore: {}, //* 
         }
@@ -106,31 +106,59 @@ class Chatbox extends Component {
     }
 
     launchChat = async() => {   
+        socket.send(JSON.stringify({
+            type: "requestConversationOverviews"
+        }))
+        socket.send(JSON.stringify({
+            type: "requestConversationOverviews"
+        }))
+        socket.send(JSON.stringify({
+            type: "requestConversationOverviews"
+        }))
         if(this.props.loggedIn) {
-            // REQUEST OVERVIEWS
-            const conversationOverviewsRequest = JSON.stringify({
-                type: "requestConversationOverviews"
-            })
-            socket.send(conversationOverviewsRequest)
+            
         } else {
-            // REQUEST OVERVIEWS
-            const conversationOverviewsRequest = JSON.stringify({
-                type: "requestConversationOverviews"
-            })
-            socket.send(conversationOverviewsRequest);
-            // await this.openChat('1234-1234-1234-1234');
+            
         }
-
-        // const newMessageEvent = JSON.stringify({
+        // WORKING with extra error
+        // socket.send(JSON.stringify({
         //     type: "newMessage", 
         //     conversationID: this.state.chatInfo.conversationID, 
         //     message: {
-        //         sender: 'bot', 
+        //         sender: 'clientID', 
         //         text: "Hello, please type your name and press enter", 
         //         time: new Date()
         //     }
-        // })
-        // socket.send(newMessageEvent)
+        // }))
+
+        // NOT WORKING
+        // socket.send(JSON.stringify({
+        //     type: "requestConversation", 
+        //     conversationID: this.state.chatInfo.conversationID
+        // }))
+
+            //WORKING 
+            // socket.send(JSON.stringify({
+            //     type: "nowTyping", 
+            //     conversationID: this.state.chatInfo.conversationID, 
+            //     participantID: this.state.chatInfo.conversationID
+            // }))
+
+             //NOT WORKING 
+            // socket.send(JSON.stringify({
+            //     type: "stoppedTyping", 
+            //     conversationID: this.state.chatInfo.conversationID, 
+            //     participantID: this.state.chatInfo.conversationID
+            // }))
+
+            //WORKING
+            // socket.send(JSON.stringify({
+            //     type: "changeName", 
+            //     conversationID: this.state.chatInfo.conversationID, 
+            //     participantID: this.state.chatInfo.conversationID, 
+            //     name: 'Bob'
+            // }))
+
         // this.sendBotMessage("Hello, please type your name and press enter");
     }
 
