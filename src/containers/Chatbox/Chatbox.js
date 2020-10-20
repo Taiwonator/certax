@@ -53,7 +53,7 @@ class Chatbox extends Component {
             console.log("Websocket open");
             this.launchChat();
         }
-        socket.onmessage = async (message) => {
+        socket.onmessage = message => {
             const dataFromServer = JSON.parse(message.data);
             console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
@@ -79,7 +79,7 @@ class Chatbox extends Component {
                 // Set conversationID IF == user
                 if(dataFromServer.conversationOverviews.length == 1) {
                     // User
-                    await this.setState((prevState) => ({
+                    this.setState((prevState) => ({
                         chatInfo: {
                             ...prevState.chatInfo,
                             conversationID: dataFromServer.conversationOverviews[0].conversationID
