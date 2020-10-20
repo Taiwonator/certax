@@ -73,12 +73,14 @@ class Chatbox extends Component {
                 // this.mergeNowTyping(dataFromServer);
             } else if (dataFromServer.type == "receiveConversationOverviews") {
 
+                
                 // NOW RECEIVED CONVERSATIONS OVERVIEW (Including the conversationID)
                 console.log("Received conversation overviews");
                 this.mergeReceiveConversationOverviews(dataFromServer);
                 // Set conversationID IF == user
                 if(dataFromServer.conversationOverviews.length == 1) {
                     // User
+                    console.log("Hi User");
                     this.setState((prevState) => ({
                         chatInfo: {
                             ...prevState.chatInfo,
@@ -90,7 +92,12 @@ class Chatbox extends Component {
                         type: "requestConversation", 
                         conversationID: this.state.chatInfo.conversationID
                     }))
+            
+                } else {
+                    console.log("Hi Client");
                 }
+
+
             } else if (dataFromServer.type == "receiveConversation") {
                 console.log("Received a conversation");
                 this.mergeReceiveConversation(dataFromServer);
@@ -105,16 +112,17 @@ class Chatbox extends Component {
         socket.close();
     }
 
-    launchChat = async() => {   
-        socket.send(JSON.stringify({
-            type: "requestConversationOverviews"
-        }))
-        socket.send(JSON.stringify({
-            type: "requestConversationOverviews"
-        }))
-        socket.send(JSON.stringify({
-            type: "requestConversationOverviews"
-        }))
+    launchChat = () => {   
+        // socket.send(JSON.stringify({
+        //     type: "requestConversationOverviews"
+        // }))
+
+        // setTimeout(function(){
+        //     socket.send(JSON.stringify({
+        //         type: "voided"
+        //     }))
+        // }, 1000)
+        
         if(this.props.loggedIn) {
             
         } else {
@@ -136,6 +144,14 @@ class Chatbox extends Component {
         //     type: "requestConversation", 
         //     conversationID: this.state.chatInfo.conversationID
         // }))
+
+         // NOT WORKING
+        socket.send(JSON.stringify({
+            type: "seenMessage",
+            conversationID: this.state.chatInfo.conversationID,
+            participantID: this.state.chatInfo.conversationID,
+            messageID: 60
+        }))
 
             //WORKING 
             // socket.send(JSON.stringify({
