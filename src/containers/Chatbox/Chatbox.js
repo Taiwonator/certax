@@ -113,6 +113,8 @@ class Chatbox extends Component {
 
             } else if (dataFromServer.type == "newMessage") {
                 this.mergeNewMessage(dataFromServer);
+            } else if (dataFromServer.type == "seenMessage") {
+                this.mergeSeenBy(dataFromServer);
             }
         }
     }
@@ -722,19 +724,12 @@ class Chatbox extends Component {
             const messages = [...this.state.chatInfo.messages];
             const lastMessageBlock = messages[messages.length - 1];
             const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
-            console.log(lastMessageBlock.messages[lastMessageBlock.messages.length - 1]);
             socket.send(JSON.stringify({
                 type: "seenMessage",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id,
                 messageID: lastMessageID
             }))
-            console.log({
-                type: "seenMessage",
-                conversationID: this.state.chatInfo.conversationID,
-                participantID: this.state.chatInfo.sender.id,
-                messageID: lastMessageID
-            });
             // this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
         }
     }
