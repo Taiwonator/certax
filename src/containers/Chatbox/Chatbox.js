@@ -40,6 +40,7 @@ class Chatbox extends Component {
         }
 
         this.messageEndRef = React.createRef();
+        this.chatTopRef = React.createRef();
     }
 
     // IF CLIENT 
@@ -435,11 +436,15 @@ class Chatbox extends Component {
                 ...prevState.chatInfo,
                 message: ''
             }
-        })) 
+        }), () => this.scrollToTop()) 
     }
     
     scrollToBottom = () => { // *
         this.messageEndRef.current.scrollIntoView({behavior: 'smooth'});
+    }
+
+    scrollToTop = () => { // *
+        this.chatTopRef.current.scrollIntoView({behavior: 'smooth'});
     }
 
     openChatbox = () => { // *
@@ -858,7 +863,8 @@ class Chatbox extends Component {
 
                                     <ChatsController messageStore={this.state.messageStore} // CLIENT
                                                      colors={this.props.colors}
-                                                     openChat={this.requestChat} />}
+                                                     openChat={this.requestChat} 
+                                                     ref={this.chatTopRef} />}
                     
                     
                
@@ -1158,7 +1164,7 @@ const ChatsHeader = (props) => { // CLIENT
     )
 }
 
-const ChatsController = (props) => { // CLIENT
+const ChatsController = React.forwardRef((props, ref) => { // CLIENT
     // key, name, quoteID, lastMessage, unseenCount, openChat, colors
     const messageStore = props.messageStore;
     const ArrayMessageStore = Object.entries(messageStore);
@@ -1208,12 +1214,15 @@ const ChatsController = (props) => { // CLIENT
             list = list.filter(x => x != mostRecentMessage);
         }
         return (
-            <>{orderedList}</>
+            <>
+                <div ref={ref} />
+                {orderedList}
+            </>
         )
     } else {
         return <div />
     }
-}
+})
 
 const ChatListItem = (props) => { // CLIENT
     let seen = false;
@@ -1353,9 +1362,11 @@ export default Chatbox;
 
 // IF quote has already been done before, open and run ReceiveConversationOverview and ReceiveConversation 
 
-// SEND MESSAGE
+// SEND MESSAGE x
 // RECEIVE MESSAGE
 // SEE MESSAGE
 // NOW TYPING
 // STOPPED TYPING
 // RECEIVE CONVERSATION
+
+// 
