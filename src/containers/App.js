@@ -7,17 +7,36 @@ import PageNotFound from "./PageNotFound";
 import AdminPanel from "./AdminPanel";
 import { checkTime } from '../helperFunctions/dateOperations.js';
 
+let socket = new WebSocket("wss://wss.certaxnorwich.accountant/") || null;
+
 class App extends Component {
     constructor(props) {
         super(props);
-        const allowChat = (checkTime(new Date())) && false;
         const loggedin = (this.getCookie('loggedIN')) ? true : false;
         this.state = {
             email: '', 
             password: '', 
             loggedin, 
-            allowChat
-        } 
+            allowChat: false
+        }
+    }
+
+    componentDidMount() {
+        socket = new WebSocket("wss://wss.certaxnorwich.accountant/") || null;
+        socket.onopen = () => {
+            this.setState({
+                allowChat: true
+            })
+        }
+    }
+
+    connectToWebSocket = () => {
+        console.log("connect to websocket");
+        socket = new WebSocket("wss://wss.certaxnorwich.accountant/") || null;
+        console.log(socket);
+        this.setState({
+            allowChat: true
+        })
     }
 
     updateInput = (key, value, callback) => {
@@ -56,7 +75,8 @@ class App extends Component {
                                     contactus={MockData.sections.contactus} 
                                     chatbox={MockData.chatbox}
                                     loggedIn={this.state.loggedin}
-                                    allowChat={this.state.allowChat}/>
+                                    allowChat={this.state.allowChat}
+                                    connectToWebSocket={this.connectToWebSocket} />
                         )}> 
                     </Route>
                     <Route path='/admin' 
@@ -64,7 +84,6 @@ class App extends Component {
                     <Route path='*' component={PageNotFound}/>
                 </Switch>
             </Router>
-            <p onClick={() => this.setState({ allowChat: true })}>chat</p>
             </> 
         );
     }

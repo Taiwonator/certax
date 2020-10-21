@@ -79,7 +79,7 @@ class Home extends Component {
                 <AboutSection ref={this.aboutRef} scrollToInfo={this.scrollToInfo} scroll={this.scrollToTestimonials} darkMode={this.darkMode} colors={this.props.colors} data={this.props.about}/>
                 <InfoSection ref={this.infoRef} colors={this.props.colors} scroll={this.scrollToGetAQuote} data={this.props.info}/>
                 <TestimonialSection ref={this.testimonialsRef} colors={this.props.colors} data={this.props.testimonial}/>
-                <GetAQuoteSection ref={this.getaquoteRef} scrollToQuote={this.scrollToGetAQuote} scrollToQuoteQuestions={this.scrollToQuoteQuestions} darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote}/>
+                <GetAQuoteSection ref={this.getaquoteRef} scrollToQuote={this.scrollToGetAQuote} scrollToQuoteQuestions={this.scrollToQuoteQuestions} darkMode={this.darkMode} colors={this.props.colors} data={this.props.getaquote} connectToWebSocket={this.props.connectToWebSocket}/>
                 <ServicesSection ref={this.servicesRef} scroll={this.scrollToContactUs} scrollToServices={this.scrollToServices} darkMode={this.darkMode} colors={this.props.colors} data={this.props.services}/>
                 <ContactUsSection ref={this.contactusRef} colors={this.props.colors} data={this.props.contactus}/>
                 <Footer colors={this.props.colors}

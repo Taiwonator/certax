@@ -20,7 +20,7 @@ const GetAQuoteSection = React.forwardRef((props, ref) => {
         return (
             <div ref={ref} className='get-a-quote-section-container'>
                 <Subheader text='WANT TO SEE YOUR QUOTE?' color={props.colors.blue} underline={false}/>
-                <GetAQuote colors={props.colors} data={props.data} scrollToQuote={props.scrollToQuote} scrollToQuoteQuestions={props.scrollToQuoteQuestions}/>
+                <GetAQuote colors={props.colors} data={props.data} scrollToQuote={props.scrollToQuote} scrollToQuoteQuestions={props.scrollToQuoteQuestions} connectToWebSocket={props.connectToWebSocket}/>
             </div>
         )
 })

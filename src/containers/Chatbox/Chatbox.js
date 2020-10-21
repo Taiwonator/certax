@@ -6,15 +6,15 @@ import { newMessage, receiveClientID, receiveConversationOverviews, receiveConve
 import Underline from '../../components/Underline/Underline';
 
 let socket = null;
-console.log(socket);
 
 class Chatbox extends Component {
     constructor(props) {
         super(props);
         this.state = {
             booleans: {
-                active: false, // *
-                chatOpen: false, // *
+                active: false, // Is chatbox open or closed
+                chatOpen: false, // Is a conversation open
+                chatReady: false,
                 sendable: false, // *
                 botChat: false, // *
                 typing: false, // *
@@ -34,7 +34,7 @@ class Chatbox extends Component {
                 message: '', // *
                 focusedMessage: '', // * 
                 messages: [], // *
-                conversationID: '65a10476-9d2c-4af3-afba-7af08717db06'
+                conversationID: ''
             },
             messageStore: {}, //* 
         }
@@ -53,31 +53,31 @@ class Chatbox extends Component {
             console.log("Websocket open");
             this.launchChat();
         }
-        socket.onmessage = message => {
+        socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
             console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
                 console.log("Received a now online event");
-                this.mergeNowOnline(dataFromServer);
+                // this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
                 console.log("Received a now offline event");
                 // this.mergeNowOffline(dataFromServer);
             } else if (dataFromServer.type == "changeName") {
                 console.log("Received a change name event");
-                // this.mergeChangeName(dataFromServer);
+                this.mergeChangeName(dataFromServer);
             } else if (dataFromServer.type == "nowTyping") {
                 console.log("Received a now typing event");
-                // this.mergeNowTyping(dataFromServer);
+                this.mergeNowTyping(dataFromServer);
             } else if (dataFromServer.type == "stoppedTyping") {
                 console.log("Received a stopped typing event");
-                // this.mergeNowTyping(dataFromServer);
+                this.mergeStoppedTyping(dataFromServer);
             } else if (dataFromServer.type == "receiveConversationOverviews") {
 
                 
                 // NOW RECEIVED CONVERSATIONS OVERVIEW (Including the conversationID)
                 console.log("Received conversation overviews");
                 this.mergeReceiveConversationOverviews(dataFromServer);
-                // Set conversationID IF == user
+
                 if(dataFromServer.conversationOverviews.length == 1) {
                     // User
                     console.log("Hi User");
@@ -87,7 +87,6 @@ class Chatbox extends Component {
                             conversationID: dataFromServer.conversationOverviews[0].conversationID
                         } 
                     }))
-                    // Send a requestConversation & nowOnline
                     socket.send(JSON.stringify({
                         type: "requestConversation", 
                         conversationID: this.state.chatInfo.conversationID
@@ -95,15 +94,22 @@ class Chatbox extends Component {
             
                 } else {
                     console.log("Hi Client");
+                    this.setState((prevState) => ({
+                        booleans: {
+                            ...prevState.chatInfo,
+                            chatReady: true
+                        } 
+                    }))
                 }
 
 
             } else if (dataFromServer.type == "receiveConversation") {
                 console.log("Received a conversation");
                 this.mergeReceiveConversation(dataFromServer);
+                this.openChat(dataFromServer.conversationID);
             } else if (dataFromServer.type == "newMessage") {
                 console.log("Received new message");
-                // this.mergeNewMessage(dataFromServer);
+                this.mergeNewMessage(dataFromServer);
             }
         }
     }
@@ -113,69 +119,13 @@ class Chatbox extends Component {
     }
 
     launchChat = () => {   
-        // socket.send(JSON.stringify({
-        //     type: "requestConversationOverviews"
-        // }))
-
-        // setTimeout(function(){
-        //     socket.send(JSON.stringify({
-        //         type: "voided"
-        //     }))
-        // }, 1000)
-        
-        if(this.props.loggedIn) {
-            
-        } else {
-            
-        }
-        // WORKING with extra error
-        // socket.send(JSON.stringify({
-        //     type: "newMessage", 
-        //     conversationID: this.state.chatInfo.conversationID, 
-        //     message: {
-        //         sender: 'clientID', 
-        //         text: "Hello, please type your name and press enter", 
-        //         time: new Date()
-        //     }
-        // }))
-
-        // NOT WORKING
-        // socket.send(JSON.stringify({
-        //     type: "requestConversation", 
-        //     conversationID: this.state.chatInfo.conversationID
-        // }))
-
-         // NOT WORKING
         socket.send(JSON.stringify({
-            type: "seenMessage",
-            conversationID: this.state.chatInfo.conversationID,
-            participantID: this.state.chatInfo.conversationID,
-            messageID: 60
-        }))
+            type: "requestConversationOverviews"
+        }))    
 
-            //WORKING 
-            // socket.send(JSON.stringify({
-            //     type: "nowTyping", 
-            //     conversationID: this.state.chatInfo.conversationID, 
-            //     participantID: this.state.chatInfo.conversationID
-            // }))
-
-             //NOT WORKING 
-            // socket.send(JSON.stringify({
-            //     type: "stoppedTyping", 
-            //     conversationID: this.state.chatInfo.conversationID, 
-            //     participantID: this.state.chatInfo.conversationID
-            // }))
-
-            //WORKING
-            // socket.send(JSON.stringify({
-            //     type: "changeName", 
-            //     conversationID: this.state.chatInfo.conversationID, 
-            //     participantID: this.state.chatInfo.conversationID, 
-            //     name: 'Bob'
-            // }))
-
-        // this.sendBotMessage("Hello, please type your name and press enter");
+        if(this.state.sender.name != this.state.chatInfo.conversationID) {
+            this.sendBotMessage("Hello, please type your name and press enter");
+        }
     }
 
     mergeNewMessage = (newMessage) => { // *
@@ -231,6 +181,7 @@ class Chatbox extends Component {
         const clientID = receiveClientID();
         for(var i = 0; i < conversationOverviews.conversationOverviews.length; i++) {
             let conversationOverview = conversationOverviews.conversationOverviews[i];
+            const name = (conversationOverview.participants[conversationOverview.conversationID].name == '') ? conversationOverview.conversationID : conversationOverview.participants[conversationOverview.conversationID].name;
             this.setState((prevState) => ({
                 messageStore: {
                     ...prevState.messageStore, 
@@ -241,7 +192,7 @@ class Chatbox extends Component {
                                 lastMessageSeenID: conversationOverview.participants[conversationOverview.conversationID].lastMessageSeenID, 
                                 isTyping: false, 
                                 isOnline: false, 
-                                name: conversationOverview.participants[conversationOverview.conversationID].name
+                                name: name
                             }, 
                             [clientID]: {
                                 lastMessageSeenID: conversationOverview.participants[clientID].lastMessageSeenID,
@@ -274,9 +225,11 @@ class Chatbox extends Component {
     }
 
     getMessagesFromStore = (conversationID) => { // *
-        
         if(this.state.messageStore[conversationID] != undefined) {
+            console.log(this.state.messageStore[conversationID])
+
             const storeMessages = (this.state.messageStore[conversationID].messages);
+            console.log();
             let messageBlocks = [];
             for(var i = 0; i < storeMessages.length; i++) {
                 if(!this.state.booleans.botChat) {
@@ -287,7 +240,6 @@ class Chatbox extends Component {
                     }
                 }
             }
-            
             return messageBlocks;
         } else {
             return null;
@@ -406,13 +358,13 @@ class Chatbox extends Component {
 
     setNewName = async() => {
         if(this.state.booleans.sendable) {
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "changeName",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id,
                 name: this.state.chatInfo.message
-            })
-            socket.send({
+            }))
+            socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
@@ -420,8 +372,8 @@ class Chatbox extends Component {
                     text: this.state.chatInfo.message, 
                     time: new Date()
                 }
-            })
-            socket.send({
+            }))
+            socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
@@ -429,9 +381,7 @@ class Chatbox extends Component {
                     text: `Hello ${this.state.chatInfo.message}, it is nice to meet you :)`, 
                     time: new Date()
                 }
-            })
-            this.mergeChangeName(changeName(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, this.state.chatInfo.message));
-            await this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
+            }))
             this.sendBotMessage(`Hello ${this.state.chatInfo.message}, it is nice to meet you :)`);
             this.setState((prevState) => ({
                 chatInfo: {
@@ -551,12 +501,12 @@ class Chatbox extends Component {
         if(this.state.chatInfo.message == '') {
             // WEB SOCKET
             // SEND NOT TYPING EVENT 
-            socket.send({
-                type: "stopedTyping",
+            socket.send(JSON.stringify({
+                type: "stoppedTyping",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id
-            })
-            this.mergeStoppedTyping(stoppedTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
+            }))
+            // this.mergeStoppedTyping(stoppedTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
             this.setState((prevState) => ({
                 booleans: {
@@ -567,12 +517,12 @@ class Chatbox extends Component {
         } else if(this.state.chatInfo.message != '' && !this.state.booleans.typing) {
             // WEB SOCKET
             // SEND TYPING EVENT 
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "nowTyping",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id
-            })
-            this.mergeNowTyping(nowTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
+            }))
+            // this.mergeNowTyping(nowTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
             this.setState((prevState) => ({
                 booleans: {
@@ -601,7 +551,7 @@ class Chatbox extends Component {
 
             // const messages = [...this.state.messages];
             // let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
@@ -609,8 +559,8 @@ class Chatbox extends Component {
                     text: this.state.chatInfo.message, 
                     time: new Date()
                 }
-            })
-            this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
+            }))
+            // this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
             this.setState((prevState) => ({
                 chatInfo: {
                     ...prevState.chatInfo,
@@ -627,7 +577,7 @@ class Chatbox extends Component {
 
     sendBotMessage = (message) => {
         setTimeout(() => {
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
@@ -635,8 +585,8 @@ class Chatbox extends Component {
                     text: message, 
                     time: new Date()
                 }
-            })
-            this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
+            }))
+            // this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
             this.scrollToBottom();
         }, 2000)
     }
@@ -772,26 +722,25 @@ class Chatbox extends Component {
             const messages = [...this.state.chatInfo.messages];
             const lastMessageBlock = messages[messages.length - 1];
             const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
-            socket.send({
+            socket.send(JSON.stringify({
                 type: "seenMessage",
                 conversationID: this.state.chatInfo.conversationID,
                 participantID: this.state.chatInfo.sender.id,
                 messageID: lastMessageID
-            })
-            this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
+            }))
+            // this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
         }
+    }
+
+    requestChat = conversationID => {
+        socket.send(JSON.stringify({
+            type: "requestConversation", 
+            conversationID
+        }))
     }
 
     openChat = async(conversationID) => { // CLIENT
         let sender, responder;
-
-        if(this.state.messageStore[conversationID].messages == undefined) {
-            socket.send({
-                type: "requestConversation", 
-                conversationID
-            })
-            await this.mergeReceiveConversation(ReceiveConversation(conversationID))
-        }
 
         if(this.props.loggedIn) {
             sender = {
@@ -816,7 +765,7 @@ class Chatbox extends Component {
                 id: receiveClientID()
             }
         }
-
+        console.log(conversationID);
         this.setState( (prevState) => ({
             booleans: {
                 ...prevState.booleans,
@@ -866,9 +815,11 @@ class Chatbox extends Component {
     render() { 
 
         var chatOpen = this.state.booleans.chatOpen;
+        var chatReady = this.state.booleans.chatReady;
+
         return ( 
             <>
-            <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/>
+            { (chatOpen || chatReady) ? <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/> : '' }
             <div className={`${this.state.booleans.active && 'show'} chatbox-container`}>
 
                 <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.booleans.chatOpen) ? '#FAFAFA' : (this.state.chatInfo.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
@@ -904,7 +855,7 @@ class Chatbox extends Component {
 
                                     <ChatsController messageStore={this.state.messageStore} // CLIENT
                                                      colors={this.props.colors}
-                                                     openChat={this.openChat} />}
+                                                     openChat={this.requestChat} />}
                     
                     
                
@@ -1387,11 +1338,21 @@ export default Chatbox;
 
 
 
-// CHATBOX
+// CHATBOX - USER
+// 1) Open chatbox
+// 2) Load quote messages in bot chatbox
+// 3) IF name == ID, nameChanged == false
+//     3a) Receive bot message asking to change name
+//     3b) Enter name
+//     3c) Receive bot messaging confirming name being sent
+// 4) ELSE
+// 5) Conversate
 
+// IF quote has already been done before, open and run ReceiveConversationOverview and ReceiveConversation 
 
-
-
-
-// Change isTyping to false when initiated
-// Opening websocket automatically shoots isOnline
+// SEND MESSAGE
+// RECEIVE MESSAGE
+// SEE MESSAGE
+// NOW TYPING
+// STOPPED TYPING
+// RECEIVE CONVERSATION

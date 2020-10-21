@@ -58,6 +58,7 @@ class GetAQuote extends Component {
                     batch: batchObj.batch
                 }))
                 this.props.scrollToQuote();
+                this.props.connectToWebSocket();
             }
         }
     }
