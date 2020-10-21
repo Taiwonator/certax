@@ -444,7 +444,7 @@ class Chatbox extends Component {
     }
 
     scrollToTop = () => { // *
-        this.chatTopRef.current.scrollIntoView({behavior: 'smooth'});
+        this.chatTopRef.current.scrollIntoView();
     }
 
     openChatbox = () => { // *
@@ -1369,4 +1369,10 @@ export default Chatbox;
 // STOPPED TYPING
 // RECEIVE CONVERSATION
 
-// 
+// FIXES
+// Seen not working for client
+// Visual bug on Renaldos's phone
+// Delivered feature
+// Now online and offline
+// 'Bot' messages to 'bot'
+// Bot 
