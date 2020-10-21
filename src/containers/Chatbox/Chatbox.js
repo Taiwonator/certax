@@ -99,7 +99,6 @@ class Chatbox extends Component {
                 this.mergeReceiveConversation(dataFromServer);
                 this.openChat(dataFromServer.conversationID);
 
-                console.log(this.state.chatInfo.sender.name, dataFromServer.conversationID);
                 if(this.state.chatInfo.sender.name == dataFromServer.conversationID) {
                     this.setState((prevState) => ({
                         booleans: {
@@ -307,6 +306,7 @@ class Chatbox extends Component {
     } 
 
     mergeSeenBy = (seenBy) => { // *
+        console.log(seenBy);
         let messageStore = {...this.state.messageStore};
         messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
@@ -360,9 +360,7 @@ class Chatbox extends Component {
     }
 
     setNewName = () => {
-        console.log(this.state.booleans.sendable);
         if(this.state.booleans.sendable) {
-            console.log("Changing name", this.state.chatInfo.message);
             socket.send(JSON.stringify({
                 type: "changeName",
                 conversationID: this.state.chatInfo.conversationID,
