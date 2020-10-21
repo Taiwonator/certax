@@ -348,6 +348,10 @@ class Chatbox extends Component {
         })
     }
 
+    isTypingCheck = (conversationID, participantID) => {
+        return this.state.messageStore[conversationID].participants[participantID].isTyping
+    } 
+
     mergeChangeName = (changeName) => {
         let messageStore = {...this.state.messageStore};
         messageStore[changeName.conversationID].participants[changeName.participantID].name = changeName.name;
@@ -508,12 +512,13 @@ class Chatbox extends Component {
             }))
             // this.mergeStoppedTyping(stoppedTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
-            this.setState((prevState) => ({
-                booleans: {
-                    ...prevState.booleans, 
-                    typing: false
-                }
-            }))
+            // this.setState((prevState) => ({
+            //     booleans: {
+            //         ...prevState.booleans, 
+            //         typing: false
+            //     }
+            // }))
+
         } else if(this.state.chatInfo.message != '' && !this.state.booleans.typing) {
             // WEB SOCKET
             // SEND TYPING EVENT 
@@ -524,12 +529,12 @@ class Chatbox extends Component {
             }))
             // this.mergeNowTyping(nowTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
 
-            this.setState((prevState) => ({
-                booleans: {
-                    ...prevState.booleans, 
-                    typing: true
-                }
-            }))
+            // this.setState((prevState) => ({
+            //     booleans: {
+            //         ...prevState.booleans, 
+            //         typing: true
+            //     }
+            // }))
         }
     }
 
@@ -825,7 +830,7 @@ class Chatbox extends Component {
                 <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.booleans.chatOpen) ? '#FAFAFA' : (this.state.chatInfo.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
 
                 { (chatOpen) ? <MessageHeader responder={this.state.chatInfo.responder} // *
-                                              typing={this.state.booleans.typing}
+                                              typing={this.isTypingCheck(this.state.chatInfo.conversationID, this.state.chatInfo.responder.id)}
                                               // typing={this.state.messageStore[this.state.chatInfo.conversationID]} // other person typing value
                                               online={this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].isOnline}
                                               colors={this.props.colors}
