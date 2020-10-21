@@ -18,16 +18,16 @@ class Chatbox extends Component {
                 sendable: false, // *
                 botChat: false, // *
                 typing: false, // *
-                nameChanged: false
+                nameChanged: true
             },
             chatInfo: {
                 responder: { // *
-                    alias: '',
+                    name: '',
                     type: '', 
                     id: ''
                 },
                 sender: { // *
-                    alias: '',
+                    name: '',
                     type: '',
                     id: ''
                 },
@@ -55,48 +55,40 @@ class Chatbox extends Component {
         }
         socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
-            console.log(dataFromServer);
+            // console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
-                console.log("Received a now online event");
                 // this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
-                console.log("Received a now offline event");
                 // this.mergeNowOffline(dataFromServer);
             } else if (dataFromServer.type == "changeName") {
-                console.log("Received a change name event");
                 this.mergeChangeName(dataFromServer);
             } else if (dataFromServer.type == "nowTyping") {
-                console.log("Received a now typing event");
                 this.mergeNowTyping(dataFromServer);
             } else if (dataFromServer.type == "stoppedTyping") {
-                console.log("Received a stopped typing event");
                 this.mergeStoppedTyping(dataFromServer);
             } else if (dataFromServer.type == "receiveConversationOverviews") {
 
                 
                 // NOW RECEIVED CONVERSATIONS OVERVIEW (Including the conversationID)
-                console.log("Received conversation overviews");
-                this.mergeReceiveConversationOverviews(dataFromServer);
+                this.mergeReceiveConversationOverviews(dataFromServer);     
 
                 if(dataFromServer.conversationOverviews.length == 1) {
                     // User
-                    console.log("Hi User");
                     this.setState((prevState) => ({
                         chatInfo: {
                             ...prevState.chatInfo,
                             conversationID: dataFromServer.conversationOverviews[0].conversationID
                         } 
                     }))
+
                     socket.send(JSON.stringify({
                         type: "requestConversation", 
                         conversationID: this.state.chatInfo.conversationID
-                    }))
-            
+                    }))       
                 } else {
-                    console.log("Hi Client");
                     this.setState((prevState) => ({
                         booleans: {
-                            ...prevState.chatInfo,
+                            ...prevState.booleans,
                             chatReady: true
                         } 
                     }))
@@ -104,11 +96,22 @@ class Chatbox extends Component {
 
 
             } else if (dataFromServer.type == "receiveConversation") {
-                console.log("Received a conversation");
                 this.mergeReceiveConversation(dataFromServer);
                 this.openChat(dataFromServer.conversationID);
+
+                console.log(this.state.chatInfo.sender.name, dataFromServer.conversationID);
+                if(this.state.chatInfo.sender.name == dataFromServer.conversationID) {
+                    this.setState((prevState) => ({
+                        booleans: {
+                            ...prevState.booleans,
+                            nameChanged: false
+                        }
+                    }), () => {
+                        this.sendBotMessage("Hello, please type your name and press enter");
+                    })
+                } 
+
             } else if (dataFromServer.type == "newMessage") {
-                console.log("Received new message");
                 this.mergeNewMessage(dataFromServer);
             }
         }
@@ -118,14 +121,10 @@ class Chatbox extends Component {
         socket.close();
     }
 
-    launchChat = () => {   
+    launchChat = () => {  
         socket.send(JSON.stringify({
             type: "requestConversationOverviews"
         }))    
-
-        if(this.state.sender.name != this.state.chatInfo.conversationID) {
-            this.sendBotMessage("Hello, please type your name and press enter");
-        }
     }
 
     mergeNewMessage = (newMessage) => { // *
@@ -174,6 +173,7 @@ class Chatbox extends Component {
                 }), () => this.seeAllMessages())
             })
         }
+        this.scrollToBottom()
         return "newMessage merge complete"
     }
 
@@ -226,10 +226,7 @@ class Chatbox extends Component {
 
     getMessagesFromStore = (conversationID) => { // *
         if(this.state.messageStore[conversationID] != undefined) {
-            console.log(this.state.messageStore[conversationID])
-
             const storeMessages = (this.state.messageStore[conversationID].messages);
-            console.log();
             let messageBlocks = [];
             for(var i = 0; i < storeMessages.length; i++) {
                 if(!this.state.booleans.botChat) {
@@ -337,7 +334,7 @@ class Chatbox extends Component {
         messageStore[nowTyping.conversationID].participants[nowTyping.participantID].isTyping = true;
         this.setState({
             messageStore
-        }, () => console.log(this.state.messageStore))
+        })
     }
 
     mergeStoppedTyping = (stoppedTyping) => { // *
@@ -360,8 +357,10 @@ class Chatbox extends Component {
         })
     }
 
-    setNewName = async() => {
+    setNewName = () => {
+        console.log(this.state.booleans.sendable);
         if(this.state.booleans.sendable) {
+            console.log("Changing name", this.state.chatInfo.message);
             socket.send(JSON.stringify({
                 type: "changeName",
                 conversationID: this.state.chatInfo.conversationID,
@@ -386,14 +385,14 @@ class Chatbox extends Component {
                     time: new Date()
                 }
             }))
-            this.sendBotMessage(`Hello ${this.state.chatInfo.message}, it is nice to meet you :)`);
+
             this.setState((prevState) => ({
                 chatInfo: {
                     ...prevState.chatInfo,
                     message: '',
                     sender: {
                         ...prevState.chatInfo.sender, 
-                        alias: prevState.chatInfo.message
+                        name: prevState.chatInfo.message
                     }
                 },
                 booleans: {
@@ -404,7 +403,6 @@ class Chatbox extends Component {
                 // Stopped Typing
                 this.checkIfTyping();
                 this.checkIfSendable();
-                this.scrollToBottom();
             })
         } 
     }
@@ -539,7 +537,6 @@ class Chatbox extends Component {
     }
 
     sendMessage = () => { // *
-        console.log(this.state.booleans.sendable);
         if(this.state.booleans.sendable) {
 
             // this.socket.send({
@@ -575,7 +572,6 @@ class Chatbox extends Component {
                 // Stopped Typing
                 this.checkIfTyping();
                 this.checkIfSendable();
-                this.scrollToBottom();
             })
         } 
     }
@@ -592,7 +588,6 @@ class Chatbox extends Component {
                 }
             }))
             // this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
-            this.scrollToBottom();
         }, 2000)
     }
 
@@ -613,12 +608,12 @@ class Chatbox extends Component {
                 chatInfo: {
                     ...prevState.chatInfo,
                     sender: {
-                        alias: prevState.chatInfo.responder.alias, 
+                        name: prevState.chatInfo.responder.name, 
                         type: prevState.chatInfo.responder.type,  
                         id: prevState.chatInfo.responder.id, 
                     }, 
                     responder: {
-                        alias: prevState.chatInfo.sender.alias, 
+                        name: prevState.chatInfo.sender.name, 
                         type: prevState.chatInfo.sender.type,
                         id: prevState.chatInfo.sender.id
                     }, 
@@ -636,7 +631,7 @@ class Chatbox extends Component {
         if(this.state.chatInfo.responder.type != 'bot') {
             obj.botChat = true;
             obj.responder = {
-                alias: 'Certax Bot', 
+                name: 'Certax Bot', 
                 type: 'bot', 
                 id: receiveClientID()
             }
@@ -644,13 +639,13 @@ class Chatbox extends Component {
             obj.botChat = false;
             if(this.state.chatInfo.sender.id == receiveClientID()) {
                 obj.responder = {
-                    alias: this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.conversationID].name, 
+                    name: this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.conversationID].name, 
                     type: 'visitor', 
                     id: this.state.chatInfo.conversationID
                 }
             } else {
                 obj.responder = {
-                    alias: this.state.messageStore[this.state.chatInfo.conversationID].participants[receiveClientID()].name, 
+                    name: this.state.messageStore[this.state.chatInfo.conversationID].participants[receiveClientID()].name, 
                     type: 'client', 
                     id: receiveClientID()
                 }
@@ -749,28 +744,27 @@ class Chatbox extends Component {
 
         if(this.props.loggedIn) {
             sender = {
-                alias: "Certax", 
+                name: "Certax", 
                 type: "client", 
                 id: receiveClientID()
             }
             responder = {
-                alias: this.state.messageStore[conversationID].participants[conversationID].name, 
+                name: this.state.messageStore[conversationID].participants[conversationID].name, 
                     type: this.returnType(conversationID), 
                     id: conversationID
             }
         } else {
             sender = {
-                alias: this.state.messageStore[conversationID].participants[conversationID].name, 
+                name: this.state.messageStore[conversationID].participants[conversationID].name, 
                     type: this.returnType(conversationID), 
                     id: conversationID
             }
             responder = {
-                alias: "Certax", 
+                name: "Certax", 
                 type: "client", 
                 id: receiveClientID()
             }
         }
-        console.log(conversationID);
         this.setState( (prevState) => ({
             booleans: {
                 ...prevState.booleans,
@@ -933,7 +927,7 @@ const MessageHeader = (props) => { // *
                     { (props.loggedIn) ? <CloseChat closeChat={props.closeChat}/> : '' } 
                     {/* Change back to closeChat */}
                     <div className='chatbox-top-bar-text'>
-                        { (props.testing) ? <h3 onClick={props.switchSender}>{props.responder.alias}</h3> : <h3>{props.responder.alias}</h3> }
+                        { (props.testing) ? <h3 onClick={props.switchSender}>{props.responder.name}</h3> : <h3>{props.responder.name}</h3> }
                         <Status typing={props.typing} online={props.online}/>
                     </div>
                 </div>
@@ -1161,7 +1155,7 @@ const ChatsHeader = (props) => { // CLIENT
 }
 
 const ChatsController = (props) => { // CLIENT
-    // key, alias, quoteID, lastMessage, unseenCount, openChat, colors
+    // key, name, quoteID, lastMessage, unseenCount, openChat, colors
     const messageStore = props.messageStore;
     const ArrayMessageStore = Object.entries(messageStore);
     if(ArrayMessageStore.length != 0) {
@@ -1177,7 +1171,7 @@ const ChatsController = (props) => { // CLIENT
             if(Object.keys(info.latestMessage).length != 0) {
                 return (
                 <ChatListItem latestMessage={info.latestMessage}
-                            alias={info.participants[conversationID].name}
+                            name={info.participants[conversationID].name}
                             conversationID={conversationID}
                             online={info.participants[conversationID].isOnline}
                             typing={info.participants[conversationID].isTyping}
@@ -1235,7 +1229,7 @@ const ChatListItem = (props) => { // CLIENT
             <div className={`chatbox-avatar ${props.online ? 'online': ''}`} style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>
             <div className='chat-list-item-content'>
                 <div className='chat-list-item-top-row'>
-                    <h3>{props.alias}</h3>
+                    <h3>{props.name}</h3>
                     <p>{returnShortDate(new Date(props.latestMessage.time))}</p>
                 </div>
                 <div className='chat-list-item-bottom-row'>

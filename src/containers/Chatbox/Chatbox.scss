@@ -128,6 +128,8 @@
                         align-self: flex-start;
                         font-weight: 100;
                         transition: filter .1s ease-in-out;
+                        font-size: 15.5px;
+                        color: rgb(78, 78, 78);
 
                         &:hover {
                             filter: brightness(.9);
