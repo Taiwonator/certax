@@ -731,7 +731,7 @@ class Chatbox extends Component {
                 participantID: this.state.chatInfo.sender.id,
                 messageID: lastMessageID
             }))
-            console.log("3")
+            console.log("3", lastMessageID)
             // this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
         }
     }
