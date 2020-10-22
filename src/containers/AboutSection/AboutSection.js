@@ -4,6 +4,7 @@ import './AboutSection.scss';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import ContentBox from '../../components/ContentBox/ContentBox.js';
 import ScrollDownButton from '../../components/ScrollDownButton/ScrollDownButton.js';
+import ParticleBackground from '../../components/ParticleBackground/ParticleBackground.js';
 
 let staircase_type = 'partial';
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Content from '../../components/Content/Content.js';
+import ParticleBackground from '../../components/ParticleBackground/ParticleBackground.js';
 import useWindowDimensions from '../../helperFunctions/useWindowDimensions.js';
 import './NewLandingPage.scss';
 
@@ -9,6 +10,7 @@ const NewLandingPage = (props) => {
 
     return ( 
         <div className='new-landing-page-container'>
+            <ParticleBackground colors={props.colors} direction={0} speed={2}/>
             <div className='new-landing-page-content-wrapper'>
                 <Content headertext={'The Enterprise solution for your photo products business'}
                         noUnderline={true}
