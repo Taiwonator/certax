@@ -706,17 +706,19 @@ class Chatbox extends Component {
     seeAllMessages = () => { // *
         // WEB SOCKET
         // SEEN BY
-        const messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
-        if(messages.length != 0) {
-            const lastMessageBlock = messages[messages.length - 1];
-            const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
-            socket.send(JSON.stringify({
-                type: "seenMessage",
-                conversationID: this.state.chatInfo.conversationID,
-                participantID: this.state.chatInfo.sender.id,
-                messageID: lastMessageID
-            }))
-            // this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
+        if(this.state.chatInfo.chatOpen) { 
+            const messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
+            if(messages.length != 0) {
+                const lastMessageBlock = messages[messages.length - 1];
+                const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
+                socket.send(JSON.stringify({
+                    type: "seenMessage",
+                    conversationID: this.state.chatInfo.conversationID,
+                    participantID: this.state.chatInfo.sender.id,
+                    messageID: lastMessageID
+                }))
+                // this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
+            }
         }
     }
 
