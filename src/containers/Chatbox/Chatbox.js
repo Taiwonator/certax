@@ -224,18 +224,20 @@ class Chatbox extends Component {
 
     getMessagesFromStore = (conversationID) => { // *
         if(this.state.messageStore[conversationID] != undefined) {
-            const storeMessages = (this.state.messageStore[conversationID].messages);
-            let messageBlocks = [];
-            for(var i = 0; i < storeMessages.length; i++) {
-                if(!this.state.booleans.botChat) {
-                    messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
-                } else {
-                    if(storeMessages[i].sender == 'bot') {
+            if(this.state.messageStore[conversationID].messages != undefined) {
+            const storeMessages = this.state.messageStore[conversationID].messages;
+                let messageBlocks = [];
+                for(var i = 0; i < storeMessages.length; i++) {
+                    if(!this.state.booleans.botChat) {
                         messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
+                    } else {
+                        if(storeMessages[i].sender == 'bot') {
+                            messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
+                        }
                     }
                 }
+                return messageBlocks;
             }
-            return messageBlocks;
         } else {
             return null;
         }
@@ -308,15 +310,14 @@ class Chatbox extends Component {
             messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
             let messages = this.getMessagesFromStore(seenBy.conversationID);
-            if(messages != undefined) {
-                for(var i = 0; i < messages.length; i++) {
-                    if(messages[i].sender == this.state.chatInfo.responder.id) {
-                        for(var j = 0; j < messages[i].messages.length; j++) {
-                            messages[i].messages[j].seen = true;
-                        }
+            for(var i = 0; i < messages.length; i++) {
+                if(messages[i].sender == this.state.chatInfo.responder.id) {
+                    for(var j = 0; j < messages[i].messages.length; j++) {
+                        messages[i].messages[j].seen = true;
                     }
                 }
             }
+            
 
             this.setState((prevState) => ({ 
                 messageStore
