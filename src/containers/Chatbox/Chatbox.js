@@ -56,6 +56,7 @@ class Chatbox extends Component {
         socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
             console.log(dataFromServer);
+            await this.checkIfNewVisitor(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
                 // this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
@@ -112,6 +113,7 @@ class Chatbox extends Component {
 
             } else if (dataFromServer.type == "newMessage") {
                 this.mergeNewMessage(dataFromServer);
+                
             } else if (dataFromServer.type == "seenMessage") {
                 this.mergeSeenBy(dataFromServer);
             }
@@ -126,6 +128,15 @@ class Chatbox extends Component {
         socket.send(JSON.stringify({
             type: "requestConversationOverviews"
         }))    
+    }
+
+    checkIfNewVisitor = (data) => {
+        if(!Object.keys(this.state.messageStore).includes(data.conversationID) && this.props.loggedIn) {
+            socket.send(JSON.stringify({
+                type: "requestConversationOverviews"
+            }))  
+        }
+        console.log(data.conversationID, Object.keys(this.state.messageStore).includes(data.conversationID));
     }
 
     mergeNewMessage = (newMessage) => { // *
