@@ -33,7 +33,6 @@ class Chatbox extends Component {
                 },
                 message: '', // *
                 focusedMessage: '', // * 
-                messages: [], // *
                 conversationID: ''
             },
             messageStore: {}, //* 
@@ -165,15 +164,7 @@ class Chatbox extends Component {
                         messages
                     }
                 }
-            }), () => {
-                const messages = this.getMessagesFromStore(newMessage.conversationID);
-                this.setState((prevState) => ({
-                    chatInfo: {
-                        ...prevState.chatInfo,
-                        messages
-                    }
-                }), () => this.seeAllMessages())
-            })
+            }), () => () => this.seeAllMessages())
         }
         this.scrollToBottom()
         return "newMessage merge complete"
@@ -310,7 +301,7 @@ class Chatbox extends Component {
         let messageStore = {...this.state.messageStore};
         messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
-        let messages = [...this.state.chatInfo.messages];
+        let messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
         for(var i = 0; i < messages.length; i++) {
             if(messages[i].sender == this.state.chatInfo.responder.id) {
                 for(var j = 0; j < messages[i].messages.length; j++) {
@@ -715,8 +706,9 @@ class Chatbox extends Component {
 
     displayTimeChecker = () => { // *
         const now = new Date();
-        if(this.state.messages.length != 0) {
-            let lastMessageBlock = this.state.chatInfo.messages[this.state.chatInfo.messages.length - 1];
+        const messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
+        if(messages.length != 0) {
+            let lastMessageBlock = messages[messages.length - 1];
             let lastMessage = lastMessageBlock.messages[lastMessageBlock.messages.length - 1];
             let lastMessageTime = lastMessage.time;
             // console.log(dateHourDiff(lastMessageDate, now))
@@ -738,8 +730,8 @@ class Chatbox extends Component {
     seeAllMessages = () => { // *
         // WEB SOCKET
         // SEEN BY
-        if(this.state.chatInfo.messages.length != 0) {
-            const messages = [...this.state.chatInfo.messages];
+        const messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
+        if(messages.length != 0) {
             const lastMessageBlock = messages[messages.length - 1];
             const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
             console.log(this.state.chatInfo.sender.id);
