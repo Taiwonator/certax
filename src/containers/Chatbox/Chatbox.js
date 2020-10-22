@@ -114,7 +114,6 @@ class Chatbox extends Component {
             } else if (dataFromServer.type == "newMessage") {
                 this.mergeNewMessage(dataFromServer);
             } else if (dataFromServer.type == "seenMessage") {
-                console.log("4")
                 this.mergeSeenBy(dataFromServer);
             }
         }
@@ -255,6 +254,7 @@ class Chatbox extends Component {
         
         if(message.messageID <= this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].lastMessageSeenID) {
             messageObj.seen = true;
+            console.log(this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].lastMessageSeenID);
             // console.log(`${this.state.sender.id} has seen message (${message.messageID})`);
         }
 
@@ -724,9 +724,7 @@ class Chatbox extends Component {
     seeAllMessages = () => { // *
         // WEB SOCKET
         // SEEN BY
-        console.log("1")
         if(this.state.chatInfo.messages.length != 0) {
-            console.log("2")
             const messages = [...this.state.chatInfo.messages];
             const lastMessageBlock = messages[messages.length - 1];
             const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
@@ -736,7 +734,6 @@ class Chatbox extends Component {
                 participantID: this.state.chatInfo.sender.id,
                 messageID: lastMessageID
             }))
-            console.log("3", this.state.chatInfo.sender.id)
             // this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
         }
     }
