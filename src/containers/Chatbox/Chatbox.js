@@ -308,10 +308,12 @@ class Chatbox extends Component {
             messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
             let messages = this.getMessagesFromStore(seenBy.conversationID);
-            for(var i = 0; i < messages.length; i++) {
-                if(messages[i].sender == this.state.chatInfo.responder.id) {
-                    for(var j = 0; j < messages[i].messages.length; j++) {
-                        messages[i].messages[j].seen = true;
+            if(messages != undefined) {
+                for(var i = 0; i < messages.length; i++) {
+                    if(messages[i].sender == this.state.chatInfo.responder.id) {
+                        for(var j = 0; j < messages[i].messages.length; j++) {
+                            messages[i].messages[j].seen = true;
+                        }
                     }
                 }
             }
