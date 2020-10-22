@@ -18,7 +18,7 @@ const ParticleBackground = props => {
         columns = 4;
     } else {
         rows = 3;
-        columns = 10;
+        columns = 7;
     }
     
     const populate = (lower, upper, count) => {
