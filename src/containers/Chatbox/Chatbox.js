@@ -169,7 +169,7 @@ class Chatbox extends Component {
                 }), () => () => this.seeAllMessages())
             }
         }
-        if(this.state.chatInfo.chatOpen) {
+        if(this.state.booleans.chatOpen) {
             this.scrollToBottom()
         }
         return "newMessage merge complete"
@@ -727,7 +727,7 @@ class Chatbox extends Component {
     seeAllMessages = () => { // *
         // WEB SOCKET
         // SEEN BY
-        if(this.state.chatInfo.chatOpen) { 
+        if(this.state.booleans.chatOpen) { 
             const messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
             if(messages.length != 0) {
                 const lastMessageBlock = messages[messages.length - 1];
