@@ -363,7 +363,7 @@ class Chatbox extends Component {
         }
     }
 
-    setNewName = () => {
+    setNewName = async() => {
         if(this.state.booleans.sendable) {
             socket.send(JSON.stringify({
                 type: "changeName",
@@ -371,7 +371,7 @@ class Chatbox extends Component {
                 participantID: this.state.chatInfo.sender.id,
                 name: this.state.chatInfo.message
             }))
-            socket.send(JSON.stringify({
+            await socket.send(JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
