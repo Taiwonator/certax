@@ -55,6 +55,7 @@ class Chatbox extends Component {
         }
         socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
+            console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
                 // this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
@@ -291,7 +292,6 @@ class Chatbox extends Component {
 
     mergeSeenBy = (seenBy) => { // *
         let messageStore = {...this.state.messageStore};
-        console.log(messageStore[seenBy.conversationID], seenBy);
         messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
         let messages = this.getMessagesFromStore(seenBy.conversationID);
