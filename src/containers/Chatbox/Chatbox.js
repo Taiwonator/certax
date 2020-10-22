@@ -137,19 +137,10 @@ class Chatbox extends Component {
                         messages: [newMessage.message]
                     }
                 }
-            }, () => {
-                const messages = this.getMessagesFromStore(newMessage.conversationID);
-                this.setState((prevState) => ({
-                    chatInfo: {
-                        ...prevState.chatInfo,
-                        messages
-                    }
-                }), () => this.seeAllMessages())
-            })
-            
+            }, () => () => () => this.seeAllMessages())
         } else {
-            let messages = [];
 
+            let messages = [];
             if(this.state.messageStore[newMessage.conversationID].messages != undefined) {
                 messages = [...this.state.messageStore[newMessage.conversationID].messages];
             }
@@ -310,11 +301,7 @@ class Chatbox extends Component {
             }
         }
 
-        this.setState((prevState) => ({
-            chatInfo: {
-                ...prevState.chatInfo,
-                messages
-            }, 
+        this.setState((prevState) => ({ 
             messageStore
         }))
         
@@ -436,7 +423,6 @@ class Chatbox extends Component {
                 },
                 message: '', // *
                 focusedMessage: '', // * 
-                messages: [], // *
                 conversationID: '' 
 
             }
@@ -672,20 +658,8 @@ class Chatbox extends Component {
                 message: '',
                 responder: obj.responder
             },
-        }), () => this.updateMessages())
+        }))
     }
-
-    updateMessages = (callback) => { // *
-        this.checkIfTyping();
-        const messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
-        this.setState((prevState) => ({
-            chatInfo: {
-                ...prevState.chatInfo,
-                messages
-            }
-        }), () => callback)
-    }
-
 
 
     messageOnClick = (m) => { // *
@@ -792,19 +766,11 @@ class Chatbox extends Component {
             },
             
         }), () => { 
-            const messages = this.getMessagesFromStore(conversationID);
-            this.setState((prevState) => ({
-                chatInfo: {
-                    ...prevState.chatInfo,
-                    messages
-                }
-            }), () => {
-                this.seeAllMessages();
-                this.messageEndRef.current.scrollIntoView(); 
+            this.seeAllMessages();
+            this.messageEndRef.current.scrollIntoView(); 
                 
-                // Probably not needed
-                this.checkIfTyping();
-            })
+            // Probably not needed
+            this.checkIfTyping();
             
         })
 
