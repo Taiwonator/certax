@@ -228,7 +228,9 @@ class Chatbox extends Component {
                 let messageBlocks = [];
                 for(var i = 0; i < storeMessages.length; i++) {
                     if(!this.state.booleans.botChat) {
-                        messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
+                        if(!storeMessages[i].botChatOnly) {
+                            messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
+                        }
                     } else {
                         if(storeMessages[i].sender == 'bot') {
                             messageBlocks = this.addMessageToObject(messageBlocks, storeMessages[i]);
@@ -377,18 +379,10 @@ class Chatbox extends Component {
                 message: {
                     sender: this.state.chatInfo.sender.id, 
                     text: this.state.chatInfo.message, 
-                    time: new Date()
+                    time: new Date(),
                 }
             }))
-            socket.send(JSON.stringify({
-                type: "newMessage", 
-                conversationID: this.state.chatInfo.conversationID, 
-                message: {
-                    sender: 'bot', 
-                    text: `Hello ${this.state.chatInfo.message}, it is nice to meet you :)`, 
-                    time: new Date()
-                }
-            }))
+            this.sendBotMessage(`Hello ${this.state.chatInfo.message}, it is nice to meet you :)`);
 
             this.setState((prevState) => ({
                 chatInfo: {
@@ -606,7 +600,8 @@ class Chatbox extends Component {
                 message: {
                     sender: 'bot', 
                     text: message, 
-                    time: new Date()
+                    time: new Date(), 
+                    botChatOnly: false 
                 }
             }))
             // this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, message, 'bot'));
@@ -625,7 +620,6 @@ class Chatbox extends Component {
 
     switchSender = () => { // TESTER
         if(!this.state.booleans.botChat) {
-            this.mergeStoppedTyping(stoppedTyping(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id));
             this.setState((prevState) => ({
                 chatInfo: {
                     ...prevState.chatInfo,
@@ -653,7 +647,7 @@ class Chatbox extends Component {
         if(this.state.chatInfo.responder.type != 'bot') {
             obj.botChat = true;
             obj.responder = {
-                name: 'Certax Bot', 
+                name: `${this.state.messageStore[this.state.chatInfo.conversationID].participants[receiveClientID()].name} bot`, 
                 type: 'bot', 
                 id: receiveClientID()
             }
@@ -757,7 +751,7 @@ class Chatbox extends Component {
 
         if(this.props.loggedIn) {
             sender = {
-                name: "Certax", 
+                name: this.state.messageStore[conversationID].participants[receiveClientID()].name, 
                 type: "client", 
                 id: receiveClientID()
             }
@@ -773,7 +767,7 @@ class Chatbox extends Component {
                     id: conversationID
             }
             responder = {
-                name: "Certax", 
+                name: this.state.messageStore[conversationID].participants[receiveClientID()].name, 
                 type: "client", 
                 id: receiveClientID()
             }
