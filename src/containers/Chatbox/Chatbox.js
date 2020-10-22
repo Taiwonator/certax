@@ -150,23 +150,24 @@ class Chatbox extends Component {
                 }
             }, () => () => () => this.seeAllMessages())
         } else {
-
-            let messages = [];
-            if(this.state.messageStore[newMessage.conversationID].messages != undefined) {
-                messages = [...this.state.messageStore[newMessage.conversationID].messages];
-            }
-
-            messages.push(newMessage.message);
-            this.setState((prevState) => ({
-                messageStore: {
-                    ...prevState.messageStore,
-                    [newMessage.conversationID]: {
-                        ...prevState.messageStore[newMessage.conversationID],
-                        latestMessage: newMessage.message, 
-                        messages
-                    }
+            if(this.state.messageStore[newMessage.conversationID] != undefined) {
+                let messages = [];
+                if(this.state.messageStore[newMessage.conversationID].messages != undefined) {
+                    messages = [...this.state.messageStore[newMessage.conversationID].messages];
                 }
-            }), () => () => this.seeAllMessages())
+
+                messages.push(newMessage.message);
+                this.setState((prevState) => ({
+                    messageStore: {
+                        ...prevState.messageStore,
+                        [newMessage.conversationID]: {
+                            ...prevState.messageStore[newMessage.conversationID],
+                            latestMessage: newMessage.message, 
+                            messages
+                        }
+                    }
+                }), () => () => this.seeAllMessages())
+            }
         }
         if(this.state.chatInfo.chatOpen) {
             this.scrollToBottom()
@@ -303,40 +304,47 @@ class Chatbox extends Component {
 
     mergeSeenBy = (seenBy) => { // *
         let messageStore = {...this.state.messageStore};
-        messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
+        if(messageStore[seenBy.conversationID] != undefined) {
+            messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
-        let messages = this.getMessagesFromStore(seenBy.conversationID);
-        for(var i = 0; i < messages.length; i++) {
-            if(messages[i].sender == this.state.chatInfo.responder.id) {
-                for(var j = 0; j < messages[i].messages.length; j++) {
-                    messages[i].messages[j].seen = true;
+            let messages = this.getMessagesFromStore(seenBy.conversationID);
+            for(var i = 0; i < messages.length; i++) {
+                if(messages[i].sender == this.state.chatInfo.responder.id) {
+                    for(var j = 0; j < messages[i].messages.length; j++) {
+                        messages[i].messages[j].seen = true;
+                    }
                 }
             }
+
+            this.setState((prevState) => ({ 
+                messageStore
+            }))
+            
+            
+
+
+            return "seenBy merge complete"
         }
-
-        this.setState((prevState) => ({ 
-            messageStore
-        }))
-        
-
-
-        return "seenBy merge complete"
     }
 
     mergeNowTyping = (nowTyping) => { // *
         let messageStore = {...this.state.messageStore};
-        messageStore[nowTyping.conversationID].participants[nowTyping.participantID].isTyping = true;
-        this.setState({
-            messageStore
-        })
+        if(messageStore[nowTyping.conversationID] != undefined) {
+            messageStore[nowTyping.conversationID].participants[nowTyping.participantID].isTyping = true;
+            this.setState({
+                messageStore
+            })
+        }
     }
 
     mergeStoppedTyping = (stoppedTyping) => { // *
         let messageStore = {...this.state.messageStore};
-        messageStore[stoppedTyping.conversationID].participants[stoppedTyping.participantID].isTyping = false;
-        this.setState({
-            messageStore
-        })
+        if(messageStore[stoppedTyping.conversationID] != undefined) {
+            messageStore[stoppedTyping.conversationID].participants[stoppedTyping.participantID].isTyping = false;
+            this.setState({
+                messageStore
+            })
+        }
     }
 
     isTypingCheck = (conversationID, participantID) => {
@@ -345,10 +353,12 @@ class Chatbox extends Component {
 
     mergeChangeName = (changeName) => {
         let messageStore = {...this.state.messageStore};
-        messageStore[changeName.conversationID].participants[changeName.participantID].name = changeName.name;
-        this.setState({
-            messageStore
-        })
+        if(messageStore[changeName.conversationID] != undefined) {
+            messageStore[changeName.conversationID].participants[changeName.participantID].name = changeName.name;
+            this.setState({
+                messageStore
+            })
+        }
     }
 
     setNewName = () => {
