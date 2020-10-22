@@ -56,7 +56,7 @@ class Chatbox extends Component {
         }
         socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
-            // console.log(dataFromServer);
+            console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
                 // this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
@@ -254,7 +254,6 @@ class Chatbox extends Component {
         
         if(message.messageID <= this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].lastMessageSeenID) {
             messageObj.seen = true;
-            console.log(this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].lastMessageSeenID);
             // console.log(`${this.state.sender.id} has seen message (${message.messageID})`);
         }
 
@@ -308,7 +307,6 @@ class Chatbox extends Component {
     } 
 
     mergeSeenBy = (seenBy) => { // *
-        console.log(seenBy);
         let messageStore = {...this.state.messageStore};
         messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
@@ -324,8 +322,9 @@ class Chatbox extends Component {
         this.setState((prevState) => ({
             chatInfo: {
                 ...prevState.chatInfo,
-                messageStore, messages
-            }
+                messages
+            }, 
+            messageStore
         }))
         
 
@@ -434,7 +433,21 @@ class Chatbox extends Component {
             },
             chatInfo: {
                 ...prevState.chatInfo,
-                message: ''
+                responder: { // *
+                    name: '',
+                    type: '', 
+                    id: ''
+                },
+                sender: { // *
+                    name: '',
+                    type: '',
+                    id: ''
+                },
+                message: '', // *
+                focusedMessage: '', // * 
+                messages: [], // *
+                conversationID: '' 
+
             }
         }), () => this.scrollToTop()) 
     }
@@ -559,7 +572,7 @@ class Chatbox extends Component {
 
             // const messages = [...this.state.messages];
             // let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
-            socket.send(JSON.stringify({
+            const message = JSON.stringify({
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
@@ -567,7 +580,8 @@ class Chatbox extends Component {
                     text: this.state.chatInfo.message, 
                     time: new Date()
                 }
-            }))
+            })
+            socket.send(message)
             // this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
             this.setState((prevState) => ({
                 chatInfo: {
@@ -728,6 +742,7 @@ class Chatbox extends Component {
             const messages = [...this.state.chatInfo.messages];
             const lastMessageBlock = messages[messages.length - 1];
             const lastMessageID = lastMessageBlock.messages[lastMessageBlock.messages.length - 1].messageID;
+            console.log(this.state.chatInfo.sender.id);
             socket.send(JSON.stringify({
                 type: "seenMessage",
                 conversationID: this.state.chatInfo.conversationID,
