@@ -292,7 +292,7 @@ class Chatbox extends Component {
         let messageStore = {...this.state.messageStore};
         messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
 
-        let messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
+        let messages = this.getMessagesFromStore(seenBy.conversationID);
         for(var i = 0; i < messages.length; i++) {
             if(messages[i].sender == this.state.chatInfo.responder.id) {
                 for(var j = 0; j < messages[i].messages.length; j++) {
