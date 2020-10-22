@@ -55,7 +55,6 @@ class Chatbox extends Component {
         }
         socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
-            console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
                 // this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
