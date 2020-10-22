@@ -53,7 +53,7 @@ const ParticleBackground = props => {
             var dx = (Math.random() / 30) * (window.innerWidth);
             var dy = (Math.random() / 30) * (window.innerHeight)
             var color = (Math.round(Math.random()) % 2) ? props.colors.blue : props.colors.yellow;
-            rcontainer.push(new rectangle(x, y, dx, dy, ctx, color));
+            rcontainer.push(new rectangle(x, y, dx, dy, color, props.direction, props.speed + Math.random()));
         }
     }
 
@@ -82,18 +82,20 @@ const ParticleBackground = props => {
     const draw = (ctx) => {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         for (var i = 0; i < rcontainer.length; i++) {
-            rcontainer[i].update(ctx, props.direction, props.speed);
+            rcontainer[i].update(ctx);
         }
     }
         
     return <canvas ref={canvasRef} {...props}/>
   }
 
-  function rectangle(x, y, dx, dy, ctx, color){
+  function rectangle(x, y, dx, dy, color, direction, speed){
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
+    this.direction = direction;
+    this.speed = speed;
 
     this.draw = (ctx) => {
         ctx.beginPath();
@@ -101,28 +103,28 @@ const ParticleBackground = props => {
         ctx.fillStyle = color;
         ctx.fill();
     }
-    this.update = (ctx, direction, speed) => {
-        switch(direction) {
+    this.update = (ctx) => {
+        switch(this.direction) {
             case 0:
-                this.y -= speed;
+                this.y -= this.speed;
                 if(this.y <= -50) {
                     this.y = window.innerHeight + 50
                 }
                 break; 
             case 1:
-                this.x += speed;
+                this.x += this.speed;
                 if(this.x >= window.innerWidth) {
                     this.x = -50
                 }
                 break; 
             case 2:
-                this.y += speed;
+                this.y += this.speed;
                 if(this.y >= window.innerHeight) {
                     this.y = -50
                 }
                 break; 
             case 3:
-                this.x -= speed;
+                this.x -= this.speed;
                 if(this.x <= -50) {
                     this.x = window.innerWidth + 50
                 }
