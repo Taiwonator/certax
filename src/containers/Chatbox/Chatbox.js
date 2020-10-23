@@ -140,11 +140,13 @@ class Chatbox extends Component {
 
     mergeNewMessage = (newMessage) => { // *
         if(Object.keys(this.state.messageStore).length == 0) {
+            let message = {...newMessage.message}
+            message.time = new Date(NewMessage.message.time)
             this.setState({
                 messageStore: {
                     [newMessage.conversationID]: {
                         latestMessage: newMessage.message, 
-                        messages: [newMessage.message]
+                        messages: [message]
                     }
                 }
             }, () => () => () => this.seeAllMessages())
@@ -154,23 +156,27 @@ class Chatbox extends Component {
                 if(this.state.messageStore[newMessage.conversationID].messages != undefined) {
                     messages = [...this.state.messageStore[newMessage.conversationID].messages];
                 }
+                let message = {...newMessage.message}
+                message.time = new Date(newMessage.message.time)
+                console.log();
 
-                messages.push(newMessage.message);
+                messages.push(message);
                 this.setState((prevState) => ({
                     messageStore: {
                         ...prevState.messageStore,
                         [newMessage.conversationID]: {
                             ...prevState.messageStore[newMessage.conversationID],
-                            latestMessage: newMessage.message, 
+                            latestMessage: message, 
                             messages
                         }
                     }
-                }), () => () => this.seeAllMessages())
+                }), () => this.seeAllMessages())
             }
         }
         if(this.state.booleans.chatOpen) {
             this.scrollToBottom()
         }
+        
         return "newMessage merge complete"
     }
 
@@ -243,7 +249,7 @@ class Chatbox extends Component {
     }
 
     addMessageToObject = (messageBlocks, message) => { //*
-        let messageObj = {messageID: message.messageID, text: message.text, time: message.time, seen: false, timeVisible: false, seenVisible: true};
+        let messageObj = {messageID: message.messageID, text: message.text, time: message.time, isDelivered: message.isDelivered, seen: false, timeVisible: false, seenVisible: true};
         // DATEVISIBLE: Method to determine whether date needs to be shown (If it is longer than an hour from its previous message)
         // SEENVISIBLE: If it is the 'latest message'
         
@@ -380,6 +386,7 @@ class Chatbox extends Component {
                     sender: this.state.chatInfo.sender.id, 
                     text: this.state.chatInfo.message, 
                     time: new Date(),
+                    isDelivered: false
                 }
             }))
             this.sendBotMessage(`Hello ${this.state.chatInfo.message}, it is nice to meet you :)`);
@@ -568,17 +575,19 @@ class Chatbox extends Component {
 
             // const messages = [...this.state.messages];
             // let newMessages = this.addMessageToObject(messages, {text: this.state.message, time: new Date(), seen: false, sender: this.state.sender.id})
-            const message = JSON.stringify({
+            const message = {
                 type: "newMessage", 
                 conversationID: this.state.chatInfo.conversationID, 
                 message: {
                     sender: this.state.chatInfo.sender.id, 
                     text: this.state.chatInfo.message, 
-                    time: new Date()
+                    time: new Date(), 
+                    isDelivered: false
                 }
-            })
-            socket.send(message)
-            // this.mergeNewMessage(newMessage(this.state.chatInfo.conversationID, this.state.chatInfo.message, this.state.chatInfo.sender.id));
+            }
+            // this.mergeNewMessage(message);
+            socket.send(JSON.stringify(message))
+
             this.setState((prevState) => ({
                 chatInfo: {
                     ...prevState.chatInfo,
@@ -1034,7 +1043,7 @@ const MessageBlock = (props) => { // *
         return (
             <div key={key} className='chatbox-message'>
                 <Timestamp time={message.time} visible={showTime}/>
-                <p onClick={() => props.messageOnClick(message)} style={{filter: (focusedMessage) ? 'brightness(.8)' : ''}} >{message.text}</p>
+                <p onClick={() => props.messageOnClick(message)} style={{filter: (focusedMessage) ? 'brightness(.8)' : ''}} >{`${message.text}`}</p>
                 <SeenLabel textAlign={textAlign} visible={showSeen}/>
             </div>
 
