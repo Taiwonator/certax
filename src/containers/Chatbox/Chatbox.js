@@ -55,10 +55,11 @@ class Chatbox extends Component {
         }
         socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
+            console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
-                // this.mergeNowOnline(dataFromServer);
+                this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
-                // this.mergeNowOffline(dataFromServer);
+                this.mergeNowOffline(dataFromServer);
             } else if (dataFromServer.type == "changeName") {
                 this.mergeChangeName(dataFromServer);
             } else if (dataFromServer.type == "nowTyping") {
@@ -85,6 +86,11 @@ class Chatbox extends Component {
                         type: "requestConversation", 
                         conversationID: this.state.chatInfo.conversationID
                     }))       
+                    socket.send(JSON.stringify({
+                        type: "nowOnline", 
+                        conversationID: this.state.chatInfo.conversationID, 
+                        participantID: this.state.chatInfo.conversationID
+                    }));
                 } else {
                     this.setState((prevState) => ({
                         booleans: {
@@ -120,7 +126,12 @@ class Chatbox extends Component {
         }
     }
 
-    componentWillUnmount() {
+    async componentWillUnmount() {
+        await socket.send(JSON.stringify({
+            type: "nowOffline", 
+            conversationID: this.state.chatInfo.conversationID, 
+            participantID: this.state.chatInfo.conversationID
+        }));
         socket.close();
     }
 
