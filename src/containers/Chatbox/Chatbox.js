@@ -33,7 +33,8 @@ class Chatbox extends Component {
                 },
                 message: '', // *
                 focusedMessage: '', // * 
-                conversationID: ''
+                conversationID: '',
+                unseenCount: 1
             },
             messageStore: {}, //* 
         }
@@ -58,7 +59,6 @@ class Chatbox extends Component {
             if(dataFromServer.type == "nowOnline") {
                 this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
-                console.log(dataFromServer);
                 this.mergeNowOffline(dataFromServer);
             } else if (dataFromServer.type == "changeName") {
                 this.mergeChangeName(dataFromServer);
@@ -71,7 +71,8 @@ class Chatbox extends Component {
 
                 
                 // NOW RECEIVED CONVERSATIONS OVERVIEW (Including the conversationID)
-                this.mergeReceiveConversationOverviews(dataFromServer);     
+                this.mergeReceiveConversationOverviews(dataFromServer);  
+                this.setInitialUnseenCount(dataFromServer);   
 
                 if(dataFromServer.conversationOverviews.length == 1) {
                     // User
@@ -126,7 +127,7 @@ class Chatbox extends Component {
                         participantID: dataFromServer.message.sender
                     })
                 }
-                
+
             } else if (dataFromServer.type == "seenMessage") {
                 this.mergeSeenBy(dataFromServer);
             }
@@ -164,18 +165,12 @@ class Chatbox extends Component {
 
     setOffline = () => {
         const participantID = (this.state.chatInfo.sender.id == '') ? receiveClientID() : this.state.chatInfo.sender.id; 
-        console.log(participantID);
         for(var i = 0; i < Object.keys(this.state.messageStore).length; i++) {
             socket.send(JSON.stringify({
                 type: "nowOffline", 
                 conversationID: Object.keys(this.state.messageStore)[i],
                 participantID
             }));
-            console.log("Sending: ", {
-                type: "nowOffline", 
-                conversationID: Object.keys(this.state.messageStore)[i],
-                participantID
-            });
         }
     }
 
@@ -207,7 +202,6 @@ class Chatbox extends Component {
                 }
                 let message = {...newMessage.message}
                 message.time = new Date(newMessage.message.time)
-                console.log();
 
                 messages.push(message);
                 this.setState((prevState) => ({
@@ -258,7 +252,6 @@ class Chatbox extends Component {
                 }
             }))
         }
-
         return "ConversationOverviews merge complete"
     } 
 
@@ -374,14 +367,10 @@ class Chatbox extends Component {
                 }
             }
             
-
             this.setState((prevState) => ({ 
                 messageStore
-            }))
+            }), () => this.updateUnseenCount())
             
-            
-
-
             return "seenBy merge complete"
         }
     }
@@ -521,7 +510,7 @@ class Chatbox extends Component {
                 ...prevState.booleans,
                 active: true,
             } 
-        }))      
+        }), () => this.seeAllMessages())
     }
 
     closeChatbox = () => { // *
@@ -780,7 +769,7 @@ class Chatbox extends Component {
     seeAllMessages = () => { // *
         // WEB SOCKET
         // SEEN BY
-        if(this.state.booleans.chatOpen) { 
+        if(this.state.booleans.chatOpen && this.state.booleans.active) { 
             const messages = this.getMessagesFromStore(this.state.chatInfo.conversationID);
             if(messages.length != 0) {
                 const lastMessageBlock = messages[messages.length - 1];
@@ -794,6 +783,45 @@ class Chatbox extends Component {
                 // this.mergeSeenBy(seenBy(this.state.chatInfo.conversationID, this.state.chatInfo.sender.id, lastMessageID));
             }
         }
+    }
+
+    setInitialUnseenCount = (data) => {
+        let count = 0
+        if(data.conversationOverviews.length > 1) {
+            for(var i = 0; i < data.conversationOverviews.length; i++) {
+                let conversationOverview = data.conversationOverviews[i];
+                console.log(conversationOverview.latestMessage.messageID);
+                count += conversationOverview.latestMessage.messageID - conversationOverview.participants[receiveClientID()].lastMessageSeenID;
+            }
+        } else {
+            console.log(data.conversationOverviews[0].participants[data.conversationOverviews[0].conversationID].lastMessageSeenID);
+            count = data.conversationOverviews[0].latestMessage.messageID - data.conversationOverviews[0].participants[data.conversationOverviews[0].conversationID].lastMessageSeenID;
+        }
+        this.setState((prevState) => ({
+            chatInfo: {
+                ...prevState.chatInfo, 
+                unseenCount: count
+            }
+        }))
+    }
+
+    updateUnseenCount = () => {
+        let count = 0;
+        if(Object.keys(this.state.messageStore).length > 1) {
+            const conversationIDs = Object.keys(this.state.messageStore);
+            for(var i = 0; i < conversationIDs.length; i++) {
+                console.log(this.state.messageStore[conversationIDs[i]]);
+                return 20;
+            }
+        } else {
+            count = this.state.messageStore[this.state.chatInfo.conversationID].latestMessage.messageID - this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.conversationID].lastMessageSeenID
+        }
+        this.setState((prevState) => ({
+            chatInfo: {
+                ...prevState.chatInfo, 
+                unseenCount: count
+            }
+        }))
     }
 
     requestChat = conversationID => {
@@ -874,7 +902,7 @@ class Chatbox extends Component {
 
         return ( 
             <>
-            { (chatOpen || chatReady) ? <OpenChatBoxButton color={this.props.colors.blue} onClick={this.openChatbox} active={this.state.booleans.active}/> : '' }
+            { (chatOpen || chatReady) ? <OpenChatBoxButton colors={this.props.colors} onClick={this.openChatbox} active={this.state.booleans.active} unseenCount={this.state.chatInfo.unseenCount} /> : '' }
             <div className={`${this.state.booleans.active && 'show'} chatbox-container`}>
 
                 <div className='chatbox-top-bar' style={{backgroundColor: (!this.state.booleans.chatOpen) ? '#FAFAFA' : (this.state.chatInfo.responder.type == 'bot') ? this.props.colors.yellow : this.props.colors.blue}}>
@@ -969,11 +997,15 @@ const OpenChatBoxButton = (props) => { // *
         }
     }
     
+    const unseenCount = (props.unseenCount > 0) ? <div className='unseen-count' style={{backgroundColor: props.colors.yellow}}>{props.unseenCount}</div> : ''
     return (
-        <svg onClick={props.onClick} className={`${(props.active && 'hidden')} chatbox-open-button`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.24 48">
-        <circle fill={props.color} cx="28.24" cy="24" r="24"/>
-        <path fill={props.color} d="M830.41,220.42s-22.65,2.35-22.65,22.65c0,0,12.1-11.32,22.65-8.39S830.41,220.42,830.41,220.42Z" transform="translate(-807.76 -199)"/>
-    </svg>
+        <div className={`${(props.active && 'hidden')} chatbox-open-button-container`}>
+            <svg onClick={props.onClick} className={`chatbox-open-button`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52.24 48">
+                <circle fill={props.colors.blue} cx="28.24" cy="24" r="24"/>
+                <path fill={props.colors.blue} d="M830.41,220.42s-22.65,2.35-22.65,22.65c0,0,12.1-11.32,22.65-8.39S830.41,220.42,830.41,220.42Z" transform="translate(-807.76 -199)"/>
+            </svg>
+            { unseenCount }
+        </div>
     )
 }
 
@@ -1283,7 +1315,14 @@ const ChatListItem = (props) => { // CLIENT
     } else {
         unseenMessageCount = props.unseenCount;
     }
-    let unseenMessagesLabel = (unseenMessageCount == 0) ? '' : <p style={{backgroundColor: props.colors.blue}}>{unseenMessageCount}</p>;
+    let unseenMessagesLabel;
+    if(unseenMessageCount != 0) {
+        if(props.latestMessage.sender == 'bot') {
+            unseenMessagesLabel = <p style={{backgroundColor: props.colors.yellow}}>{unseenMessageCount}</p>
+        } else {
+            unseenMessagesLabel = <p style={{backgroundColor: props.colors.blue}}>{unseenMessageCount}</p>
+        }
+    }
     return (
         <div className='chat-list-item-container' onClick={() => props.openChat(props.conversationID)}>
             <div className={`chatbox-avatar ${props.online ? 'online': ''}`} style={{backgroundColor: props.colors.blue}}><PersonIcon /></div>

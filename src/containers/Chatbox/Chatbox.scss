@@ -239,20 +239,40 @@
     }
 }
 
-.chatbox-open-button {
+.chatbox-open-button-container {
     position: fixed;
-    height: 100px;
-    width: 100px;
-    z-index: 100;
     right: 2.5%;
     bottom: 2.5%;
-    background: white;
-    padding: 1em;
-    box-shadow: 0 0px 7px rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
-    transition: filter .1s ease-in-out, bottom 1s ease-in-out, opacity .25s ease-in-out;
+    z-index: 100;
 
-    &:hover {
-        filter: brightness(.9);
+    transition: filter .1s ease-in-out, bottom 1s ease-in-out, opacity .25s ease-in-out;
+    .chatbox-open-button {
+        height: 100px;
+        width: 100px;
+        
+        background: white;
+        padding: 1em;
+        box-shadow: 0 0px 7px rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+
+        &:hover {
+            filter: brightness(.9);
+        }
+    }
+
+    .unseen-count {
+        position: absolute;
+        left: 70%;
+        top: 70%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: yellow;
+        font-size: 15px;
+        color: white;
+        font-weight: 100;
+        border-radius: 100px;
     }
 }
 
@@ -261,6 +281,7 @@
     bottom: -100%;
     opacity: 0;
 }
+
 
 .show {
     bottom: 0;
