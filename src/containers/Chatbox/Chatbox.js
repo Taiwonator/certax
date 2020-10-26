@@ -120,12 +120,15 @@ class Chatbox extends Component {
 
             } else if (dataFromServer.type == "newMessage") {
                 this.mergeNewMessage(dataFromServer);
-                if(this.state.messageStore[dataFromServer.conversationID].participants[dataFromServer.message.sender].isOnline == false){
-                    this.mergeNowOnline({
-                        type: "nowOnline", 
-                        conversationID: dataFromServer.conversationID, 
-                        participantID: dataFromServer.message.sender
-                    })
+                if(this.state.messageStore[dataFromServer.conversationID] != undefined && dataFromServer.message.sender != 'bot') {
+                    console.log("New message coming from", dataFromServer);
+                    if(this.state.messageStore[dataFromServer.conversationID].participants[dataFromServer.message.sender].isOnline == false){
+                        this.mergeNowOnline({
+                            type: "nowOnline", 
+                            conversationID: dataFromServer.conversationID, 
+                            participantID: dataFromServer.message.sender
+                        })
+                    }
                 }
 
             } else if (dataFromServer.type == "seenMessage") {
@@ -296,10 +299,13 @@ class Chatbox extends Component {
         // SEENVISIBLE: If it is the 'latest message'
         
         // Set Seen (Should work)
-        
-        if(message.messageID <= this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].lastMessageSeenID) {
-            messageObj.seen = true;
-            // console.log(`${this.state.sender.id} has seen message (${message.messageID})`);
+        if(this.state.chatInfo.conversationID != '') {
+            if(message.messageID <= this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.responder.id].lastMessageSeenID) {
+                messageObj.seen = true;
+                // console.log(`${this.state.sender.id} has seen message (${message.messageID})`);
+            }
+        } else {
+            console.log("Error", message);
         }
 
         //  CHECK TIME BETWEEN THIS MESSAGE AND PREVIOUS MESSAGE
@@ -352,6 +358,7 @@ class Chatbox extends Component {
     } 
 
     mergeSeenBy = (seenBy) => { // *
+        console.log(seenBy);
         let messageStore = {...this.state.messageStore};
         if(messageStore[seenBy.conversationID] != undefined) {
             messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
@@ -452,7 +459,14 @@ class Chatbox extends Component {
 
     mergeNowOnline = (nowOnline) => {
         let messageStore = {...this.state.messageStore};
-        messageStore[nowOnline.conversationID].participants[nowOnline.participantID].isOnline = true;
+        if(messageStore[nowOnline.conversationID] == undefined) {
+            socket.send(JSON.stringify({
+                type: "requestConversationOverviews"
+            }))
+        } else {
+            messageStore[nowOnline.conversationID].participants[nowOnline.participantID].isOnline = true;
+            
+        }
         this.setState({
             messageStore
         })
@@ -460,7 +474,13 @@ class Chatbox extends Component {
 
     mergeNowOffline = (nowOffline) => {
         let messageStore = {...this.state.messageStore};
-        messageStore[nowOffline.conversationID].participants[nowOffline.participantID].isOnline = false;
+        if(messageStore[nowOffline.conversationID] == undefined) {
+            socket.send(JSON.stringify({
+                type: "requestConversationOverviews"
+            }))
+        } else {
+            messageStore[nowOffline.conversationID].participants[nowOffline.participantID].isOnline = false;
+        }
         this.setState({
             messageStore
         })
