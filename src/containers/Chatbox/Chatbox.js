@@ -193,7 +193,7 @@ class Chatbox extends Component {
                         messages: [message]
                     }
                 }
-            }, () => () => () => this.seeAllMessages())
+            }, () => this.seeAllMessages())
         } else {
             if(this.state.messageStore[newMessage.conversationID] != undefined) {
                 let messages = [];
@@ -790,11 +790,12 @@ class Chatbox extends Component {
         if(data.conversationOverviews.length > 1) {
             for(var i = 0; i < data.conversationOverviews.length; i++) {
                 let conversationOverview = data.conversationOverviews[i];
-                console.log(conversationOverview.latestMessage.messageID);
                 count += conversationOverview.latestMessage.messageID - conversationOverview.participants[receiveClientID()].lastMessageSeenID;
+                if(conversationOverview.participants[receiveClientID()].lastMessageSeenID == -1) {
+                    count -= 1
+                }
             }
         } else {
-            console.log(data.conversationOverviews[0].participants[data.conversationOverviews[0].conversationID].lastMessageSeenID);
             count = data.conversationOverviews[0].latestMessage.messageID - data.conversationOverviews[0].participants[data.conversationOverviews[0].conversationID].lastMessageSeenID;
         }
         this.setState((prevState) => ({
