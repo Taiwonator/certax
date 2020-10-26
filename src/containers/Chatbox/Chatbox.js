@@ -121,7 +121,7 @@ class Chatbox extends Component {
             } else if (dataFromServer.type == "newMessage") {
                 this.mergeNewMessage(dataFromServer);
                 if(this.state.messageStore[dataFromServer.conversationID] != undefined && dataFromServer.message.sender != 'bot') {
-                    console.log("New message coming from", dataFromServer);
+                    // console.log("New message coming from", dataFromServer);
                     if(this.state.messageStore[dataFromServer.conversationID].participants[dataFromServer.message.sender].isOnline == false){
                         this.mergeNowOnline({
                             type: "nowOnline", 
@@ -305,7 +305,7 @@ class Chatbox extends Component {
                 // console.log(`${this.state.sender.id} has seen message (${message.messageID})`);
             }
         } else {
-            console.log("Error", message);
+            // console.log("Error", message);
         }
 
         //  CHECK TIME BETWEEN THIS MESSAGE AND PREVIOUS MESSAGE
@@ -358,7 +358,6 @@ class Chatbox extends Component {
     } 
 
     mergeSeenBy = (seenBy) => { // *
-        console.log(seenBy);
         let messageStore = {...this.state.messageStore};
         if(messageStore[seenBy.conversationID] != undefined) {
             messageStore[seenBy.conversationID].participants[seenBy.participantID].lastMessageSeenID = seenBy.messageID;
