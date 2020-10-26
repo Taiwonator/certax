@@ -55,10 +55,10 @@ class Chatbox extends Component {
         }
         socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
-            console.log(dataFromServer);
             if(dataFromServer.type == "nowOnline") {
                 this.mergeNowOnline(dataFromServer);
             } else if (dataFromServer.type == "nowOffline") {
+                console.log(dataFromServer);
                 this.mergeNowOffline(dataFromServer);
             } else if (dataFromServer.type == "changeName") {
                 this.mergeChangeName(dataFromServer);
@@ -99,6 +99,7 @@ class Chatbox extends Component {
                         } 
                     }))
                 }
+                this.setOnline(dataFromServer);
 
 
             } else if (dataFromServer.type == "receiveConversation") {
@@ -117,21 +118,30 @@ class Chatbox extends Component {
                 } 
 
             } else if (dataFromServer.type == "newMessage") {
-                await this.checkIfNewVisitor(dataFromServer);
                 this.mergeNewMessage(dataFromServer);
+                if(this.state.messageStore[dataFromServer.conversationID].participants[dataFromServer.message.sender].isOnline == false){
+                    this.mergeNowOnline({
+                        type: "nowOnline", 
+                        conversationID: dataFromServer.conversationID, 
+                        participantID: dataFromServer.message.sender
+                    })
+                }
                 
             } else if (dataFromServer.type == "seenMessage") {
                 this.mergeSeenBy(dataFromServer);
             }
         }
+
+        window.onbeforeunload = () => {
+            console.log("closing");
+            this.setOffline();
+
+            return null
+        }
+        
     }
 
-    async componentWillUnmount() {
-        await socket.send(JSON.stringify({
-            type: "nowOffline", 
-            conversationID: this.state.chatInfo.conversationID, 
-            participantID: this.state.chatInfo.conversationID
-        }));
+    componentWillUnmount() {        
         socket.close();
     }
 
@@ -139,6 +149,34 @@ class Chatbox extends Component {
         socket.send(JSON.stringify({
             type: "requestConversationOverviews"
         }))    
+    }
+
+    setOnline = (data) => {
+        const participantID = (this.state.chatInfo.sender.id == '') ? receiveClientID() : this.state.chatInfo.sender.id; 
+        for(var i = 0; i < data.conversationOverviews.length; i++) {
+            socket.send(JSON.stringify({
+                type: "nowOnline", 
+                conversationID: data.conversationOverviews[i].conversationID, 
+                participantID
+            }));
+        }
+    }  
+
+    setOffline = () => {
+        const participantID = (this.state.chatInfo.sender.id == '') ? receiveClientID() : this.state.chatInfo.sender.id; 
+        console.log(participantID);
+        for(var i = 0; i < Object.keys(this.state.messageStore).length; i++) {
+            socket.send(JSON.stringify({
+                type: "nowOffline", 
+                conversationID: Object.keys(this.state.messageStore)[i],
+                participantID
+            }));
+            console.log("Sending: ", {
+                type: "nowOffline", 
+                conversationID: Object.keys(this.state.messageStore)[i],
+                participantID
+            });
+        }
     }
 
     checkIfNewVisitor = (data) => {
@@ -433,7 +471,7 @@ class Chatbox extends Component {
 
     mergeNowOffline = (nowOffline) => {
         let messageStore = {...this.state.messageStore};
-        messageStore[nowOffline.conversationID].participants[nowOffline.participantID].isOnline = true;
+        messageStore[nowOffline.conversationID].participants[nowOffline.participantID].isOnline = false;
         this.setState({
             messageStore
         })
@@ -483,8 +521,7 @@ class Chatbox extends Component {
                 ...prevState.booleans,
                 active: true,
             } 
-        })) 
-        
+        }))      
     }
 
     closeChatbox = () => { // *
