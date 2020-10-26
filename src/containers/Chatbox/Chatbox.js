@@ -810,8 +810,7 @@ class Chatbox extends Component {
         if(Object.keys(this.state.messageStore).length > 1) {
             const conversationIDs = Object.keys(this.state.messageStore);
             for(var i = 0; i < conversationIDs.length; i++) {
-                console.log(this.state.messageStore[conversationIDs[i]]);
-                return 20;
+                count += this.state.messageStore[conversationIDs[i]].latestMessage.messageID - this.state.messageStore[conversationIDs[i]].participants[receiveClientID()].lastMessageSeenID
             }
         } else {
             count = this.state.messageStore[this.state.chatInfo.conversationID].latestMessage.messageID - this.state.messageStore[this.state.chatInfo.conversationID].participants[this.state.chatInfo.conversationID].lastMessageSeenID
