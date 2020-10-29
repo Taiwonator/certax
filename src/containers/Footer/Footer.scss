@@ -58,12 +58,11 @@
     justify-content: space-between;
     position: relative;
 
-    @include b.for-phone() {
-        flex-direction: column;
-    }
-
     img {
         max-width: 250px;
+        @include b.for-phone() {
+            max-width: 150px;
+        }
     }
     
 }
