@@ -32,7 +32,7 @@ class Services extends Component {
     }
 
     checkForNextService() {
-        if(this.state.counter % 10 == 0 && this.state.counter > 1) {
+        if(this.state.counter % 40 == 0 && this.state.counter > 1) {
             this.nextService();
         } 
     }
@@ -51,7 +51,7 @@ class Services extends Component {
         const service_index = index;
         this.setState({
             // Increased amount of time
-            service_index, counter: -10
+            service_index, counter: -40
         }) 
         this.props.scrollToServices();
     }

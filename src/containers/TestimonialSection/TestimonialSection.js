@@ -8,7 +8,7 @@ import TGraphic from '../../components/TGraphic/TGraphic';
 const TestimonialSection = React.forwardRef((props, ref) => {
     return (
         <div ref={ref} className='testimonial-section-container'>
-            <Subheader text='HEAR WHAT MY CLIENTS HAVE TO SAY' color={props.colors.yellow} underline={false} stars={true}/>
+            <Subheader text='HEAR WHAT OUR CLIENTS HAVE TO SAY' color={props.colors.yellow} underline={false} stars={true}/>
             <TGraphic color={props.colors.yellow} translateY={10}/> 
             <BigTestimonyList testimonials={props.data.bigtestimonials} colors={props.colors}/>
             {/* <QuoteCarousel testimonials={props.data.minitestimonials} color={props.colors.yellow}/> */}

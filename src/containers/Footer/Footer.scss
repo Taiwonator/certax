@@ -49,3 +49,21 @@
         
     }
 }
+
+.footer-images {
+    padding: 0 5vw;
+    display: flex;
+    width: 100vw;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+    @include b.for-phone() {
+        flex-direction: column;
+    }
+
+    img {
+        max-width: 250px;
+    }
+    
+}

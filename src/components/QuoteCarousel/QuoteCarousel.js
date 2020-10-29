@@ -44,7 +44,7 @@ class QuoteCarousel extends Component {
 
 
       checkForNextQuote() {
-        if(this.state.counter % 5 == 0 && this.state.counter > 1) {
+        if(this.state.counter % 15 == 0 && this.state.counter > 1) {
             if(this.state.pointer < this.props.testimonials.length - 1) {
                 this.forwardButton();
             } else {
@@ -140,14 +140,14 @@ class QuoteCarousel extends Component {
     clickBack = () => {
         this.backButton();
         this.setState({
-            counter: -5
+            counter: -10
         })
     } 
 
     clickForward = () => {
         this.forwardButton();
         this.setState({
-            counter: -5
+            counter: -10
         })
     }
 

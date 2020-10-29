@@ -32,6 +32,7 @@ const ContactUs = (props) => {
                         text: props.text, 
                         highlightedWord: 'anytime'
                     }]}/>
+        {/* <img src="https://www.aelmarkhams.co.uk/wp-content/uploads/2018/11/XERO-Logo.png" alt="nope"/> */}
         </div>
     );
 }

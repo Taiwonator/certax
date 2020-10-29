@@ -3,6 +3,7 @@ import './Footer.scss';
 
 const Footer = (props) => {
     return (
+        <>
         <div className='footer-container'>
             <div className='footer-left'>
                 <a style={{color: props.colors.blue}}>Copyright © 2020, Certax Accounting</a>
@@ -12,6 +13,11 @@ const Footer = (props) => {
                 <FooterItemList labels={props.labels} scrolls={props.label_scrolls}/>
             </div>
         </div>
+        <div className='footer-images'>
+            <img src="https://www.chevening.org/wp-content/uploads/2019/09/ICAEW-logo-small.png" alt="nope"/>
+            <img src="https://www.aelmarkhams.co.uk/wp-content/uploads/2018/11/XERO-Logo.png" alt="nope"/>
+        </div>
+        </>
     );
 }
 
