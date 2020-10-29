@@ -214,7 +214,7 @@ class GetAQuote extends Component {
                         <div className='get-a-quote-price'>
                             <p className='get-a-quote-price-currency'>£</p>
                             <p className='get-a-quote-price-value'>{(this.state.quote / 12).toFixed(2)}</p>
-                            <p className='get-a-quote-price-per'>/mon</p>
+                            <p className='get-a-quote-price-per'>/mon VAT exclusive</p>
                         </div>
                     </div>
                 </div>
