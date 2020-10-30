@@ -46,8 +46,7 @@ class Chatbox extends Component {
     // IF CLIENT 
     // IF VISITOR (Receive Conversation only)
 
-
-    async componentDidMount() {
+    async initSocket() {
         socket = await new WebSocket("wss://wss.certaxnorwich.accountant/"); 
         window.chatSocket = socket;   
         socket.onopen = () => {
@@ -107,7 +106,8 @@ class Chatbox extends Component {
                 this.mergeReceiveConversation(dataFromServer);
                 this.openChat(dataFromServer.conversationID);
 
-                if(this.state.chatInfo.sender.name == dataFromServer.conversationID) {
+                const latestMessage = dataFromServer.messages[dataFromServer.messages.length - 1];
+                if(this.state.chatInfo.sender.name == dataFromServer.conversationID && latestMessage.sender != "bot") { // Haven't changed their name
                     this.setState((prevState) => ({
                         booleans: {
                             ...prevState.booleans,
@@ -136,13 +136,18 @@ class Chatbox extends Component {
             }
         }
 
+        
+
         window.onbeforeunload = () => {
             console.log("closing");
             this.setOffline();
 
             return null
         }
-        
+    }
+
+    componentDidMount() {
+        this.initSocket();
     }
 
     componentWillUnmount() {        
@@ -521,6 +526,8 @@ class Chatbox extends Component {
     }
 
     openChatbox = () => { // *
+        console.log(socket);
+        this.initSocket();
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW
 
