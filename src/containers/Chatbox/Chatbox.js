@@ -136,10 +136,18 @@ class Chatbox extends Component {
             }
         }
 
-        
+        socket.onclose = () => {
+            console.log("Websocket closing, attempting to reconnect");
+            setTimeout(function() {
+                initSocket();
+              }, 1000);
+        }
+
+        socket.onerror = (err) => {
+            console.log(`Socket encounted error ${err.message}`)
+        }
 
         window.onbeforeunload = () => {
-            console.log("closing");
             this.setOffline();
 
             return null
@@ -526,8 +534,6 @@ class Chatbox extends Component {
     }
 
     openChatbox = () => { // *
-        console.log(socket);
-        this.initSocket();
         // WEBSOCKET 
         // REQUEST CONVERSATION OVERVIEW
 
