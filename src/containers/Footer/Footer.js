@@ -4,19 +4,24 @@ import './Footer.scss';
 const Footer = (props) => {
     return (
         <>
+        <div className='footer-images'>
+            <img src="https://www.chevening.org/wp-content/uploads/2019/09/ICAEW-logo-small.png" alt="nope"/>
+            <img src="https://www.aelmarkhams.co.uk/wp-content/uploads/2018/11/XERO-Logo.png" alt="nope"/>
+        </div>
         <div className='footer-container'>
             <div className='footer-left'>
-                <a style={{color: props.colors.blue}}>Copyright © 2020, Certax Accounting</a>
+                <p style={{color: props.colors.blue}}>Copyright © 2020, Certax Accounting</p>
+                <p>Certax Accounting (Central & East Norwich) Ltd Regus UK, Cavell House, Stannard Place St. Crispins Road, Norwich, NR3 1YE</p>
+                <p>Tel: 01603 821014</p>
+                <p>Fax: 01603 821001</p>
+                <p>Company number: 8167643    Registered in England</p>
             </div>
             <div className='footer-right'>
                 <a onClick={props.homescroll} style={{color: props.colors.yellow}}>Home</a>
                 <FooterItemList labels={props.labels} scrolls={props.label_scrolls}/>
             </div>
         </div>
-        <div className='footer-images'>
-            <img src="https://www.chevening.org/wp-content/uploads/2019/09/ICAEW-logo-small.png" alt="nope"/>
-            <img src="https://www.aelmarkhams.co.uk/wp-content/uploads/2018/11/XERO-Logo.png" alt="nope"/>
-        </div>
+        
         </>
     );
 }
