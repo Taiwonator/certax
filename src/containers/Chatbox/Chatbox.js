@@ -138,9 +138,7 @@ class Chatbox extends Component {
 
         socket.onclose = () => {
             console.log("Websocket closing, attempting to reconnect");
-            setTimeout(function() {
-                initSocket();
-              }, 1000);
+            setTimeout(this.initSocket(), 1000);
         }
 
         socket.onerror = (err) => {
