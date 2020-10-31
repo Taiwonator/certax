@@ -51,7 +51,9 @@ class Chatbox extends Component {
         window.chatSocket = socket;   
         socket.onopen = () => {
             console.log("Websocket open");
-            this.launchChat();
+            socket.send(JSON.stringify({
+                type: "requestConversationOverviews"
+            })) 
         }
         socket.onmessage = async(message) => {
             const dataFromServer = JSON.parse(message.data);
@@ -158,12 +160,6 @@ class Chatbox extends Component {
 
     componentWillUnmount() {        
         socket.close();
-    }
-
-    launchChat = () => {  
-        socket.send(JSON.stringify({
-            type: "requestConversationOverviews"
-        }))    
     }
 
     setOnline = (data) => {
