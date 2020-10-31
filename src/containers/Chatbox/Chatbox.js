@@ -109,14 +109,16 @@ class Chatbox extends Component {
                 this.openChat(dataFromServer.conversationID);
 
                 const latestMessage = dataFromServer.messages[dataFromServer.messages.length - 1];
-                if(this.state.chatInfo.sender.name == dataFromServer.conversationID && latestMessage.sender != "bot") { // Haven't changed their name
+                if(this.state.chatInfo.sender.name == dataFromServer.conversationID) { // Haven't changed their name
                     this.setState((prevState) => ({
                         booleans: {
                             ...prevState.booleans,
                             nameChanged: false
                         }
                     }), () => {
-                        this.sendBotMessage("Hello, please type your name and press enter");
+                        if(latestMessage.sender != "bot") {
+                            this.sendBotMessage("Hello, please type your name and press enter");
+                        }
                     })
                 } 
 
@@ -140,7 +142,7 @@ class Chatbox extends Component {
 
         socket.onclose = () => {
             console.log("Websocket closing, attempting to reconnect");
-            setTimeout(this.initSocket, 1000);
+            setTimeout(this.initSocket(), 1000);
         }
 
         socket.onerror = (err) => {
@@ -149,7 +151,6 @@ class Chatbox extends Component {
 
         window.onbeforeunload = () => {
             this.setOffline();
-
             return null
         }
     }
