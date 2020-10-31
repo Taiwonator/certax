@@ -116,7 +116,7 @@ class Chatbox extends Component {
                             nameChanged: false
                         }
                     }), () => {
-                        if(latestMessage.sender != "bot") {
+                        if(latestMessage.text != "Hello, please type your name and press enter") {
                             this.sendBotMessage("Hello, please type your name and press enter");
                         }
                     })
