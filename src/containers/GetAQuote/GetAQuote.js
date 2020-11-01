@@ -36,6 +36,7 @@ class GetAQuote extends Component {
                 answersObj[keys[i]] = null;
             }
         }
+        console.log(batchObj);
         if(this.state.requestProcessing) {
             if(batchObj.newQuestions.length != 0) {
                 this.setState((prevState) => ({
@@ -56,7 +57,7 @@ class GetAQuote extends Component {
                     active: false, 
                     quote: batchObj.quote, 
                     batch: batchObj.batch
-                }))
+                }), () => getABatch(this.state.answers, this.state.questions, this.state.batch, this.state.moreQuestionsAvailable, this.state.quote))
                 this.props.scrollToQuote();
                 this.props.connectToWebSocket();
             }

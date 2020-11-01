@@ -11,9 +11,11 @@ const Footer = (props) => {
         <div className='footer-container'>
             <div className='footer-left'>
                 <p style={{color: props.colors.blue}}>Copyright © 2020, Certax Accounting</p>
-                <p>Certax Accounting (Central & East Norwich) Ltd Regus UK, Cavell House, Stannard Place St. Crispins Road, Norwich, NR3 1YE</p>
+                <p>Certax Accounting (Central & East Norwich)</p>
+                <p>Ltd Regus UK</p>
+                <p>Cavell House, Stannard Place St. Crispins Road</p>
+                <p>Norwich, NR3 1YE</p>
                 <p>Tel: 01603 821014</p>
-                <p>Fax: 01603 821001</p>
                 <p>Company number: 8167643    Registered in England</p>
             </div>
             <div className='footer-right'>
