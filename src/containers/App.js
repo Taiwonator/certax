@@ -12,11 +12,9 @@ let socket = new WebSocket("wss://wss.certaxnorwich.accountant/") || null;
 class App extends Component {
     constructor(props) {
         super(props);
-        const loggedin = (this.getCookie('loggedIN')) ? true : false;
         this.state = {
             email: '', 
             password: '', 
-            loggedin, 
             allowChat: false
         }
     }
@@ -28,6 +26,11 @@ class App extends Component {
                 allowChat: true
             })
         }
+        console.log(this.getCookie('loggedIN'));
+        const loggedin = (this.getCookie('loggedIN')) ? true : false;
+        this.setState({
+            loggedin
+        })
     }
 
     connectToWebSocket = () => {
@@ -47,7 +50,12 @@ class App extends Component {
 
     getCookie = (name) => {
         if(document.cookie.length != 0) {
-            return document.cookie.split('; ').find(row => row.startsWith(name)).split("=")[1];
+            const cookie = document.cookie.split('; ').find(row => row.startsWith(name));
+            if(cookie != undefined) {
+                return cookie.split("=")[1];
+            }
+        } else {
+            return null
         }
     }
 
