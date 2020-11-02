@@ -62,10 +62,11 @@ export const getABatch = async (answers, questions, batch, moreQuestionsAvailabl
     } else {
         jsonObject = {answers: convertObject(answers, questions), batch, moreQuestionsAvailable}
     }
+    
     console.log("JSON Object being sent", jsonObject);
     return await postData("https://api.certaxnorwich.accountant/postQuote", jsonObject)
     .then(data => {
-        console.log(data);
+        console.log("JSON object received", data);
         return data;
     })
 }
