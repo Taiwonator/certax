@@ -185,7 +185,12 @@ class GetAQuote extends Component {
                                 text={[{
                                     type: "para", 
                                     text: "As stated previously, our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges.", 
-                                }]}/>
+                                }, 
+                                {
+                                    type: "para", 
+                                    text: "With the quote, you will have access to the use of an Accounting Software for processing your transactions and a Receipt App for uploading your receipts/invoices."
+                                }
+                                ]}/>
         } else {
             content = <Content headertext='Instant Quotation'
                          paratext=''
@@ -197,9 +202,14 @@ class GetAQuote extends Component {
                          buttoninverse={true}
                          buttonOnClick={this.reset}
                          text={[{
-                            type: "para", 
-                            text: "As stated previously, our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges.", 
-                        }]}/>
+                                    type: "para", 
+                                    text: "As stated previously, our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges.", 
+                                }, 
+                                {
+                                    type: "para", 
+                                    text: "With the quote, you will have access to the use of an Accounting Software for processing your transactions and a Receipt App for uploading your receipts/invoices."
+                                }
+                                ]}/>
         } 
         return ( 
         <div className='get-a-quote-container'>

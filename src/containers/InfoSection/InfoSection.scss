@@ -27,6 +27,8 @@
             }
 
             .content-container {
+                height: 100% !important;
+
                 p {
                     max-width: 80%;
                     @include b.for-phone() {

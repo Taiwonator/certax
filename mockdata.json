@@ -37,10 +37,16 @@
         "info": {
             "headertext": "GET A QUOTE TODAY", 
             "paratext": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch. Our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges. We provide a free no obligation initial consultation to discuss your requirements after obtaining the fixed fee quotes on our website.", 
-            "text": [{
-                "type": "para", 
-                "text": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch. Our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges. We provide a free no obligation initial consultation to discuss your requirements after obtaining the fixed fee quotes on our website."
-            }]
+            "text": [
+                {
+                    "type": "para", 
+                    "text": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch. Our fees are calculated on a fixed fee basis, so you know upfront the cost of the services required with no hidden charges. We provide a free no obligation initial consultation to discuss your requirements after obtaining the fixed fee quotes on our website."
+                }, 
+                {
+                      "type": "para", 
+                      "text": "With the quote, you will have access to the use of an Accounting Software for processing your transactions and a Receipt App for uploading your receipts/invoices."  
+                }
+            ]
         }, 
 
         "testimonial": {
