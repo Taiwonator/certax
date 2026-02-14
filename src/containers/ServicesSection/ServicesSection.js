@@ -6,12 +6,12 @@ import ScrollDownButton from '../../components/ScrollDownButton/ScrollDownButton
 
 const ServicesSection = React.forwardRef((props, ref) => {
     return (
-        <div ref={ref} className='services-section-container'>
+        <section ref={ref} className='services-section-container' aria-label="Our Services">
             <Subheader text='SERVICES' underline={true} stars={false} color={props.colors.yellow} />
-            <Services darkMode={props.darkMode} colors={props.colors} services={props.data} scrollToServices={props.scrollToServices}/>
+            <Services darkMode={props.darkMode} colors={props.colors} services={props.data} scrollToServices={props.scrollToServices} />
             <ScrollDownButton scroll={props.scroll} color={props.colors.blue} />
-        </div>
-    ) 
+        </section>
+    )
 })
 
 export default ServicesSection;

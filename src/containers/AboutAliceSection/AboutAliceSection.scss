@@ -1,0 +1,131 @@
+@use '../../stylesheets/basics' as b;
+
+.about-alice-section-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 6em auto;
+    position: relative;
+    align-items: center;
+    width: 80vw;
+    padding: 2em 0;
+
+    @include b.for-tablet() {
+        width: 90vw;
+        margin: 3em auto;
+    }
+
+    .subheader-container {
+        margin-bottom: 3em;
+        
+        @include b.for-tablet() {
+            margin-bottom: 2em;
+        }
+    }
+
+    .about-alice-content-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 3em;
+        width: 100%;
+        max-width: 1200px;
+
+        @include b.for-tablet() {
+            flex-direction: column;
+            gap: 2em;
+        }
+
+        .about-alice-main-content {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+            text-align: left;
+
+            .about-alice-text-content {
+                h2 {
+                    font-size: 28px;
+                    font-weight: 600;
+                    margin-bottom: 1em;
+
+                    @include b.for-phone() {
+                        font-size: 24px;
+                    }
+                }
+
+                .content-container {
+                    align-items: flex-start;
+                }
+            }
+
+            .about-alice-specialisms {
+                background-color: #f9f9f9;
+                padding: 2em;
+                border-radius: 8px;
+
+                h3 {
+                    font-size: 22px;
+                    font-weight: 600;
+                    margin-bottom: 1em;
+
+                    @include b.for-phone() {
+                        font-size: 20px;
+                    }
+                }
+
+                ul {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+
+                    li {
+                        font-size: 16px;
+                        line-height: 2;
+                        padding-left: 0.5em;
+
+                        span {
+                            font-size: 20px;
+                            margin-right: 0.5em;
+                        }
+                    }
+                }
+            }
+        }
+
+        .about-alice-contact-info {
+            flex: 1;
+            background-color: #f5f5f5;
+            padding: 2em;
+            border-radius: 8px;
+            text-align: left;
+            height: fit-content;
+
+            h3 {
+                font-size: 22px;
+                font-weight: 600;
+                margin-bottom: 1.5em;
+
+                @include b.for-phone() {
+                    font-size: 20px;
+                }
+            }
+
+            .contact-details {
+                p {
+                    font-size: 15px;
+                    line-height: 1.8;
+                    margin-bottom: 0.8em;
+
+                    strong {
+                        display: block;
+                        margin-bottom: 0.2em;
+                        font-size: 14px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    }
+                }
+            }
+        }
+    }
+}
+

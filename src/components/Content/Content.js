@@ -9,30 +9,30 @@ const Content = (props) => {
     let css_align = 'center';
     let button_align = 'space-around';
 
-    switch(props.align) {
+    switch (props.align) {
         case 'center':
             css_flex = 'center';
-            css_align = 'center'; 
+            css_align = 'center';
             button_align = 'space-around';
             break;
         case 'left':
             css_flex = 'flex-start';
-            css_align = 'left'; 
+            css_align = 'left';
             button_align = 'flex-start';
             break;
         case 'right':
             css_flex = 'flex-end';
-            css_align = 'right'; 
+            css_align = 'right';
             button_align = 'flex-end';
             break;
     }
     const content_container_style = {
-        alignItems: css_flex, 
+        alignItems: css_flex,
 
     }
 
     const header_style = {
-        color: props.headercolor, 
+        color: props.headercolor,
         textAlign: css_align
     }
 
@@ -42,14 +42,14 @@ const Content = (props) => {
     }
 
     // If the property twin is true, the second button will show
-    let twinbutton = (props.twinbutton) ? <ContentButton buttonOnClick={props.twinbuttonOnClick} inverse={props.twinbuttoninverse} color={props.twinbuttoncolor} text={props.twinbuttontext}/> : '';   
-    let button =  (props.buttontext != null) ? <ContentButton buttonOnHoverText={props.buttonOnHoverText} 
-                                                              buttonOnHover={props.buttonOnHover}
-                                                              buttonOnClick={props.buttonOnClick} 
-                                                              inverse={props.buttoninverse} 
-                                                              color={props.buttoncolor} 
-                                                              text={props.buttontext}/> : '';
-    let underline = (props.noUnderline) ? '' : <Underline color={props.headercolor} justifyContent={css_flex}/>
+    let twinbutton = (props.twinbutton && props.twinButtonHref) ? <a className='button-link' href={props.twinButtonHref} target="_blank" rel="noopener noreferrer"><ContentButton buttonOnClick={props.twinbuttonOnClick} inverse={props.twinbuttoninverse} color={props.twinbuttoncolor} text={props.twinbuttontext} /></a> : (props.twinbutton) ? <ContentButton buttonOnClick={props.twinbuttonOnClick} inverse={props.twinbuttoninverse} color={props.twinbuttoncolor} text={props.twinbuttontext} /> : '';
+    let button = (props.buttontext != null) ? <ContentButton buttonOnHoverText={props.buttonOnHoverText}
+        buttonOnHover={props.buttonOnHover}
+        buttonOnClick={props.buttonOnClick}
+        inverse={props.buttoninverse}
+        color={props.buttoncolor}
+        text={props.buttontext} /> : '';
+    let underline = (props.noUnderline) ? '' : <Underline color={props.headercolor} justifyContent={css_flex} />
 
     return (
         <div className='content-container' style={content_container_style}>
@@ -58,8 +58,8 @@ const Content = (props) => {
                 {underline}
             </div>
             {/* <p style={para_style}>{props.paratext}</p> */}
-            <Text text={props.text} color={props.paracolor} textAlign={props.align}/>
-            <div style={{justifyContent: button_align}} className='buttons-container'>
+            <Text text={props.text} color={props.paracolor} textAlign={props.align} />
+            <div style={{ justifyContent: button_align }} className='buttons-container'>
                 {button}
                 {twinbutton}
             </div>

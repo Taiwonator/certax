@@ -13,29 +13,29 @@ const AboutSection = React.forwardRef((props, ref) => {
     const phone_size = 600;
 
     // Changes the staircase type for phone view
-    if(width <= phone_size & staircase_type != 'single') {
+    if (width <= phone_size & staircase_type != 'single') {
         staircase_type = 'single';
-    } else if(width > phone_size & staircase_type != 'partial') {
+    } else if (width > phone_size & staircase_type != 'partial') {
         staircase_type = 'partial';
     }
 
     return (
-        <div ref={ref} style={{borderBottomColor: (props.darkMode()) ? props.colors.yellow : props.colors.lightgrey}} className='about-section-container'>
+        <section ref={ref} style={{ borderBottomColor: (props.darkMode()) ? props.colors.yellow : props.colors.lightgrey }} className='about-section-container' aria-label="About Certax Accounting">
             <div className='about-section-content-wrapper'>
                 <div className='about-section-content-container'>
-                    { width > phone_size ? 
-                    <>
-                    <Staircase position='TR' color={props.colors.yellow} type='block'/>
-                    <Staircase position='TL' color={props.colors.blue} type='block'/> 
-                    <Staircase position='BR' color={props.colors.blue} type='block'/>
-                    <Staircase position='BL' color={props.colors.yellow} type='block'/> 
-                    </>
-                    : ''}
-                    <ContentBox darkMode={props.darkMode} colors={props.colors} content={props.data} buttonOnClick={props.scrollToInfo}/>
+                    {width > phone_size ?
+                        <>
+                            <Staircase position='TR' color={props.colors.yellow} type='block' />
+                            <Staircase position='TL' color={props.colors.blue} type='block' />
+                            <Staircase position='BR' color={props.colors.blue} type='block' />
+                            <Staircase position='BL' color={props.colors.yellow} type='block' />
+                        </>
+                        : ''}
+                    <ContentBox darkMode={props.darkMode} colors={props.colors} content={props.data} buttonOnClick={props.scrollToInfo} />
                 </div>
-                <ScrollDownButton scroll={props.scroll} color={props.colors.blue}/>
+                <ScrollDownButton scroll={props.scroll} color={props.colors.blue} />
             </div>
-        </div>
+        </section>
     )
 })
 

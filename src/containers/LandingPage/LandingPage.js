@@ -11,27 +11,27 @@ let lower_staircase_type = 'partial';
 
 const LandingPage = React.forwardRef((props, ref) => {
     const { width } = useWindowDimensions();
-    if(width <= 600 & upper_staircase_type != 'mini') {
+    if (width <= 600 & upper_staircase_type != 'mini') {
         upper_staircase_type = 'mini';
         lower_staircase_type = 'single';
-    } else if(width > 600 & upper_staircase_type != 'full') {
+    } else if (width > 600 & upper_staircase_type != 'full') {
         upper_staircase_type = 'full';
         lower_staircase_type = 'partial';
     }
-    
-    return ( 
-        <div ref={ref} className='landing-page-container'>
+
+    return (
+        <header ref={ref} className='landing-page-container'>
             <HeaderContent scroll={props.scroll} colors={props.colors} />
-            <div className='landing-page-graphics-container'>
-                <BackgroundPanels darkMode={props.darkMode}/>
-                <Staircase position='BR' color={props.colors.blue} type={upper_staircase_type}/>
-                <Staircase position= 'BL' color={props.colors.yellow} type={upper_staircase_type}/>  
+            <div className='landing-page-graphics-container' aria-hidden="true">
+                <BackgroundPanels darkMode={props.darkMode} />
+                <Staircase position='BR' color={props.colors.blue} type={upper_staircase_type} />
+                <Staircase position='BL' color={props.colors.yellow} type={upper_staircase_type} />
                 <div className='lower-staircase-container'>
-                    <Staircase position='TR' color={props.colors.yellow} type={lower_staircase_type}/>
-                    <Staircase position='TL' color={props.colors.blue} type={lower_staircase_type}/>
+                    <Staircase position='TR' color={props.colors.yellow} type={lower_staircase_type} />
+                    <Staircase position='TL' color={props.colors.blue} type={lower_staircase_type} />
                 </div>
             </div>
-        </div>
+        </header>
     );
 })
 

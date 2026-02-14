@@ -1,0 +1,4 @@
+# robots.txt for Certax Accounting Norwich
+User-agent: *
+Allow: /
+

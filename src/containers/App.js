@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import Home from './Home';
 import MockData from "../../mockdata.json";
 import Login from "./Login";
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PageNotFound from "./PageNotFound";
 import AdminPanel from "./AdminPanel";
 import { checkTime } from '../helperFunctions/dateOperations.js';
@@ -13,8 +13,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '', 
-            password: '', 
+            email: '',
+            password: '',
             allowChat: false
         }
     }
@@ -49,9 +49,9 @@ class App extends Component {
     }
 
     getCookie = (name) => {
-        if(document.cookie.length != 0) {
+        if (document.cookie.length != 0) {
             const cookie = document.cookie.split('; ').find(row => row.startsWith(name));
-            if(cookie != undefined) {
+            if (cookie != undefined) {
                 return cookie.split("=")[1];
             }
         } else {
@@ -59,42 +59,43 @@ class App extends Component {
         }
     }
 
-    render () {
-        return ( 
+    render() {
+        return (
             <>
-            <Router>
-                <Switch>
-                    <Route path='/login'
-                        render={(props) => (
-                                <Login {...props} colors={MockData.colors} email={this.state.email} password={this.state.password} loggedin={this.state.loggedin} updateInput={this.updateInput}/>
+                <Router>
+                    <Switch>
+                        <Route path='/login'
+                            render={(props) => (
+                                <Login {...props} colors={MockData.colors} email={this.state.email} password={this.state.password} loggedin={this.state.loggedin} updateInput={this.updateInput} />
                             )}>
-                    </Route>
+                        </Route>
 
-                    <Route path='/' exact={true}
-                        render={(props) => (
-                            <Home {...props} 
-                                    colors={MockData.colors}  
-                                    landingpage={MockData.sections.landingpage} 
+                        <Route path='/' exact={true}
+                            render={(props) => (
+                                <Home {...props}
+                                    colors={MockData.colors}
+                                    landingpage={MockData.sections.landingpage}
                                     about={MockData.sections.about}
                                     info={MockData.sections.info}
                                     testimonial={MockData.sections.testimonial}
                                     getaquote={MockData.sections.getaquote}
+                                    aboutalice={MockData.sections.aboutalice}
                                     services={MockData.sections.services}
-                                    contactus={MockData.sections.contactus} 
+                                    contactus={MockData.sections.contactus}
                                     chatbox={MockData.chatbox}
                                     loggedIn={this.state.loggedin}
                                     allowChat={this.state.allowChat}
                                     connectToWebSocket={this.connectToWebSocket} />
-                        )}> 
-                    </Route>
-                    <Route path='/admin' 
-                           render={(props) => (this.state.loggedin) ? <AdminPanel {...props} email={this.state.email} /> : <PageNotFound />}/>
-                    <Route path='*' component={PageNotFound}/>
-                </Switch>
-            </Router>
-            </> 
+                            )}>
+                        </Route>
+                        <Route path='/admin'
+                            render={(props) => (this.state.loggedin) ? <AdminPanel {...props} email={this.state.email} /> : <PageNotFound />} />
+                        <Route path='*' component={PageNotFound} />
+                    </Switch>
+                </Router>
+            </>
         );
     }
 }
- 
+
 export default App;

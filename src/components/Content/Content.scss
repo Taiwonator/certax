@@ -7,6 +7,7 @@
     flex-direction: column;
     justify-content: space-around;
     height: 60%;
+
     @include b.for-phone() {
         align-items: center;
         height: 80%;
@@ -38,6 +39,12 @@
 
         @include b.for-phone() {
             flex-direction: column;
+        }
+
+        .button-link {
+            .button {
+                width: 100%;
+            }
         }
 
         .button {

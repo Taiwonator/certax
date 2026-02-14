@@ -11,7 +11,7 @@ let lastScrollTop = 0;
 class Navbar extends Component {
     constructor(props) {
         super(props);
-        this.state = {active: false, hidden: false};
+        this.state = { active: false, hidden: false };
     }
 
     componentDidMount() {
@@ -23,7 +23,7 @@ class Navbar extends Component {
     }
 
     handleScroll = () => {
-        if(window.pageYOffset > lastScrollTop) {
+        if (window.pageYOffset > lastScrollTop) {
             this.setState({
                 hidden: true
             })
@@ -40,7 +40,7 @@ class Navbar extends Component {
         this.setState({
             active: !this.state.active
         }, () => {
-            if(this.state.active) {
+            if (this.state.active) {
                 document.body.style.overflow = 'hidden';
             } else {
                 document.body.style.overflow = '';
@@ -57,28 +57,29 @@ class Navbar extends Component {
         this.toggleNavbar();
         this.props.label_scrolls[i]();
     }
-    
+
 
     render() {
-    return (
-        <nav style={{ backgroundColor: this.activeStateDarkMode()}} className={`navbar-container ${this.state.active ? 'navbar-active' : ''} ${this.state.hidden ? 'hiddenNav' : ''}`} onScroll={() => console.log("Hekki")}>
-            <div className='navbar-content'>
-                <CompanyTextLogo toggleDarkMode={this.props.toggleDarkMode} colors={this.props.colors}/>
-                <ToggleButton color={this.props.colors.blue} toggleNavbar={this.toggleNavbar} shape='bars' inverse='true'/>
-            </div>
-            <ul className='navbar-items'>
-                <ToggleButton color={this.props.colors.yellow} toggleNavbar={this.toggleNavbar} shape='cross' inverse='true'/>
-                <NavbarItemList scrollTo={this.scrollTo} label_scrolls={this.props.label_scrolls} labels={this.props.labels} color={this.props.colors.yellow} />
-                {/* <ToggleSwitch colors={this.props.colors} toggleDarkMode={this.props.toggleDarkMode}/> */}
-            </ul>
-        </nav>
-    )}
+        return (
+            <nav style={{ backgroundColor: this.activeStateDarkMode() }} className={`navbar-container ${this.state.active ? 'navbar-active' : ''} ${this.state.hidden ? 'hiddenNav' : ''}`} aria-label="Main navigation" role="navigation">
+                <div className='navbar-content'>
+                    <CompanyTextLogo toggleDarkMode={this.props.toggleDarkMode} colors={this.props.colors} />
+                    <ToggleButton color={this.props.colors.blue} toggleNavbar={this.toggleNavbar} shape='bars' inverse='true' aria-label="Toggle navigation menu" aria-expanded={this.state.active} />
+                </div>
+                <ul className='navbar-items' role="menu">
+                    <ToggleButton color={this.props.colors.yellow} toggleNavbar={this.toggleNavbar} shape='cross' inverse='true' aria-label="Close navigation menu" />
+                    <NavbarItemList scrollTo={this.scrollTo} label_scrolls={this.props.label_scrolls} labels={this.props.labels} color={this.props.colors.yellow} />
+                    {/* <ToggleSwitch colors={this.props.colors} toggleDarkMode={this.props.toggleDarkMode}/> */}
+                </ul>
+            </nav>
+        )
+    }
 }
 
 function NavbarItemList(props) {
     const navbar_labels = props.labels;
-    const list = navbar_labels.map((label, i) => 
-        <NavbarItem key={`key_${label}`} color={props.color} text={label} scroll={() => props.scrollTo(i)}/>
+    const list = navbar_labels.map((label, i) =>
+        <NavbarItem key={`key_${label}`} color={props.color} text={label} scroll={() => props.scrollTo(i)} />
     );
     return (<div className='navbar-items-list'>{list}</div>)
 }

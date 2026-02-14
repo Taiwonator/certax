@@ -5,25 +5,25 @@ const ContentButton = (props) => {
     let style = {};
     //Use for onhover change
 
-    if(!props.inverse) {
+    if (!props.inverse) {
         style = {
             color: props.color,
             borderColor: props.color
         }
-        
+
     } else {
         style = {
-            color: 'white', 
-            borderColor: 'none', 
+            color: 'white',
+            borderColor: 'none',
             backgroundColor: props.color
         }
     }
-        
-        return (
-            <div onClick={props.buttonOnClick} className={`button ${(!props.inverse) ? '' : 'inverse'} `} style={style} type='button'>
-                {props.text}
-            </div>
-        )
+
+    return (
+        <button onClick={props.buttonOnClick} className={`button ${(!props.inverse) ? '' : 'inverse'} `} style={style} type='button'>
+            {props.text}
+        </button>
+    )
 }
 
 export default ContentButton;

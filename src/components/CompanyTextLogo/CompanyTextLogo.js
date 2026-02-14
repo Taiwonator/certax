@@ -3,7 +3,8 @@ import './CompanyTextLogo.scss';
 
 const CompanyTextLogo = (props) => (
     <div className='company-text-logo-container'>
-        <svg id="company-text-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730.1 123.95">
+        <svg id="company-text-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730.1 123.95" role="img" aria-label="Certax Accounting Norwich">
+            <title>Certax Accounting Norwich</title>
             <path fill={props.colors.blue} d="M563.77,697.54a51.84,51.84,0,0,1-7.44,48.6,54.67,54.67,0,0,0-82.62-62.74,51.88,51.88,0,0,1,90.06,14.14Z" transform="translate(-454.84 -663.05)" />
             <path fill={props.colors.yellow} d="M493.36,786.18a51.83,51.83,0,0,1-38.52-30.53A54.68,54.68,0,0,0,550.28,715a51.88,51.88,0,0,1-56.92,71.21Z" transform="translate(-454.84 -663.05)" />
             <path fill={props.colors.yellow} d="M507.21,691.88c7.06,0,12.27,2,15.61,5.3l2.51-4.46h3.44S527,701.54,527,705.54v6.13h-3.9v-3.53c0-7.71-6-13-15.79-13-16.35,0-19.88,15-19.88,28.8,0,15.24,4.27,28.71,20.44,28.71,9.84,0,15.23-5.21,17.46-14.87l3.72.56c-1.86,8.73-6.88,17.56-21.93,17.56-18.48,0-28.05-13.19-28.05-32.24C479.07,704.42,489,691.88,507.21,691.88Z" transform="translate(-454.84 -663.05)" />
@@ -21,6 +22,6 @@ const CompanyTextLogo = (props) => (
             <path className='hide' fill={props.colors.lightblue} d="M1130.05,748.22h7.6V704h-7.6v-2.54h21.33V704h-7.61v20.66h27.45V704h-7.61v-2.54h21.33V704h-7.61v44.23h7.61v2.53h-21.33v-2.53h7.61V727.33h-27.45v20.89h7.61v2.53h-21.33Z" transform="translate(-454.84 -663.05)" />
         </svg>
     </div>
-) 
+)
 
 export default CompanyTextLogo;

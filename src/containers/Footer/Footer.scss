@@ -8,13 +8,15 @@
     flex-direction: row;
     justify-content: space-between;
     position: relative;
+    margin-bottom: 40px;
 
     @include b.for-tablet() {
         flex-direction: column;
         height: 150px;
     }
 
-    .footer-left, .footer-right {
+    .footer-left,
+    .footer-right {
         display: flex;
         height: 100%;
         align-items: center;
@@ -62,7 +64,7 @@
             flex: 1;
             margin: 0 1em;
         }
-        
+
     }
 }
 
@@ -76,9 +78,10 @@
 
     img {
         max-width: 250px;
+
         @include b.for-phone() {
             max-width: 150px;
         }
     }
-    
+
 }
