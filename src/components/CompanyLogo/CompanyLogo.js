@@ -3,7 +3,7 @@ import './CompanyLogo.scss';
 
 const CompanyLogo = (props) => (
     <div className="company-logo-container">
-        <svg id="certax-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.13 226.05" role="img" aria-label="Certax Accounting Logo">
+        <svg id="certax-logo" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 204.13 226.05" role="img" aria-label="Certax Accounting Logo">
             <title>Certax Accounting Logo</title>
             <path fill={props.colors.blue} d="M1073.65,351.91a94.52,94.52,0,0,1-13.55,88.61,99.7,99.7,0,0,0-150.69-114.4,94.61,94.61,0,0,1,164.24,25.79Z" transform="translate(-875.02 -289)" />
             <path fill={props.colors.yellow} d="M945.26,513.56A94.51,94.51,0,0,1,875,457.87a99.7,99.7,0,0,0,174-74.18,94.6,94.6,0,0,1-103.8,129.87Z" transform="translate(-875.02 -289)" />

@@ -27,7 +27,7 @@ const InfoSection = React.forwardRef((props, ref) => {
 
 
 const LeftGraphic = (props) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 233.5 660.5" className='left-side-graphic'>
+    <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 233.5 660.5" className='left-side-graphic'>
         <g>
             <g>
                 <rect x="76" width="74" height="76" fill={props.colors.yellow} opacity='.8' isolation='isolate' />

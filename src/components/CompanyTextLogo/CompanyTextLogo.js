@@ -3,7 +3,7 @@ import './CompanyTextLogo.scss';
 
 const CompanyTextLogo = (props) => (
     <div className='company-text-logo-container'>
-        <svg id="company-text-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 730.1 123.95" role="img" aria-label="Certax Accounting Norwich">
+        <svg id="company-text-logo" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 730.1 123.95" role="img" aria-label="Certax Accounting Norwich">
             <title>Certax Accounting Norwich</title>
             <path fill={props.colors.blue} d="M563.77,697.54a51.84,51.84,0,0,1-7.44,48.6,54.67,54.67,0,0,0-82.62-62.74,51.88,51.88,0,0,1,90.06,14.14Z" transform="translate(-454.84 -663.05)" />
             <path fill={props.colors.yellow} d="M493.36,786.18a51.83,51.83,0,0,1-38.52-30.53A54.68,54.68,0,0,0,550.28,715a51.88,51.88,0,0,1-56.92,71.21Z" transform="translate(-454.84 -663.05)" />
