@@ -1,10 +1,10 @@
 import { tinaField, useTina } from "tinacms/dist/react";
-import type { PageQuery, PageQueryVariables } from "../__generated__/types";
+import type { HomeQuery, HomeQueryVariables } from "../__generated__/types";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 
 type Props = {
-	variables: PageQueryVariables;
-	data: PageQuery;
+	variables: HomeQueryVariables;
+	data: HomeQuery;
 	query: string;
 }
 
@@ -15,16 +15,2610 @@ const HomePage = (props: Props) => {
 		data: props.data,
 	})
 
-	const page = data.page;
-
+	const home = data.home;
 
 	return (
-		<main>
-			<div data-tina-field={tinaField(page, "body")}>
-				<TinaMarkdown content={page.body} />
+		<div id="root">
+			<div className="home-container">
+				<nav
+					className="navbar-container"
+					aria-label="Main navigation"
+					role="navigation"
+				>
+					<div className="navbar-content">
+						<div className="company-text-logo-container">
+							<svg
+								id="company-text-logo"
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 730.1 123.95"
+								role="img"
+								aria-label="Certax Accounting Norwich"
+							>
+								<title>Certax Accounting Norwich</title>
+								<path
+									fill="#525288"
+									d="M563.77,697.54a51.84,51.84,0,0,1-7.44,48.6,54.67,54.67,0,0,0-82.62-62.74,51.88,51.88,0,0,1,90.06,14.14Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									fill="#E2AA60"
+									d="M493.36,786.18a51.83,51.83,0,0,1-38.52-30.53A54.68,54.68,0,0,0,550.28,715a51.88,51.88,0,0,1-56.92,71.21Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									fill="#E2AA60"
+									d="M507.21,691.88c7.06,0,12.27,2,15.61,5.3l2.51-4.46h3.44S527,701.54,527,705.54v6.13h-3.9v-3.53c0-7.71-6-13-15.79-13-16.35,0-19.88,15-19.88,28.8,0,15.24,4.27,28.71,20.44,28.71,9.84,0,15.23-5.21,17.46-14.87l3.72.56c-1.86,8.73-6.88,17.56-21.93,17.56-18.48,0-28.05-13.19-28.05-32.24C479.07,704.42,489,691.88,507.21,691.88Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									fill="#525288"
+									d="M577,748.26h7.68V703.65H577v-2.56h39.58l-2.94,15h-2l-.6-9.26c-.15-2.71-.45-3-2.26-3H590.81v20.92h12.34v-6.7h3V735h-3V727.5H590.81V748h16.33c3.24,0,4-.68,7.07-13.09h2.19s-.61,8-.53,12v3.91H577Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									fill="#525288"
+									d="M623.92,748.26h7.68V703.65h-7.68v-2.56h19.87c12.71,0,17.45,4.81,17.45,12.56,0,6-2.78,10.46-10.61,12.34v.3c4.74,1.28,9.26,5.27,9.48,13.47.08,3.91.68,8.28,3.76,8.28,1.51,0,2.79-2.26,2.94-2.49l2.18,1.28a7.69,7.69,0,0,1-7.07,4.67c-5.49,0-8.5-5.34-8.58-12.87,0-7.82-4.29-11.28-8.28-11.28h-7.29v20.91h7.67v2.56H623.92Zm20.47-23.62c7.75,0,10.23-3.69,10.23-10.31,0-6.77-2.26-10.46-10.23-10.46h-6.62v20.77Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									fill="#525288"
+									d="M682.46,748.26h7.67V703.87h-10c-3.31,0-4,.75-7,12.27h-2.26s.45-7.6.45-11.29v-3.76h44.62l-1,15h-2l-1.73-7.45c-1-4.37-1.43-4.82-3.54-4.82H696.3v44.39H704v2.56H682.46Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									fill="#525288"
+									d="M713.31,748.26h6.47l16.93-47.92h3l18,47.92h6v2.56h-19v-2.56h6.47l-5.79-15.19h-17L723,748.26h6.32v2.56h-16Zm16-17.9h15l-7.83-20.54Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									fill="#525288"
+									d="M764.55,748.26h6.69l13.25-21.67-13.85-22.94h-6.85v-2.56h19.87v2.56h-6.17l10.68,17.53,10.61-17.53h-6.17v-2.56H809v2.56h-6.69l-12.27,20.24,15.05,24.37H812v2.56H791.71v-2.56h6.17l-11.51-19-11.52,19H781v2.56H764.55Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									className="hide"
+									fill="#9FB7DB"
+									d="M825.51,748.22h7.6V705.85a4.24,4.24,0,0,0-3.88-1.86h-5v-2.54h13.65l28.94,39.16V704h-7.61v-2.54h18.2V704h-7.61v47.14h-3.06L836.1,709.28v38.94h7.6v2.53H825.51Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									className="hide"
+									fill="#9FB7DB"
+									d="M905.54,700.41c15.29,0,21.85,9.17,21.85,24.91,0,15.36-6.11,26.48-21.85,26.48-16.26,0-21.78-10.45-21.78-26.48C883.76,711.15,889.88,700.41,905.54,700.41Zm15.06,25.73c0-13.35-2.16-23.2-15-23.2s-15.06,10.52-15.06,23.2c0,13.13,2.16,23.12,15.06,23.12C918.22,749.26,920.6,738.3,920.6,726.14Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									className="hide"
+									fill="#9FB7DB"
+									d="M934.48,748.22h7.61V704h-7.61v-2.54h19.69c12.6,0,17.3,4.77,17.3,12.46,0,5.89-2.76,10.36-10.51,12.23v.3c4.69,1.27,9.17,5.22,9.39,13.35.08,3.88.67,8.2,3.73,8.2,1.49,0,2.76-2.24,2.91-2.46l2.16,1.27a7.61,7.61,0,0,1-7,4.62c-5.44,0-8.43-5.29-8.5-12.75,0-7.76-4.25-11.19-8.2-11.19H948.2v20.74h7.61v2.53H934.48Zm20.28-23.42c7.69,0,10.15-3.66,10.15-10.22,0-6.71-2.24-10.37-10.15-10.37H948.2V724.8Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									className="hide"
+									fill="#9FB7DB"
+									d="M1036.29,701.45h16.41V704h-6.42l-16,47.51h-3.06L1015.18,718l-11.86,33.49h-2.91L983.33,704h-7v-2.54h20V704h-6.64l13.8,38.26,10.22-28.57-3.51-9.69h-7.08v-2.54h20V704h-6.57l13.73,38.11L1043.08,704h-6.79Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									className="hide"
+									fill="#9FB7DB"
+									d="M1055.31,748.22h7.61V704h-7.61v-2.54h21.33V704H1069v44.23h7.61v2.53h-21.33Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									className="hide"
+									fill="#9FB7DB"
+									d="M1106.18,700.41c5.67,0,9.84,1.56,12.53,4.25l2-3.58h2.76a77.73,77.73,0,0,0-1.42,10.29v4.92h-3.13v-2.83c0-6.19-4.85-10.44-12.68-10.44-13.12,0-16,12.08-16,23.12,0,12.23,3.43,23.05,16.41,23.05,7.91,0,12.23-4.18,14-11.94l3,.45c-1.5,7-5.52,14.1-17.61,14.1-14.84,0-22.52-10.59-22.52-25.88S1091.56,700.41,1106.18,700.41Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+								<path
+									className="hide"
+									fill="#9FB7DB"
+									d="M1130.05,748.22h7.6V704h-7.6v-2.54h21.33V704h-7.61v20.66h27.45V704h-7.61v-2.54h21.33V704h-7.61v44.23h7.61v2.53h-21.33v-2.53h7.61V727.33h-27.45v20.89h7.61v2.53h-21.33Z"
+									transform="translate(-454.84 -663.05)"
+								/>
+							</svg>
+						</div>
+						<div
+							className="toggle-button-container bars inverse"
+							style={{ backgroundColor: "rgb(82, 82, 136)" }}
+						>
+							<svg
+								id="toggle-button"
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 64.47 58.31"
+							>
+								<rect
+									fill="#525288"
+									className="bars"
+									x="990.89"
+									y="471.22"
+									width="3.44"
+									height="64.29"
+									transform="translate(-484.43 987.87) rotate(-89.23)"
+								/>
+								<rect
+									fill="#525288"
+									className="bars"
+									x="990.82"
+									y="498.22"
+									width="3.44"
+									height="64.29"
+									transform="translate(-511.49 1014.44) rotate(-89.23)"
+								/>
+								<rect
+									fill="#525288"
+									className="bars"
+									x="990.75"
+									y="525.22"
+									width="3.44"
+									height="64.29"
+									transform="translate(-538.56 1041) rotate(-89.23)"
+								/>
+								<rect
+									fill="#525288"
+									className="cross"
+									x="966.31"
+									y="450.9"
+									width="3.44"
+									height="79.13"
+									transform="translate(-1002.11 366.88) rotate(-45)"
+								/>
+								<rect
+									fill="#525288"
+									className="cross"
+									x="928.46"
+									y="488.74"
+									width="79.13"
+									height="3.44"
+									transform="translate(-1002.11 366.88) rotate(-45)"
+								/>
+							</svg>
+						</div>
+					</div>
+					<ul className="navbar-items" role="menu">
+						<div
+							className="toggle-button-container cross inverse"
+							style={{ backgroundColor: "rgb(226, 170, 96)" }}
+						>
+							<svg
+								id="toggle-button"
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 64.47 58.31"
+							>
+								<rect
+									fill="#E2AA60"
+									className="bars"
+									x="990.89"
+									y="471.22"
+									width="3.44"
+									height="64.29"
+									transform="translate(-484.43 987.87) rotate(-89.23)"
+								/>
+								<rect
+									fill="#E2AA60"
+									className="bars"
+									x="990.82"
+									y="498.22"
+									width="3.44"
+									height="64.29"
+									transform="translate(-511.49 1014.44) rotate(-89.23)"
+								/>
+								<rect
+									fill="#E2AA60"
+									className="bars"
+									x="990.75"
+									y="525.22"
+									width="3.44"
+									height="64.29"
+									transform="translate(-538.56 1041) rotate(-89.23)"
+								/>
+								<rect
+									fill="#E2AA60"
+									className="cross"
+									x="966.31"
+									y="450.9"
+									width="3.44"
+									height="79.13"
+									transform="translate(-1002.11 366.88) rotate(-45)"
+								/>
+								<rect
+									fill="#E2AA60"
+									className="cross"
+									x="928.46"
+									y="488.74"
+									width="79.13"
+									height="3.44"
+									transform="translate(-1002.11 366.88) rotate(-45)"
+								/>
+							</svg>
+						</div>
+						<div className="navbar-items-list">
+							<span
+								className="navbar-item-container"
+								style={{ borderColor: "rgb(113, 85, 48)" }}
+							>
+								<p style={{ color: "rgb(226, 170, 96)" }}>About</p>
+							</span>
+							<span
+								className="navbar-item-container"
+								style={{ borderColor: "rgb(113, 85, 48)" }}
+							>
+								<p style={{ color: "rgb(226, 170, 96)" }}>Testimonials</p>
+							</span>
+							<span
+								className="navbar-item-container"
+								style={{ borderColor: "rgb(113, 85, 48)" }}
+							>
+								<p style={{ color: "rgb(226, 170, 96)" }}>Alice</p>
+							</span>
+							<span
+								className="navbar-item-container"
+								style={{ borderColor: "rgb(113, 85, 48)" }}
+							>
+								<p style={{ color: "rgb(226, 170, 96)" }}>Services</p>
+							</span>
+							<span
+								className="navbar-item-container"
+								style={{ borderColor: "rgb(113, 85, 48)" }}
+							>
+								<p style={{ color: "rgb(226, 170, 96)" }}>Contact Us</p>
+							</span>
+						</div>
+					</ul>
+				</nav>
+				<header className="landing-page-container">
+					<div className="header-content-container">
+						<div className="company-logo-container">
+							<svg
+								id="certax-logo"
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 204.13 226.05"
+								role="img"
+								aria-label="Certax Accounting Logo"
+							>
+								<title>Certax Accounting Logo</title>
+								<path
+									fill="#525288"
+									d="M1073.65,351.91a94.52,94.52,0,0,1-13.55,88.61,99.7,99.7,0,0,0-150.69-114.4,94.61,94.61,0,0,1,164.24,25.79Z"
+									transform="translate(-875.02 -289)"
+								/>
+								<path
+									fill="#E2AA60"
+									d="M945.26,513.56A94.51,94.51,0,0,1,875,457.87a99.7,99.7,0,0,0,174-74.18,94.6,94.6,0,0,1-103.8,129.87Z"
+									transform="translate(-875.02 -289)"
+								/>
+								<path
+									fill="#E2AA60"
+									d="M970.52,341.59c12.87,0,22.36,3.56,28.46,9.65l4.57-8.13h6.27s-3.22,16.1-3.22,23.38v11.18h-7.11v-6.44c0-14.06-11-23.71-28.8-23.71-29.82,0-36.25,27.44-36.25,52.51,0,27.78,7.79,52.35,37.27,52.35,17.95,0,27.78-9.49,31.84-27.11l6.78,1c-3.39,15.92-12.54,32-40,32-33.71,0-51.16-24.06-51.16-58.79C919.19,364.46,937.32,341.59,970.52,341.59Z"
+									transform="translate(-875.02 -289)"
+								/>
+							</svg>
+						</div>
+						<div className="company-name-container">
+							<h1 style={{ color: "rgb(82, 82, 136)" }}>CERTAX</h1>
+							<h2 style={{ color: "rgb(159, 183, 219)" }}>
+								<span>accounting</span>
+							</h2>
+							<h3 style={{ color: "rgb(226, 170, 96)" }}>
+								Professional Accountants
+								<br /> &amp; Tax Advisers
+							</h3>
+						</div>
+						<div className="scroll-down-button-container">
+							<svg
+								id="scroll-down-button"
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 126.1 63.05"
+							>
+								<polygon fill="#525288" points="0 0 126.09 0 63.05 63.05 0 0" />
+							</svg>
+						</div>
+					</div>
+					<div className="landing-page-graphics-container" aria-hidden="true">
+						<div className="background-panels-container">
+							<div className="background-panel panel-4" />
+							<div className="background-panel panel-3" />
+							<div className="background-panel panel-2" />
+							<div className="background-panel panel-1" />
+							<div className="background-panel panel-0 hide" />
+							<div className="background-panel panel-1 hide" />
+							<div className="background-panel panel-2" />
+							<div className="background-panel panel-3" />
+							<div className="background-panel panel-4" />
+						</div>
+						<div className="staircase-container BR">
+							<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+								<rect
+									className="box-10"
+									x={1060}
+									y={681}
+									width={117}
+									height={117}
+									transform="translate(1645 1149) rotate(-180)"
+									fill="#525288"
+								/>
+								<g>
+									<rect
+										className="box-8"
+										x={1060}
+										y={564}
+										width={117}
+										height={117}
+										transform="translate(1645 915) rotate(-180)"
+										fill="#525288"
+									/>
+									<rect
+										className="box-8"
+										x={943}
+										y={681}
+										width={117}
+										height={117}
+										transform="translate(1411 1149) rotate(-180)"
+										fill="#525288"
+									/>
+								</g>
+								<g>
+									<rect
+										className="box-6"
+										x={1060}
+										y={447}
+										width={117}
+										height={117}
+										transform="translate(1645 681) rotate(-180)"
+										fill="#525288"
+									/>
+									<rect
+										className="box-6"
+										x={826}
+										y={681}
+										width={117}
+										height={117}
+										transform="translate(1177 1149) rotate(-180)"
+										fill="#525288"
+									/>
+									<rect
+										className="box-6"
+										x={943}
+										y={564}
+										width={117}
+										height={117}
+										transform="translate(1411 915) rotate(-180)"
+										fill="#525288"
+									/>
+								</g>
+								<g>
+									<rect
+										className="box-4"
+										x={1060}
+										y={330}
+										width={117}
+										height={117}
+										transform="translate(1645 447) rotate(-180)"
+										fill="#525288"
+									/>
+									<rect
+										className="box-4"
+										x={943}
+										y={447}
+										width={117}
+										height={117}
+										transform="translate(1411 681) rotate(-180)"
+										fill="#525288"
+									/>
+									<rect
+										className="box-4"
+										x={826}
+										y={564}
+										width={117}
+										height={117}
+										transform="translate(1177 915) rotate(-180)"
+										fill="#525288"
+									/>
+									<rect
+										className="box-4"
+										x={709}
+										y={681}
+										width={117}
+										height={117}
+										transform="translate(943 1149) rotate(-180)"
+										fill="#525288"
+									/>
+								</g>
+								<rect
+									className="box-2"
+									x={592}
+									y={681}
+									width={117}
+									height={117}
+									transform="translate(709 1149) rotate(-180)"
+									fill="#525288"
+								/>
+							</svg>
+						</div>
+						<div className="staircase-container BL">
+							<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+								<rect
+									className="box-10"
+									x={1060}
+									y={681}
+									width={117}
+									height={117}
+									transform="translate(1645 1149) rotate(-180)"
+									fill="#E2AA60"
+								/>
+								<g>
+									<rect
+										className="box-8"
+										x={1060}
+										y={564}
+										width={117}
+										height={117}
+										transform="translate(1645 915) rotate(-180)"
+										fill="#E2AA60"
+									/>
+									<rect
+										className="box-8"
+										x={943}
+										y={681}
+										width={117}
+										height={117}
+										transform="translate(1411 1149) rotate(-180)"
+										fill="#E2AA60"
+									/>
+								</g>
+								<g>
+									<rect
+										className="box-6"
+										x={1060}
+										y={447}
+										width={117}
+										height={117}
+										transform="translate(1645 681) rotate(-180)"
+										fill="#E2AA60"
+									/>
+									<rect
+										className="box-6"
+										x={826}
+										y={681}
+										width={117}
+										height={117}
+										transform="translate(1177 1149) rotate(-180)"
+										fill="#E2AA60"
+									/>
+									<rect
+										className="box-6"
+										x={943}
+										y={564}
+										width={117}
+										height={117}
+										transform="translate(1411 915) rotate(-180)"
+										fill="#E2AA60"
+									/>
+								</g>
+								<g>
+									<rect
+										className="box-4"
+										x={1060}
+										y={330}
+										width={117}
+										height={117}
+										transform="translate(1645 447) rotate(-180)"
+										fill="#E2AA60"
+									/>
+									<rect
+										className="box-4"
+										x={943}
+										y={447}
+										width={117}
+										height={117}
+										transform="translate(1411 681) rotate(-180)"
+										fill="#E2AA60"
+									/>
+									<rect
+										className="box-4"
+										x={826}
+										y={564}
+										width={117}
+										height={117}
+										transform="translate(1177 915) rotate(-180)"
+										fill="#E2AA60"
+									/>
+									<rect
+										className="box-4"
+										x={709}
+										y={681}
+										width={117}
+										height={117}
+										transform="translate(943 1149) rotate(-180)"
+										fill="#E2AA60"
+									/>
+								</g>
+								<rect
+									className="box-2"
+									x={592}
+									y={681}
+									width={117}
+									height={117}
+									transform="translate(709 1149) rotate(-180)"
+									fill="#E2AA60"
+								/>
+							</svg>
+						</div>
+						<div className="lower-staircase-container">
+							<div className="staircase-container TR">
+								<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+									<rect
+										className="box-10"
+										x={1060}
+										y={681}
+										width={117}
+										height={117}
+										transform="translate(1645 1149) rotate(-180)"
+										fill="#E2AA60"
+									/>
+									<g>
+										<rect
+											className="box-8"
+											x={1060}
+											y={564}
+											width={117}
+											height={117}
+											transform="translate(1645 915) rotate(-180)"
+											fill="#E2AA60"
+										/>
+										<rect
+											className="box-8"
+											x={943}
+											y={681}
+											width={117}
+											height={117}
+											transform="translate(1411 1149) rotate(-180)"
+											fill="#E2AA60"
+										/>
+									</g>
+									<g>
+										<rect
+											className="box-6"
+											x={1060}
+											y={447}
+											width={117}
+											height={117}
+											transform="translate(1645 681) rotate(-180)"
+											fill="#E2AA60"
+										/>
+										<rect
+											className="box-6"
+											x={826}
+											y={681}
+											width={117}
+											height={117}
+											transform="translate(1177 1149) rotate(-180)"
+											fill="#E2AA60"
+										/>
+										<rect
+											className="box-6"
+											x={943}
+											y={564}
+											width={117}
+											height={117}
+											transform="translate(1411 915) rotate(-180)"
+											fill="#E2AA60"
+										/>
+									</g>
+								</svg>
+							</div>
+							<div className="staircase-container TL">
+								<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+									<rect
+										className="box-10"
+										x={1060}
+										y={681}
+										width={117}
+										height={117}
+										transform="translate(1645 1149) rotate(-180)"
+										fill="#525288"
+									/>
+									<g>
+										<rect
+											className="box-8"
+											x={1060}
+											y={564}
+											width={117}
+											height={117}
+											transform="translate(1645 915) rotate(-180)"
+											fill="#525288"
+										/>
+										<rect
+											className="box-8"
+											x={943}
+											y={681}
+											width={117}
+											height={117}
+											transform="translate(1411 1149) rotate(-180)"
+											fill="#525288"
+										/>
+									</g>
+									<g>
+										<rect
+											className="box-6"
+											x={1060}
+											y={447}
+											width={117}
+											height={117}
+											transform="translate(1645 681) rotate(-180)"
+											fill="#525288"
+										/>
+										<rect
+											className="box-6"
+											x={826}
+											y={681}
+											width={117}
+											height={117}
+											transform="translate(1177 1149) rotate(-180)"
+											fill="#525288"
+										/>
+										<rect
+											className="box-6"
+											x={943}
+											y={564}
+											width={117}
+											height={117}
+											transform="translate(1411 915) rotate(-180)"
+											fill="#525288"
+										/>
+									</g>
+								</svg>
+							</div>
+						</div>
+					</div>
+				</header>
+				<main>
+					<section
+						className="about-section-container"
+						aria-label="About Certax Accounting"
+						style={{ borderBottomColor: "rgb(245, 245, 245)" }}
+					>
+						<div className="about-section-content-wrapper">
+							<div className="about-section-content-container">
+								<div className="staircase-container TR">
+									<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+										<rect
+											className="box-10"
+											x={1060}
+											y={681}
+											width={117}
+											height={117}
+											transform="translate(1645 1149) rotate(-180)"
+											fill="#E2AA60"
+										/>
+										<g>
+											<rect
+												className="box-8"
+												x={1060}
+												y={564}
+												width={117}
+												height={117}
+												transform="translate(1645 915) rotate(-180)"
+												fill="#E2AA60"
+											/>
+											<rect
+												className="box-8"
+												x={943}
+												y={681}
+												width={117}
+												height={117}
+												transform="translate(1411 1149) rotate(-180)"
+												fill="#E2AA60"
+											/>
+										</g>
+										<rect
+											className="box-6"
+											x={943}
+											y={564}
+											width={117}
+											height={117}
+											transform="translate(1411 915) rotate(-180)"
+											fill="#E2AA60"
+										/>
+									</svg>
+								</div>
+								<div className="staircase-container TL">
+									<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+										<rect
+											className="box-10"
+											x={1060}
+											y={681}
+											width={117}
+											height={117}
+											transform="translate(1645 1149) rotate(-180)"
+											fill="#525288"
+										/>
+										<g>
+											<rect
+												className="box-8"
+												x={1060}
+												y={564}
+												width={117}
+												height={117}
+												transform="translate(1645 915) rotate(-180)"
+												fill="#525288"
+											/>
+											<rect
+												className="box-8"
+												x={943}
+												y={681}
+												width={117}
+												height={117}
+												transform="translate(1411 1149) rotate(-180)"
+												fill="#525288"
+											/>
+										</g>
+										<rect
+											className="box-6"
+											x={943}
+											y={564}
+											width={117}
+											height={117}
+											transform="translate(1411 915) rotate(-180)"
+											fill="#525288"
+										/>
+									</svg>
+								</div>
+								<div className="staircase-container BR">
+									<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+										<rect
+											className="box-10"
+											x={1060}
+											y={681}
+											width={117}
+											height={117}
+											transform="translate(1645 1149) rotate(-180)"
+											fill="#525288"
+										/>
+										<g>
+											<rect
+												className="box-8"
+												x={1060}
+												y={564}
+												width={117}
+												height={117}
+												transform="translate(1645 915) rotate(-180)"
+												fill="#525288"
+											/>
+											<rect
+												className="box-8"
+												x={943}
+												y={681}
+												width={117}
+												height={117}
+												transform="translate(1411 1149) rotate(-180)"
+												fill="#525288"
+											/>
+										</g>
+										<rect
+											className="box-6"
+											x={943}
+											y={564}
+											width={117}
+											height={117}
+											transform="translate(1411 915) rotate(-180)"
+											fill="#525288"
+										/>
+									</svg>
+								</div>
+								<div className="staircase-container BL">
+									<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+										<rect
+											className="box-10"
+											x={1060}
+											y={681}
+											width={117}
+											height={117}
+											transform="translate(1645 1149) rotate(-180)"
+											fill="#E2AA60"
+										/>
+										<g>
+											<rect
+												className="box-8"
+												x={1060}
+												y={564}
+												width={117}
+												height={117}
+												transform="translate(1645 915) rotate(-180)"
+												fill="#E2AA60"
+											/>
+											<rect
+												className="box-8"
+												x={943}
+												y={681}
+												width={117}
+												height={117}
+												transform="translate(1411 1149) rotate(-180)"
+												fill="#E2AA60"
+											/>
+										</g>
+										<rect
+											className="box-6"
+											x={943}
+											y={564}
+											width={117}
+											height={117}
+											transform="translate(1411 915) rotate(-180)"
+											fill="#E2AA60"
+										/>
+									</svg>
+								</div>
+								<div className="content-box-container">
+									<div
+										className="content-box-left-half"
+										style={{
+											borderTopColor: "rgb(226, 170, 96)",
+											borderRight: "none",
+											borderBottomColor: "rgb(226, 170, 96)",
+											borderLeftColor: "rgb(226, 170, 96)"
+										}}
+									></div>
+									<div
+										className="content-box-right-half"
+										style={{
+											borderTopColor: "rgb(82, 82, 136)",
+											borderRightColor: "rgb(82, 82, 136)",
+											borderBottomColor: "rgb(82, 82, 136)",
+											borderLeft: "none"
+										}}
+									></div>
+									<div className="staircase-container TR">
+										<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+											<rect
+												className="box-10"
+												x={1060}
+												y={681}
+												width={117}
+												height={117}
+												transform="translate(1645 1149) rotate(-180)"
+												fill="#E2AA60"
+											/>
+											<g>
+												<rect
+													className="box-8"
+													x={1060}
+													y={564}
+													width={117}
+													height={117}
+													transform="translate(1645 915) rotate(-180)"
+													stroke="#E2AA60"
+													strokeWidth={2}
+													fill="none"
+												/>
+												<rect
+													className="box-8"
+													x={943}
+													y={681}
+													width={117}
+													height={117}
+													transform="translate(1411 1149) rotate(-180)"
+													stroke="#E2AA60"
+													strokeWidth={2}
+													fill="none"
+												/>
+											</g>
+										</svg>
+									</div>
+									<div className="staircase-container TL">
+										<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+											<rect
+												className="box-10"
+												x={1060}
+												y={681}
+												width={117}
+												height={117}
+												transform="translate(1645 1149) rotate(-180)"
+												fill="#525288"
+											/>
+											<g>
+												<rect
+													className="box-8"
+													x={1060}
+													y={564}
+													width={117}
+													height={117}
+													transform="translate(1645 915) rotate(-180)"
+													stroke="#525288"
+													strokeWidth={2}
+													fill="none"
+												/>
+												<rect
+													className="box-8"
+													x={943}
+													y={681}
+													width={117}
+													height={117}
+													transform="translate(1411 1149) rotate(-180)"
+													stroke="#525288"
+													strokeWidth={2}
+													fill="none"
+												/>
+											</g>
+										</svg>
+									</div>
+									<div className="staircase-container BR">
+										<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+											<rect
+												className="box-10"
+												x={1060}
+												y={681}
+												width={117}
+												height={117}
+												transform="translate(1645 1149) rotate(-180)"
+												fill="#525288"
+											/>
+											<g>
+												<rect
+													className="box-8"
+													x={1060}
+													y={564}
+													width={117}
+													height={117}
+													transform="translate(1645 915) rotate(-180)"
+													stroke="#525288"
+													strokeWidth={2}
+													fill="none"
+												/>
+												<rect
+													className="box-8"
+													x={943}
+													y={681}
+													width={117}
+													height={117}
+													transform="translate(1411 1149) rotate(-180)"
+													stroke="#525288"
+													strokeWidth={2}
+													fill="none"
+												/>
+											</g>
+										</svg>
+									</div>
+									<div className="staircase-container BL">
+										<svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 585 468">
+											<rect
+												className="box-10"
+												x={1060}
+												y={681}
+												width={117}
+												height={117}
+												transform="translate(1645 1149) rotate(-180)"
+												fill="#E2AA60"
+											/>
+											<g>
+												<rect
+													className="box-8"
+													x={1060}
+													y={564}
+													width={117}
+													height={117}
+													transform="translate(1645 915) rotate(-180)"
+													stroke="#E2AA60"
+													strokeWidth={2}
+													fill="none"
+												/>
+												<rect
+													className="box-8"
+													x={943}
+													y={681}
+													width={117}
+													height={117}
+													transform="translate(1411 1149) rotate(-180)"
+													stroke="#E2AA60"
+													strokeWidth={2}
+													fill="none"
+												/>
+											</g>
+										</svg>
+									</div>
+									<div
+										className="content-container"
+										style={{ alignItems: "center" }}
+									>
+										<div className="header-container">
+											<h3
+												style={{ color: "rgb(82, 82, 136)", textAlign: "center" }}
+												data-tina-field={tinaField(home.sections?.about, "headertext")}
+											>
+												{home?.sections?.about?.headertext}
+											</h3>
+											<div
+												className="underline"
+												style={{ justifyContent: "center", display: "flex" }}
+											>
+												<div style={{ backgroundColor: "rgb(82, 82, 136)" }}></div>
+											</div>
+										</div>
+										<p
+											className="para"
+											style={{ color: "rgb(159, 183, 219)", textAlign: "center" }}
+										>
+											Certax Accounting (Central &amp; East Norwich) Ltd is a firm
+											of Chartered Accountants located in Central Norwich and part
+											of a network of accountants across the UK. We provide
+											professional advice and assistance on a wide range of tax and
+											accountancy matters for small to medium size businesses and
+											individuals at a competitive fixed fee. Our aim is to help
+											grow your business, maximise your overall profits, whilst
+											minimising your tax liabilities.
+										</p>
+										<p
+											className="para"
+											style={{ color: "rgb(159, 183, 219)", textAlign: "center" }}
+										>
+											At Certax, you are guaranteed of top quality, professional and
+											proactive services delivered timely with a personal touch.
+										</p>
+										<div
+											className="buttons-container"
+											style={{ justifyContent: "space-around" }}
+										>
+											<button
+												className="button inverse"
+												type="button"
+												style={{
+													color: "white",
+													backgroundColor: "rgb(226, 170, 96)"
+												}}
+											>
+												More info
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className="scroll-down-button-container">
+								<svg
+									id="scroll-down-button"
+									xmlns="https://www.w3.org/2000/svg"
+									viewBox="0 0 126.1 63.05"
+								>
+									<polygon fill="#525288" points="0 0 126.09 0 63.05 63.05 0 0" />
+								</svg>
+							</div>
+						</div>
+					</section>
+					<section
+						className="info-section-container"
+						aria-label="Why Choose Certax"
+					>
+						<div className="info-section-content-wrapper">
+							<svg
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 233.5 660.5"
+								className="left-side-graphic"
+							>
+								<g>
+									<g>
+										<rect
+											x={76}
+											width={74}
+											height={76}
+											fill="#E2AA60"
+											opacity=".8"
+											isolation="isolate"
+										></rect>
+										<rect
+											y={76}
+											width={76}
+											height={74}
+											fill="#E2AA60"
+											opacity={1}
+											isolation="isolate"
+										></rect>
+										<rect
+											width={76}
+											height={76}
+											fill="#E2AA60"
+											opacity=".6"
+											isolation="isolate"
+										/>
+									</g>
+								</g>
+								<g>
+									<g>
+										<rect x={148} y={146} width={72} height={74} fill="#525288" />
+										<rect
+											x={148}
+											y={75}
+											width={72}
+											height={71}
+											fill="#525288"
+											opacity=".8"
+											isolation="isolate"
+										/>
+										<rect
+											x={75}
+											y={146}
+											width={73}
+											height={74}
+											fill="#525288"
+											opacity=".8"
+											isolation="isolate"
+										/>
+										<rect
+											x={75}
+											y={75}
+											width={73}
+											height={71}
+											fill="#525288"
+											opacity=".6"
+											isolation="isolate"
+										/>
+									</g>
+								</g>
+								<line x1="42.5" y1="120.5" x2="42.5" y2="627.5" stroke="#E2AA60" />
+								<line x1="42.5" y1="627.5" x2="220.5" y2="627.5" stroke="#E2AA60" />
+								<line
+									x1="220.5"
+									y1="591.5"
+									x2="220.5"
+									y2="660.5"
+									stroke="#E2AA60"
+								/>
+								<line
+									x1="233.5"
+									y1="613.5"
+									x2="233.5"
+									y2="638.5"
+									stroke="#E2AA60"
+								/>
+							</svg>
+							<div className="info-section-content">
+								<div
+									className="content-container"
+									style={{ alignItems: "flex-start" }}
+								>
+									<div className="header-container">
+										<h3 style={{ color: "rgb(226, 170, 96)", textAlign: "left" }}>
+											CENTRAL AND EAST NORWICH
+										</h3>
+										<div
+											className="underline"
+											style={{ justifyContent: "flex-start", display: "flex" }}
+										>
+											<div style={{ backgroundColor: "rgb(226, 170, 96)" }}></div>
+										</div>
+									</div>
+									<p
+										className="para"
+										style={{ color: "rgb(112, 112, 112)", textAlign: "left" }}
+									>
+										Alice Taiwo is a Chartered Accountant with vast experience in
+										tax and accountancy matters affecting small to medium size
+										businesses and individuals. Her aim is to help grow your
+										business, maximise your overall profits whilst minimising your
+										tax liabilities. With her, you are guaranteed of top quality,
+										professional and proactive services delivered timely with a
+										personal touch.
+									</p>
+									<div
+										className="buttons-container"
+										style={{ justifyContent: "flex-start" }}
+									>
+										<button
+											className="button inverse"
+											type="button"
+											style={{
+												color: "white",
+												backgroundColor: "rgb(82, 82, 136)"
+											}}
+										>
+											Learn more
+										</button>
+									</div>
+								</div>
+								<div className="SVGCalculator-container">
+									<svg
+										id="SVGCalculator"
+										xmlns="https://www.w3.org/2000/svg"
+										viewBox="0 0 391.69 391.73"
+									>
+										<rect
+											id="Rectangle_61-4"
+											data-name="Rectangle 61-4"
+											x="202.57"
+											y="189.16"
+											width="167.8"
+											height="167.8"
+											fill="#525288"
+											opacity=".8"
+											isolation="isolate"
+										></rect>
+										<rect
+											id="Rectangle_100"
+											data-name="Rectangle 100"
+											x="270.71"
+											y="273.06"
+											width="35.86"
+											height="0.94"
+											fill="white"
+										/>
+										<rect
+											id="Rectangle_101"
+											data-name="Rectangle 101"
+											x="287.7"
+											y="255.13"
+											width="0.94"
+											height="35.86"
+											fill="white"
+										/>
+										<rect
+											id="Rectangle_61-3"
+											data-name="Rectangle 61-3"
+											x="202.57"
+											y="21.36"
+											width="167.8"
+											height="167.8"
+											fill="#525288"
+										/>
+										<rect
+											id="Rectangle_98"
+											data-name="Rectangle 98"
+											x="269.77"
+											y="100.45"
+											width="35.86"
+											height="0.94"
+											fill="white"
+										/>
+										<rect
+											id="Rectangle_61"
+											data-name="Rectangle 61"
+											x="34.77"
+											y="21.36"
+											width="167.8"
+											height="167.8"
+											fill="#525288"
+											opacity=".8"
+											isolation="isolate"
+										/>
+										<rect
+											id="Rectangle_97"
+											data-name="Rectangle 97"
+											x="117.86"
+											y="82.85"
+											width="0.94"
+											height="35.86"
+											transform="translate(-36.6 113.19) rotate(-45)"
+											fill="white"
+										></rect>
+										<rect
+											id="Rectangle_99"
+											data-name="Rectangle 99"
+											x="100.4"
+											y="99.64"
+											width="35.86"
+											height="0.94"
+											transform="translate(-36.13 113) rotate(-45)"
+											fill="white"
+										/>
+										<rect
+											id="Rectangle_61-5"
+											data-name="Rectangle 61-5"
+											y="154.39"
+											width="237.34"
+											height="237.34"
+											fill="#E2AA60"
+										/>
+										<g id="Group_64" data-name="Group 64">
+											<rect
+												id="Rectangle_102"
+												data-name="Rectangle 102"
+												x="95.08"
+												y="263.34"
+												width="46.5"
+												height="1.48"
+												fill="white"
+											/>
+											<rect
+												id="Rectangle_103"
+												data-name="Rectangle 103"
+												x="95.08"
+												y="284.18"
+												width="46.5"
+												height="1.48"
+												fill="white"
+											/>
+										</g>
+										<path
+											d="M13.87,140.26V.5H391.19V377.82H252.47"
+											fill="none"
+											stroke="#E2AA60"
+											strokeMiterlimit={10}
+										/>
+									</svg>
+								</div>
+							</div>
+						</div>
+						<div className="middle-graphic-container">
+							<svg viewBox="0 0 132.5 407.5">
+								<g isolation="isolate">
+									<g>
+										<rect fill="grey" x="32.5" y={0} width={100} height={100} />
+										<rect fill="#525288" x="82.5" y={50} width={50} height={50} />
+										<rect
+											fill="#525288"
+											x="82.5"
+											width={50}
+											height={50}
+											opacity=".8"
+										/>
+										<rect
+											fill="#525288"
+											x="32.5"
+											width={50}
+											height={50}
+											opacity=".6"
+										/>
+										<g>
+											<rect
+												stroke="#E2AA60"
+												fill="none"
+												x="49.5"
+												y={374}
+												width={33}
+												height={33}
+											></rect>
+										</g>
+										<rect fill="#E2AA60" x={15} y="17.5" width={100} height={100} />
+										<line
+											stroke="#E2AA60"
+											fill="none"
+											x1="65.5"
+											y1="373.5"
+											x2="65.5"
+											y2="117.5"
+										/>
+										<rect fill="#E2AA60" x={65} y="67.5" width={50} height={50} />
+										<rect fill="#deb176" x={65} y="17.5" width={50} height={50} />
+										<rect fill="#deb176" x={15} y="67.5" width={50} height={50} />
+										<rect fill="#ddbb8f" x={15} y="17.5" width={50} height={50} />
+									</g>
+								</g>
+							</svg>
+						</div>
+					</section>
+					<section
+						className="testimonial-section-container"
+						aria-label="Client Testimonials"
+					>
+						<div className="subheader-container">
+							<h3 style={{ color: "rgb(226, 170, 96)" }}>
+								HEAR WHAT OUR CLIENTS HAVE TO SAY
+							</h3>
+							<h4 />
+							<div
+								className="underline"
+								style={{ justifyContent: "center", display: "none" }}
+							>
+								<div style={{ backgroundColor: "rgb(226, 170, 96)" }} />
+							</div>
+							<svg
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 324.26 48.29"
+								className="stars"
+								style={{ display: "block" }}
+							>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+									transform="translate(-623 -515)"
+								/>
+							</svg>
+						</div>
+						<svg
+							viewBox="0 0 64 134.5"
+							width={60}
+							style={{ width: 50, transform: "translateY(10px)" }}
+						>
+							<line
+								fill="none"
+								stroke="#E2AA60"
+								x1={32}
+								y1="9.5"
+								x2={32}
+								y2="134.5"
+								strokeWidth="1.5"
+							></line>
+							<line
+								fill="none"
+								stroke="#E2AA60"
+								y1="9.5"
+								x2={64}
+								y2="9.5"
+								strokeWidth="1.5"
+							/>
+							<line
+								fill="none"
+								stroke="#E2AA60"
+								x1={47}
+								y1="0.5"
+								x2={17}
+								y2="0.5"
+								strokeWidth={2}
+							/>
+						</svg>
+						<div>
+							<div className="big-testimony-container">
+								<div
+									className="big-testimony-content-container"
+									style={{ backgroundColor: "rgb(226, 170, 96)", order: 0 }}
+								>
+									<div className="quote-container">
+										<p
+											className="quote-text"
+											style={{ alignSelf: "flex-start", textAlign: "left" }}
+										>
+											Alice Taiwo has been our business accountant for the last 7
+											years, she is always professional in her approach and deals
+											with our accounts in a timely and extremely proficient manner,
+											we would have no hesitation in recommending her to anyone in
+											need of a first className accountant
+										</p>
+										<h4
+											className="quote-author hide-right"
+											style={{
+												alignSelf: "flex-end",
+												textAlign: "right",
+												color: "rgb(47, 39, 33)"
+											}}
+										>
+											<span>John &amp; Jill McGrath</span>
+										</h4>
+										<h5
+											className="quote-author hide-right"
+											style={{
+												alignSelf: "flex-end",
+												textAlign: "right",
+												color: "rgb(47, 39, 33)"
+											}}
+										>
+											<span>The Mortgage Point (Suffolk) Ltd, Beccles</span>
+										</h5>
+									</div>
+								</div>
+								<div
+									className="big-testimony-image"
+									style={{
+										backgroundImage:
+											'url("https://static.wixstatic.com/media/9615bc_96cb727f2f1f406b98e82562d1a43711~mv2_d_5312_2988_s_4_2.jpg/v1/fill/w_1903,h_529,al_c,q_85,usm_0.66_1.00_0.01/9615bc_96cb727f2f1f406b98e82562d1a43711~mv2_d_5312_2988_s_4_2.webp")'
+									}}
+								></div>
+							</div>
+							<div className="big-testimony-container">
+								<div
+									className="big-testimony-content-container"
+									style={{ backgroundColor: "rgb(82, 82, 136)", order: 1 }}
+								>
+									<div className="quote-container">
+										<p
+											className="quote-text"
+											style={{ alignSelf: "flex-end", textAlign: "right" }}
+										>
+											We have been working with Alice and Certax Accounting team for
+											seven years. They provide us with expert advice in relation to
+											our annual accounts, tax and financial legislation. The team
+											at Certax Accounting are very professional, and always give
+											clear advice and guidance in a prompt and efficient manner.
+										</p>
+										<h4
+											className="quote-author hide-left"
+											style={{
+												alignSelf: "flex-start",
+												textAlign: "left",
+												color: "rgb(226, 170, 96)"
+											}}
+										>
+											<span>Sergiu Nema</span>
+										</h4>
+										<h5
+											className="quote-author hide-left"
+											style={{
+												alignSelf: "flex-start",
+												textAlign: "left",
+												color: "rgb(226, 170, 96)"
+											}}
+										>
+											<span>Nema &amp; Sons LTD, Norwich</span>
+										</h5>
+									</div>
+								</div>
+								<div
+									className="big-testimony-image"
+									style={{
+										backgroundImage:
+											'url("https://images.unsplash.com/photo-1485575301924-6891ef935dcd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80")'
+									}}
+								></div>
+							</div>
+						</div>
+						<div className="quote-carousel-container tall">
+							<div id="back" className="quote-carousel-button">
+								<p style={{ color: "rgb(82, 82, 136)" }}>BACK</p>
+							</div>
+							<div className="quote-carousel-list-wrapper">
+								<div className="quote-carousel-list" style={{ left: "-100%" }}>
+									<div className="quote-carousel-item-container wide">
+										<div
+											className="quote-carousel-item"
+											style={{ borderColor: "rgb(82, 82, 136)" }}
+										>
+											<h3 style={{ color: "rgb(82, 82, 136)" }}>
+												Excellent service
+											</h3>
+											<p style={{ color: "rgb(82, 82, 136)" }}>
+												Tremendous help to rescue the company during a crucial tax
+												investigation with the HMRC, our previous accountant were
+												totally incompetent. But Alice from Certax Accounting took
+												on the rather daunting challenge and the company's account
+												is now back on track with appropriate accounting entries
+												acceptable to the HMRC investigators. Comes highly
+												recommended, very friendly and polite at all times.
+											</p>
+											<h4 style={{ color: "rgb(82, 82, 136)" }}>
+												Akintola Dasaolu (Director)
+											</h4>
+											<h5 style={{ color: "rgb(82, 82, 136)" }}>
+												ADN Consulting Ltd, Norwich
+											</h5>
+										</div>
+									</div>
+									<div className="quote-carousel-item-container wide">
+										<div
+											className="quote-carousel-item"
+											style={{ borderColor: "rgb(82, 82, 136)" }}
+										>
+											<h3 style={{ color: "rgb(82, 82, 136)" }}>
+												5 Star Person / 5 Star Work
+											</h3>
+											<p style={{ color: "rgb(82, 82, 136)" }}>
+												I would just like to say for the past years I have known
+												Alice Taiwo, it has been an absolute pleasure! Alice
+												explains things to you in a way that you can understand. She
+												has helped my daughter and I, put me on the right track with
+												my businesses and I thank her very much for that. This lady
+												is one accountant I truly recommend.
+											</p>
+											<h4 style={{ color: "rgb(82, 82, 136)" }}>
+												Sarah Jefford (Proprietor)
+											</h4>
+											<h5 style={{ color: "rgb(82, 82, 136)" }}>
+												Lifeboat Restaurant and B&amp;B, Wells Next-the-Sea
+											</h5>
+										</div>
+									</div>
+									<div className="quote-carousel-item-container wide">
+										<div
+											className="quote-carousel-item"
+											style={{ borderColor: "rgb(82, 82, 136)" }}
+										>
+											<h3 style={{ color: "rgb(82, 82, 136)" }}>
+												Amazing Accountant
+											</h3>
+											<p style={{ color: "rgb(82, 82, 136)" }}>
+												I have used Alice at Certax Accounting since I started my
+												business in 2012. In all of this time, not only has she done
+												my accounts so made my life easier, but she is professional
+												at all times, approachable, open to discussion regarding my
+												accounts and totally flexible in her approach to her work.
+												Alice responds to all calls/e-mails as soon as she is free
+												to do so. I fully recommend Alice and Certax Accounting
+												(Central &amp; East Norwich) Ltd to any business.
+											</p>
+											<h4 style={{ color: "rgb(82, 82, 136)" }}>
+												Mrs C. Davison (Proprietor)
+											</h4>
+											<h5 style={{ color: "rgb(82, 82, 136)" }}>
+												Diamond Home Support, Norwich
+											</h5>
+										</div>
+									</div>
+									<div className="quote-carousel-item-container wide">
+										<div
+											className="quote-carousel-item"
+											style={{ borderColor: "rgb(82, 82, 136)" }}
+										>
+											<h3 style={{ color: "rgb(82, 82, 136)" }}>
+												Friendly, Affordable, Efficient Tax Advisor
+											</h3>
+											<p style={{ color: "rgb(82, 82, 136)" }}>
+												I have had the pleasure of using Alice Taiwo's Certax Tax
+												Advisor Services in Norwich since 2012. Alice makes tax easy
+												and gives me the confidence and peace of mind that my
+												financial affairs have been calculated properly in line with
+												the latest legislation. Always providing a warm welcome at
+												very reasonable rates. Alice has turned a chore into a
+												pleasure - I would recommend her to anyone.
+											</p>
+											<h4 style={{ color: "rgb(82, 82, 136)" }}>Gilan Harrison</h4>
+											<h5 style={{ color: "rgb(82, 82, 136)" }}>
+												Property Investor, Norwich
+											</h5>
+										</div>
+									</div>
+									<div className="quote-carousel-item-container wide">
+										<div
+											className="quote-carousel-item"
+											style={{ borderColor: "rgb(82, 82, 136)" }}
+										>
+											<h3 style={{ color: "rgb(82, 82, 136)" }} />
+											<p style={{ color: "rgb(82, 82, 136)" }}>
+												It's not very often that a tax issue becomes a death
+												sentence! I felt utterly helpless and desperate until my
+												sister recommended Alice from Certax who had assisted her
+												with a 4 year backlog....I had 6!!! My tax situation was
+												complex but Alice was not only willing to travel all the way
+												from Norwich to Cambridge to assist me, she helped
+												streamline my accounts, is knowledgeable, thorough,
+												methodical, affordable, trustworthy and nothing is too much.
+												Alice quickly understood my business, had a very good grasp
+												of what was needed and explained what she would do to help
+												in a language I could understand. This business relationship
+												with Alice brought me back from the brink of bankruptcy! I
+												would not hesitate to recommend Alice for her excellent
+												services and expertise.
+											</p>
+											<h4 style={{ color: "rgb(82, 82, 136)" }}>Lady P</h4>
+											<h5 style={{ color: "rgb(82, 82, 136)" }}>
+												International Language School Host, Cambridge
+											</h5>
+										</div>
+									</div>
+									<div className="quote-carousel-item-container wide">
+										<div
+											className="quote-carousel-item"
+											style={{ borderColor: "rgb(82, 82, 136)" }}
+										>
+											<h3 style={{ color: "rgb(82, 82, 136)" }} />
+											<p style={{ color: "rgb(82, 82, 136)" }}>
+												Alice Taiwo has been our accountant since 2014. She is
+												reliable, honest and trustworthy.&nbsp; She is always very
+												helpful and professional.&nbsp;We definitely recommend her
+												services as she has worked well with our business and has a
+												large range of knowledge in the accountancy sector.
+											</p>
+											<h4 style={{ color: "rgb(82, 82, 136)" }}>Denny Robles</h4>
+											<h5 style={{ color: "rgb(82, 82, 136)" }}>
+												Ibertech Solutions Limited, Diss
+											</h5>
+										</div>
+									</div>
+									<div className="quote-carousel-item-container wide">
+										<div
+											className="quote-carousel-item"
+											style={{ borderColor: "rgb(82, 82, 136)" }}
+										>
+											<h3 style={{ color: "rgb(82, 82, 136)" }} />
+											<p style={{ color: "rgb(82, 82, 136)" }}>
+												I have used Alice for over 5 years now. She is always
+												available to answer any questions and on hand to help with
+												my business’s finances and accounts. She is a pleasure to
+												work with and always very professional. She is friendly and
+												approachable, and I will continue to use her and her
+												services for many years to come.
+											</p>
+											<h4 style={{ color: "rgb(82, 82, 136)" }}>Dean Kelf</h4>
+											<h5 style={{ color: "rgb(82, 82, 136)" }}>
+												DK Electrical, Norwich
+											</h5>
+										</div>
+									</div>
+									<div className="quote-carousel-item-container wide">
+										<div
+											className="quote-carousel-item"
+											style={{ borderColor: "rgb(82, 82, 136)" }}
+										>
+											<h3 style={{ color: "rgb(82, 82, 136)" }} />
+											<p style={{ color: "rgb(82, 82, 136)" }}>
+												Excellent and efficient accounting, simply the best!
+											</p>
+											<h4 style={{ color: "rgb(82, 82, 136)" }}>
+												Dr Omotola Omotoso
+											</h4>
+											<h5 style={{ color: "rgb(82, 82, 136)" }}>
+												Apex Practice Ltd, Manchester
+											</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="forward" className="quote-carousel-button">
+								<p style={{ color: "rgb(82, 82, 136)" }}>FORWARD</p>
+							</div>
+						</div>
+					</section>
+					<section
+						className="about-alice-section-container"
+						aria-label="Meet Your Accountant - Alice Taiwo"
+					>
+						<div className="subheader-container">
+							<h3 style={{ color: "rgb(82, 82, 136)" }}>MEET YOUR ACCOUNTANT</h3>
+							<h4 />
+							<div
+								className="underline"
+								style={{ justifyContent: "center", display: "none" }}
+							>
+								<div style={{ backgroundColor: "rgb(82, 82, 136)" }} />
+							</div>
+							<svg
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 324.26 48.29"
+								className="stars"
+								style={{ display: "none" }}
+							>
+								<path
+									fill="#525288"
+									stroke="#525288"
+									strokeMiterlimit={10}
+									d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#525288"
+									stroke="#525288"
+									strokeMiterlimit={10}
+									d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#525288"
+									stroke="#525288"
+									strokeMiterlimit={10}
+									d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#525288"
+									stroke="#525288"
+									strokeMiterlimit={10}
+									d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#525288"
+									stroke="#525288"
+									strokeMiterlimit={10}
+									d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+									transform="translate(-623 -515)"
+								/>
+							</svg>
+						</div>
+						<div className="about-alice-content-wrapper">
+							<div className="about-alice-main-content">
+								<div className="about-alice-text-content">
+									<h2 style={{ color: "rgb(226, 170, 96)" }}>
+										Alice Taiwo BSc (Hons), ACA
+									</h2>
+									<div
+										className="content-container"
+										style={{ alignItems: "flex-start" }}
+									>
+										<div className="header-container">
+											<h3
+												style={{ color: "rgb(82, 82, 136)", textAlign: "left" }}
+											></h3>
+										</div>
+										<p
+											className="para"
+											style={{ color: "rgb(112, 112, 112)", textAlign: "left" }}
+										>
+											Alice is well versed in providing high quality services to
+											meet the business needs of small to medium size businesses and
+											individuals in a professional and friendly manner.
+										</p>
+										<p
+											className="para"
+											style={{ color: "rgb(112, 112, 112)", textAlign: "left" }}
+										>
+											In her spare time, Alice is an active member of a local
+											charity involved in various fund raising activities, helping
+											to alleviate poverty both locally and internationally.
+										</p>
+										<div
+											className="buttons-container"
+											style={{ justifyContent: "flex-start" }}
+										></div>
+									</div>
+								</div>
+								<div className="about-alice-specialisms">
+									<h3 style={{ color: "rgb(82, 82, 136)" }}>Specialisms</h3>
+									<ul>
+										<li style={{ color: "rgb(112, 112, 112)" }}>
+											<span style={{ color: "rgb(226, 170, 96)" }}>•</span> Cloud
+											Accounting
+										</li>
+										<li style={{ color: "rgb(112, 112, 112)" }}>
+											<span style={{ color: "rgb(226, 170, 96)" }}>•</span> Tax
+											Enquiry Service
+										</li>
+										<li style={{ color: "rgb(112, 112, 112)" }}>
+											<span style={{ color: "rgb(226, 170, 96)" }}>•</span>{" "}
+											Accounts, Bookkeeping &amp; Taxation
+										</li>
+										<li style={{ color: "rgb(112, 112, 112)" }}>
+											<span style={{ color: "rgb(226, 170, 96)" }}>•</span>{" "}
+											Payroll/VAT
+										</li>
+										<li style={{ color: "rgb(112, 112, 112)" }}>
+											<span style={{ color: "rgb(226, 170, 96)" }}>•</span> Company
+											Formation
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div className="about-alice-contact-info">
+								<h3 style={{ color: "rgb(82, 82, 136)" }}>Get in Touch</h3>
+								<div className="contact-details">
+									<p style={{ color: "rgb(112, 112, 112)" }}>
+										<strong style={{ color: "rgb(226, 170, 96)" }}>Phone:</strong>{" "}
+										01603 821014
+									</p>
+									<p style={{ color: "rgb(112, 112, 112)" }}>
+										<strong style={{ color: "rgb(226, 170, 96)" }}>Email:</strong>{" "}
+										alicetaiwo@certax.co.uk
+									</p>
+									<p style={{ color: "rgb(112, 112, 112)" }}>
+										<strong style={{ color: "rgb(226, 170, 96)" }}>Address:</strong>{" "}
+										Regus UK, Cavell House, Stannard Place, St. Crispins Road,
+										Norwich, NR3 1YE
+									</p>
+									<p style={{ color: "rgb(112, 112, 112)" }}>
+										<strong style={{ color: "rgb(226, 170, 96)" }}>Hours:</strong>{" "}
+										Monday to Friday
+									</p>
+									<p
+										style={{
+											color: "rgb(112, 112, 112)",
+											fontSize: 14,
+											marginTop: "1em"
+										}}
+									>
+										Our fees are calculated on a fixed fee basis, so you know
+										upfront the cost of the services required with no hidden
+										charges. Contact us for your free initial consultation.
+									</p>
+								</div>
+							</div>
+						</div>
+					</section>
+					<section className="services-section-container" aria-label="Our Services">
+						<div className="subheader-container">
+							<h3 style={{ color: "rgb(226, 170, 96)" }}>SERVICES</h3>
+							<h4 />
+							<div
+								className="underline"
+								style={{ justifyContent: "center", display: "flex" }}
+							>
+								<div style={{ backgroundColor: "rgb(226, 170, 96)" }} />
+							</div>
+							<svg
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 324.26 48.29"
+								className="stars"
+								style={{ display: "none" }}
+							>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+									transform="translate(-623 -515)"
+								/>
+								<path
+									fill="#E2AA60"
+									stroke="#E2AA60"
+									strokeMiterlimit={10}
+									d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+									transform="translate(-623 -515)"
+								/>
+							</svg>
+						</div>
+						<div className="services-container">
+							<div className="services-main-card-container">
+								<div
+									className="serivces-main-card-content"
+									style={{ backgroundColor: "rgb(82, 82, 136)" }}
+								>
+									<div
+										className="content-container"
+										style={{ alignItems: "flex-start" }}
+									>
+										<div className="header-container">
+											<h3
+												style={{ color: "rgb(255, 255, 255)", textAlign: "left" }}
+											>
+												Accounts &amp; Bookkeeping
+											</h3>
+											<div
+												className="underline"
+												style={{ justifyContent: "flex-start", display: "flex" }}
+											>
+												<div
+													style={{ backgroundColor: "rgb(255, 255, 255)" }}
+												></div>
+											</div>
+										</div>
+										<p
+											className="para"
+											style={{ color: "rgb(255, 255, 255)", textAlign: "left" }}
+										>
+											Whether you are a sole trader, in partnership or a limited
+											company, maintaining accurate books and records of financial
+											transactions and reporting them are essential. The last thing
+											any business owner wants is spending their valuable time and
+											business resources on routine bookkeeping and accounts
+											preparation. Why not let us take these tedious tasks away from
+											you to enable you focus on activities that are relevant to the
+											growth and success of your business.
+										</p>
+										<p
+											className="para"
+											style={{ color: "rgb(255, 255, 255)", textAlign: "left" }}
+										>
+											At Certax, we provide a fast and reliable bookkeeping service
+											using technology. All our bookkeeping services are provided
+											using Xero Accounting Software and Receipts App. All you need
+											to do is send your receipts/invoices to us using the App that
+											will be provided to you from the onset or via an email. We can
+											even fetch the documents direct from your suppliers if they
+											are listed on our document fetch provider database. You can
+											then relax and let us take care of the rest.
+										</p>
+										<div
+											className="buttons-container"
+											style={{ justifyContent: "flex-start" }}
+										>
+											<button
+												className="button inverse"
+												type="button"
+												style={{
+													color: "white",
+													backgroundColor: "rgb(82, 82, 136)"
+												}}
+											>
+												Next
+											</button>
+										</div>
+									</div>
+								</div>
+								<div
+									className="services-main-card-image"
+									style={{
+										backgroundImage:
+											'url("https://images.unsplash.com/photo-1554252116-ee59370d1f66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80")'
+									}}
+								></div>
+							</div>
+							<div className="services-card-list-container">
+								<div
+									className="services-card-container"
+									style={{ backgroundColor: "rgb(82, 82, 136)" }}
+								>
+									<div className="services-card-content active-index">
+										<div className="subheader-container">
+											<h3 style={{ color: "rgb(82, 82, 136)" }}>
+												Accounts &amp; Bookkeeping
+											</h3>
+											<h4 />
+											<div
+												className="underline"
+												style={{ justifyContent: "center", display: "flex" }}
+											>
+												<div style={{ backgroundColor: "rgb(82, 82, 136)" }}></div>
+											</div>
+											<svg
+												xmlns="https://www.w3.org/2000/svg"
+												viewBox="0 0 324.26 48.29"
+												className="stars"
+												style={{ display: "none" }}
+											>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+													transform="translate(-623 -515)"
+												/>
+											</svg>
+										</div>
+										<p style={{ color: "rgb(82, 82, 136)" }}>
+											READ MORE{" "}
+											<span aria-hidden="true" className="fa fa-long-arrow-right" />
+										</p>
+									</div>
+									<div
+										className="services-card-face"
+										style={{
+											backgroundImage:
+												'url("https://images.unsplash.com/photo-1554252116-ee59370d1f66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80")',
+											borderColor: "rgb(82, 82, 136)",
+											opacity: 0,
+											backgroundColor: "rgb(255, 255, 255)"
+										}}
+									></div>
+								</div>
+								<div
+									className="services-card-container"
+									style={{ backgroundColor: "rgb(226, 170, 96)" }}
+								>
+									<div className="services-card-content">
+										<div className="subheader-container">
+											<h3 style={{ color: "rgb(226, 170, 96)" }}>Tax Returns</h3>
+											<h4 />
+											<div
+												className="underline"
+												style={{ justifyContent: "center", display: "flex" }}
+											>
+												<div style={{ backgroundColor: "rgb(226, 170, 96)" }}></div>
+											</div>
+											<svg
+												xmlns="https://www.w3.org/2000/svg"
+												viewBox="0 0 324.26 48.29"
+												className="stars"
+												style={{ display: "none" }}
+											>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+													transform="translate(-623 -515)"
+												/>
+											</svg>
+										</div>
+										<p style={{ color: "rgb(226, 170, 96)" }}>
+											READ MORE{" "}
+											<span aria-hidden="true" className="fa fa-long-arrow-right" />
+										</p>
+									</div>
+									<div
+										className="services-card-face"
+										style={{
+											backgroundImage:
+												'url("https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80")',
+											borderColor: "rgb(226, 170, 96)",
+											backgroundColor: "rgb(255, 255, 255)"
+										}}
+									></div>
+								</div>
+								<div
+									className="services-card-container"
+									style={{ backgroundColor: "rgb(82, 82, 136)" }}
+								>
+									<div className="services-card-content">
+										<div className="subheader-container">
+											<h3 style={{ color: "rgb(82, 82, 136)" }}>VAT</h3>
+											<h4 />
+											<div
+												className="underline"
+												style={{ justifyContent: "center", display: "flex" }}
+											>
+												<div style={{ backgroundColor: "rgb(82, 82, 136)" }}></div>
+											</div>
+											<svg
+												xmlns="https://www.w3.org/2000/svg"
+												viewBox="0 0 324.26 48.29"
+												className="stars"
+												style={{ display: "none" }}
+											>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+													transform="translate(-623 -515)"
+												/>
+											</svg>
+										</div>
+										<p style={{ color: "rgb(82, 82, 136)" }}>
+											READ MORE{" "}
+											<span aria-hidden="true" className="fa fa-long-arrow-right" />
+										</p>
+									</div>
+									<div
+										className="services-card-face"
+										style={{
+											backgroundImage:
+												'url("https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80")',
+											borderColor: "rgb(82, 82, 136)",
+											backgroundColor: "rgb(255, 255, 255)"
+										}}
+									></div>
+								</div>
+								<div
+									className="services-card-container"
+									style={{ backgroundColor: "rgb(226, 170, 96)" }}
+								>
+									<div className="services-card-content">
+										<div className="subheader-container">
+											<h3 style={{ color: "rgb(226, 170, 96)" }}>Payroll / PAYE</h3>
+											<h4 />
+											<div
+												className="underline"
+												style={{ justifyContent: "center", display: "flex" }}
+											>
+												<div style={{ backgroundColor: "rgb(226, 170, 96)" }}></div>
+											</div>
+											<svg
+												xmlns="https://www.w3.org/2000/svg"
+												viewBox="0 0 324.26 48.29"
+												className="stars"
+												style={{ display: "none" }}
+											>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+													transform="translate(-623 -515)"
+												/>
+											</svg>
+										</div>
+										<p style={{ color: "rgb(226, 170, 96)" }}>
+											READ MORE{" "}
+											<span aria-hidden="true" className="fa fa-long-arrow-right" />
+										</p>
+									</div>
+									<div
+										className="services-card-face"
+										style={{
+											backgroundImage:
+												'url("https://images.unsplash.com/photo-1554224155-1696413565d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80")',
+											borderColor: "rgb(226, 170, 96)",
+											backgroundColor: "rgb(255, 255, 255)"
+										}}
+									></div>
+								</div>
+								<div
+									className="services-card-container"
+									style={{ backgroundColor: "rgb(82, 82, 136)" }}
+								>
+									<div className="services-card-content">
+										<div className="subheader-container">
+											<h3 style={{ color: "rgb(82, 82, 136)" }}>
+												Company Formation
+											</h3>
+											<h4 />
+											<div
+												className="underline"
+												style={{ justifyContent: "center", display: "flex" }}
+											>
+												<div style={{ backgroundColor: "rgb(82, 82, 136)" }}></div>
+											</div>
+											<svg
+												xmlns="https://www.w3.org/2000/svg"
+												viewBox="0 0 324.26 48.29"
+												className="stars"
+												style={{ display: "none" }}
+											>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#525288"
+													stroke="#525288"
+													strokeMiterlimit={10}
+													d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+													transform="translate(-623 -515)"
+												/>
+											</svg>
+										</div>
+										<p style={{ color: "rgb(82, 82, 136)" }}>
+											READ MORE{" "}
+											<span aria-hidden="true" className="fa fa-long-arrow-right" />
+										</p>
+									</div>
+									<div
+										className="services-card-face"
+										style={{
+											backgroundImage:
+												'url("https://images.unsplash.com/photo-1563198804-b144dfc1661c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1341&q=80")',
+											borderColor: "rgb(82, 82, 136)",
+											backgroundColor: "rgb(255, 255, 255)"
+										}}
+									></div>
+								</div>
+								<div
+									className="services-card-container"
+									style={{ backgroundColor: "rgb(226, 170, 96)" }}
+								>
+									<div className="services-card-content">
+										<div className="subheader-container">
+											<h3 style={{ color: "rgb(226, 170, 96)" }}>
+												Tax Enquiry&nbsp;Protection Service
+											</h3>
+											<h4 />
+											<div
+												className="underline"
+												style={{ justifyContent: "center", display: "flex" }}
+											>
+												<div style={{ backgroundColor: "rgb(226, 170, 96)" }}></div>
+											</div>
+											<svg
+												xmlns="https://www.w3.org/2000/svg"
+												viewBox="0 0 324.26 48.29"
+												className="stars"
+												style={{ display: "none" }}
+											>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M642.5,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L663.69,562l-14.76-10.66L633.83,562l5.82-16.75L624.49,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M710.75,533.85l6-17.34,6.16,17.34H741l-14.63,10.86L731.93,562l-14.76-10.66L702.07,562l5.83-16.75L692.74,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M779,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L800.18,562l-14.76-10.66L770.32,562l5.83-16.75L761,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M847.24,533.85l6-17.34,6.15,17.34h18.07l-14.62,10.86L868.43,562l-14.76-10.66L838.57,562l5.82-16.75L829.23,534Z"
+													transform="translate(-623 -515)"
+												/>
+												<path
+													fill="#E2AA60"
+													stroke="#E2AA60"
+													strokeMiterlimit={10}
+													d="M915.49,533.85l6-17.34,6.16,17.34h18.07l-14.63,10.86L936.67,562l-14.76-10.66L906.81,562l5.83-16.75L897.48,534Z"
+													transform="translate(-623 -515)"
+												/>
+											</svg>
+										</div>
+										<p style={{ color: "rgb(226, 170, 96)" }}>
+											READ MORE{" "}
+											<span aria-hidden="true" className="fa fa-long-arrow-right" />
+										</p>
+									</div>
+									<div
+										className="services-card-face"
+										style={{
+											backgroundImage:
+												'url("https://images.unsplash.com/photo-1544761634-dc512f2238a3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80")',
+											borderColor: "rgb(226, 170, 96)",
+											backgroundColor: "rgb(255, 255, 255)"
+										}}
+									></div>
+								</div>
+							</div>
+						</div>
+						<div className="scroll-down-button-container">
+							<svg
+								id="scroll-down-button"
+								xmlns="https://www.w3.org/2000/svg"
+								viewBox="0 0 126.1 63.05"
+							>
+								<polygon fill="#525288" points="0 0 126.09 0 63.05 63.05 0 0" />
+							</svg>
+						</div>
+					</section>
+					<section className="contact-us-section-container" aria-label="Contact Us">
+						<div className="contact-us-container">
+							<div
+								className="contact-us-background-image"
+								style={{
+									backgroundImage:
+										'url("https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80")'
+								}}
+							></div>
+							<div className="content-container" style={{ alignItems: "center" }}>
+								<div className="header-container">
+									<h3 style={{ color: "rgb(255, 255, 255)", textAlign: "center" }}>
+										Free initial consultation?
+									</h3>
+									<div
+										className="underline"
+										style={{ justifyContent: "center", display: "flex" }}
+									>
+										<div style={{ backgroundColor: "rgb(255, 255, 255)" }}></div>
+									</div>
+								</div>
+								<p
+									className="para"
+									style={{ color: "rgb(255, 255, 255)", textAlign: "center" }}
+								>
+									You can contact us
+									<span className="bold">anytime</span> and we won't keep you
+									waiting
+								</p>
+								<div
+									className="buttons-container"
+									style={{ justifyContent: "space-around" }}
+								>
+									<button
+										className="button inverse"
+										type="button"
+										style={{ color: "white", backgroundColor: "rgb(226, 170, 96)" }}
+									>
+										01603 821014
+									</button>
+									<a
+										className="button-link"
+										href="mailto:alicetaiwo@certax.co.uk"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										<button
+											className="button inverse"
+											type="button"
+											style={{
+												color: "white",
+												backgroundColor: "rgb(82, 82, 136)"
+											}}
+										>
+											alicetaiwo@certax.co.uk
+										</button>
+									</a>
+								</div>
+							</div>
+						</div>
+					</section>
+				</main>
+				<footer>
+					<div className="footer-images">
+						<img
+							src="https://www.chevening.org/wp-content/uploads/2019/09/ICAEW-logo-small.png"
+							alt="ICAEW - Institute of Chartered Accountants in England and Wales"
+						/>
+						<img
+							width={100}
+							src="https://upload.wikimedia.org/wikipedia/commons/5/57/Xero-logo-hires-RGB.png?20131106042228"
+							alt="Xero Cloud Accounting Software Partner"
+						/>
+					</div>
+					<div className="footer-container">
+						<div className="footer-left">
+							<p style={{ color: "rgb(82, 82, 136)" }}>
+								Copyright © 2020, Certax Accounting
+							</p>
+							<p>Certax Accounting (Central &amp; East Norwich) Ltd</p>
+							<p>Regus UK Cavell House, Stannard Place St. Crispins Road</p>
+							<p>Norwich, NR3 1YE</p>
+							<p>
+								Tel: <a href="tel:+441603821014">01603 821014</a>
+							</p>
+							<p>Company number: 8167643 Registered in England</p>
+						</div>
+						<nav className="footer-right" aria-label="Footer navigation">
+							<a role="button" tabIndex={0} style={{ color: "rgb(226, 170, 96)" }}>
+								Home
+							</a>
+							<a role="button" tabIndex={0}>
+								About
+							</a>
+							<a role="button" tabIndex={0}>
+								Testimonials
+							</a>
+							<a role="button" tabIndex={0}>
+								Alice
+							</a>
+							<a role="button" tabIndex={0}>
+								Services
+							</a>
+							<a role="button" tabIndex={0}>
+								Contact
+							</a>
+						</nav>
+					</div>
+				</footer>
 			</div>
-		</main>
+		</div>
 	)
 }
 
 export default HomePage;
+
+
+/**
+ * Website Packages: Commercial
+ * 
+ * Basic: Static HTML, CSS & JS Hosted on Netlify (company portfolio) - £500
+ * Middle: Astro + TinaCMS + Netlify (blog, pages, portfolio) - £1000
+ * Mid High: Add Third party tools such as Google Analytics, Search Console, Calendy etc - £2000
+ * High: Laravel/Inertia (application) - £5000
+ */

@@ -33,6 +33,34 @@ const blog = defineCollection({
   }),
 });
 
+const home = defineCollection({
+  loader: async () => {
+    const response = await client.queries.homeConnection();
+
+    return response.data.homeConnection.edges
+      ?.filter((p) => !!p)
+      .map((p) => {
+        const node = p?.node;
+
+        return {
+          ...node,
+          id: node?._sys.relativePath.replace(/\.mdx?$/, ""),
+          tinaInfo: node?._sys,
+        };
+      });
+  },
+  schema: z.object({
+    tinaInfo: z.object({
+      filename: z.string(),
+      basename: z.string(),
+      path: z.string(),
+      relativePath: z.string(),
+    }),
+    seoTitle: z.string(),
+    body: z.any(),
+  }),
+});
+
 const page = defineCollection({
   loader: async () => {
     const postsResponse = await client.queries.pageConnection();
@@ -60,5 +88,6 @@ const page = defineCollection({
     seoTitle: z.string(),
     body: z.any(),
   }),
-})
-export const collections = { blog, page };
+});
+
+export const collections = { blog, home, page };

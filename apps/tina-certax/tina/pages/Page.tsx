@@ -19,6 +19,7 @@ const TinaPage = (props: Props) => {
 
 	return (
 		<main>
+			I am a piece of cheese
 			<div data-tina-field={tinaField(page, "body")}>
 				<TinaMarkdown content={page.body} />
 			</div>

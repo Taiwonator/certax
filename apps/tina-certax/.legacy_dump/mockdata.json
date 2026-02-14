@@ -1,0 +1,321 @@
+{
+    "colors": {
+        "yellow": "#E2AA60",
+        "lightyellow": "#deb176",
+        "lighteryellow": "#ddbb8f",
+        "blue": "#525288",
+        "lightblue": "#9FB7DB",
+        "textblack": "#2F2721",
+        "black": "#0F0F0F",
+        "grey": "#707070",
+        "lightgrey": "#F5F5F5",
+        "white": "#FFFFFF"
+    },
+    "navbar": {
+        "wordlogo": ""
+    },
+    "sections": {
+        "landingpage": {
+            "logo": ""
+        },
+        "about": {
+            "headertext": "ABOUT CERTAX",
+            "paratext": "Certax Accounting (Central & East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities.",
+            "text": [
+                {
+                    "type": "para",
+                    "text": "Certax Accounting (Central & East Norwich) Ltd is a firm of Chartered Accountants located in Central Norwich and part of a network of accountants across the UK. We provide professional advice and assistance on a wide range of tax and accountancy matters for small to medium size businesses and individuals at a competitive fixed fee. Our aim is to help grow your business, maximise your overall profits, whilst minimising your tax liabilities."
+                },
+                {
+                    "type": "para",
+                    "text": "At Certax, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch."
+                }
+            ]
+        },
+        "info": {
+            "headertext": "CENTRAL AND EAST NORWICH",
+            "paratext": "Alice Taiwo is a Chartered Accountant with vast experience in tax and accountancy matters affecting small to medium size businesses and individuals. Her aim is to help grow your business, maximise your overall profits whilst minimising your tax liabilities. With her, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch.",
+            "text": [
+                {
+                    "type": "para",
+                    "text": "Alice Taiwo is a Chartered Accountant with vast experience in tax and accountancy matters affecting small to medium size businesses and individuals. Her aim is to help grow your business, maximise your overall profits whilst minimising your tax liabilities. With her, you are guaranteed of top quality, professional and proactive services delivered timely with a personal touch."
+                }
+            ]
+        },
+        "testimonial": {
+            "bigtestimonials": [
+                {
+                    "text": "Alice Taiwo has been our business accountant for the last 7 years, she is always professional in her approach and deals with our accounts in a timely and extremely proficient manner, we would have no hesitation in recommending her to anyone in need of a first class accountant",
+                    "author": "John & Jill McGrath",
+                    "company": "The Mortgage Point (Suffolk) Ltd, Beccles",
+                    "image": "https://static.wixstatic.com/media/9615bc_96cb727f2f1f406b98e82562d1a43711~mv2_d_5312_2988_s_4_2.jpg/v1/fill/w_1903,h_529,al_c,q_85,usm_0.66_1.00_0.01/9615bc_96cb727f2f1f406b98e82562d1a43711~mv2_d_5312_2988_s_4_2.webp"
+                },
+                {
+                    "text": "We have been working with Alice and Certax Accounting team for seven years. They provide us with expert advice in relation to our annual accounts, tax and financial legislation. The team at Certax Accounting are very professional, and always give clear advice and guidance in a prompt and efficient manner.",
+                    "author": "Sergiu Nema",
+                    "company": "Nema & Sons LTD, Norwich",
+                    "image": "https://images.unsplash.com/photo-1485575301924-6891ef935dcd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                }
+            ],
+            "longtestimonials": [
+                {
+                    "header": "Excellent service",
+                    "text": "Tremendous help to rescue the company during a crucial tax investigation with the HMRC, our previous accountant were totally incompetent. But Alice from Certax Accounting took on the rather daunting challenge and the company's account is now back on track with appropriate accounting entries acceptable to the HMRC investigators. Comes highly recommended, very friendly and polite at all times.",
+                    "author": "Akintola Dasaolu (Director)",
+                    "company": "ADN Consulting Ltd, Norwich"
+                },
+                {
+                    "header": "5 Star Person / 5 Star Work",
+                    "text": "I would just like to say for the past years I have known Alice Taiwo, it has been an absolute pleasure! Alice explains things to you in a way that you can understand. She has helped my daughter and I, put me on the right track with my businesses and I thank her very much for that. This lady is one accountant I truly recommend.",
+                    "author": "Sarah Jefford (Proprietor)",
+                    "company": "Lifeboat Restaurant and B&B, Wells Next-the-Sea"
+                },
+                {
+                    "header": "Amazing Accountant",
+                    "text": "I have used Alice at Certax Accounting since I started my business in 2012. In all of this time, not only has she done my accounts so made my life easier, but she is professional at all times, approachable, open to discussion regarding my accounts and totally flexible in her approach to her work. Alice responds to all calls/e-mails as soon as she is free to do so. I fully recommend Alice and Certax Accounting (Central & East Norwich) Ltd to any business.",
+                    "author": "Mrs C. Davison (Proprietor)",
+                    "company": "Diamond Home Support, Norwich"
+                },
+                {
+                    "header": "Friendly, Affordable, Efficient Tax Advisor",
+                    "text": "I have had the pleasure of using Alice Taiwo's Certax Tax Advisor Services in Norwich since 2012. Alice makes tax easy and gives me the confidence and peace of mind that my financial affairs have been calculated properly in line with the latest legislation. Always providing a warm welcome at very reasonable rates. Alice has turned a chore into a pleasure - I would recommend her to anyone.",
+                    "author": "Gilan Harrison",
+                    "company": "Property Investor, Norwich"
+                },
+                {
+                    "header": "",
+                    "text": "It's not very often that a tax issue becomes a death sentence! I felt utterly helpless and desperate until my sister recommended Alice from Certax who had assisted her with a 4 year backlog....I had 6!!! My tax situation was complex but Alice was not only willing to travel all the way from Norwich to Cambridge to assist me, she helped streamline my accounts, is knowledgeable, thorough, methodical, affordable, trustworthy and nothing is too much. Alice quickly understood my business, had a very good grasp of what was needed and explained what she would do to help in a language I could understand. This business relationship with Alice brought me back from the brink of bankruptcy! I would not hesitate to recommend Alice for her excellent services and expertise.",
+                    "author": "Lady P",
+                    "company": "International Language School Host, Cambridge"
+                },
+                {
+                    "header": "",
+                    "text": "Alice Taiwo has been our accountant since 2014. She is reliable, honest and trustworthy.  She is always very helpful and professional. We definitely recommend her services as she has worked well with our business and has a large range of knowledge in the accountancy sector.",
+                    "author": "Denny Robles",
+                    "company": "Ibertech Solutions Limited, Diss"
+                },
+                {
+                    "header": "",
+                    "text": "I have used Alice for over 5 years now. She is always available to answer any questions and on hand to help with my business’s finances and accounts. She is a pleasure to work with and always very professional. She is friendly and approachable, and I will continue to use her and her services for many years to come.",
+                    "author": "Dean Kelf",
+                    "company": "DK Electrical, Norwich"
+                },
+                {
+                    "header": "",
+                    "text": "Excellent and efficient accounting, simply the best!",
+                    "author": "Dr Omotola Omotoso",
+                    "company": "Apex Practice Ltd, Manchester"
+                }
+            ],
+            "minitestimonials": [
+                {
+                    "text": "Excellent and efficient accounting, simply the best!",
+                    "author": "Tola Omotosho"
+                }
+            ]
+        },
+        "getaquote": {
+            "questions": [
+                [
+                    {
+                        "question": "Self Assesment",
+                        "type": "binary"
+                    }
+                ],
+                [
+                    {
+                        "question": "What industry are you in?",
+                        "type": "multi"
+                    },
+                    {
+                        "question": "What type of legal entity needs the accounts done?",
+                        "type": "multi"
+                    },
+                    {
+                        "question": "Is the company VAT registered",
+                        "type": "binary"
+                    }
+                ],
+                [
+                    {
+                        "question": "How many directors are in the company?",
+                        "type": "number"
+                    },
+                    {
+                        "question": "Do you require book keeping?",
+                        "type": "binary"
+                    },
+                    {
+                        "question": "How many employees need payroll",
+                        "type": "number"
+                    }
+                ],
+                [
+                    {
+                        "question": "What is your estimated annual turnover",
+                        "type": "number"
+                    }
+                ]
+            ]
+        },
+        "aboutalice": {
+            "headertext": "MEET YOUR ACCOUNTANT",
+            "name": "Alice Taiwo BSc (Hons), ACA",
+            "paratext": "Alice Taiwo is a Chartered Accountant with vast experience in tax and accountancy matters affecting small to medium size businesses and individuals. Her aim is to help grow your business, maximise your overall profits whilst minimising your tax liabilities.",
+            "text": [
+                {
+                    "type": "para",
+                    "text": "Alice is well versed in providing high quality services to meet the business needs of small to medium size businesses and individuals in a professional and friendly manner."
+                },
+                {
+                    "type": "para",
+                    "text": "In her spare time, Alice is an active member of a local charity involved in various fund raising activities, helping to alleviate poverty both locally and internationally."
+                }
+            ],
+            "specialisms": [
+                "Cloud Accounting",
+                "Tax Enquiry Service",
+                "Accounts, Bookkeeping & Taxation",
+                "Payroll/VAT",
+                "Company Formation"
+            ],
+            "contact": {
+                "phone": "01603 821014",
+                "email": "alicetaiwo@certax.co.uk",
+                "address": "Regus UK, Cavell House, Stannard Place, St. Crispins Road, Norwich, NR3 1YE",
+                "hours": "Monday to Friday"
+            }
+        },
+        "services": {
+            "services": [
+                {
+                    "title": "Accounts & Bookkeeping",
+                    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.",
+                    "image": "https://images.unsplash.com/photo-1554252116-ee59370d1f66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80",
+                    "text": [
+                        {
+                            "type": "para",
+                            "text": "Whether you are a sole trader, in partnership or a limited company, maintaining accurate books and records of financial transactions and reporting them are essential. The last thing any business owner wants is spending their valuable time and business resources on routine bookkeeping and accounts preparation. Why not let us take these tedious tasks away from you to enable you focus on activities that are relevant to the growth and success of your business."
+                        },
+                        {
+                            "type": "para",
+                            "text": "At Certax, we provide a fast and reliable bookkeeping service using technology. All our bookkeeping services are provided using Xero Accounting Software and Receipts App. All you need to do is send your receipts/invoices to us using the App that will be provided to you from the onset or via an email. We can even fetch the documents direct from your suppliers if they are listed on our document fetch provider database. You can then relax and let us take care of the rest."
+                        }
+                    ]
+                },
+                {
+                    "title": "Tax Returns",
+                    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.",
+                    "image": "https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+                    "text": [
+                        {
+                            "type": "para",
+                            "text": "Due to the complexity of tax rules and regulation, completing the tax returns yourself can be confusing and stressful, increasing the risk of errors and late submission which can be costly. Let us take the stress away from you by handling your Self Assessment Tax Return and Corporation Tax Return for you."
+                        },
+                        {
+                            "type": "para",
+                            "text": "Our service at Certax will help simplify the tasks and help to prevent any discrepancies in tax payments, potentially leaving you with more cash. We have the required expertise that will ensure no costly mistakes, overlooked tax saving opportunities, miscalculations or missed deadlines."
+                        }
+                    ]
+                },
+                {
+                    "title": "VAT",
+                    "info": "Value Added Tax (VAT) can be tricky and quite confusing, very often resulting in errors which may carry hefty fines and penalties. We can save you the hassles and the potential financial loss by taking care of your VAT needs including the registration if you are eligible to register but not yet registered, deregistration if you are no longer required to be registered, preparation of the periodic calculation and submission of the return to HMRC.",
+                    "image": "https://images.unsplash.com/photo-1501290836517-b22a21c522a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80",
+                    "text": [
+                        {
+                            "type": "para",
+                            "text": "Value Added Tax (VAT) can be tricky and quite confusing, very often resulting in errors which may carry hefty fines and penalties. We can save you the hassles and the potential financial loss by taking care of your VAT needs including the registration if you are eligible to register but not yet registered, deregistration if you are no longer required to be registered, preparation of the periodic calculation and submission of the return to HMRC."
+                        }
+                    ]
+                },
+                {
+                    "title": "Payroll / PAYE",
+                    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.",
+                    "image": "https://images.unsplash.com/photo-1554224155-1696413565d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+                    "text": [
+                        {
+                            "type": "para",
+                            "text": "Payroll administration can place a significant demand on business owners’ time particularly since the introduction of Real Time Information (RTI). We can take the burden off you by handling your payroll activities for you. We provide paperless payroll service; all your payslips and other relevant payroll documents will be delivered to you electronically in a timely manner ensuring you comply with the relevant regulations and guidelines."
+                        },
+                        {
+                            "type": "para",
+                            "text": "We will also support you with your auto enrolment duties where applicable. If you operate within Construction Industry, the burden of operating the Construction Industry Scheme (CIS) lies with you but we can provide support to ensure compliance. For further details, please see UK government guidelines for CIS scheme",
+                            "highlightedWord": "UK government guidelines for CIS scheme"
+                        }
+                    ]
+                },
+                {
+                    "title": "Company Formation",
+                    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.",
+                    "image": "https://images.unsplash.com/photo-1563198804-b144dfc1661c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1341&q=80",
+                    "text": [
+                        {
+                            "type": "para",
+                            "text": "We can assist you with your company formation. We also take care of the submission of various documents and update the register as required by Companies House."
+                        }
+                    ]
+                },
+                {
+                    "title": "Tax Enquiry Protection Service",
+                    "info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dapibus sollicitudin luctus. Ut finibus non purus at pulvinar. Quisque tincidunt est at arcu efficitur ultrices. Cras felis mauris, feugiat id lectus vel, mollis efficitur ligula.",
+                    "image": "https://images.unsplash.com/photo-1544761634-dc512f2238a3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+                    "text": [
+                        {
+                            "type": "para",
+                            "text": "We provide tax enquiry protection service to safeguard you against the taxman as HMRC is using sophisticated software to target all taxpayers. With the number of investigations rising every single year, you could be selected at random for an investigation by HMRC and this could cost you money even if you have done nothing wrong."
+                        },
+                        {
+                            "type": "para",
+                            "text": "An investigation can take months and cost thousands of pounds in professional fees. Even the very thought of an enquiry by HMRC can be daunting but when you are chosen for an investigation, we can help you at every step of the process for a small annual cost."
+                        },
+                        {
+                            "type": "para",
+                            "text": "Our Tax Investigation service provides you with the following benefits:"
+                        },
+                        {
+                            "type": "bulletpoints",
+                            "points": [
+                                {
+                                    "type": "para",
+                                    "text": "Representation from us in the event of an HMRC investigation, with zero excess on fees of up to £100,000",
+                                    "highlightedWord": "Representation"
+                                },
+                                {
+                                    "type": "para",
+                                    "text": "Peace of mind. We will deal directly with HMRC on your behalf, safeguarding you from the concern and stress of unknown additional fees",
+                                    "highlightedWord": "Peace of mind"
+                                },
+                                {
+                                    "type": "para",
+                                    "text": "Access to experienced solicitors who will advise you on all areas of law including contract, property and landlord & tenant.",
+                                    "highlightedWord": "experienced solicitors"
+                                },
+                                {
+                                    "type": "para",
+                                    "text": "Access to Health & Safety support line for advice on your responsibilities and the implications of non-compliance",
+                                    "highlightedWord": "Health & Safety support line"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "contactus": {
+            "email": "alicetaiwo@certax.co.uk",
+            "image": "https://images.unsplash.com/photo-1457904375453-3e1fc2fc76f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+        }
+    },
+    "chatbox": {
+        "colors": {
+            "blue": "#525288",
+            "yellow": "#E2AA60"
+        },
+        "user": {
+            "id": "123",
+            "alias": "Certax",
+            "type": "admin"
+        }
+    }
+}
